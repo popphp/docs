@@ -1,4 +1,2 @@
-Pop PHP Framework 2 Reference
-=============================
-
-## Pop\I18n
+Pop\I18n
+========

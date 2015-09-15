@@ -1,4 +1,2 @@
-Getting Started
-===============
-
-## Applications
+Applications
+============

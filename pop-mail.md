@@ -1,4 +1,2 @@
-Pop PHP Framework 2 Reference
-=============================
-
-## Pop\Mail
+Pop\Mail
+========

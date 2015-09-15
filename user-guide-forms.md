@@ -1,4 +1,2 @@
-User Guide
-==========
-
-## Forms
+Forms
+=====
