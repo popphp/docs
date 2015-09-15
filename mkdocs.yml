@@ -1,0 +1,64 @@
+site_name: Pop PHP Framework Documentation
+pages:
+- Overview: index.md
+- Installation: install.md
+- Getting Started:
+  - Applications: getting-started-applications.md
+  - Routing: getting-started-routing.md
+  - Controllers: getting-started-controllers.md
+  - Modules: getting-started-modules.md
+  - Events: getting-started-events.md
+  - Services: getting-started-services.md
+- User Guide to Common Components:
+  - HTTP and the Web: user-guide-http.md
+  - Views: user-guide-views.md
+  - Databases: user-guide-databases.md
+  - Forms: user-guide-forms.md
+  - Images: user-guide-images.md
+  - PDF: user-guide-pdfs.md
+- Pop PHP Framework 2 Reference:
+  - Pop\Acl: pop-acl.md
+  - Pop\Application: pop-application.md
+  - Pop\Archive: pop-archive.md
+  - Pop\Auth: pop-auth.md
+  - Pop\Cache: pop-cache.md
+  - Pop\Code: pop-code.md
+  - Pop\Config: pop-config.md
+  - Pop\Console: pop-console.md
+  - Pop\Controller: pop-controller.md
+  - Pop\Crypt: pop-crypt.md
+  - Pop\Data: pop-data.md
+  - Pop\Db: pop-db.md
+  - Pop\Dom: pop-dom.md
+  - Pop\Event: pop-event.md
+  - Pop\Feed: pop-feed.md
+  - Pop\File: pop-file.md
+  - Pop\Filter: pop-filter.md
+  - Pop\Form: pop-form.md
+  - Pop\Ftp: pop-ftp.md
+  - Pop\Geo: pop-geo.md
+  - Pop\Http: pop-http.md
+  - Pop\I18n: pop-i18n.md
+  - Pop\Image: pop-image.md
+  - Pop\Loader: pop-loader.md
+  - Pop\Log: pop-log.md
+  - Pop\Mail: pop-mail.md
+  - Pop\Module: pop-module.md
+  - Pop\Nav: pop-nav.md
+  - Pop\Paginator: pop-paginator.md
+  - Pop\Payment: pop-payment.md
+  - Pop\Pdf: pop-pdf.md
+  - Pop\Router: pop-router.md
+  - Pop\Service: pop-service.md
+  - Pop\Shipping: pop-shipping.md
+  - Pop\Validator: pop-validator.md
+  - Pop\Version: pop-version.md
+  - Pop\View: pop-view.md
+  - Pop\Web: pop-web.md
+theme: readthedocs
+site_author: "Nick Sagona, III"
+site_url: http://www.popphp.org/
+site_description: Pop PHP Framework 2
+repo_url: https://github.com/popphp/popphp-framework
+repo_name: GitHub
+include_search: true
