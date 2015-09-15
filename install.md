@@ -1,5 +1,3 @@
-Pop PHP Framework Documentation
-===============================
+Installation
+============
 
-Install
--------

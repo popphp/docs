@@ -1,7 +1,4 @@
-Pop PHP Framework Documentation
-===============================
+Pop PHP Framework 2 Reference
+=============================
 
-Reference
----------
-
-### Pop\File
+## Pop\File
