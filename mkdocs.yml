@@ -59,6 +59,6 @@ theme: readthedocs
 site_author: "Nick Sagona, III"
 site_url: http://www.popphp.org/
 site_description: Pop PHP Framework 2
-repo_url: https://github.com/popphp/popphp-framework
+repo_url: https://github.com/popphp/docs
 repo_name: GitHub
 include_search: true
