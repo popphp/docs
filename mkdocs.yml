@@ -11,6 +11,8 @@ pages:
   - Services: getting-started-services.md
 - User Guide to Common Components:
   - HTTP and the Web: user-guide-http.md
+    - HTTP Clients: user-guide-http-clients.md
+    - Web Component: user-guide-http-web.md
   - Views: user-guide-views.md
   - Databases: user-guide-databases.md
   - Forms: user-guide-forms.md
