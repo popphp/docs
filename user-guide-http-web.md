@@ -1,5 +1,4 @@
-HTTP and the Web
-================
+Web Component
+=============
 
-* 
-*
+This is a test
