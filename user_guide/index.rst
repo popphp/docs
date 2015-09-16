@@ -1,5 +1,5 @@
-Pop PHP Framework
-=================
+User Guide
+==========
 
 .. toctree::
     :maxdepth: 1
