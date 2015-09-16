@@ -2,7 +2,10 @@ Pop PHP Framework
 =================
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
     overview
-    getting_started
+    installation
+    getting_started/index
+    user_guide/index
+    reference/index
