@@ -8,16 +8,30 @@ life-cycle, such as the router, service locator, event manager and module manage
 you can also have access to the config object and the autoloader, if needed.
 
 The application object's constructor is pretty flexible in what it can accept when setting up your
-application. You can  pass it individual instances of the objects your application will need:
+application. You can pass it individual instances of the objects your application will need:
 
-(sample code)
+.. code-block:: php
+
+    <?php
+
+    $router  = new Pop\Router\Router();
+    $service = new Pop\Service\Locator();
+    $events  = new Pop\Event\Manager();
+    $config  = [
+        'someConfigValue' => 'foo'
+    ];
+
+    $app = new Pop\Application(
+        $router, $service, $events, $config
+    );
 
 Or, you can pass it a configuration array and let the application object create and set up the
 objects for you:
 
-(sample code)
+.. code-block:: php
 
 Once the application object and its dependencies are wired up, you'll be able to access them
 through the appropriate methods:
 
-(sample code)
+.. code-block:: php
+
