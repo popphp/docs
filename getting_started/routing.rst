@@ -32,7 +32,7 @@ for more control over what happens for each route:
 
 .. code-block:: php
 
-    class MyApp\Controller\IndexController
+    class MyApp\Controller\IndexController extends \Pop\Controller\AbstractController
     {
         public function index()
         {
