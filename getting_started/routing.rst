@@ -27,6 +27,32 @@ In the above example, a web request of ``/hello`` will execute the closure as th
 In the above example, a CLI command of ``hello`` will execute the closure as the controller and echo
 ``Hello World`` out to the console.
 
+Of course, an controller object can be, and usually is, an instance of a class instead of a closure
+for more control over what happens for each route:
+
+.. code-block:: php
+
+    class MyApp\Controller\IndexController
+    {
+        public function index()
+        {
+            echo 'Hello World!';
+        }
+    }
+
+    $router->addRoute('/', [
+        'controller' => 'MyApp\Controller\IndexController',
+        'action'     => 'index'
+    ]);
+
+In the above example, a controller class is used to route the request ``/`` to the ``index`` method.
+
+Controller Parameters
+---------------------
+
+Dispatch Parameters
+-------------------
+
 Defining route dispatch parameters, you can define required (or optional) data that is needed for a
 particular route:
 
@@ -45,8 +71,7 @@ particular route:
 The HTTP request of ``/hello/pop`` and the CLI command of ``hello pop`` will echo out
 ``Hello Pop`` to the browser and screen, respectively.
 
-Of course, the controller can be, and usually is, a class instead of a closure for more control
-over what happens for each route:
+**Optional Dispatch Parameters**
 
 .. code-block:: php
 
@@ -62,13 +87,22 @@ over what happens for each route:
         }
     }
 
+For HTTP:
+
     $router->addRoute('/hello[/:name]', [
         'controller' => 'MyApp\Controller\IndexController',
         'action'     => 'hello'
     ]);
 
-In the above example, a controller class is used to route the request to the ``hello`` method. Also,
-and example of an optional dispatch parameter is used as well.
+For CLI:
+
+    $router->addRoute('hello <name>', [
+        'controller' => 'MyApp\Controller\IndexController',
+        'action'     => 'hello'
+    ]);
+
+In the above example, the parameter ``$name`` is an optional dispatch parameter and the ``hello``
+method performs two different actions depending on whether or not the parameter value it present.
 
 Dynamic Routing
 ---------------
