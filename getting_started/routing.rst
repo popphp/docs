@@ -14,7 +14,7 @@ that may be required with them.
     });
 
 In the above example, a web request of ``/hello`` will execute the closure as the controller and echo
-out to the browser ``Hello World``
+``Hello World`` out to the browser.
 
 **CLI Route Example**
 
@@ -25,10 +25,10 @@ out to the browser ``Hello World``
     });
 
 In the above example, a CLI command of ``hello`` will execute the closure as the controller and echo
-out to the screen ``Hello World``
+``Hello World`` out to the console.
 
 Defining route dispatch parameters, you can define required (or optional) data that is needed for a
-particular route.
+particular route:
 
 .. code-block:: php
 
@@ -45,8 +45,8 @@ particular route.
 The HTTP request of ``/hello/pop`` and the CLI command of ``hello pop`` will echo out
 ``Hello Pop`` to the browser and screen, respectively.
 
-Of course, the controller can be a class instead of a closure for more controller over what happens
-for each route.
+Of course, the controller can be, and usually is, a class instead of a closure for more control
+over what happens for each route:
 
 .. code-block:: php
 
@@ -67,16 +67,58 @@ for each route.
         'action'     => 'hello'
     ]);
 
-In teh above example, a controller class is used to route the request to the ``hello`` method. Also,
+In the above example, a controller class is used to route the request to the ``hello`` method. Also,
 and example of an optional dispatch parameter is used as well.
 
 Dynamic Routing
-
-(sample code for HTTP routes)
-
-(sample code for CLI routes)
+---------------
 
 Dynamic routing is also supported. You can define routes as outlined in the example above and they will
-be dynamically mapped and routed to the correct controller and method.
+be dynamically mapped and routed to the correct controller and method. Let's assume your application has
+the following controller class:
 
-(sample controller/method)
+.. code-block:: php
+
+    class MyApp\Controller\UsersController
+    {
+
+        public function index()
+        {
+            // Show a list of users
+        }
+
+        public function edit($id = null)
+        {
+            // Edit the user with the ID of $id
+        }
+    }
+
+
+You could define a dynamic route for HTTP like this:
+
+.. code-block:: php
+
+    $router->addRoute('/:controller/:action[/:param]', [
+        'prefix' => 'MyApp\Controller\\'
+    ]);
+
+and for CLI like this:
+
+.. code-block:: php
+
+    $router->addRoute('<controller> <action> [<param>]', [
+        'prefix' => 'MyApp\Controller\\'
+    ]);
+
+And the follow routes would be valid due to dynamic route matching:
+
+**HTTP**
+
+``/users``
+``/users/edit/1001``
+
+**CLI**
+
+``users``
+``users edit 1001``
+

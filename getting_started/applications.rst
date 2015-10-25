@@ -7,6 +7,9 @@ are ways to create, store and manipulate common elements that you may need durin
 life-cycle, such as the router, service locator, event manager and module manager. Additionally,
 you can also have access to the config object and the autoloader, if needed.
 
+Configuring Your Application
+----------------------------
+
 The application object's constructor is pretty flexible in what it can accept when setting up your
 application. You can pass it individual instances of the objects your application will need:
 
@@ -98,4 +101,14 @@ You can also pass in the autoloader if it is needed as well:
 .. code-block:: php
 
     $app->autoloader()->addPsr4('MyApp\\Foo', __DIR__ . '/foo/src');
+
+Running Your Application
+------------------------
+
+Of course, once you've configured your application object, you can run the application
+by simply executing the ``run`` method:
+
+.. code-block:: php
+
+    $app->run();
 
