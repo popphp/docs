@@ -12,11 +12,13 @@ If you only want the core components you can install the repository at popphp/po
 Create a new project
 ~~~~~~~~~~~~~~~~~~~~
 .. code-block:: bash
+
     composer create-project popphp/popphp project-folder
 
 Add it to the composer.json file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: bash
+
     "require": {
         "popphp/popphp": "2.0.*"
     }
@@ -24,6 +26,7 @@ Add it to the composer.json file
 Add it to an existing project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: bash
+
     composer require popphp/popphp
 
 If you want to use the use the full framework and all of its components, you can use the
