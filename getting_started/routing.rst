@@ -50,6 +50,60 @@ In the above example, a controller class is used to route the request ``/`` to t
 Controller Parameters
 ---------------------
 
+It's common to require access to various elements and values of your application while within an
+instance of your controller class. To provide this, the router object allows you to inject parameters
+into the controller on instantiation. Let's assume your controller's constructor looks like this:
+
+.. code-block:: php
+
+    class MyApp\Controller\IndexController extends \Pop\Controller\AbstractController
+    {
+        protected $foo;
+        protected $bar;
+
+        public function __construct($foo, $bar)
+        {
+            $this->foo = $foo;
+            $this->bar = $bar;
+        }
+    }
+
+You could then inject parameters into the controller's constructor like this:
+
+.. code-block:: php
+
+    $router->addControllerParams(
+        'MyApp\Controller\IndexController', [
+            'foo' => $foo,
+            'bar' => $bar
+        ]
+    );
+
+If you require parameters to be injected globally to all of your controller classes, then you can
+replace the controller name ``'MyApp\Controller\IndexController`` with ``*`` and they will be injected
+into all controllers. You can also define controller parameters within the route configuration as well.
+
+.. code-block:: php
+
+    $config = [
+        'routes' => [
+            '/' => [
+                'controller'       => 'MyApp\Controller\IndexController',
+                'action'           => 'index',
+                'controllerParams' => [
+                    'foo'    => 123,
+                    'bar'    => 456,
+                    'append' => true
+                ]
+            ]
+        ]
+    ];
+
+    $app = new Pop\Application($config);
+
+The ``append`` flag tells the router to append the controller parameters on to the existing controller
+parameters if set to ``true``. If set to ``false``, they will override the existing controller parameters.
+
 Dispatch Parameters
 -------------------
 
@@ -111,7 +165,7 @@ method performs two different actions depending on whether or not the parameter 
 Dynamic Routing
 ---------------
 
-Dynamic routing is also supported. You can define routes as outlined in the example above and they will
+Dynamic routing is also supported. You can define routes as outlined in the examples below and they will
 be dynamically mapped and routed to the correct controller and method. Let's assume your application has
 the following controller class:
 
@@ -127,10 +181,9 @@ the following controller class:
 
         public function edit($id = null)
         {
-            // Edit the user with the ID of $id
+            // Edit the user with the ID# of $id
         }
     }
-
 
 You could define a dynamic route for HTTP like this:
 
@@ -148,7 +201,7 @@ and for CLI like this:
         'prefix' => 'MyApp\Controller\\'
     ]);
 
-And the follow routes would be valid due to dynamic route matching:
+And the follow routes would be valid because of dynamic route matching:
 
 **HTTP**
 
@@ -159,4 +212,3 @@ And the follow routes would be valid due to dynamic route matching:
 
 * ``users``
 * ``users edit 1001``
-
