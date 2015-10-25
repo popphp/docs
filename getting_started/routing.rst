@@ -75,7 +75,7 @@ The HTTP request of ``/hello/pop`` and the CLI command of ``hello pop`` will ech
 
 .. code-block:: php
 
-    class MyApp\Controller\IndexController
+    class MyApp\Controller\IndexController extends \Pop\Controller\AbstractController
     {
         public function hello($name = null)
         {
@@ -113,7 +113,7 @@ the following controller class:
 
 .. code-block:: php
 
-    class MyApp\Controller\UsersController
+    class MyApp\Controller\UsersController extends \Pop\Controller\AbstractController
     {
 
         public function index()
