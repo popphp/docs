@@ -89,12 +89,16 @@ The HTTP request of ``/hello/pop`` and the CLI command of ``hello pop`` will ech
 
 For HTTP:
 
+.. code-block:: php
+
     $router->addRoute('/hello[/:name]', [
         'controller' => 'MyApp\Controller\IndexController',
         'action'     => 'hello'
     ]);
 
 For CLI:
+
+.. code-block:: php
 
     $router->addRoute('hello <name>', [
         'controller' => 'MyApp\Controller\IndexController',
@@ -148,11 +152,11 @@ And the follow routes would be valid due to dynamic route matching:
 
 **HTTP**
 
-``/users``
-``/users/edit/1001``
+* ``/users``
+* ``/users/edit/1001``
 
 **CLI**
 
-``users``
-``users edit 1001``
+* ``users``
+* ``users edit 1001``
 
