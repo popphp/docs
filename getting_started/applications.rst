@@ -104,7 +104,7 @@ You can access the main elements of the application object through the following
 * ``$app->events()`` - Access the event manager
 * ``$app->modules()`` - Access the module manager
 
-Also, direct properties are exposed via magic methods as well:
+Also, magic methods expose them as direct properties as well:
 
 * ``$app->autoloader`` - Access the autoloader
 * ``$app->config`` - Access the configuration object
@@ -118,6 +118,8 @@ The application object has some shorthand method and property calls to tidy up i
 * ``$app->register($name, $module);`` - Register a module
 * ``$app->unregister($name);`` - Unregister a module
 * ``$app->isRegistered($name);`` - Check is a module is registered
+* ``$app->addRoute($route, $controller);`` - Add a route
+* ``$app->addRoutes($routes);`` - Add routes
 * ``$app->setService($name, $service);`` - Set a service
 * ``$app->getService($name);`` - Get a service
 * ``$app->removeService($name);`` - Remove a service
@@ -134,4 +136,3 @@ by simply executing the ``run`` method:
 .. code-block:: php
 
     $app->run();
-
