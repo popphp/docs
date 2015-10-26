@@ -54,13 +54,13 @@ be injected. The default hook points within a Pop application object are:
 This conveniently wires together various common points in the application's life cycle where one may need
 to fire off an event of some kind. You can build upon these event hook points, creating your own that are
 specific to your application. For example, perhaps you require an event hook point right before a controller
-in your application sends its response. You could create and event hook point in your application like this:
+in your application sends its response. You could create an event hook point in your application like this:
 
 .. code-block:: php
 
     $application->on('app.send.pre', 'MyApp\Event::logResponse');
 
-And then down in your controller method, right before you send then response, you would trigger that event:
+And then in your controller method, right before you send then response, you would trigger that event:
 
 .. code-block:: php
 
@@ -73,7 +73,7 @@ And then down in your controller method, right before you send then response, yo
         }
     }
 
-The example above assumes that the application object is injected into the controller object and stored
+The above example assumes that the application object is injected into the controller object and stored
 as a property. Also, it injects the controller object into the event in case the event called requires
 interaction with the controller or any of its properties. By default, the application object is injected
 into the events that are triggered from a Pop application object, but as demonstrated above, you can

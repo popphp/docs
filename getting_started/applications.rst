@@ -92,6 +92,39 @@ You can also pass in the autoloader if it is needed as well:
 
     $app->autoloader->addPsr4('MyApp\Foo\\', __DIR__ . '/foo/src');
 
+Shorthand Calls
+---------------
+
+You can access the main elements of the application object through the following methods:
+
+* ``$app->autoloader()`` - Access the autoloader
+* ``$app->config()`` - Access the configuration object
+* ``$app->router()`` - Access the router
+* ``$app->services()`` - Access the service locator
+* ``$app->events()`` - Access the event manager
+* ``$app->modules()`` - Access the module manager
+
+Also, direct properties are exposed via magic methods as well:
+
+* ``$app->autoloader`` - Access the autoloader
+* ``$app->config`` - Access the configuration object
+* ``$app->router`` - Access the router
+* ``$app->services`` - Access the service locator
+* ``$app->events`` - Access the event manager
+* ``$app->modules`` - Access the module manager
+
+The application object has some shorthand method and property calls to tidy up its use as well:
+
+* ``$app->register($name, $module);`` - Register a module
+* ``$app->unregister($name);`` - Unregister a module
+* ``$app->isRegistered($name);`` - Check is a module is registered
+* ``$app->setService($name, $service);`` - Set a service
+* ``$app->getService($name);`` - Get a service
+* ``$app->removeService($name);`` - Remove a service
+* ``$app->on($name, $action, $priority = 0);`` - Attach an event
+* ``$app->off($name, $action);`` - Detach an event
+* ``$app->trigger($name, array $args = []);`` - Trigger an event
+
 Running an Application
 ----------------------
 
