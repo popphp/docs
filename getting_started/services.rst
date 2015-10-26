@@ -52,34 +52,35 @@ You can remove a service from the service locator if needed:
     $services->remove('foo');
     unset($services['bar']);
 
-Services Syntax & Parameters
-----------------------------
+Syntax & Parameters
+-------------------
 
 You have a couple of different options when setting services. You can pass callable strings or already
 instantiated instances of objects, although the latter would be potentially less efficient. Also, if
-needed you can define parameters that will be passed into the service object being returned.
+needed, you can define parameters that will be passed into the service being called.
 
 Valid callable service strings are as follows:
 
-1.) 'SomeClass'
-    Creates a new instance of 'SomeClass' and returns it.
-2.) 'SomeClass->foo'
-    Creates a new instance of 'SomeClass', calls the method 'foo' and returns the value from it.
-3.) 'SomeClass::bar'
-    Calls the static method 'bar' and returns the value from it.
-
-In the following example, the service ``foo`` is defined by the callable ``MyApp\SomeService``.
-When the service ``foo`` is retrieved, the locator will create a new instance of ``MyApp\SomeService``
-while passing the params ``bar`` and ``baz`` into the constructor and returning that object as the service.
+1. 'SomeClass'
+   Creates a new instance of 'SomeClass' and returns it.
+2. 'SomeClass->foo'
+   Creates a new instance of 'SomeClass', calls the method 'foo' and returns the value from it.
+3. 'SomeClass::bar'
+   Calls the static method 'bar' and returns the value from it.
 
 .. code-block:: php
 
     $services = new Pop\Service\Locator([
         'foo' => [
-            'call'   => 'MyApp\SomeService',
+            'call'   => 'MyApp\SomeService->foo',
             'params' => [
                 'bar' => 123,
                 'baz' => 456
             ]
         ]
     ]);
+
+In the example above, the service ``foo`` is defined by the callable ``MyApp\SomeService->foo``.
+When the service ``foo`` is retrieved, the locator will create a new instance of ``MyApp\SomeService``,
+call the method ``foo`` while passing the params ``bar`` and ``baz`` into the method and returning
+that value from that method.
