@@ -7,6 +7,6 @@ Getting Started
     applications
     routing
     controllers
-    modules
-    events
     services
+    events
+    modules
