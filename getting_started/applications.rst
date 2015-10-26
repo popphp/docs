@@ -90,7 +90,7 @@ You can also pass in the autoloader if it is needed as well:
 
     $app = new Pop\Application($autoloader);
 
-    $app->autoloader->addPsr4('MyApp\\Foo', __DIR__ . '/foo/src');
+    $app->autoloader->addPsr4('MyApp\Foo\\', __DIR__ . '/foo/src');
 
 Running an Application
 ----------------------
