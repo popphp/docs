@@ -58,20 +58,20 @@ through the appropriate methods:
 
 .. code-block:: php
 
-    $app->router()->addRoute($router, $controller);
+    $app->router->addRoute($router, $controller);
 
 **Access the service locator**
 
 .. code-block:: php
 
-    $sess = $app->services()->get('session');
+    $sess = $app->services['session'];
 
 
 **Access the event manager**
 
 .. code-block:: php
 
-    $app->events()->on('app.init', $action);
+    $app->events->on('app.init', $action);
 
 You can pass in configuration values that your application may need during its life-cycle
 via an array or array-like object:
@@ -82,7 +82,7 @@ via an array or array-like object:
         'foo' => 'bar'
     ]);
 
-    $foo = $app->config()['foo'];
+    $foo = $app->config['foo'];
 
 You can also pass in the autoloader if it is needed as well:
 
@@ -92,7 +92,7 @@ You can also pass in the autoloader if it is needed as well:
 
     $app = new Pop\Application($autoloader);
 
-    $app->autoloader()->addPsr4('MyApp\\Foo', __DIR__ . '/foo/src');
+    $app->autoloader->addPsr4('MyApp\\Foo', __DIR__ . '/foo/src');
 
 Running an Application
 ----------------------
