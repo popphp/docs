@@ -11,8 +11,8 @@ needed for a PHP application.
 
 The two main concepts behind Pop PHP have always been:
 
-1.) To be lightweight and easy to use
-2.) To promote standards in development while maintaining a manageable learning curve
+1. To be lightweight and easy to use
+2. To promote standards in development while maintaining a manageable learning curve
 
 The goal is so that anyone from an advanced programmer to a novice developer can install
 and start using Pop PHP quickly and effectively.
