@@ -38,8 +38,8 @@ To detach an event, you simply call the ``off`` method:
 
     $events->off('foo');
 
-Events within a Pop Application Object
---------------------------------------
+Events in a Pop Application Object
+----------------------------------
 
 Within the context of a Pop application object, an event manager object is created by default or one can
 be injected. The default hook points within a Pop application object are:
