@@ -10,3 +10,4 @@ User Guide
     forms
     images
     pdfs
+    cli_and_the_console
