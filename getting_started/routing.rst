@@ -216,8 +216,10 @@ And the follow routes would be valid because of dynamic route matching:
 Routing Syntax
 --------------
 
-HTTP Routing Syntax
-~~~~~~~~~~~~~~~~~~~
+The tables below outline the accepted routing syntax for the router object and matching desired routes:
+
+HTTP
+~~~~
 
 +---------------------------------+---------------------------------------------------------------------+
 | Web Route                       | What's Expected                                                     |
@@ -235,8 +237,8 @@ HTTP Routing Syntax
 | /foo/:bar[/:baz*]               | One required param, one optional param that is a collection (array) |
 +---------------------------------+---------------------------------------------------------------------+
 
-CLI Routing Syntax
-~~~~~~~~~~~~~~~~~~
+CLI
+~~~
 
 +-------------------------------------+----------------------------------------------------------------------+
 | CLI Route                           | What's Expected                                                      |
