@@ -92,8 +92,19 @@ You can also pass in the autoloader if it is needed as well:
 
     $app->autoloader->addPsr4('MyApp\Foo\\', __DIR__ . '/foo/src');
 
-Shorthand Calls
----------------
+Basic API
+---------
+
+* ``$app->bootstrap($autoloader = null)`` - Bootstrap the application, creating default elements
+* ``$app->init()`` - Initialize the application
+* ``$app->loadConfig($config)`` - Load a new configuration into the application, overwriting any existing values
+* ``$app->loadRouter($router)`` - Load a new router object
+* ``$app->loadServices($services)`` - Load a new service locator
+* ``$app->loadEvents($events)`` - Load a new event manager
+* ``$app->loadModules($modules)`` - Load a new module manager
+* ``$app->registerAutoloader($autoloader)`` - Register an autoloader with the application
+* ``$app->mergeConfig($config, $replace = false)`` - Merge config values into the application
+* ``$app->run()`` - Run the application
 
 You can access the main elements of the application object through the following methods:
 
@@ -113,11 +124,15 @@ Also, magic methods expose them as direct properties as well:
 * ``$app->events`` - Access the event manager
 * ``$app->modules`` - Access the module manager
 
-The application object has some shorthand method and property calls to tidy up its use as well:
+Shorthand Methods
+-----------------
+
+The application object has some shorthand methods to help tidy up its use as well:
 
 * ``$app->register($name, $module);`` - Register a module
 * ``$app->unregister($name);`` - Unregister a module
 * ``$app->isRegistered($name);`` - Check is a module is registered
+* ``$app->module($module)`` - Get a module object
 * ``$app->addRoute($route, $controller);`` - Add a route
 * ``$app->addRoutes($routes);`` - Add routes
 * ``$app->setService($name, $service);`` - Set a service
