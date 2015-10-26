@@ -95,9 +95,9 @@ You can also pass in the autoloader if it is needed as well:
 Basic API
 ---------
 
-* ``$app->bootstrap($autoloader = null)`` - Bootstrap the application, creating default elements
+* ``$app->bootstrap($autoloader = null)`` - Bootstrap the application
 * ``$app->init()`` - Initialize the application
-* ``$app->loadConfig($config)`` - Load a new configuration into the application, overwriting any existing values
+* ``$app->loadConfig($config)`` - Load a new configuration
 * ``$app->loadRouter($router)`` - Load a new router object
 * ``$app->loadServices($services)`` - Load a new service locator
 * ``$app->loadEvents($events)`` - Load a new event manager
