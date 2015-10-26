@@ -8,7 +8,7 @@ that is provided with Pop.
 
 When building your controller classes by extending the abstract controller class, you can define
 the methods that represent the actions that will be executed on the matched route. Here's an example
-of what a basic controller might look like:
+of what a basic controller might look like for a web application:
 
 .. code-block:: php
 
@@ -43,7 +43,7 @@ of what a basic controller might look like:
 
 The above example uses the ``popphp/pop-http`` component and injects a request and a response object
 into the controller's constructor. For more on how to inject controller parameters into the controller's
-constructor, refer the the section on controller parameters under Routing.
+constructor, refer the the section on `controller parameters`_ under `Routing`_.
 
 For a console application, your controller class might look like this, utilizing the ``popphp/pop-console``
 component:
@@ -75,3 +75,6 @@ component:
         }
 
     }
+
+.. _controller parameters: ./routing.html#controller-parameters
+.. _Routing: ./routing.html

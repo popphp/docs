@@ -91,8 +91,7 @@ into all controllers. You can also define controller parameters within the route
                 'controller'       => 'MyApp\Controller\IndexController',
                 'action'           => 'index',
                 'controllerParams' => [
-                    'foo'    => 123,
-                    'bar'    => 456,
+                    'baz'    => 789,
                     'append' => true
                 ]
             ]
@@ -107,7 +106,7 @@ parameters if set to ``true``. If set to ``false``, they will override the exist
 Dispatch Parameters
 -------------------
 
-Defining route dispatch parameters, you can define required (or optional) data that is needed for a
+Defining route dispatch parameters, you can define required (or optional) parameters that are needed for a
 particular route:
 
 .. code-block:: php
@@ -154,7 +153,7 @@ For CLI:
 
 .. code-block:: php
 
-    $router->addRoute('hello <name>', [
+    $router->addRoute('hello [<name>]', [
         'controller' => 'MyApp\Controller\IndexController',
         'action'     => 'hello'
     ]);
@@ -216,7 +215,7 @@ And the follow routes would be valid because of dynamic route matching:
 Routing Syntax
 --------------
 
-The tables below outline the accepted routing syntax for the router object and matching desired routes:
+The tables below outline the accepted routing syntax for the route matching:
 
 HTTP
 ~~~~
@@ -245,7 +244,9 @@ CLI
 +=====================================+======================================================================+
 | foo bar                             | Two commands are required                                            |
 +-------------------------------------+----------------------------------------------------------------------+
-| foo [bar\|baz]                      | First command is optional and can accept 2 values                    |
+| foo bar\|baz                        | Two commands are required, the 2nd can accept 2 values               |
++-------------------------------------+----------------------------------------------------------------------+
+| foo [bar\|baz]                      | The second command is optional and can accept 2 values               |
 +-------------------------------------+----------------------------------------------------------------------+
 | foo -o1 [-o2]                       | First option required, 2nd option is optional                        |
 +-------------------------------------+----------------------------------------------------------------------+

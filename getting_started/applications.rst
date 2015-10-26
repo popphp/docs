@@ -43,16 +43,14 @@ objects for you:
             ]
         ],
         'services' => [
-            'session' => [
-                'call' => 'Pop\Web\Session::getInstance'
-            ]
+            'session' => 'Pop\Web\Session::getInstance'
         ]
     ];
 
     $app = new Pop\Application($config);
 
 Once the application object and its dependencies are wired up, you'll be able to access them
-through the appropriate methods:
+through the appropriate methods and properties:
 
 **Access the router**
 

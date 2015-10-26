@@ -8,12 +8,11 @@ into the constructor, or you can set them individually as needed.
 .. code-block:: php
 
     $services = new Pop\Service\Locator([
-        'foo' => [
-            'call' => 'MyApp\SomeService'
-        ]
+        'foo' => 'MyApp\SomeService'
     ]);
 
-    $services->setService('bar', 'MyApp\SomeService->bar');
+    $services->set('bar', 'MyApp\SomeService->bar');
+    $service['baz'] = 'MyApp\SomeService->baz';
 
 Then, you can retrieve a service a number of ways:
 
@@ -43,7 +42,7 @@ The ``isLoaded`` method determines if the service has been set and already previ
     }
 
 This is because service locator uses "lazy-loading" to store the service names and their attributes,
-and doesn't load or create the services until they are actually called from the service locator.
+and doesn't load or create the services until they are actually needed and called from the service locator.
 
 You can remove a service from the service locator if needed:
 

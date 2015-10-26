@@ -9,22 +9,22 @@ Using Composer
 
 If you only want the core components you can install the ``popphp/popphp`` repository in the following ways:
 
-Create a new project
-~~~~~~~~~~~~~~~~~~~~
+**Create a new project**
+
 .. code-block:: bash
 
     composer create-project popphp/popphp project-folder
 
-Add it to the composer.json file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Add it to the composer.json file**
+
 .. code-block:: json
 
     "require": {
         "popphp/popphp": "2.0.*"
     }
 
-Add it to an existing project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Add it to an existing project**
+
 .. code-block:: bash
 
     composer require popphp/popphp
