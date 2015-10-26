@@ -22,7 +22,7 @@ Then, you can retrieve a service a number of ways:
     $foo = $services['foo'];
     $bar = $services->get('bar');
 
-If you'd like to determine if a service is available, but not loaded yet:
+You can use the ``isAvailable`` method if you'd like to determine if a service is available, but not loaded yet:
 
 .. code-block:: php
 
@@ -42,8 +42,8 @@ The ``isLoaded`` method determines if the service has been set and already previ
         $services->setService('foo', 'MyApp\SomeService');
     }
 
-This is because service locator uses "lazy-loading" to store the service names and its attributes,
-but doesn't load or create the services until they are actually called from the service locator.
+This is because service locator uses "lazy-loading" to store the service names and their attributes,
+and doesn't load or create the services until they are actually called from the service locator.
 
 You can remove a service from the service locator if needed:
 
@@ -62,11 +62,12 @@ needed, you can define parameters that will be passed into the service being cal
 Valid callable service strings are as follows:
 
 1. 'SomeClass'
-   Creates a new instance of 'SomeClass' and returns it.
 2. 'SomeClass->foo'
-   Creates a new instance of 'SomeClass', calls the method 'foo' and returns the value from it.
 3. 'SomeClass::bar'
-   Calls the static method 'bar' and returns the value from it.
+
+The first callable string example creates a new instance of 'SomeClass' and returns it. The second
+callable string example creates a new instance of 'SomeClass', calls the method 'foo' and returns the value
+from it. The third callable string example calls the static method 'bar' and returns the value from it.
 
 .. code-block:: php
 
