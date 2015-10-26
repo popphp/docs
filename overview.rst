@@ -25,22 +25,22 @@ It is available on `Github`_, through `Composer`_ or as a `stand-alone installat
 The framework is tested using `PHPUnit`_ and continuous integration is maintained
 using `Travis CI`_.
 
-**History of Pop PHP**
+**A Brief History of Pop PHP**
 
 The humble beginnings of the framework started back in 2009 as a small library of
 components. From that, the Pop PHP Framework began to take shape and the very first
-version of it was released in early 2012. That version made it to 1.7, where in 2014,
-support was ended for version 1 and work on version 2 began. Version 2 ushered in a
-significant refactor, taking advantage of PHP 5.4, eliminating inter-dependencies
-among components, breaking all the components into self-contained repositories,
-and incorporating `Composer`_.
+version of it was released in early 2012. That version made it to 1.7 in 2014, where
+support was ended for version 1 and work on version 2 began. Pop PHP 2 ushered in a
+significant refactor, taking advantage of PHP 5.4, eliminating dependencies among
+components, separating the components into self-contained repositories, and
+incorporating `Composer`_.
 
 Community & Support
 -------------------
 
-Being an open source project, Pop PHP welcomes collaboration from the community
-and maintains an open dialogue with the community. Support and communication is
-maintained in the `Gitter chat room`_ and `IRC channel`_.
+Being an open source project, Pop PHP welcomes input and collaboration from the
+community and maintains an open dialogue with the community. Support and communication
+is maintained in the `Gitter chat room`_ and `IRC channel`_.
 
 .. _Github: https://github.com/popphp
 .. _Composer: https://packagist.org/packages/popphp/
