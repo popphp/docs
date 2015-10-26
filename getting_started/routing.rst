@@ -213,8 +213,11 @@ And the follow routes would be valid because of dynamic route matching:
 * ``users``
 * ``users edit 1001``
 
-HTTP Route Syntax
------------------
+Routing Syntax
+--------------
+
+HTTP Routing Syntax
+~~~~~~~~~~~~~~~~~~~
 
 +---------------------------------+---------------------------------------------------------------------+
 | Web Route                       | What's Expected                                                     |
@@ -232,8 +235,8 @@ HTTP Route Syntax
 | /foo/:bar[/:baz*]               | One required param, one optional param that is a collection (array) |
 +---------------------------------+---------------------------------------------------------------------+
 
-CLI Route Syntax
-----------------
+CLI Routing Syntax
+~~~~~~~~~~~~~~~~~~
 
 +-------------------------------------+----------------------------------------------------------------------+
 | CLI Route                           | What's Expected                                                      |
