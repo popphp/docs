@@ -68,6 +68,9 @@ The first callable string example creates a new instance of 'SomeClass' and retu
 callable string example creates a new instance of 'SomeClass', calls the method 'foo' and returns the value
 from it. The third callable string example calls the static method 'bar' and returns the value from it.
 
+Additionally, if you need to inject parameters into your service upon calling your service, you can
+set a service using an array with a ``call`` key and a ``params`` key like this:
+
 .. code-block:: php
 
     $services = new Pop\Service\Locator([
@@ -80,7 +83,7 @@ from it. The third callable string example calls the static method 'bar' and ret
         ]
     ]);
 
-In the example above, the service ``foo`` is defined by the callable ``MyApp\SomeService->foo``.
+In the example above, the service ``foo`` is defined by the callable string ``MyApp\SomeService->foo``.
 When the service ``foo`` is retrieved, the locator will create a new instance of ``MyApp\SomeService``,
 call the method ``foo`` while passing the params ``bar`` and ``baz`` into the method and returning
 that value from that method.
