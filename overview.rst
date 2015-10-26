@@ -1,11 +1,51 @@
 Overview
 ========
 
+Introduction
+------------
+
 Pop PHP Framework is a lightweight, yet robust PHP framework that can be used for
 rapid application development. The framework itself has a base set of core components
-as well as 32 additional components to facilitate many of the common features
+as well as additional components to facilitate many of the common features
 needed for a PHP application.
 
-The main idea behind Pop PHP is to promote today's standards in web development
-while maintaining a manageable learning curve so that anyone from an advanced
-programmer to a novice developer can start using Pop PHP quickly and effectively.
+The two main concepts behind Pop PHP have always been:
+
+1.) To be lightweight and easy to use;
+2.) To promote standards in development while maintaining a manageable learning curve.
+
+The goal is so that anyone from an advanced programmer to a novice developer can install
+and start using Pop PHP quickly and effectively.
+
+About the Framework
+-------------------
+
+Pop PHP is an open source, object-oriented PHP framework that uses PHP 5.4+.
+It is available on `Github`_, through `Composer`_ or as a `stand-alone installation`_.
+The framework is tested using `PHPUnit`_ and continuous integration is maintained
+using `Travis CI`_.
+
+**History of Pop PHP**
+
+The humble beginnings of the framework started back in 2009 as a small library of
+components. From that, the Pop PHP Framework began to take shape and the very first
+version of it was released in early 2012. That version made it to 1.7, where in 2014,
+support was ended for version 1 and work on version 2 began. Version 2 ushered in a
+significant refactor, taking advantage of PHP 5.4, eliminating inter-dependencies
+among components, breaking all the components into self-contained repositories,
+and incorporating `Composer`_.
+
+Community & Support
+-------------------
+
+Being an open source project, Pop PHP welcomes collaboration from the community
+and maintains an open dialogue with the community. Support and communication is
+maintained in the `Gitter chat room`_ and `IRC channel`_.
+
+.. _Github: https://github.com/popphp
+.. _Composer: https://packagist.org/packages/popphp/
+.. _stand-alone installation: http://www.popphp.org/
+.. _PHPUnit: https://phpunit.de/
+.. _Travis CI: https://travis-ci.org/popphp/
+.. _Gitter chat room: https://gitter.im/popphp/2
+.. _IRC channel: irc://freenode/popphp
