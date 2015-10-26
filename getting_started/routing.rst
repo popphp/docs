@@ -222,11 +222,11 @@ HTTP Routing Syntax
 +---------------------------------+---------------------------------------------------------------------+
 | Web Route                       | What's Expected                                                     |
 +=================================+=====================================================================+
-| /foo/:bar/:baz                  | All 3 params are required                                           |
+| /foo/:bar/:baz                  | All 2 params are required                                           |
 +---------------------------------+---------------------------------------------------------------------+
-| /foo[/:bar][/:baz]              | First param required, last two are optional                         |
+| /foo[/:bar][/:baz]              | The 2 params are optional                                           |
 +---------------------------------+---------------------------------------------------------------------+
-| /foo/:bar[/:baz]                | First two params required, last one is optional                     |
+| /foo/:bar[/:baz]                | First param required, last one is optional                          |
 +---------------------------------+---------------------------------------------------------------------+
 | /foo/:bar/:baz[/:some][/:other] | Two required, two optional                                          |
 +---------------------------------+---------------------------------------------------------------------+
@@ -241,15 +241,15 @@ CLI Routing Syntax
 +-------------------------------------+----------------------------------------------------------------------+
 | CLI Route                           | What's Expected                                                      |
 +=====================================+======================================================================+
-| foo bar                             | All 2 params are required                                            |
+| foo bar                             | Two commands are required                                            |
 +-------------------------------------+----------------------------------------------------------------------+
-| foo [bar\|baz]                      | First param required, 2nd param has optional 2 values                |
+| foo [bar\|baz]                      | First command is optional and can accept 2 values                    |
 +-------------------------------------+----------------------------------------------------------------------+
-| foo -o1 [-o2]                       | First param required, 1st option required, 2nd option optional       |
+| foo -o1 [-o2]                       | First option required, 2nd option is optional                        |
 +-------------------------------------+----------------------------------------------------------------------+
-| foo --option1\|-o1 [--option2\|-o2] | First param required, 1st option required, 2nd option optional       |
+| foo --option1\|-o1 [--option2\|-o2] | 1st option required, 2nd optional; long & short supported for both   |
 +-------------------------------------+----------------------------------------------------------------------+
-| foo \<name\> [\<email\>]            | First param required, 1st value required, 2nd value optional         |
+| foo \<name\> [\<email\>]            | First param required, 2nd param optional                             |
 +-------------------------------------+----------------------------------------------------------------------+
-| foo --name= [--email=]              | First param required, 1st opt value required, 2nd opt value optional |
+| foo --name= [--email=]              | First value param required, 2nd value param optional                 |
 +-------------------------------------+----------------------------------------------------------------------+
