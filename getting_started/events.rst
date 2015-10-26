@@ -32,8 +32,14 @@ to configuration values from your main application object:
 In the above example, any events triggered by ``foo`` will get the application object injected into them
 so that the event called can utilize that object and retrieve configuration values from it.
 
-Events in a Pop Application
----------------------------
+To detach an event, you simply call the ``off`` method:
+
+.. code-block:: php
+
+    $events->off('foo');
+
+Events within a Pop Application Object
+--------------------------------------
 
 Within the context of a Pop application object, an event manager object is created by default or one can
 be injected. The default hook points within a Pop application object are:
@@ -70,7 +76,7 @@ And then down in your controller method, right before you send then response, yo
 The example above assumes that the application object is injected into the controller object and stored
 as a property. Also, it injects the controller object into the event in case the event called requires
 interaction with the controller or any of its properties. By default, the application object is injected
-into the events that are triggered, but as demonstrated above, you can inject your own required parameters
-into an event call as well.
+into the events that are triggered from a Pop application object, but as demonstrated above, you can
+inject your own required parameters into an event call as well.
 
 .. _services: ./services.html#syntax-parameters
