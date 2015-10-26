@@ -38,8 +38,8 @@ Stand-alone Installation
 
 Of course, if you do not wish to use Composer and want to install a stand-alone version of Pop,
 you can download a full version of the framework from the website http://www.popphp.org/. It is
-set up for web applications by default, but can easily been switched to handle CLI applications
-as well. The following files and folders are included:
+set up for web applications by default, but can been switched to handle CLI applications as well.
+The following files and folders are included:
 
 * ``/public/``
     * ``index.php``
