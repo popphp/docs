@@ -13,7 +13,7 @@ that may be required with them.
         echo 'Hello World';
     });
 
-In the above example, a web request of ``/hello`` will execute the closure as the controller and echo
+In the above example, a web request of ``http://localhost/hello`` will execute the closure as the controller and echo
 ``Hello World`` out to the browser.
 
 **CLI Route Example**
@@ -24,10 +24,10 @@ In the above example, a web request of ``/hello`` will execute the closure as th
         echo 'Hello World';
     });
 
-In the above example, a CLI command of ``hello`` will execute the closure as the controller and echo
+In the above example, a CLI command of ``./app hello`` will execute the closure as the controller and echo
 ``Hello World`` out to the console.
 
-Of course, an controller object can be, and usually is, an instance of a class instead of a closure
+A controller object can be, and usually is, an instance of a class instead of a closure
 for more control over what happens for each route:
 
 .. code-block:: php
@@ -45,14 +45,14 @@ for more control over what happens for each route:
         'action'     => 'index'
     ]);
 
-In the above example, a controller class is used to route the request ``/`` to the ``index`` method.
+In the above example, a controller class is used to route the request ``/`` to the ``index()`` method.
 
 Controller Parameters
 ---------------------
 
 It's common to require access to various elements and values of your application while within an
 instance of your controller class. To provide this, the router object allows you to inject parameters
-into the controller on instantiation. Let's assume your controller's constructor looks like this:
+into the controller upon instantiation. Let's assume your controller's constructor looks like this:
 
 .. code-block:: php
 
@@ -101,7 +101,7 @@ into all controllers. You can also define controller parameters within the route
     $app = new Pop\Application($config);
 
 The ``append`` flag tells the router to append the controller parameters on to the existing controller
-parameters if set to ``true``. If set to ``false``, they will override the existing controller parameters.
+parameters if set to ``true``. If set to ``false``, they will override any existing controller parameters.
 
 Dispatch Parameters
 -------------------
@@ -121,8 +121,8 @@ particular route:
         echo 'Hello ' . ucfisrt($name);
     });
 
-The HTTP request of ``/hello/pop`` and the CLI command of ``hello pop`` will echo out
-``Hello Pop`` to the browser and screen, respectively.
+The HTTP request of ``http://localhost/hello/pop`` and the CLI command of ``./app hello pop`` will each
+echo out ``Hello Pop`` to the browser and console, respectively.
 
 **Optional Dispatch Parameters**
 
@@ -158,7 +158,7 @@ For CLI:
         'action'     => 'hello'
     ]);
 
-In the above example, the parameter ``$name`` is an optional dispatch parameter and the ``hello``
+In the above example, the parameter ``$name`` is an optional dispatch parameter and the ``hello()``
 method performs two different actions depending on whether or not the parameter value it present.
 
 Dynamic Routing
@@ -192,7 +192,11 @@ You could define a dynamic route for HTTP like this:
         'prefix' => 'MyApp\Controller\\'
     ]);
 
-and for CLI like this:
+to achieve valid routes such as:
+* ``http://localhost/users``
+* ``http://localhost/users/edit/1001``
+
+For CLI like, you can define a dynamic route like this:
 
 .. code-block:: php
 
@@ -200,17 +204,9 @@ and for CLI like this:
         'prefix' => 'MyApp\Controller\\'
     ]);
 
-And the follow routes would be valid because of dynamic route matching:
-
-**HTTP**
-
-* ``/users``
-* ``/users/edit/1001``
-
-**CLI**
-
-* ``users``
-* ``users edit 1001``
+to achieve valid routes such as:
+* ``./app users``
+* ``./app users edit 1001``
 
 Routing Syntax
 --------------

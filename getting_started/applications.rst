@@ -10,7 +10,7 @@ you can also have access to the config object and the autoloader, if needed.
 Configuring an Application
 --------------------------
 
-The application object's constructor is pretty flexible in what it can accept when setting up your
+The application object's constructor is flexible in what it can accept when setting up your
 application. You can pass it individual instances of the objects your application will need:
 
 .. code-block:: php
@@ -49,40 +49,12 @@ objects for you:
 
     $app = new Pop\Application($config);
 
-Once the application object and its dependencies are wired up, you'll be able to access them
-through the appropriate methods and properties:
+**The Autoloader**
 
-**Access the router**
-
-.. code-block:: php
-
-    $app->router->addRoute($router, $controller);
-
-**Access the service locator**
-
-.. code-block:: php
-
-    $sess = $app->services['session'];
-
-
-**Access the event manager**
-
-.. code-block:: php
-
-    $app->events->on('app.init', $action);
-
-You can pass in configuration values that your application may need during its life-cycle
-via an array or array-like object:
-
-.. code-block:: php
-
-    $app = new Pop\Application([
-        'foo' => 'bar'
-    ]);
-
-    $foo = $app->config['foo'];
-
-You can also pass in the autoloader if it is needed as well:
+You can also pass in the autoloader and access through the application object if it is
+needed to register other components of the application. However, it is required that the
+autoloader object's API mirrors that of Composer's ``Composer\Autoload\ClassLoader`` or
+Pop PHP's ``Pop\Loader\ClassLoader``.
 
 .. code-block:: php
 
@@ -90,10 +62,13 @@ You can also pass in the autoloader if it is needed as well:
 
     $app = new Pop\Application($autoloader);
 
-    $app->autoloader->addPsr4('MyApp\Foo\\', __DIR__ . '/foo/src');
+    $app->autoloader->addPsr4('MyApp\\', __DIR__ . '/src');
 
 Basic API
 ---------
+
+Once the application object and its dependencies are wired up, you'll be able to interact
+with the application object through the appropriate API calls.
 
 * ``$app->bootstrap($autoloader = null)`` - Bootstrap the application
 * ``$app->init()`` - Initialize the application
@@ -127,7 +102,8 @@ Also, magic methods expose them as direct properties as well:
 Shorthand Methods
 -----------------
 
-The application object has some shorthand methods to help tidy up its use as well:
+The application object has some shorthand methods to help tidy up common calls to elements
+within the application object:
 
 * ``$app->register($name, $module);`` - Register a module
 * ``$app->unregister($name);`` - Unregister a module
