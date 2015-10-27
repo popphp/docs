@@ -14,7 +14,7 @@ into the constructor, or you can set them individually as needed.
     $services->set('bar', 'MyApp\SomeService->bar');
     $service['baz'] = 'MyApp\SomeService->baz';
 
-Then, you can retrieve a service a number of ways:
+Then, you can retrieve a service in a number of ways:
 
 .. code-block:: php
 
@@ -31,7 +31,7 @@ You can use the ``isAvailable`` method if you'd like to determine if a service i
         $services->setService('foo', 'MyApp\SomeService');
     }
 
-The ``isLoaded`` method determines if the service has been set and already previously loaded:
+The ``isLoaded`` method determines if the service has been set and previously called:
 
 .. code-block:: php
 
@@ -44,7 +44,7 @@ The ``isLoaded`` method determines if the service has been set and already previ
 This is because service locator uses "lazy-loading" to store the service names and their attributes,
 and doesn't load or create the services until they are actually needed and called from the service locator.
 
-You can remove a service from the service locator if needed:
+You can also remove a service from the service locator if needed:
 
 .. code-block:: php
 
@@ -55,7 +55,7 @@ Syntax & Parameters
 -------------------
 
 You have a couple of different options when setting services. You can pass callable strings or already
-instantiated instances of objects, although the latter would be potentially less efficient. Also, if
+instantiated instances of objects, although the latter could be potentially less efficient. Also, if
 needed, you can define parameters that will be passed into the service being called.
 
 Valid callable service strings are as follows:
@@ -64,9 +64,10 @@ Valid callable service strings are as follows:
 2. 'SomeClass->foo'
 3. 'SomeClass::bar'
 
-The first callable string example creates a new instance of 'SomeClass' and returns it. The second
-callable string example creates a new instance of 'SomeClass', calls the method 'foo' and returns the value
-from it. The third callable string example calls the static method 'bar' and returns the value from it.
+The first callable string example creates a new instance of ``SomeClass`` and returns it. The second
+callable string example creates a new instance of ``SomeClass``, calls the method ``foo()`` and returns the value
+from it. The third callable string example calls the static method ``bar()`` in the ``SomeClass`` class
+and returns the value from it.
 
 Additionally, if you need to inject parameters into your service upon calling your service, you can
 set a service using an array with a ``call`` key and a ``params`` key like this:

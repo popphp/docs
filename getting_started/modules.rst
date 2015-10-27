@@ -4,7 +4,7 @@ Modules
 Module Objects
 --------------
 
-Module objects can be thought of as "mini-application objects" that allow you to easily extend the
+Module objects can be thought of as "mini-application objects" that allow you to extend the
 functionality of your application. Module objects accept similar configuration parameters as an
 application object, such as ``routes``, ``services`` and ``events``. Additionally, it accepts a
 ``prefix`` configuration value as well to allow the module to register itself with the application
@@ -35,8 +35,8 @@ Custom Module Objects
 ---------------------
 
 Of course, you can pass your own custom module objects into the application as well, as long as they
-implement the module interface provided. In the example below, you can create a new instance of your
-custom module and pass that into the application, instead of just the configuration. The benefit of
+implement the module interface provided. As the example below shows, you can create a new instance of
+your custom module and pass that into the application, instead of just the configuration. The benefit of
 doing this is to allow you to extend the base module class and methods and provide any additional
 functionality that may be needed. In doing it this way, however, you will have to register your module's
 namespace prefix with the application's autoloader prior to registering the module with the application.

@@ -197,7 +197,7 @@ to achieve valid routes such as:
 * ``http://localhost/users``
 * ``http://localhost/users/edit/1001``
 
-For CLI like, you can define a dynamic route like this:
+For CLI, you can define a dynamic route like this:
 
 .. code-block:: php
 
