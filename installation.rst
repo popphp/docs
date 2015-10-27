@@ -36,10 +36,10 @@ instead of the full ``popphp/popphp-framework`` repository.
 Stand-alone Installation
 ------------------------
 
-Of course, if you do not wish to use Composer and want to install a stand-alone version of Pop,
-you can download a full version of the framework from the website http://www.popphp.org/. It is
-set up for web applications by default, but can been switched to handle CLI applications as well.
-The following files and folders are included:
+If you do not wish to use Composer and want to install a stand-alone version of Pop, you
+can download a full version of the framework from the website http://www.popphp.org/. It
+is set up for web applications by default, but can been used to handle CLI applications
+as well. The following files and folders are included:
 
 * ``/public/``
     * ``index.php``
@@ -51,12 +51,14 @@ The ``/vendor/`` folder contains the autoloader, the framework and all of the ne
 Requirements
 ------------
 
-The only main requirement for Pop PHP is that you have at least **PHP 5.4.0** installed in your environment.
+The only main requirement for the Pop PHP Framework is that you have at least **PHP 5.4.0**
+installed in your environment.
 
 Recommendations
 ---------------
 
-**Web Server**
+Web Server
+~~~~~~~~~~
 
 When writing web applications, a web server that supports URL rewrites is recommended, such as:
 
@@ -65,7 +67,8 @@ When writing web applications, a web server that supports URL rewrites is recomm
 + Lighttpd
 + IIS
 
-**Extensions**
+Extensions
+~~~~~~~~~~
 
 Various components of the Pop PHP Framework require different PHP extensions to function correctly.
 If you wish to take advantage of the many components of Pop PHP, the following extensions are
