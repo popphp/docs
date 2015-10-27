@@ -46,7 +46,7 @@ The following files and folders are included:
     * ``.htaccess``
 * ``/vendor/``
 
-*(The "vendor" folder contains the autoloader, the framework and all of the necessary components.)*
+The ``/vendor/`` folder contains the autoloader, the framework and all of the necessary components.
 
 Requirements
 ------------
@@ -114,4 +114,4 @@ recommended:
     - simplexml
     - yaml
 
-*(\* - The **imagick** and **gmagick** extensions cannot be used simultaneously.)*
+(* - The **imagick** and **gmagick** extensions cannot be used simultaneously.)
