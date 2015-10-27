@@ -193,6 +193,7 @@ You could define a dynamic route for HTTP like this:
     ]);
 
 to achieve valid routes such as:
+
 * ``http://localhost/users``
 * ``http://localhost/users/edit/1001``
 
@@ -205,6 +206,7 @@ For CLI like, you can define a dynamic route like this:
     ]);
 
 to achieve valid routes such as:
+
 * ``./app users``
 * ``./app users edit 1001``
 
