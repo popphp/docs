@@ -12,7 +12,7 @@ into the constructor, or you can set them individually as needed.
     ]);
 
     $services->set('bar', 'MyApp\SomeService->bar');
-    $service['baz'] = 'MyApp\SomeService->baz';
+    $services['baz'] = 'MyApp\SomeService->baz';
 
 Then, you can retrieve a service in a number of ways:
 
@@ -66,7 +66,7 @@ Valid callable service strings are as follows:
 
 The first callable string example creates a new instance of ``SomeClass`` and returns it. The second
 callable string example creates a new instance of ``SomeClass``, calls the method ``foo()`` and returns the value
-from it. The third callable string example calls the static method ``bar()`` in the ``SomeClass`` class
+from it. The third callable string example calls the static method ``bar()`` in the class ``SomeClass``
 and returns the value from it.
 
 **Parameters**

@@ -1,15 +1,11 @@
 Modules
 =======
 
-Module Objects
---------------
-
-Module objects can be thought of as "mini-application objects" that allow you to extend the
-functionality of your application. Module objects accept similar configuration parameters as an
-application object, such as ``routes``, ``services`` and ``events``. Additionally, it accepts a
-``prefix`` configuration value as well to allow the module to register itself with the application
-autoloader. Here's an example of what a module might look like and how you'd register it with an
-application:
+Modules can be thought of as "mini-application objects" that allow you to extend the functionality
+of your application. Module objects accept similar configuration parameters as an application object,
+such as ``routes``, ``services`` and ``events``. Additionally, it accepts a ``prefix`` configuration
+value as well to allow the module to register itself with the application autoloader. Here's an example
+of what a module might look like and how you'd register it with an application:
 
 .. code-block:: php
 
@@ -31,8 +27,8 @@ In the above example, the module configuration is passed into the application ob
 an instance of the base module object is created and the configuration is passed into it. The newly
 created module object is then registered with the module manager within the application object.
 
-Custom Module Objects
----------------------
+Custom Modules
+--------------
 
 You can pass your own custom module objects into the application as well, as long as they implement
 the module interface provided. As the example below shows, you can create a new instance of your
