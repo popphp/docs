@@ -1,8 +1,8 @@
 Installation
 ============
 
-Installing Pop PHP is simple and there are couple of different options. You can use Composer
-or you can download the stand-alone version from the website http://www.popphp.org/
+There are a couple of different options to install the Pop PHP Framework. You can use Composer
+or you can download the stand-alone version from the website http://www.popphp.org/.
 
 Using Composer
 --------------
@@ -47,3 +47,71 @@ The following files and folders are included:
 * ``/vendor/``
 
 *(The "vendor" folder contains the autoloader, the framework and all of the necessary components.)*
+
+Requirements & Recommendations
+------------------------------
+
+The main requirement for Pop PHP is that you have at least **PHP 5.4.0** installed.
+
+Recommendations
+---------------
+
+**Web Server**
+
+When writing web applications, a web server that supports URL rewrites is recommended, such as:
+
++ Apache
++ Nginx
++ Lighttpd
++ IIS
+
+**Extensions**
+
+Various components of the Pop PHP Framework require different PHP extensions to function correctly.
+If you wish to take advantage of the many components of Pop PHP, the following extensions are
+recommended:
+
++ pop-cache
+
+    - apc
+    - memcache
+    - sqlite3 or pdo_sqlite
+
++ pop-db
+
+    - mysqli
+    - oci8
+    - pdo_mysql
+    - pdo_pgsql
+    - pdo_sqlite
+    - pgsql
+    - sqlite3
+    - sqlsrv
+
++ pop-image
+
+    - gd
+    - imagick*
+    - gmagick*
+
++ pop-archive
+
+    - archive_tar (PEAR Extension)
+    - rar (PECL Extension)
+    - zip
+    - bz2
+    - zlib
+    - zip
+
++ other
+    - curl
+    - dom
+    - ftp
+    - geoip
+    - ldap
+    - mcrypt
+    - soap
+    - simplexml
+    - yaml
+
+*(* - The imagick and gmagick extensions cannot be used simultaneously.)*
