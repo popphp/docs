@@ -73,7 +73,6 @@ If you wish to take advantage of the many components of Pop PHP, the following e
 recommended:
 
 + pop-db
-
     - mysqli
     - oci8
     - pdo_mysql
@@ -84,19 +83,16 @@ recommended:
     - sqlsrv
 
 + pop-image
-
     - gd
     - imagick*
     - gmagick*
 
 + pop-cache
-
     - apc
     - memcache
     - sqlite3 or pdo_sqlite
 
 + pop-archive
-
     - archive_tar (PEAR Extension)
     - rar (PECL Extension)
     - zip
