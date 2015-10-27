@@ -57,8 +57,7 @@ installed in your environment.
 Recommendations
 ---------------
 
-Web Server
-~~~~~~~~~~
+**Web Server**
 
 When writing web applications, a web server that supports URL rewrites is recommended, such as:
 
@@ -67,8 +66,7 @@ When writing web applications, a web server that supports URL rewrites is recomm
 + Lighttpd
 + IIS
 
-Extensions
-~~~~~~~~~~
+**Extensions**
 
 Various components of the Pop PHP Framework require different PHP extensions to function correctly.
 If you wish to take advantage of the many components of Pop PHP, the following extensions are
