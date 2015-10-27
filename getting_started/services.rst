@@ -28,7 +28,7 @@ You can use the ``isAvailable`` method if you'd like to determine if a service i
     if ($services->isAvailable('foo')) {
         $foo = $services['foo'];
     } else {
-        $services->setService('foo', 'MyApp\SomeService');
+        $services->set('foo', 'MyApp\SomeService');
     }
 
 The ``isLoaded`` method determines if the service has been set and previously called:
@@ -37,12 +37,10 @@ The ``isLoaded`` method determines if the service has been set and previously ca
 
     if ($services->isLoaded('foo')) {
         $foo = $services['foo'];
-    } else {
-        $services->setService('foo', 'MyApp\SomeService');
     }
 
-This is because service locator uses "lazy-loading" to store the service names and their attributes,
-and doesn't load or create the services until they are actually needed and called from the service locator.
+The service locator uses "lazy-loading" to store the service names and their attributes, and doesn't load or
+create the services until they are actually needed and called from the service locator.
 
 You can also remove a service from the service locator if needed:
 
@@ -58,6 +56,8 @@ You have a couple of different options when setting services. You can pass calla
 instantiated instances of objects, although the latter could be potentially less efficient. Also, if
 needed, you can define parameters that will be passed into the service being called.
 
+**Syntax**
+
 Valid callable service strings are as follows:
 
 1. 'SomeClass'
@@ -68,6 +68,8 @@ The first callable string example creates a new instance of ``SomeClass`` and re
 callable string example creates a new instance of ``SomeClass``, calls the method ``foo()`` and returns the value
 from it. The third callable string example calls the static method ``bar()`` in the ``SomeClass`` class
 and returns the value from it.
+
+**Parameters**
 
 Additionally, if you need to inject parameters into your service upon calling your service, you can
 set a service using an array with a ``call`` key and a ``params`` key like this:

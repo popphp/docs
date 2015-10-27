@@ -34,12 +34,13 @@ created module object is then registered with the module manager within the appl
 Custom Module Objects
 ---------------------
 
-Of course, you can pass your own custom module objects into the application as well, as long as they
-implement the module interface provided. As the example below shows, you can create a new instance of
-your custom module and pass that into the application, instead of just the configuration. The benefit of
+You can pass your own custom module objects into the application as well, as long as they implement
+the module interface provided. As the example below shows, you can create a new instance of your
+custom module and pass that into the application, instead of just the configuration. The benefit of
 doing this is to allow you to extend the base module class and methods and provide any additional
 functionality that may be needed. In doing it this way, however, you will have to register your module's
-namespace prefix with the application's autoloader prior to registering the module with the application.
+namespace prefix with the application's autoloader prior to registering the module with the application
+so that the application can properly detect and load the module's source files.
 
 .. code-block:: php
 

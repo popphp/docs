@@ -45,7 +45,7 @@ for more control over what happens for each route:
         'action'     => 'index'
     ]);
 
-In the above example, a controller class is used to route the request ``/`` to the ``index()`` method.
+In the above example, the request ``/`` is routed to the ``index()`` method in the defined controller class.
 
 Controller Parameters
 ---------------------
@@ -87,8 +87,8 @@ into all controllers. You can also define controller parameters within the route
 
     $config = [
         'routes' => [
-            '/' => [
-                'controller'       => 'MyApp\Controller\IndexController',
+            '/products' => [
+                'controller'       => 'MyApp\Controller\ProductsController',
                 'action'           => 'index',
                 'controllerParams' => [
                     'baz'    => 789,
@@ -126,6 +126,8 @@ echo out ``Hello Pop`` to the browser and console, respectively.
 
 **Optional Dispatch Parameters**
 
+Consider the following controller class and method:
+
 .. code-block:: php
 
     class MyApp\Controller\IndexController extends \Pop\Controller\AbstractController
@@ -140,7 +142,9 @@ echo out ``Hello Pop`` to the browser and console, respectively.
         }
     }
 
-For HTTP:
+Then add the following routes for HTTP and CLI:
+
+**HTTP:**
 
 .. code-block:: php
 
@@ -149,7 +153,7 @@ For HTTP:
         'action'     => 'hello'
     ]);
 
-For CLI:
+**CLI:**
 
 .. code-block:: php
 
@@ -159,7 +163,7 @@ For CLI:
     ]);
 
 In the above example, the parameter ``$name`` is an optional dispatch parameter and the ``hello()``
-method performs two different actions depending on whether or not the parameter value it present.
+method performs differently depending on whether or not the parameter value it present.
 
 Dynamic Routing
 ---------------
@@ -192,7 +196,7 @@ You could define a dynamic route for HTTP like this:
         'prefix' => 'MyApp\Controller\\'
     ]);
 
-to achieve valid routes such as:
+and routes such as these would be valid:
 
 * ``http://localhost/users``
 * ``http://localhost/users/edit/1001``
@@ -205,7 +209,7 @@ For CLI, you can define a dynamic route like this:
         'prefix' => 'MyApp\Controller\\'
     ]);
 
-to achieve valid routes such as:
+and routes such as these would be valid:
 
 * ``./app users``
 * ``./app users edit 1001``

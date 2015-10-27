@@ -107,7 +107,7 @@ within the application object:
 
 * ``$app->register($name, $module);`` - Register a module
 * ``$app->unregister($name);`` - Unregister a module
-* ``$app->isRegistered($name);`` - Check is a module is registered
+* ``$app->isRegistered($name);`` - Check if a module is registered
 * ``$app->module($module)`` - Get a module object
 * ``$app->addRoute($route, $controller);`` - Add a route
 * ``$app->addRoutes($routes);`` - Add routes

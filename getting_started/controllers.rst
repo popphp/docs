@@ -61,7 +61,7 @@ component:
 
         public function __construct(Console $console)
         {
-            $this->console  = $console;;
+            $this->console  = $console;
         }
 
         public function home()
