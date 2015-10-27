@@ -48,10 +48,10 @@ The following files and folders are included:
 
 *(The "vendor" folder contains the autoloader, the framework and all of the necessary components.)*
 
-Requirements & Recommendations
-------------------------------
+Requirements
+------------
 
-The main requirement for Pop PHP is that you have at least **PHP 5.4.0** installed.
+The only main requirement for Pop PHP is that you have at least **PHP 5.4.0** installed in your environment.
 
 Recommendations
 ---------------
@@ -71,12 +71,6 @@ Various components of the Pop PHP Framework require different PHP extensions to 
 If you wish to take advantage of the many components of Pop PHP, the following extensions are
 recommended:
 
-+ pop-cache
-
-    - apc
-    - memcache
-    - sqlite3 or pdo_sqlite
-
 + pop-db
 
     - mysqli
@@ -93,6 +87,12 @@ recommended:
     - gd
     - imagick*
     - gmagick*
+
++ pop-cache
+
+    - apc
+    - memcache
+    - sqlite3 or pdo_sqlite
 
 + pop-archive
 
@@ -114,4 +114,4 @@ recommended:
     - simplexml
     - yaml
 
-*(* - The imagick and gmagick extensions cannot be used simultaneously.)*
+*(\* - The **imagick** and **gmagick** extensions cannot be used simultaneously.)*
