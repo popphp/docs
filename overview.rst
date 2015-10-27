@@ -39,8 +39,9 @@ Community & Support
 -------------------
 
 Being an open source project, Pop PHP welcomes input and collaboration from the
-community and maintains an open dialogue with the community. Support and communication
-is maintained in the `Gitter chat room`_ and `IRC channel`_.
+community and maintains an open dialogue with the community. Issues can be submitted
+to the appropriate repository on `Github`_. Additional support and communication is
+maintained in the `Gitter chat room`_ and `IRC channel`_.
 
 .. _Github: https://github.com/popphp
 .. _Composer: https://packagist.org/packages/popphp/
