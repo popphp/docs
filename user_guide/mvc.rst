@@ -74,4 +74,4 @@ within your application.
 More in-depth examples will be given later in the user guide.
 
 .. _MVC design pattern: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
-.. _Views: ./views.rst
+.. _Views: ./views.html

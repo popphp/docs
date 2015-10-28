@@ -24,4 +24,4 @@ within it. Additionally, the template strings can be easily stored and managed w
 remove the need to have to edit and transfer template files to the server. This is a common tactic used by
 content management systems that have template functionality built into them.
 
-.. _MVC section: ./mvc.rst
+.. _MVC section: ./mvc.html
