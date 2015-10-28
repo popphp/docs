@@ -1,7 +1,7 @@
-Skeleton Application
-====================
+Get the Skeleton Application
+============================
 
-You can get a copy of the Pop PHP Framework skeleton application over on `Github`_. Or you can
+You can get a copy of the Pop PHP Framework skeleton application over on `Github`_. You can
 install via composer:
 
 .. code-block:: bash
