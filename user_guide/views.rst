@@ -77,6 +77,9 @@ The result of the above example is:
 
     </html>
 
+As mentioned before, the benefit of using file-based templates is you can fully leverage PHP within the
+script file.
+
 Streams
 -------
 
@@ -88,7 +91,82 @@ within it. Additionally, the template strings can be easily stored and managed w
 remove the need to have to edit and transfer template files to the server. This is a common tactic used by
 content management systems that have template functionality built into them.
 
+Let's look at the same example from above, but with a stream template:
+
+.. code-block:: php
+
+    $tmpl = <<<TMPL
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>[{title}]</title>
+    </head>
+    <body>
+        <h1>[{title}]</h1>
+    [{content}]
+        <ul>
+    [{links}]
+            <li><a href="[{key}]">[{value}]</a></li>
+    [{/links}]
+        </ul>
+    </body>
+
+    </html>
+    TMPL;
+
+The above code snippet is a template stored as string. The stream-based templates use a system of placeholders
+to mark where you want the value to go within the template string. This is common with most string-based templating
+engines. In the case of ``popphp/pop-view``, the placeholder uses the square bracket/curly bracket combination
+to wrap the variable name, such as ``[{title}]``. In the special case of arrays, where iteration is allowed,
+the placeholders are marked the same way, but have an end mark like you see in the above template: ``[{links}]``
+to ``[{/links}]``. The iteration you need can happen in between those placeholder marks.
+
+And, using the exact same examples from above:
+
+.. code-block:: php
+
+    $data = [
+        'title'   => 'View Example',
+        'content' => '    <p>Some page content.</p>',
+        'links'   => [
+            'http://www.popphp.org/'     => 'Pop PHP Framework',
+            'http://popcorn.popphp.org/' => 'Popcorn Micro Framework',
+            'http://www.phirecms.org/'   => 'Phire CMS'
+        ]
+    ];
+
+    $view = new Pop\View\View('index.phtml', $data);
+
+    echo $view;
+
+We can achieve exact same results, just with a stream-template instead:
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>View Example</title>
+    </head>
+    <body>
+        <h1>View Example</h1>
+        <p>Some page content.</p>
+        <ul>
+            <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+            <li><a href="http://popcorn.popphp.org/">Popcorn Micro Framework</a></li>
+            <li><a href="http://www.phirecms.org/">Phire CMS</a></li>
+        </ul>
+    </body>
+
+    </html>
+
+As mentioned before, the benefit of using stream-based templates is you can limit the use of PHP within
+the script for security, and more importantly, store the template strings within the application for
+easier access and management for the application users.
+
 Filtering Data
 --------------
 
-.. _MVC section: ./mvc.html
+.. _MVC section: ./mvc.html#views
