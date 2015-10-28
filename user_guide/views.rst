@@ -218,15 +218,14 @@ Scalars
 Arrays
 ~~~~~~
 
+Conditionals
+~~~~~~~~~~~~
+
 Includes
 ~~~~~~~~
 
 Inheritance
 ~~~~~~~~~~~
-
-Conditionals
-~~~~~~~~~~~~
-
 
 Filtering Data
 --------------
