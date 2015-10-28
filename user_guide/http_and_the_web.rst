@@ -2,7 +2,7 @@ HTTP and the Web
 ================
 
 In building a web application with the Pop PHP Framework, there are a few concepts and components
-that you'll need to be familiar with. Along with the core components, one would commonly leverage
+with which you'll need to be familiar. Along with the core components, one would commonly leverage
 the ``pop-http``, ``pop-view`` and ``pop-web`` components to get started on building a web
 application with Pop PHP.
 
@@ -72,9 +72,12 @@ the ``getPath()`` method. Consider the URI ``/users/edit/1001``:
 * ``$request->isHead();``
 * ``$request->isPost();``
 * ``$request->isPut();``
+* ``$request->isPatch();``
 * ``$request->isDelete();``
 * ``$request->isTrace();``
 * ``$request->isHead();``
+* ``$request->isOptions();``
+* ``$request->isConnect();``
 
 **Retrieve Data from the Request**
 
@@ -96,7 +99,7 @@ If the request method passed is **PUT**, **PATCH** or **DELETE**, the request ob
 the raw request data to provide the data from that. The request object will also attempt to be content-aware
 and parse JSON or XML from the data if it successfully detects a content type from the request.
 
-If you need to access the raw request data or the parsed request data,you can do so with these methods:
+If you need to access the raw request data or the parsed request data, you can do so with these methods:
 
 * ``$request->getRawData();``
 * ``$request->getParsedData();``
@@ -109,8 +112,85 @@ If you need to access the raw request data or the parsed request data,you can do
 Responses
 ~~~~~~~~~
 
-The main response class is ``Pop\Http\Response``.
+The ``Pop\Http\Response`` class has a full-featured API that allows you to create a outbound response to send
+back to the user or parse an inbound response from a request. The main constructor of the response object accepts
+a configuration array with the basic data to get the response object started:
 
+.. code-block:: php
+
+    $response = new Pop\Http\Response([
+        'code'    => 200,
+        'message' => 'OK',
+        'version' => '1.1',
+        'body'    => 'Some body content',
+        'headers' => [
+            'Content-Type' => 'text/plain'
+        ]
+    ]);
+
+All of that basic response data can also be set as needed through the API:
+
+* ``$response->setCode($code);`` - set the response code
+* ``$response->setMessage($message);`` - set the response message
+* ``$response->setVersion($version);`` - set the response version
+* ``$response->setBody($body);`` - set the response body
+* ``$response->setHeader($name, $value);`` - set a response header
+* ``$response->setHeaders($headers);`` - set response headers from an array
+
+And retrieved as well:
+
+* ``$response->getCode();`` - get the response code
+* ``$response->getMessage();`` - get the response message
+* ``$response->getVersion();`` - get the response version
+* ``$response->getBody();`` - get the response body
+* ``$response->getHeader($name);`` - get a response header
+* ``$response->getHeaders($headers);`` - get response headers as an array
+* ``$response->getHeadersAsString();`` - get response headers as a string
+
+**Check the Response**
+
+* ``$response->isSuccess();`` - 100, 200 or 300 level response code
+* ``$response->isRedirect();`` - 300 level response code
+* ``$response->isError();`` - 400 or 500 level response code
+* ``$response->isClientError();`` - 400 level response code
+* ``$response->isServerError();`` - 500 level response code
+
+And you can get the appropriate response message from the code like this:
+
+.. code-block:: php
+
+    use Pop\Http\Response;
+
+    $response = new Response();
+    $response->setCode(403);
+    $response->setMessage(Response::getMessageFromCode(403)); // Sets 'Forbidden'
+
+**Sending the Response**
+
+.. code-block:: php
+
+    $response = new Pop\Http\Response([
+        'code'    => 200,
+        'message' => 'OK',
+        'version' => '1.1',
+        'body'    => 'Some body content',
+        'headers' => [
+            'Content-Type'   => 'text/plain'
+        ]
+    ]);
+
+    $response->setHeader('Content-Length', strlen($response->getBody()));
+    $response->send();
+
+The above example would produce something like:
+
+.. code-block::
+
+    HTTP/1.1 200 OK
+    Content-Type: text/plain
+    Content-Length: 19
+
+    Some body content
 
 
 Views
