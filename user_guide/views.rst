@@ -122,7 +122,8 @@ to wrap the variable name, such as ``[{title}]``. In the special case of arrays,
 the placeholders are marked the same way, but have an end mark like you see in the above template: ``[{links}]``
 to ``[{/links}]``. The iteration you need can happen in between those placeholder marks.
 
-And, using the exact same examples from above:
+And, using the exact same examples from above, except passing the string template, ``$tmpl``, into the view
+constructor:
 
 .. code-block:: php
 
@@ -136,11 +137,11 @@ And, using the exact same examples from above:
         ]
     ];
 
-    $view = new Pop\View\View('index.phtml', $data);
+    $view = new Pop\View\View($tmpl, $data);
 
     echo $view;
 
-We can achieve exact same results, just with a stream-template instead:
+We can achieve exact same results as above:
 
 .. code-block:: html
 
@@ -163,8 +164,27 @@ We can achieve exact same results, just with a stream-template instead:
     </html>
 
 As mentioned before, the benefit of using stream-based templates is you can limit the use of PHP within
-the script for security, and more importantly, store the template strings within the application for
+the template for security, and more importantly, store the template strings within the application for
 easier access and management for the application users.
+
+Stream Syntax
+-------------
+
+Scalars
+~~~~~~~
+
+Arrays
+~~~~~~
+
+Includes
+~~~~~~~~
+
+Inheritance
+~~~~~~~~~~~
+
+Conditionals
+~~~~~~~~~~~~
+
 
 Filtering Data
 --------------
