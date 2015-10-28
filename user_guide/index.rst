@@ -11,8 +11,8 @@ common programming topics that utilize a set of the more common components from 
     mvc
     views
     http_and_the_web
+    cli_and_the_console
     databases
     forms
     images
     pdfs
-    cli_and_the_console
