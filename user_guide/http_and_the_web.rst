@@ -201,9 +201,9 @@ The above example would produce something like:
 
 **Parsing a Response**
 
-In parsing a response from a request, you pass either the URL you which to parse or a response
-string that already exists. A new response object with all of its data parsed from that
-response will be created:
+In parsing a response from a request, you pass either the URL or a response string that
+already exists. A new response object with all of its data parsed from that response
+will be created:
 
 .. code-block:: php
 
