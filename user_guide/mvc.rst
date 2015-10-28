@@ -71,7 +71,7 @@ They could integrate with your data source, such as a database, to save and retr
 application. There are many different ways you can go with how you build and utilize model objects
 within your application.
 
-More in-depth examples will be given later in the user guide.
+More in-depth examples connecting all of these concepts will be covered later in the user guide.
 
 .. _MVC design pattern: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _Views: ./views.html
