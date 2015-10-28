@@ -152,14 +152,14 @@ Let's look at the same example from above, but with a stream template:
     </html>
     TMPL;
 
-The above code snippet is a template stored as string. The stream-based templates use a system of placeholders
+The above code snippet is a template stored as string. The stream-based templates use a system of **placeholders**
 to mark where you want the value to go within the template string. This is common with most string-based templating
 engines. In the case of ``popphp/pop-view``, the placeholder uses the square bracket/curly bracket combination
 to wrap the variable name, such as ``[{title}]``. In the special case of arrays, where iteration is allowed,
 the placeholders are marked the same way, but have an end mark like you see in the above template: ``[{links}]``
 to ``[{/links}]``. The iteration you need can happen in between those placeholder marks.
 
-And, using the exact same examples from above, except passing the string template, ``$tmpl``, into the view
+Let's use the exact same examples from above, except passing the string template, ``$tmpl``, into the view
 constructor:
 
 .. code-block:: php
@@ -206,8 +206,8 @@ easier access and management for the application users. And, streams can be stor
 The most common is as a string in the application's database that gets passed in to the view's constructor.
 But, you can store them in a text-based file, such as ``index.html`` or ``template.txt``, and the view
 constructor will detect that and grab the string contents from that template file. This will be applicable
-when we cover includes and inheritance, and you need to be able to reference other string-based templates
-outside of the main one currently being used by the view object.
+when we cover **includes** and **inheritance**, as you will need to be able to reference other string-based
+templates outside of the main one currently being used by the view object.
 
 Stream Syntax
 -------------
