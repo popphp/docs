@@ -184,7 +184,7 @@ And you can get the appropriate response message from the code like this:
 
 The above example would produce something like:
 
-.. code-block::
+.. code-block:: text
 
     HTTP/1.1 200 OK
     Content-Type: text/plain
