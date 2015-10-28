@@ -17,7 +17,7 @@ Let's revisit and expand upon the basic example given in the previous `MVC secti
 look at the view template, ``index.phtml``:
 
 .. code-block:: php
-    <?php echo 123; ?>
+
     <!DOCTYPE html>
     <html>
 
