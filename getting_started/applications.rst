@@ -51,10 +51,10 @@ objects for you:
 
 **The Autoloader**
 
-You can also pass in the autoloader and access through the application object if it is
+You can also pass in the autoloader and access it through the application object if it is
 needed to register other components of the application. However, it is required that the
-autoloader object's API mirrors that of Composer's ``Composer\Autoload\ClassLoader`` or
-Pop PHP's ``Pop\Loader\ClassLoader``.
+autoloader object's API mirrors that of Composer's ``Composer\Autoload\ClassLoader`` class
+or Pop PHP's ``Pop\Loader\ClassLoader`` class.
 
 .. code-block:: php
 
@@ -62,7 +62,25 @@ Pop PHP's ``Pop\Loader\ClassLoader``.
 
     $app = new Pop\Application($autoloader);
 
-    $app->autoloader->addPsr4('MyApp\\', __DIR__ . '/src');
+    $app->autoloader->add('Test', __DIR__ . '/src/Test');   // PSR-0
+    $app->autoloader->addPsr4('MyApp\\', __DIR__ . '/src'); // PSR-4
+
+
+If needed, you can autoload your application's source through the application constructor
+by setting a ``prefix`` and ``src`` keys in the configuration array:
+
+.. code-block:: php
+
+    $autoloader = include __DIR__ . '/vendor/autoload.php';
+
+    $app = new Pop\Application($autoloader, [
+        'prefix' => 'MyApp\\',
+        'src'    => __DIR__ . '/src'
+    ]);
+
+If you need to autoload the above example as PSR-0, then set the ``psr-0`` config key to ``true``.
+And then you can always continue autoloading other code sources by accessing the autoloader
+through the application object, as in the first example.
 
 Basic API
 ---------
