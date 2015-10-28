@@ -36,7 +36,7 @@ Views
 -----
 
 The ``popphp/pop-view`` component provides the functionality for creating and rendering views.
-The topic views will be covered more in-depth in the next seciont of the user guide, `Views`_.
+The topic of views will be covered more in-depth in the next section of the user guide, `Views`_.
 But for now, know that the view component supports both file-based templates and string or
 stream-based templates. Data can be pushed into and retrieved from a view object and a template
 can be set in which the data will be rendered. A basic example would be:
@@ -52,7 +52,7 @@ can be set in which the data will be rendered. A basic example would be:
 
     echo $view;
 
-Assuming the `index.phtml` template file is written containing the variables ``$title`` and
+Assuming the ``index.phtml`` template file is written containing the variables ``$title`` and
 ``$content``, that data will be parsed and displayed within that template.
 
 Again, the main ideas and concepts of the view component will be explored more the `Views`_ section

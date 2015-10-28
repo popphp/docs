@@ -215,6 +215,3 @@ Sessions
 Cookies
 ~~~~~~~
 
-Putting It Together
--------------------
-
