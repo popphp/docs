@@ -78,7 +78,44 @@ The result of the above example is:
     </html>
 
 As mentioned before, the benefit of using file-based templates is you can fully leverage PHP within the
-script file.
+script file. Of course, one common thing that can be utilized when using file-based templates is file
+includes. This helps tidy up your template code and makes script files easier to manage by re-using
+template code. Here's an example that would work for the above script:
+
+**header.phtml**
+
+.. code-block:: php
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title><?=$title; ?></title>
+    </head>
+    <body>
+
+**footer.phtml**
+
+.. code-block:: php
+
+    </body>
+
+    </html>
+
+
+**index.phtml**
+
+.. code-block:: php
+
+    <?php include __DIR__ . '/header.phtml'; ?>
+        <h1><?=$title; ?></h1>
+    <?=$content; ?>
+        <ul>
+    <?php foreach ($links as $url => $link): ?>
+            <li><a href="<?=$url; ?>"><?=$link; ?></a></li>
+    <?php endforeach; ?>
+        </ul>
+    <?php include __DIR__ . '/footer.phtml'; ?>
 
 Streams
 -------
@@ -165,7 +202,12 @@ We can achieve exact same results as above:
 
 As mentioned before, the benefit of using stream-based templates is you can limit the use of PHP within
 the template for security, and more importantly, store the template strings within the application for
-easier access and management for the application users.
+easier access and management for the application users. And, streams can be stored in a number of ways.
+The most common is as a string in the application's database that gets passed in to the view's constructor.
+But, you can store them in a text-based file, such as ``index.html`` or ``template.txt``, and the view
+constructor will detect that and grab the string contents from that template file. This will be applicable
+when we cover includes and inheritance, and you need to be able to reference other string-based templates
+outside of the main one currently being used by the view object.
 
 Stream Syntax
 -------------
