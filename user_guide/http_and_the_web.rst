@@ -192,6 +192,28 @@ The above example would produce something like:
 
     Some body content
 
+**Redirecting a Response**
+
+.. code-block:: php
+
+    Pop\Http\Response::redirect('http://www.domain.com/some-new-page');
+    exit();
+
+**Parsing a Response**
+
+In parsing a response from a request, you pass either the URL you which to parse or a native string
+from a response that was already obtained, and a new response object with all of its data parsed
+from that response will be created:
+
+.. code-block:: php
+
+    $response = Pop\Http\Response::parse('http://www.domain.com/some-page');
+
+    if ($response->getCode() == 200) {
+        // Do something with the response
+    } else if ($response->isError()) {
+        // Uh oh. Something went wrong
+    }
 
 Views
 -----
