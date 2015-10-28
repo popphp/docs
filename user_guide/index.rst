@@ -8,6 +8,7 @@ common programming topics that utilize a set of the more common components from 
 .. toctree::
     :maxdepth: 1
 
+    mvc
     http_and_the_web
     views
     databases

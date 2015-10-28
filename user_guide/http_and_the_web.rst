@@ -6,17 +6,6 @@ with which you'll need to be familiar. Along with the core components, one would
 the ``pop-http``, ``pop-view`` and ``pop-web`` components to get started on building a web
 application with Pop PHP.
 
-MVC
----
-
-Pop PHP Framework is an MVC framework. It is assumed that you have some familiarity with the
-`MVC design pattern`_. An overly simple description of it is that the "controller" (C) controls
-and routes the incoming request, calling the proper "models" (M) to handle the business logic
-of the request, returning the results of what was requested back to the user in a "view" (V).
-The basic idea is separation of concerns in that each component of the MVC pattern is only
-concerned with the one area it is assigned to handle, and that there is very little, if any,
-cross-cutting concerns among them.
-
 HTTP
 ----
 
@@ -239,6 +228,3 @@ Cookies
 Putting It Together
 -------------------
 
-
-
-.. _MVC design pattern: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
