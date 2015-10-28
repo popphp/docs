@@ -21,16 +21,16 @@ dispatch method:
 
 * ``$controller->setDefaultAction($default)``
     - The "setDefaultAction" method sets the default action to handle a request that hasn't
-    been assigned an action. Typically, this would be an "error" method or something along
-    those lines. This method may not be used at all, as you can set the protected
+      been assigned an action. Typically, this would be an "error" method or something along
+      those lines. This method may not be used at all, as you can set the protected
     ``$defaultAction`` property within your child controller class directly.
 * ``$controller->getDefaultAction()``
     - This method retrieves the name of the current default action.
 * ``$controller->dispatch($action = null, $params = null)``
     - This is the main dispatch method, which will look for the "$action" method within
-    the controller class and attempt to execute it, passing the "$params" into it if they
-    are present. If the "$action" method is not found, the controller will fall back on
-    the defined default action.
+      the controller class and attempt to execute it, passing the "$params" into it if they
+      are present. If the "$action" method is not found, the controller will fall back on
+      the defined default action.
 
 Views
 -----
