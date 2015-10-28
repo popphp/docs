@@ -204,14 +204,7 @@ will be created:
         // Uh oh. Something went wrong
     }
 
-Views
------
 
-Files
-~~~~~
-
-Streams
-~~~~~~~
 
 Web Components
 --------------
@@ -221,9 +214,6 @@ Sessions
 
 Cookies
 ~~~~~~~
-
-
-
 
 Putting It Together
 -------------------

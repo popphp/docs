@@ -3,11 +3,11 @@ MVC
 
 Pop PHP Framework is an MVC framework. It is assumed that you have some familiarity with the
 `MVC design pattern`_. An overly simple description of it is that the "controller" (C) serves
-as the bridge between the "models" (M) and "view" (V). It calls the proper "models" (M) to
-handle the business logic of the request, returning the results of what was requested back
-to the user in a "view" (V). The basic idea is separation of concerns in that each component
-of the MVC pattern is only concerned with the one area it is assigned to handle, and that
-there is very little, if any, cross-cutting concerns among them.
+as the bridge between the "models" (M) and "view" (V). It calls the proper models to handle
+the business logic of the request, returning the results of what was requested back to the
+user in a view. The basic idea is separation of concerns in that each component of the MVC
+pattern is only concerned with the one area it is assigned to handle, and that there is very
+little, if any, cross-cutting concerns among them.
 
 Controllers
 -----------
@@ -36,10 +36,10 @@ Views
 -----
 
 The ``popphp/pop-view`` component provides the functionality for creating and rendering views.
-The topic views will be covered more in-depth later in the user guide, but for now, know that
-the view component supports both file-based templates and string or stream-based templates.
-Data can be pushed into and retrieved from a view object and a template can be set in which
-the data will be rendered. A basic example would be:
+The topic views will be covered more in-depth in the next seciont of the user guide, `Views`_.
+But for now, know that the view component supports both file-based templates and string or
+stream-based templates. Data can be pushed into and retrieved from a view object and a template
+can be set in which the data will be rendered. A basic example would be:
 
 .. code-block:: php
 
