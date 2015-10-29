@@ -201,7 +201,7 @@ We can achieve exact same results as above:
     </html>
 
 As mentioned before, the benefit of using stream-based templates is you can limit the use of PHP within
-the template for security, and more importantly, store the template strings within the application for
+the template for security, as well as store the template strings within the application for
 easier access and management for the application users. And, streams can be stored in a number of ways.
 The most common is as a string in the application's database that gets passed in to the view's constructor.
 But, you can store them in a text-based file, such as ``index.html`` or ``template.txt``, and the view
@@ -278,6 +278,14 @@ And here's an "if/else" statement:
         <p>The variable 'foo' is set to [{foo}].</p>
     [{else}]
         <p>The variable 'foo' is not set.</p>
+    [{/if}]
+
+You can also use conditionals to check if a value is set in an array:
+
+.. code-block:: text
+
+    [{if(foo[bar])}]
+        <p>The value of '$foo[$bar]' is set to [{foo[bar]}].</p>
     [{/if}]
 
 Includes
@@ -431,9 +439,9 @@ placeholder tokens for the extending a template use double curly brackets.
 Filtering Data
 --------------
 
-You can apply filters to the data in the view as well for security and tidying-up. You pass the
-``addFilter()`` method a callable and any optional parameters and then calling the ``filter()``
-method will iterate through the data and apply the filters.
+You can apply filters to the data in the view as well for security and tidying up content. You pass
+the ``addFilter()`` method a callable and any optional parameters and then call the ``filter()``
+method to iterate through the data and apply the filters.
 
 .. code-block:: php
 
@@ -463,7 +471,7 @@ You can also use the ``addFilters()`` to apply muliple filters at once:
 
     echo $view;
 
-And need be, you can clear the filters out of the view object as well:
+And if need be, you can clear the filters out of the view object as well:
 
 .. code-block:: php
 
