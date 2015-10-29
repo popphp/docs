@@ -209,8 +209,91 @@ will be created:
 Web Components
 --------------
 
+The ``popphp/pop-web`` component has a few useful sub-components that come with it. The two most commonly
+used one would be the **session** and **cookie** sub-components.
+
 Sessions
 ~~~~~~~~
+
+The session sub-component support basic sessions, session expirations, namespaced sessions and request-based
+sessions.
+
+**Basic Sessions**
+
+.. code-block:: php
+
+    $sess = Pop\Web\Session::getInstance();
+    $sess->user_id = 1001;
+
+The above snippet saves the ``user_id`` value of 1001 to the user's session. To recall it later, you can
+access the session like this:
+
+.. code-block:: php
+
+    $sess = Pop\Web\Session::getInstance();
+    echo $sess->user_id; // echos out 1001
+
+And to destroy the session, you can call the ``kill()`` method:
+
+
+.. code-block:: php
+
+    $sess = Pop\Web\Session::getInstance();
+    $sess->kill();
+
+**Namespaced Sessions**
+
+Namespaced sessions allow you to store session under a namespace to protected and preserve that data away
+from the normal session data.
+
+.. code-block:: php
+
+    $sessFoo = new Pop\Web\SessionNamespace('foo');
+    $sessFoo->bar = 'baz'
+
+What's happening "under the hood" is that an array is being created with the key ``foo`` in the main ``$_SESSION``
+variable and any data that is saved or recalled by the ``foo`` object will be stored in that array.
+
+.. code-block:: php
+
+    $sessFoo = new Pop\Web\SessionNamespace('foo');
+    echo $sessFoo->bar; // echos out 'baz'
+
+    $sess = Pop\Web\Session::getInstance();
+    echo $sess->bar; // echos out null, because it was never stored in the regular session
+
+And you can unset a value under a session namespace like this:
+
+.. code-block:: php
+
+    $sessFoo = new Pop\Web\SessionNamespace('foo');
+    unset($sessFoo->bar);
+
+**Session Expirations**
+
+Both basic sessions and namespaced sessions support timed values used to "expire" a value stored in session.
+
+.. code-block:: php
+
+    $sess = Pop\Web\Session::getInstance();
+    $sess->setTimedValue('foo', 'bar', 60);
+
+The above example will set the value for ``foo`` with an expiration of 60 seconds. That means that if another
+request is made after 60 seconds, ``foo`` will no longer be available in session.
+
+**Sessions Requests**
+
+Request-based session values can be stored as well, which sets a number of time, or "hops", that a value is
+available in session. This is useful for **flash messaging**. Both basic sessions and namespaced sessions
+support request-based session values.
+
+.. code-block:: php
+
+    $sess = Pop\Web\Session::getInstance();
+    $sess->setRequestValue('foo', 'bar', 3);
+
+The above example will allow the value for ``foo`` to be available to the user for 3 requests. After the 3rd
+request, ``foo`` will no longer be available in session.
 
 Cookies
 ~~~~~~~
