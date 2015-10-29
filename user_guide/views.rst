@@ -433,7 +433,7 @@ Filtering Data
 
 You can apply filters to the data in the view as well for security and tidying-up. You pass the
 ``addFilter()`` method a callable and any optional parameters and then calling the ``filter()``
-will iterate through the data and apply the filters.
+method will iterate through the data and apply the filters.
 
 .. code-block:: php
 
