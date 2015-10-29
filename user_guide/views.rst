@@ -216,16 +216,14 @@ Scalars
 ~~~~~~~
 
 Examples of using scalar values were show above. You wrap the name of the variable in the placeholder
-bracket notation:
-
-* ``$title`` => ``[{title}]``
+bracket notation, ``[{title}]``, in which the variable ``$title`` will render.
 
 Arrays
 ~~~~~~
 
 As mentioned in the example above, iterating over arrays use a similar bracket notation, but with a start
-key ``[{links}]`` and an end key with a slash ``[{/links}]``. From there you can write a line of code in
-the template to define what to display for each iteration:
+key ``[{links}]`` and an end key with a slash ``[{/links}]``. In between those markers, you can write a line
+of code in the template to define what to display for each iteration:
 
 .. code-block:: php
 
@@ -244,7 +242,7 @@ the template to define what to display for each iteration:
     [{/links}]
 
 Additionally, when you are iterating over an array in a stream template, you have access to a counter in the
-form of ``[{i}]``. That way, if you need to, you can mark each iteration uniquely:
+form of the placeholder, ``[{i}]``. That way, if you need to, you can mark each iteration uniquely:
 
 .. code-block:: text
 
@@ -285,8 +283,8 @@ And here's an "if/else" statement:
 Includes
 ~~~~~~~~
 
-As referenced eariler, you can store stream-based templates as files on disk. This is useful if you want
-to utilize includes with them. Consider the following templates
+As referenced earlier, you can store stream-based templates as files on disk. This is useful if you want
+to utilize includes with them. Consider the following templates:
 
 **header.html**
 
@@ -324,7 +322,7 @@ Note the include token uses a double curly bracket and @ symbol.
 Inheritance
 ~~~~~~~~~~~
 
-Inheritance is also supported with stream-based templates. Consider the following templates:
+Inheritance, or blocks, are also supported with stream-based templates. Consider the following templates:
 
 **parent.html**
 
@@ -427,10 +425,48 @@ will produce the following HTML:
     </html>
 
 As you can see, using the child template that extends the parent, the ``{{header}}`` section
-was extended, incorporating the additional style tags in the header of the HTML. Note that the
+was extended, incorporating the additional **style** tags in the header of the HTML. Note that the
 placeholder tokens for the extending a template use double curly brackets.
 
 Filtering Data
 --------------
+
+You can apply filters to the data in the view as well for security and tidying-up. You pass the
+``addFilter()`` method a callable and any optional parameters and then calling the ``filter()``
+will iterate through the data and apply the filters.
+
+.. code-block:: php
+
+    $view = new Pop\View\View('index.phtml', $data);
+    $view->addFilter('strip_tags');
+    $view->addFilter('htmlentities', [ENT_QUOTES, 'UTF-8'])
+    $view->filter();
+
+    echo $view;
+
+You can also use the ``addFilters()`` to apply muliple filters at once:
+
+.. code-block:: php
+
+    $view = new Pop\View\View('index.phtml', $data);
+    $view->addFilters([
+        [
+            'call'   => 'strip_tags'
+        ],
+        [
+            'call'   => 'htmlentities',
+            'params' => [ENT_QUOTES, 'UTF-8']
+        ]
+    ]);
+
+    $view->filter();
+
+    echo $view;
+
+And need be, you can clear the filters out of the view object as well:
+
+.. code-block:: php
+
+    $view->clearFilters();
 
 .. _MVC section: ./mvc.html#views
