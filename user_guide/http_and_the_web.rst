@@ -215,8 +215,13 @@ used would be the **session** and **cookie** sub-components.
 Sessions
 ~~~~~~~~
 
-The session sub-component supports **basic sessions**, **session expirations**, **namespaced sessions** and
-**request-based sessions**.
+The session sub-component gives you multiple ways to interact with the ``$_SESSION`` variable and store
+and retrieve data to it. The following are supported:
+
+* basic sessions
+* session expirations
+* namespaced sessions
+* request-based sessions
 
 **Basic Sessions**
 
