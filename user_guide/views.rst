@@ -215,17 +215,220 @@ Stream Syntax
 Scalars
 ~~~~~~~
 
+Examples of using scalar values were show above. You wrap the name of the variable in the placeholder
+bracket notation:
+
+* ``$title`` => ``[{title}]``
+
 Arrays
 ~~~~~~
+
+As mentioned in the example above, iterating over arrays use a similar bracket notation, but with a start
+key ``[{links}]`` and an end key with a slash ``[{/links}]``. From there you can write a line of code in
+the template to define what to display for each iteration:
+
+.. code-block:: php
+
+    $data = [
+        'links'   => [
+            'http://www.popphp.org/'     => 'Pop PHP Framework',
+            'http://popcorn.popphp.org/' => 'Popcorn Micro Framework',
+            'http://www.phirecms.org/'   => 'Phire CMS'
+        ]
+    ];
+
+.. code-block:: text
+
+    [{links}]
+            <li><a href="[{key}]">[{value}]</a></li>
+    [{/links}]
+
+Additionally, when you are iterating over an array in a stream template, you have access to a counter in the
+form of ``[{i}]``. That way, if you need to, you can mark each iteration uniquely:
+
+.. code-block:: text
+
+    [{links}]
+            <li id="li-item-[{i}]"><a href="[{key}]">[{value}]</a></li>
+    [{/links}]
+
+The above template would render like this:
+
+.. code-block:: html
+
+            <li id="li-item-1"><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+            <li id="li-item-2"><a href="http://popcorn.popphp.org/">Popcorn Micro Framework</a></li>
+            <li id="li-item-3"><a href="http://www.phirecms.org/">Phire CMS</a></li>
 
 Conditionals
 ~~~~~~~~~~~~
 
+Stream-based templates support basic conditional logic as well to test if a variable is set.
+Here's an "if" statement:
+
+.. code-block:: text
+
+    [{if(foo)}]
+        <p>The variable 'foo' is set to [{foo}].</p>
+    [{/if}]
+
+And here's an "if/else" statement:
+
+.. code-block:: text
+
+    [{if(foo)}]
+        <p>The variable 'foo' is set to [{foo}].</p>
+    [{else}]
+        <p>The variable 'foo' is not set.</p>
+    [{/if}]
+
 Includes
 ~~~~~~~~
 
+As referenced eariler, you can store stream-based templates as files on disk. This is useful if you want
+to utilize includes with them. Consider the following templates
+
+**header.html**
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>[{title}]</title>
+    </head>
+    <body>
+
+**footer.html**
+
+.. code-block:: html
+
+    </body>
+
+    </html>
+
+You could then reference the above templates in the main template like below:
+
+**index.html**
+
+.. code-block:: html
+
+    {{@include header.html}}
+        <h1>[{title}]</h1>
+    [{content}]
+    {{@include footer.html}}
+
+Note the include token uses a double curly bracket and @ symbol.
+
 Inheritance
 ~~~~~~~~~~~
+
+Inheritance is also supported with stream-based templates. Consider the following templates:
+
+**parent.html**
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+    {{header}}
+        <title>[{title}]</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {{/header}}
+    </head>
+
+    <body>
+        <h1>[{title}]</h1>
+        [{content}]
+    </body>
+
+    </html>
+
+**child.html**
+
+.. code-block:: html
+
+    {{@extends parent.html}}
+
+    {{header}}
+    {{parent}}
+        <style>
+            body { margin: 0; padding: 0; color: #bbb;}
+        </style>
+    {{/header}}
+
+Render using the parent:
+
+.. code-block:: php
+
+    $view = new Pop\View\View('parent.html');
+    $view->title   = 'Hello World!';
+    $view->content = 'This is a test!';
+
+    echo $view;
+
+will produce the following HTML:
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+
+        <title>Hello World!</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    </head>
+
+    <body>
+        <h1>Hello World!</h1>
+        This is a test!
+    </body>
+
+    </html>
+
+Render using the child:
+
+.. code-block:: php
+
+    $view = new Pop\View\View('child.html');
+    $view->title   = 'Hello World!';
+    $view->content = 'This is a test!';
+
+    echo $view;
+
+will produce the following HTML:
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+
+        <title>Hello World!</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <style>
+            body { margin: 0; padding: 0; color: #bbb;}
+        </style>
+
+    </head>
+
+    <body>
+        <h1>Hello World!</h1>
+        This is a test!
+    </body>
+
+    </html>
+
+As you can see, using the child template that extends the parent, the ``{{header}}`` section
+was extended, incorporating the additional style tags in the header of the HTML. Note that the
+placeholder tokens for the extending a template use double curly brackets.
 
 Filtering Data
 --------------
