@@ -210,31 +210,31 @@ Web Components
 --------------
 
 The ``popphp/pop-web`` component has a few useful sub-components that come with it. The two most commonly
-used one would be the **session** and **cookie** sub-components.
+used would be the **session** and **cookie** sub-components.
 
 Sessions
 ~~~~~~~~
 
-The session sub-component support basic sessions, session expirations, namespaced sessions and request-based
-sessions.
+The session sub-component supports **basic sessions**, **session expirations**, **namespaced sessions** and
+**request-based sessions**.
 
 **Basic Sessions**
 
 .. code-block:: php
 
     $sess = Pop\Web\Session::getInstance();
-    $sess->user_id = 1001;
+    $sess->user_id    = 1001;
+    $sess['username'] = 'admin';
 
-The above snippet saves the ``user_id`` value of 1001 to the user's session. To recall it later, you can
-access the session like this:
+The above snippet saves values to the user's session. To recall it later, you can access the session like this:
 
 .. code-block:: php
 
     $sess = Pop\Web\Session::getInstance();
-    echo $sess->user_id; // echos out 1001
+    echo $sess->user_id;    // echos out 1001
+    echo $sess['username']; // echos out 'admin'
 
-And to destroy the session, you can call the ``kill()`` method:
-
+And to destroy the session and its values, you can call the ``kill()`` method:
 
 .. code-block:: php
 
@@ -252,7 +252,7 @@ from the normal session data.
     $sessFoo->bar = 'baz'
 
 What's happening "under the hood" is that an array is being created with the key ``foo`` in the main ``$_SESSION``
-variable and any data that is saved or recalled by the ``foo`` object will be stored in that array.
+variable and any data that is saved or recalled by the ``foo`` namespaced session object will be stored in that array.
 
 .. code-block:: php
 
@@ -260,7 +260,7 @@ variable and any data that is saved or recalled by the ``foo`` object will be st
     echo $sessFoo->bar; // echos out 'baz'
 
     $sess = Pop\Web\Session::getInstance();
-    echo $sess->bar; // echos out null, because it was never stored in the regular session
+    echo $sess->bar; // echos out null, because it was only stored in the namespaced session
 
 And you can unset a value under a session namespace like this:
 
