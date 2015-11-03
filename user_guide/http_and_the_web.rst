@@ -3,13 +3,13 @@ HTTP and the Web
 
 In building a web application with the Pop PHP Framework, there are a few concepts and components
 with which you'll need to be familiar. Along with the core components, one would commonly leverage
-the ``pop-http``, ``pop-view`` and ``pop-web`` components to get started on building a web
-application with Pop PHP.
+the ``popphp/pop-http``, ``popphp/pop-view`` and ``popphp/pop-web`` components to get started on
+building a web application with Pop PHP.
 
 HTTP
 ----
 
-The ``pop-http`` component contains a **request object** and a **response object** that can assist in
+The ``popphp/pop-http`` component contains a **request object** and a **response object** that can assist in
 capturing and managing the incoming requests to your application and handle assembling the appropriate
 response back to the user.
 
@@ -218,10 +218,10 @@ Sessions
 The session sub-component gives you multiple ways to interact with the ``$_SESSION`` variable and store
 and retrieve data to it. The following are supported:
 
-* basic sessions
-* session expirations
-* namespaced sessions
-* request-based sessions
+* Managing basic sessions and session values
+* Creating namespaced sessions
+* Setting session value expirations
+* Setting request-based session values
 
 **Basic Sessions**
 
@@ -274,7 +274,7 @@ And you can unset a value under a session namespace like this:
     $sessFoo = new Pop\Web\SessionNamespace('foo');
     unset($sessFoo->bar);
 
-**Session Expirations**
+**Session Value Expirations**
 
 Both basic sessions and namespaced sessions support timed values used to "expire" a value stored in session.
 
@@ -286,7 +286,7 @@ Both basic sessions and namespaced sessions support timed values used to "expire
 The above example will set the value for ``foo`` with an expiration of 60 seconds. That means that if another
 request is made after 60 seconds, ``foo`` will no longer be available in session.
 
-**Sessions Requests**
+**Request-Based Session Values**
 
 Request-based session values can be stored as well, which sets a number of time, or "hops", that a value is
 available in session. This is useful for **flash messaging**. Both basic sessions and namespaced sessions
@@ -333,4 +333,3 @@ And then you can delete a cookie value like this:
 
     $cookie->delete('foo');
     unset($cookie['baz']);
-
