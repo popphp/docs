@@ -36,7 +36,7 @@ To detach an event listener, you call the ``off`` method:
 
 .. code-block:: php
 
-    $events->off('foo');
+    $events->off('foo', 'MyApp\Event->bootstrap');
 
 Event Priority
 --------------

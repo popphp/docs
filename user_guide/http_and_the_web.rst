@@ -248,7 +248,7 @@ And to destroy the session and its values, you can call the ``kill()`` method:
 
 **Namespaced Sessions**
 
-Namespaced sessions allow you to store session under a namespace to protected and preserve that data away
+Namespaced sessions allow you to store session under a namespace to protect and preserve that data away
 from the normal session data.
 
 .. code-block:: php
@@ -298,7 +298,7 @@ support request-based session values.
     $sess->setRequestValue('foo', 'bar', 3);
 
 The above example will allow the value for ``foo`` to be available to the user for 3 requests. After the 3rd
-request, ``foo`` will no longer be available in session.
+request, ``foo`` will no longer be available in session. The default value of "hops" is 1.
 
 Cookies
 ~~~~~~~
