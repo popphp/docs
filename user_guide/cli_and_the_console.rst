@@ -28,6 +28,7 @@ Add `#!/usr/bin/php` as the first line to the PHP script above (or wherever your
 binary is located):
 
 .. code-block:: php
+
     #!/usr/bin/php
     <?php
     echo 'Hello, ' . $argv[1];
