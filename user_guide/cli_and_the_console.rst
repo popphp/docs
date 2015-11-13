@@ -91,5 +91,15 @@ Of course, those examples only allow for up to 3 arguments to be passed. So, as 
 above for BASH and batch files use the catch-alls `$@` and `%*` respectively, to allow all possible parameters
 to be passed into the PHP script.
 
+.. code-block:: bash
+
+    #!/bin/bash
+    php ./foo.php $@
+
+.. code-block:: batch
+
+    @echo off
+    php foo.php %*
+
 Console
 -------
