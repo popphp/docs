@@ -2,14 +2,13 @@ CLI and the Console
 ===================
 
 In writing an application tailored for the CLI, you can leverage the `popphp/pop-console`
-component to help you configure and build your application for the console.
-
-CLI
----
-
+component to help you configure and build your application for the console. Please note,
 While there is support for CLI-based applications to run on both Windows and Linux/Unix
 based systems, the `popphp/pop-console` component's colorize feature is not supported in Windows
 CLI-based applications.
+
+CLI
+---
 
 Before getting into utilizing the `popphp/pop-console` component with CLI-based applications,
 let's take a look at some simple CLI scripts to call and execute your PHP scripts. For these
@@ -103,3 +102,63 @@ to be passed into the PHP script.
 
 Console
 -------
+
+Using the `popphp/pop-console` component when building a CLI-based application with Pop gives you
+access to a set of features that facilitate the routing and display of your application.
+
+.. code-block:: php
+
+    $console = new Pop\Console\Console();
+
+Here's a look at the basic API:
+
+* ``$console->setWidth(80);`` - sets the character width of the console
+* ``$console->setIndent(4);`` - sets the indentation in spaces at the start of a line
+* ``$console->request();`` - gets the console request object
+* ``$console->response();`` - gets the console response object
+* ``$console->colorize($string, $fg, $bg);`` - colorize the string and return the value
+* ``$console->prompt($prompt, $options, $caseSensitive, $length);`` - call a prompt and return the answer
+* ``$console->append($text);`` - appends text to the current console response body
+* ``$console->write($text);`` - appends text to the current console response body and sends the response
+* ``$console->send();`` - sends the response
+* ``$console->clear();`` - clears the console screen (Linux/Unix only)
+
+As mentioned before, on terminals that support basic ANSI color, such as on a Linux or Unix machine,
+you can colorize your text:
+
+.. code-block:: php
+
+    $coloredText = $console->colorize('Hello World!', Pop\Console\Console::BOLD_CYAN);
+    $console->append($coloredText);
+
+The list of available color constants are:
+
+* NORMAL
+* BLACK
+* RED
+* GREEN
+* YELLOW
+* BLUE
+* MAGENTA
+* CYAN
+* WHITE
+* GRAY
+* BOLD_RED
+* BOLD_GREEN
+* BOLD_YELLOW
+* BOLD_BLUE
+* BOLD_MAGENTA
+* BOLD_CYAN
+* BOLD_WHITE
+
+Also, you can call a prompt to read in user input:
+
+.. code-block:: php
+
+    $input = $console->prompt('Are you sure? [Y/N]', ['Y', 'N']);
+
+What the above line of code does is echo the prompt to the user and once the user enters an answer,
+that answer gets returned back and stored in the variable `$input`. The `$options` array allows you
+to enforce a certain set of options. Failure to input one of those options will result in the prompt
+being printed to the console screen again.
+
