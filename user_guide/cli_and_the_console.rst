@@ -123,6 +123,8 @@ Here's a look at the basic API:
 * ``$console->send();`` - sends the response
 * ``$console->clear();`` - clears the console screen (Linux/Unix only)
 
+**Colors**
+
 As mentioned before, on terminals that support basic ANSI color, such as on a Linux or Unix machine,
 you can colorize your text:
 
@@ -150,6 +152,8 @@ The list of available color constants are:
 * BOLD_MAGENTA
 * BOLD_CYAN
 * BOLD_WHITE
+
+**Prompts**
 
 Also, you can call a prompt to read in user input:
 

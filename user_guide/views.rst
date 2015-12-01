@@ -215,7 +215,7 @@ Stream Syntax
 Scalars
 ~~~~~~~
 
-Examples of using scalar values were show above. You wrap the name of the variable in the placeholder
+Examples of using scalar values were shown above. You wrap the name of the variable in the placeholder
 bracket notation, ``[{title}]``, in which the variable ``$title`` will render.
 
 Arrays

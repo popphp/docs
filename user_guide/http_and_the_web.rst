@@ -3,8 +3,8 @@ HTTP and the Web
 
 In building a web application with the Pop PHP Framework, there are a few concepts and components
 with which you'll need to be familiar. Along with the core components, one would commonly leverage
-the ``popphp/pop-http``, ``popphp/pop-view`` and ``popphp/pop-web`` components to get started on
-building a web application with Pop PHP.
+the ``popphp/pop-http`` and ``popphp/pop-web`` components to get started on building a web
+application with Pop PHP.
 
 HTTP
 ----
