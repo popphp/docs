@@ -202,7 +202,7 @@ And the following example would be how you use the above script:
 Prompts
 ~~~~~~~
 
-`popphp/pop-console` component, you can call a prompt to read in user input:
+With the `popphp/pop-console` component, you can call a prompt to read in user input:
 
 .. code-block:: php
 
