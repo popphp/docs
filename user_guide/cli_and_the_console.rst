@@ -123,7 +123,98 @@ Here's a look at the basic API:
 * ``$console->send();`` - sends the response
 * ``$console->clear();`` - clears the console screen (Linux/Unix only)
 
-**Colors**
+Commands & Options
+~~~~~~~~~~~~~~~~~~
+
+When using the `popphp/pop-console` component, you can create and define which parameters you would like
+your CLI application to accept in the form of commands and options. This helps provide a level of validation
+for what comes through the CLI interface from the user to you application, as well as provide an interface
+to access those command and option values. Additionally, you can set default help values to trigger a help
+screen to display for the command or option.
+
+**Using a Command**
+
+.. code-block:: php
+
+    use Pop\Console\Console;
+    use Pop\Console\Input\Command;
+
+    $edit = new Command('edit', Command::VALUE_REQUIRED);
+    $edit->setHelp('This is the help screen for the edit command.');
+
+    $console = new Console();
+    $console->addCommand($edit);
+
+    $console->parseRequest();
+
+    if ($console->isRequestValid()) {
+        if ($console->hasCommand('edit')) {
+            if ($console['edit'] == 'help') {
+                $console->write($console->getCommand('edit')->getHelp());
+            } else {
+                $console->write('You have selected to edit ' . $console['edit']);
+            }
+        }
+    }
+
+    $console->send();
+
+And the following example would be how you use the above script:
+
+.. code-block:: bash
+
+    $ ./pop edit foo
+      You have selected to edit foo
+    $ ./pop edit help
+      This is the help screen for the edit command.
+
+**Using an Option**
+
+.. code-block:: php
+
+    use Pop\Console\Console;
+    use Pop\Console\Input\Option;
+
+    $name = new Option('-n|--name', Option::VALUE_REQUIRED);
+
+    $console = new Console();
+    $console->addOption($name);
+
+    $console->parseRequest();
+
+    if ($console->isRequestValid()) {
+        if ($console->hasOption('-n')) {
+            $console->write('You have passed the name option with the value of ' . $console['-n']);
+        }
+    }
+
+    $console->send();
+
+And the following example would be how you use the above script:
+
+.. code-block:: bash
+
+    $ ./pop -nfoo
+      You have passed the name option with the value of foo
+    $ ./pop --name=bar
+      You have passed the name option with the value of bar
+
+Prompts
+~~~~~~~
+
+`popphp/pop-console` component, you can call a prompt to read in user input:
+
+.. code-block:: php
+
+    $input = $console->prompt('Are you sure? [Y/N]', ['Y', 'N']);
+
+What the above line of code does is echo the prompt to the user and once the user enters an answer,
+that answer gets returned back and stored in the variable `$input`. The `$options` array allows you
+to enforce a certain set of options. Failure to input one of those options will result in the prompt
+being printed to the console screen again.
+
+Colors
+~~~~~~
 
 As mentioned before, on terminals that support basic ANSI color, such as on a Linux or Unix machine,
 you can colorize your text:
@@ -152,17 +243,3 @@ The list of available color constants are:
 * BOLD_MAGENTA
 * BOLD_CYAN
 * BOLD_WHITE
-
-**Prompts**
-
-Also, you can call a prompt to read in user input:
-
-.. code-block:: php
-
-    $input = $console->prompt('Are you sure? [Y/N]', ['Y', 'N']);
-
-What the above line of code does is echo the prompt to the user and once the user enters an answer,
-that answer gets returned back and stored in the variable `$input`. The `$options` array allows you
-to enforce a certain set of options. Failure to input one of those options will result in the prompt
-being printed to the console screen again.
-
