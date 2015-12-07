@@ -12,9 +12,9 @@ Natively, there are adapters that support for the following database drivers:
 + SQLite
 + PDO
 
-One can use the above adapters, or extend the base `Pop\Db\Adapter\AbstractAdapter` class and
+One can use the above adapters, or extend the base `Pop\\Db\\Adapter\\AbstractAdapter` class and
 write your own. Additionally, access to individual database tables can be leveraged via the
-`Pop\Db\Record` class.
+`Pop\\Db\\Record` class.
 
 Connecting to a Database
 ------------------------
@@ -34,13 +34,13 @@ And for other database connections:
 
 .. code-block:: php
 
-    $mysql  = Pop\Db\Db::connect('mysql', $options);
     $pgsql  = Pop\Db\Db::connect('pgsql', $options);
     $oracle = Pop\Db\Db::connect('oracle', $options);
     $sqlsrv = Pop\Db\Db::connect('sqlsrv', $options);
     $sqlite = Pop\Db\Db::connect('sqlite', $options);
 
-And if you'd like to use the PDO adapter:
+If you'd like to use the PDO adapter, it requires the `type` option to be defined so it can set
+up the proper DSN:
 
 .. code-block:: php
 
@@ -51,8 +51,6 @@ And if you'd like to use the PDO adapter:
         'host'     => 'mydb.server.com',
         'type'     => 'mysql'
     ]);
-
-The PDO adapter required the `type` option to be defined so it can set the proper DSN.
 
 Querying a Database
 -------------------
@@ -94,22 +92,22 @@ from above also has and `id` column.
 Using Active Record
 -------------------
 
-The `Pop\Db\Record` class provides a robust `Active Record pattern`_ to allow you to work with and
+The `Pop\\Db\\Record` class provides an `Active Record pattern`_ to allow you to work with and
 query tables in a database directly. To set this up, you create a table class that extends the
-`Pop\Db\Record` class:
+`Pop\\Db\\Record` class:
 
 .. code-block:: php
 
     class Users extends Pop\Db\Record { }
 
 By default, the table name will be parsed from the class name and it will have a primary key called `id`.
-Those settings are configurable as well for when you need to override them. The "class name to table name"
+Those settings are configurable as well for when you need to override them. The "class-name-to-table-name"
 parsing works by converting the CamelCase class name into a lower case underscore name (without the
 namespace prefix):
 
 * Users -> users
 * MyUsers -> my_users
-* MyApp\Table\SomeMetaData -> some_meta_data
+* MyApp\\Table\\SomeMetaData -> some_meta_data
 
 If you need to override these default settings, you can do so in the child table class you create:
 
@@ -129,7 +127,7 @@ are set to a value of two columns. The custom table prefix means that the full t
 in the class will be `pop_my_custom_table`.
 
 Once you've created and configured your table classes, you can then use the API to interface with them. At
-some point early in the beginning stages of your application's life cycle, you will need to set the database
+some point in the beginning stages of your application's life cycle, you will need to set the database
 adapter for the table classes to use. You can do that like this:
 
 .. code-block:: php
@@ -137,7 +135,7 @@ adapter for the table classes to use. You can do that like this:
     $db = Pop\Db\Db::connect('mysql', $options);
     Pop\Db\Record::setDb($db);
 
-And that database adapter will be used for all table classes in your application that extend `Pop\Db\Record`.
+And that database adapter will be used for all table classes in your application that extend `Pop\\Db\\Record`.
 If you want a specific database adapter for a particular table class, you can specify that as well:
 
 .. code-block:: php
@@ -192,7 +190,7 @@ The above example will produce:
 
     SELECT `id`, `username` FROM `users` WHERE `id` > ?
 
-If the database adapter changed from MySQL to PostgreSQL, then the output would change to:
+If the database adapter changed to PostgreSQL, then the output would be:
 
 .. code-block:: text
 
