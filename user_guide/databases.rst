@@ -66,7 +66,7 @@ The code below would produce the same results:
 
 The above adapter objects are all instances of `Pop\\Db\\Adapter\\AbstractAdapter`, which implements the
 `Pop\\Db\\Adapter\\AdapterInterface` interface. If necessary, you can use that underlying foundation to
-build your own database adapter to facilitate your database needs for you application.
+build your own database adapter to facilitate your database needs for your application.
 
 Querying a Database
 -------------------
