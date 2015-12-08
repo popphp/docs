@@ -23,7 +23,7 @@ You can use the database factory to create the appropriate adapter instance and 
 
 .. code-block:: php
 
-    $db = Pop\Db\Db::connect('mysql', [
+    $mysql = Pop\Db\Db::connect('mysql', [
         'database' => 'my_database',
         'username' => 'my_db_user',
         'password' => 'my_db_password',
@@ -51,6 +51,22 @@ up the proper DSN:
         'host'     => 'mydb.server.com',
         'type'     => 'mysql'
     ]);
+
+The database factory outlined above is simply creating new instances of the database adapter objects.
+The code below would produce the same results:
+
+.. code-block:: php
+
+    $mysql  = new Pop\Db\Adapter\Mysql($options);
+    $pgsql  = new Pop\Db\Adapter\Pgsql($options);
+    $oracle = new Pop\Db\Adapter\Oracle($options);
+    $sqlsrv = new Pop\Db\Adapter\Sqlsrv($options);
+    $sqlite = new Pop\Db\Adapter\Sqlite($options);
+    $pdo    = new Pop\Db\Adapter\Pdo($options);
+
+The above adapter objects are all instances of `Pop\\Db\\Adapter\\AbstractAdapter`, which implements the
+`Pop\\Db\\Adapter\\AdapterInterface` interface. If necessary, you can use that underlying foundation to
+build your own database adapter to facilitate your database needs for you application.
 
 Querying a Database
 -------------------
