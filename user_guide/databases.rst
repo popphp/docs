@@ -266,4 +266,84 @@ You can execute custom SQL to run custom queries on the table. One way to do thi
         echo $user->username;
     }
 
+Shorthand SQL Syntax
+--------------------
+
+To help with making custom queries more quickly and without having to utilize the Sql Builder, there is
+shorthand SQL syntax that is supported by the `Pop\\Db\\Record` class. Here's a list of what is supported
+and what it translates into:
+
+**Basic operators**
+
+.. code-block:: text
+
+    $users = Users::findBy(['id' => 1]);   => WHERE id = 1
+    $users = Users::findBy(['id>' => 1]);  => WHERE id > 1
+    $users = Users::findBy(['id>=' => 1]); => WHERE id >= 1
+    $users = Users::findBy(['id<' => 1]);  => WHERE id < 1
+    $users = Users::findBy(['id<=' => 1]); => WHERE id <= 1
+
+**LIKE and NOT LIKE**
+
+.. code-block:: text
+
+    $users = Users::findBy(['username' => '%test%']);    => WHERE username LIKE '%test%'
+    $users = Users::findBy(['username' => 'test%']);     => WHERE username LIKE 'test%'
+    $users = Users::findBy(['username' => '%test']);     => WHERE username LIKE '%test'
+    $users = Users::findBy(['username' => '-%test']);    => WHERE username NOT LIKE '%test'
+    $users = Users::findBy(['username' => 'test%-']);    => WHERE username NOT LIKE 'test%'
+    $users = Users::findBy(['username' => '-%test%-']);  => WHERE username NOT LIKE '%test%'
+
+
+**NULL and NOT NULL**
+
+.. code-block:: text
+
+    $users = Users::findBy(['username' => null]);  => WHERE username IS NULL
+    $users = Users::findBy(['username-' => null]); => WHERE username IS NOT NULL
+
+**IN and NOT IN**
+
+.. code-block:: text
+
+    $users = Users::findBy(['id' => [2, 3]]);  => WHERE id IN (2, 3)
+    $users = Users::findBy(['id-' => [2, 3]]); => WHERE id NOT IN (2, 3)
+
+** BETWEEN and NOT BETWEEN**
+
+.. code-block:: text
+
+    $users = Users::findBy(['id' => '(1, 5)']);  => WHERE id BETWEEN (1, 5)
+    $users = Users::findBy(['id-' => '(1, 5)']); => WHERE id NOT BETWEEN (1, 5)
+
+Additionally, if you need use multiple conditions for your query, you can and they will be
+stitched together with AND:
+
+.. code-block:: php
+
+    $users = Users::findBy([
+        'id>'      => 1,
+        'username' => '%user1'
+    ]);
+
+which will be translated into:
+
+.. code-block:: text
+    WHERE (id > 1) AND (username LIKE '%test')
+
+If you need to use OR instead, you can specify it like this:
+
+.. code-block:: php
+
+    $users = Users::findBy([
+        'id>'      => 1,
+        'username' => '%user1 OR'
+    ]);
+
+Notice the ' OR' added as a suffix to the second condition's value. That will apply the OR
+to that part of the predicate like this:
+
+.. code-block:: text
+    WHERE (id > 1) OR (username LIKE '%test')
+
 .. _Active Record pattern: https://en.wikipedia.org/wiki/Active_record_pattern
