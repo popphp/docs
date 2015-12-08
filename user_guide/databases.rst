@@ -309,7 +309,7 @@ and what it translates into:
     $users = Users::findBy(['id' => [2, 3]]);  => WHERE id IN (2, 3)
     $users = Users::findBy(['id-' => [2, 3]]); => WHERE id NOT IN (2, 3)
 
-** BETWEEN and NOT BETWEEN**
+**BETWEEN and NOT BETWEEN**
 
 .. code-block:: text
 
@@ -329,6 +329,7 @@ stitched together with AND:
 which will be translated into:
 
 .. code-block:: text
+
     WHERE (id > 1) AND (username LIKE '%test')
 
 If you need to use OR instead, you can specify it like this:
@@ -344,6 +345,7 @@ Notice the ' OR' added as a suffix to the second condition's value. That will ap
 to that part of the predicate like this:
 
 .. code-block:: text
+
     WHERE (id > 1) OR (username LIKE '%test')
 
 .. _Active Record pattern: https://en.wikipedia.org/wiki/Active_record_pattern
