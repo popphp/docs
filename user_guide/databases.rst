@@ -89,6 +89,70 @@ from above also has and `id` column.
         echo $row['username'];
     }
 
+Using the SQL Builder
+---------------------
+
+The SQL Builder is a part of the component that provides an interface that will produce syntactically correct
+SQL for whichever type of database you have elected to use. One of the main goals of this is portability across
+different systems and environments. In order for it to function correctly, you need to pass it the database
+adapter your application is currently using so that it can properly build the SQL.
+
+.. code-block:: php
+
+    $db = Pop\Db\Db::connect('mysql', $options);
+
+    $sql = new Pop\Db\Sql($db, 'users');
+    $sql->select(['id', 'username'])
+        ->where('id > :id');
+
+    echo $sql;
+
+The above example will produce:
+
+.. code-block:: text
+
+    SELECT `id`, `username` FROM `users` WHERE `id` > ?
+
+If the database adapter changed to PostgreSQL, then the output would be:
+
+.. code-block:: text
+
+    SELECT "id", "username" FROM "users" WHERE "id" > $1
+
+And SQLite would look like:
+
+.. code-block:: text
+
+    SELECT "id", "username" FROM "users" WHERE "id" > :id
+
+The SQL Builder component has an extensive API to assist you in constructing complex SQL statements. Here's
+an example using JOIN and ORDER BY:
+
+.. code-block:: php
+
+    $db = Pop\Db\Db::connect('mysql', $options);
+
+    $sql = new Pop\Db\Sql($db, 'users');
+    $sql->select([
+        'user_id'    => 'id',
+        'user_email' => 'email'
+    ]);
+
+    $sql->select()->join('user_data', ['users.id' => 'user_data.user_id']);
+    $sql->select()->orderBy('id', 'ASC');
+    $sql->select->where('id > :id');
+
+    echo $sql;
+
+The above example would produce the following SQL statement for MySQL:
+
+.. code-block:: text
+
+    SELECT `id` AS `user_id`, `email` AS `user_email` FROM `users`
+        LEFT JOIN `user_data` ON `users`.`id` = `user_data`.`user_id`
+        WHERE `id` > ?
+        ORDER BY `id` ASC;
+
 Using Active Record
 -------------------
 
@@ -143,8 +207,10 @@ If you want a specific database adapter for a particular table class, you can sp
     $userDb = Pop\Db\Db::connect('mysql', $options)
     Users::setDb($userDb);
 
-From there, the API to query the table in the database directly is as follows:
+From there, the API to query the table in the database directly like in the following examples:
 
+
+**Fetch multiple rows**
 
 .. code-block:: php
 
@@ -154,52 +220,46 @@ From there, the API to query the table in the database directly is as follows:
         echo $user->username;
     }
 
-    $user = Users::findById(1001);
-
-    if (isset($user->id)) {
-        echo $user->username;
-    }
-
     $user = Users::findBy(['username' => 'admin']);
 
     if (isset($user->id)) {
         echo $user->username;
     }
 
-SQL Builder
------------
-
-The SQL Builder is a part of the component that provides an interface that will produce syntactically correct
-SQL for whichever type of database you have elected to use. One of the main goals of this is portability across
-different systems and environments. In order for it to function correctly, you need to pass it the database
-adapter your application is currently using so that it can properly build the SQL.
+**Fetch a single row, update data**
 
 .. code-block:: php
 
-    $db = Pop\Db\Db::connect('mysql', $options);
+    $user = Users::findById(1001);
 
-    $sql = new Pop\Db\Sql($db, 'users');
-    $sql->select(['id', 'username'])
-        ->where('id > :id');
+    if (isset($user->id)) {
+        $user->username = 'admin2';
+        $user->save();
+    }
 
-    echo $sql;
+**Create a new record**
 
-The above example will produce:
+.. code-block:: php
 
-.. code-block:: text
+    $user = new Users([
+        'username' => 'editor',
+        'email'    => 'editor@mysite.com'
+    ]);
 
-    SELECT `id`, `username` FROM `users` WHERE `id` > ?
+    $user->save();
 
-If the database adapter changed to PostgreSQL, then the output would be:
+You can execute custom SQL to run custom queries on the table. One way to do this is by using the SQL Builder.
 
-.. code-block:: text
+.. code-block:: php
 
-    SELECT "id", "username" FROM "users" WHERE "id" > $1
+    $sql = Users::sql();
 
-And SQLite would look like:
+    $sql->select()->where('id > :id');
 
-.. code-block:: text
+    $users = Users::execute($sql, ['id' => 1000]);
 
-    SELECT "id", "username" FROM "users" WHERE "id" > :id
+    foreach ($users->rows() as $user) {
+        echo $user->username;
+    }
 
 .. _Active Record pattern: https://en.wikipedia.org/wiki/Active_record_pattern
