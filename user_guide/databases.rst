@@ -156,8 +156,8 @@ The above example would produce the following SQL statement for MySQL:
 Using Active Record
 -------------------
 
-The `Pop\\Db\\Record` class provides an `Active Record pattern`_ to allow you to work with and
-query tables in a database directly. To set this up, you create a table class that extends the
+The `Pop\\Db\\Record` class uses the `Active Record pattern`_ as a base to allow you to work with
+and query tables in a database directly. To set this up, you create a table class that extends the
 `Pop\\Db\\Record` class:
 
 .. code-block:: php
@@ -179,16 +179,16 @@ If you need to override these default settings, you can do so in the child table
 
     class Users extends Pop\Db\Record
     {
-        protected $table  = 'my_custom_table';
+        protected $table  = 'my_custom_users_table';
 
         protected $prefix = 'pop_';
 
-        protected $primaryKeys = ['id', 'custom_id'];
+        protected $primaryKeys = ['id', 'some_other_id'];
     }
 
-In the above example, the table is setting to a custom value, a table prefix is defined and the primary keys
+In the above example, the table is set to a custom value, a table prefix is defined and the primary keys
 are set to a value of two columns. The custom table prefix means that the full table name that will be used
-in the class will be `pop_my_custom_table`.
+in the class will be `pop_my_custom_users_table`.
 
 Once you've created and configured your table classes, you can then use the API to interface with them. At
 some point in the beginning stages of your application's life cycle, you will need to set the database
@@ -199,8 +199,9 @@ adapter for the table classes to use. You can do that like this:
     $db = Pop\Db\Db::connect('mysql', $options);
     Pop\Db\Record::setDb($db);
 
-And that database adapter will be used for all table classes in your application that extend `Pop\\Db\\Record`.
-If you want a specific database adapter for a particular table class, you can specify that as well:
+That database adapter will be used for all table classes in your application that extend `Pop\\Db\\Record`.
+If you want a specific database adapter for a particular table class, you can specify that on the table
+sub-class level:
 
 .. code-block:: php
 
@@ -214,7 +215,10 @@ From there, the API to query the table in the database directly like in the foll
 
 .. code-block:: php
 
-    $users = Users::findAll(['order' => 'id ASC']);
+    $users = Users::findAll([
+        'order' => 'id ASC',
+        'limit' => 25
+    ]);
 
     foreach ($users->rows() as $user) {
         echo $user->username;
@@ -248,7 +252,7 @@ From there, the API to query the table in the database directly like in the foll
 
     $user->save();
 
-You can execute custom SQL to run custom queries on the table. One way to do this is by using the SQL Builder.
+You can execute custom SQL to run custom queries on the table. One way to do this is by using the SQL Builder:
 
 .. code-block:: php
 
