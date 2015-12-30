@@ -67,6 +67,22 @@ The above code will produce:
 
     <input name="first_name" id="first_name" type="text" size="40" />
 
+The `name` and `id` attributes of the element are set from the first `$name` parameter that is passed into the
+object. However, if you wish to override these, you can by doing this:
+
+.. code-block:: php
+
+    $text = new Pop\Form\Element\Input\Text('first_name');
+    $text->setAttribute('size', 40);
+    $text->setAttribute('id', 'my-custom-id');
+    echo $text;
+
+The above code will produce:
+
+.. code-block:: html
+
+    <input name="first_name" id="my-custom-id" type="text" size="40" />
+
 Here's an example of a select element:
 
 .. code-block:: php
@@ -134,8 +150,8 @@ When rendered with the form, it will render like this:
 
     <label for="first_name">First Name:</label>
 
-Using Validators
-----------------
+Validators
+----------
 
 The Form Object
 ---------------
@@ -144,8 +160,8 @@ The form object serves as the center of the functionality. You can create a form
 it. The form object then manages those elements, their values and processes the validation, if any, attached to the
 form elements.
 
-Using Field Configurations
---------------------------
+Field Configurations
+--------------------
 
 
 Rendering a Form
@@ -156,9 +172,9 @@ Validating a Form
 -----------------
 
 
-Using a Template
-----------------
+Templates
+---------
 
 
-Using Form Elements Only
-------------------------
+Using the Form Elements Only
+----------------------------
