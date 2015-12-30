@@ -135,9 +135,9 @@ The above code will produce:
         <span class="checkbox-span">Blue</span>
     </fieldset>
 
-As you can see, in the special case of a field collection set, the object manages a lot of creation and assignment
-of values and other elements, such as the `<span>` elements that hold the field values. Each element has a class
-attribute that can be utilized for styling.
+In the special case of a field collection set, the object manages the creation and assignment of values and other
+elements, such as the `<span>` elements that hold the field values. Each element has a class attribute that can
+be utilized for styling.
 
 Labels
 ------
@@ -150,7 +150,7 @@ typically used when rendering the main form object.
     $text = new Pop\Form\Element\Input\Text('first_name');
     $text->setLabel('First Name:');
 
-When rendered with the form, it will render like this:
+When rendered with the form, the label will render like this:
 
 .. code-block:: html
 
@@ -159,7 +159,7 @@ When rendered with the form, it will render like this:
 Validators
 ----------
 
-When if comes to attaching validators to a form element, you have a few options. The default option is to use the
+When if comes to attaching validators to a form element, there are a few options. The default option is to use the
 `popphp/pop-validator` component. You can use the standard set of validator classes included in that component,
 or you can write your own by extending the main `Pop\\Validator\\AbstractValidator` class. Alternatively, if you'd
 like to create your own, independent validators, you can do that as well. You just need to pass it something that
@@ -182,8 +182,8 @@ If the field's valid was set to something that wasn't alphanumeric, then it woul
     }
 
 If using a custom validator that is callable, the main guideline you would have to follow is that upon failure,
-return a validation failure message, otherwise, simply return null. Those messages are what is collected in the
-elements `$errors` array property for error message display. Here's an example:
+your validator should return a failure message, otherwise, simply return null. Those messages are what is collected
+in the elements `$errors` array property for error message display. Here's an example:
 
 .. code-block:: php
 
@@ -202,9 +202,6 @@ elements `$errors` array property for error message display. Here's an example:
     if (!$text->validate()) {
         print_r($text->getErrors());
     }
-
-For the sake of the example, the above code accomplishes the same result as using the `Pop\\Validator\\AlphaNumeric`
-to illustrate how to use custom validators.
 
 Form Objects
 ------------
