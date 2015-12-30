@@ -58,6 +58,7 @@ Here's an example that creates and renders a simple input text element:
 .. code-block:: php
 
     $text = new Pop\Form\Element\Input\Text('first_name');
+    $text->setRequired(true);
     $text->setAttribute('size', 40);
     echo $text;
 
@@ -65,9 +66,14 @@ The above code will produce:
 
 .. code-block:: html
 
-    <input name="first_name" id="first_name" type="text" size="40" />
+    <input name="first_name" id="first_name" type="text" required="required" size="40" />
 
-The `name` and `id` attributes of the element are set from the first `$name` parameter that is passed into the
+Note the `required` attribute. Since the element was set to be required, this will assign that attribute to the
+element, which is only effective client-side, if the client interface hasn't bypassed HTML form validation.
+If the client interface has bypassed HTML form validation, then the form object will still account for the required
+setting when validating server-side with PHP. If the field is set to be required and it is empty, validation will fail.
+
+Also, the `name` and `id` attributes of the element are set from the first `$name` parameter that is passed into the
 object. However, if you wish to override these, you can by doing this:
 
 .. code-block:: php
@@ -153,8 +159,55 @@ When rendered with the form, it will render like this:
 Validators
 ----------
 
-The Form Object
----------------
+When if comes to attaching validators to a form element, you have a few options. The default option is to use the
+`popphp/pop-validator` component. You can use the standard set of validator classes included in that component,
+or you can write your own by extending the main `Pop\\Validator\\AbstractValidator` class. Alternatively, if you'd
+like to create your own, independent validators, you can do that as well. You just need to pass it something that
+is callable.
+
+Here's an example using the `popphp/pop-validator` component:
+
+.. code-block:: php
+
+    $text = new Pop\Form\Element\Input\Text('first_name');
+    $text->addValidator(new Pop\Validator\AlphaNumeric());
+
+If the field's valid was set to something that wasn't alphanumeric, then it would fail validation:
+
+.. code-block:: php
+
+    $text->setValue('abcd#$%');
+    if (!$text->validate()) {
+        print_r($text->getErrors());
+    }
+
+If using a custom validator that is callable, the main guideline you would have to follow is that upon failure,
+return a validation failure message, otherwise, simply return null. Those messages are what is collected in the
+elements `$errors` array property for error message display. Here's an example:
+
+.. code-block:: php
+
+    $myValidator = function($value) {
+        if (preg_match('/^\w+$/', $value) == 0) {
+            return 'The value is not alphanumeric.';
+        } else {
+            return null;
+        }
+    };
+
+    $text = new Pop\Form\Element\Input\Text('first_name');
+    $text->addValidator($myValidator);
+
+    $text->setValue('abcd#$%');
+    if (!$text->validate()) {
+        print_r($text->getErrors());
+    }
+
+For the sake of the example, the above code accomplishes the same result as using the `Pop\\Validator\\AlphaNumeric`
+to illustrate how to use custom validators.
+
+Form Objects
+------------
 
 The form object serves as the center of the functionality. You can create a form object and inject form elements into
 it. The form object then manages those elements, their values and processes the validation, if any, attached to the
@@ -176,5 +229,5 @@ Templates
 ---------
 
 
-Using the Form Elements Only
-----------------------------
+Using Form Elements Only
+------------------------
