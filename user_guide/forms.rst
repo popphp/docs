@@ -1,9 +1,9 @@
 Forms
 =====
 
-HTML Forms are common to web applications and present challenges in building, rendering and validating the form
-and it's elements. The `popphp/pop-form` component helps to manage those aspects of web forms and streamline the
-process of utilizing forms in your web application.
+HTML Forms are common to web applications and present a unique set of challenges in building, rendering and
+validating a form and it's elements. The `popphp/pop-form` component helps to manage those aspects of web forms
+and streamline the process of utilizing forms in your web application.
 
 Form Elements
 -------------
@@ -16,7 +16,7 @@ The generic input class is:
 
 * `Pop\\Form\\Element\\Input`
 
-The standard available input element classes extend the above class:
+The standard available input element classes extend the above class are:
 
 * `Pop\\Form\\Element\\Input\\Button`
 * `Pop\\Form\\Element\\Input\\Checkbox`
