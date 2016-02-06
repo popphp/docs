@@ -203,8 +203,8 @@ in the elements `$errors` array property for error message display. Here's an ex
         print_r($text->getErrors());
     }
 
-Form Objects & Validation
--------------------------
+Form Objects
+------------
 
 The form object serves as the center of the functionality. You can create a form object and inject form elements into
 it. The form object then manages those elements, their values and processes the validation, if any, attached to the
@@ -275,7 +275,7 @@ HTML as the initial render by default:
     </form>
 
 If the user were to input non-valid data into on of the fields, and then submit the form, then the script would
-be processed again, this time, it would render with the error messages, like this:
+be processed again, this time, it would trigger the form validation and render with the error messages, like this:
 
 .. code-block:: html
 
