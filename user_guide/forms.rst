@@ -330,32 +330,13 @@ is callable, like this:
     }
 
 In the above code, the `addFilter` methods are called before the data is set into the form for validation or
-re-rendering. The example passes the `strip_tags` and 'htmlentities` functions and those functions will be applied
+re-rendering. The example passes the `strip_tags` and `htmlentities` functions and those functions are applied
 to the each value of form data. So, if a user tries to submit the data `<script>alert("Bad Code");</script>` into
 one of the fields, it would get filtered and re-rendered like this:
 
 .. code-block:: html
 
-    <form action="/" method="post" id="my-form">
-        <dl id="my-form-field-group-1" class="my-form-field-group">
-        <dt>
-            <label for="username" class="required">Username:</label>
-        </dt>
-        <dd>
-            <input type="text" name="username" id="username" value="alert(&quot;Hello&quot;);" required="required" size="40" />
-            <div class="error">The value must only contain alphanumeric characters.</div>
-        </dd>
-        <dt>
-            <label for="email" class="required">Email:</label>
-        </dt>
-        <dd>
-            <input type="email" name="email" id="email" value="test@test.com" required="required" size="40" />
-        </dd>
-        <dd>
-            <input type="submit" name="submit" id="submit" value="SUBMIT" />
-        </dd>
-        </dl>
-    </form>
+    <input type="text" name="username" id="username" value="alert(&quot;Bad Code&quot;);" required="required" size="40" />
 
 As you can see, the `<script>` tags were stripped and the quotes were converted to HTML entities.
 
