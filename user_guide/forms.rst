@@ -8,7 +8,7 @@ and streamline the process of utilizing forms in your web application.
 Form Elements
 -------------
 
-Most of the standard HTML5 form elements are supported with in the `popphp/pop-form` component. If you require a
+Most of the standard HTML5 form elements are supported within the `popphp/pop-form` component. If you require a
 different element of any kind, you can extend the `Pop\\Form\\Element\\AbstractElement` class to build your own.
 With each element instance, you can set attributes, values and validation parameters.
 
@@ -105,7 +105,7 @@ The above code will produce:
 
 .. code-block:: html
 
-    <select name="colors" id="colors">
+    <select name="colors" id="colors" class="drop-down">
         <option value="Red">Red</option>
         <option value="Green">Green</option>
         <option value="Blue">Blue</option>
@@ -210,6 +210,70 @@ The form object serves as the center of the functionality. You can create a form
 it. The form object then manages those elements, their values and processes the validation, if any, attached to the
 form elements.
 
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Form\Element\Input;
+    use Pop\Validator;
+
+    $form = new Form();
+    $form->setAttribute('id', 'my-form');
+
+    $username = new Input\Text('username');
+    $username->setLabel('Username:')
+             ->setRequired(true)
+             ->setAttribute('size', 40)
+             ->addValidator(new Validator\AlphaNumeric());
+
+    $email = new Input\Email('email');
+    $email->setLabel('Email:')
+          ->setRequired(true)
+          ->setAttribute('size', 40);
+
+    $submit = new Input\Submit('submit', 'SUBMIT');
+
+    $form->addElements([$username, $email, $submit]);
+
+    if ($_POST) {
+        $form->setFieldValues($_POST);
+        if (!$form->isValid()) {
+            echo $form; // Has errors
+        } else {
+            echo 'Valid!';
+        }
+    } else {
+        echo $form;
+    }
+
+The above code will produce the following HTML by default. The form's action is pulled from the current
+REQUEST_URI of the current page, unless otherwise directly specified:
+
+.. code-block:: html
+
+    <form action="/" method="post" id="my-form">
+        <dl id="my-form-field-group-1" class="my-form-field-group">
+        <dt>
+            <label for="username" class="required">Username:</label>
+        </dt>
+        <dd>
+            <input type="text" name="username" id="username" value="" required="required" size="40" />
+        </dd>
+        <dt>
+            <label for="email" class="required">Email:</label>
+        </dt>
+        <dd>
+            <input type="email" name="email" id="email" value="" required="required" size="40" />
+        </dd>
+        <dd>
+            <input type="submit" name="submit" id="submit" value="SUBMIT" />
+        </dd>
+        </dl>
+    </form>
+
+Using Templates
+---------------
+
+
 Field Configurations
 --------------------
 
@@ -220,10 +284,6 @@ Rendering a Form
 
 Validating a Form
 -----------------
-
-
-Templates
----------
 
 
 Using Form Elements Only
