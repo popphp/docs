@@ -203,12 +203,14 @@ in the elements `$errors` array property for error message display. Here's an ex
         print_r($text->getErrors());
     }
 
-Form Objects
-------------
+Form Objects & Validation
+-------------------------
 
 The form object serves as the center of the functionality. You can create a form object and inject form elements into
 it. The form object then manages those elements, their values and processes the validation, if any, attached to the
-form elements.
+form elements. The form object object also provides a default way to render an HTML form object using a DL tag with
+nested DT and DD tags that contain the field elements and their labels. This default setting can be overridden using
+templates, as outlined in the `Using Templates`_ section below. Consider the following code:
 
 .. code-block:: php
 
@@ -240,13 +242,15 @@ form elements.
             echo $form; // Has errors
         } else {
             echo 'Valid!';
+            print_r($form->getFields());
         }
     } else {
         echo $form;
     }
 
-The above code will produce the following HTML by default. The form's action is pulled from the current
-REQUEST_URI of the current page, unless otherwise directly specified:
+The form's action is pulled from the current `REQUEST_URI` of the current page, unless otherwise directly specified.
+Also, the form's method defaults to `POST` unless otherwise specified. The above code will produce the following
+HTML as the initial render by default:
 
 .. code-block:: html
 
@@ -270,21 +274,102 @@ REQUEST_URI of the current page, unless otherwise directly specified:
         </dl>
     </form>
 
-Using Templates
----------------
+If the user were to input non-valid data into on of the fields, and then submit the form, then the script would
+be processed again, this time, it would render with the error messages, like this:
+
+.. code-block:: html
+
+    <form action="/" method="post" id="my-form">
+        <dl id="my-form-field-group-1" class="my-form-field-group">
+        <dt>
+            <label for="username" class="required">Username:</label>
+        </dt>
+        <dd>
+            <input type="text" name="username" id="username" value="dfvdfv##$dfv" required="required" size="40" />
+            <div class="error">The value must only contain alphanumeric characters.</div>
+        </dd>
+        <dt>
+            <label for="email" class="required">Email:</label>
+        </dt>
+        <dd>
+            <input type="email" name="email" id="email" value="test@test.com" required="required" size="40" />
+        </dd>
+        <dd>
+            <input type="submit" name="submit" id="submit" value="SUBMIT" />
+        </dd>
+        </dl>
+    </form>
+
+As you can see above, the values entered by the user are retained so that they may correct any errors and re-submit
+the form. Once the form is corrected and re-submitted, it will pass validation and then move on to the portion of
+the script that will handle what to do with the form data.
+
+
+Using Filters
+-------------
+
+When dealing with the data that is being passed through a form object, besides validation, you'll want to consider
+adding filters to further protect against bad or malicious data. We can modify the above example to add filters to
+be used to process the form data before it is validated or re-rendered to the screen. A filter can be anything that
+is callable, like this:
+
+.. code-block:: php
+
+    if ($_POST) {
+        $form->addFilter('strip_tags');
+        $form->addFilter('htmlentities', [ENT_QUOTES, 'UTF-8']);
+        $form->setFieldValues($_POST);
+        if (!$form->isValid()) {
+            echo $form; // Has errors
+        } else {
+            echo 'Valid!';
+            print_r($form->getFields());
+        }
+    } else {
+        echo $form;
+    }
+
+In the above code, the `addFilter` methods are called before the data is set into the form for validation or
+re-rendering. The example passes the `strip_tags` and 'htmlentities` functions and those functions will be applied
+to the each value of form data. So, if a user tries to submit the data `<script>alert("Bad Code");</script>` into
+one of the fields, it would get filtered and re-rendered like this:
+
+.. code-block:: html
+
+    <form action="/" method="post" id="my-form">
+        <dl id="my-form-field-group-1" class="my-form-field-group">
+        <dt>
+            <label for="username" class="required">Username:</label>
+        </dt>
+        <dd>
+            <input type="text" name="username" id="username" value="alert(&quot;Hello&quot;);" required="required" size="40" />
+            <div class="error">The value must only contain alphanumeric characters.</div>
+        </dd>
+        <dt>
+            <label for="email" class="required">Email:</label>
+        </dt>
+        <dd>
+            <input type="email" name="email" id="email" value="test@test.com" required="required" size="40" />
+        </dd>
+        <dd>
+            <input type="submit" name="submit" id="submit" value="SUBMIT" />
+        </dd>
+        </dl>
+    </form>
+
+As you can see, the `<script>` tags were stripped and the quotes were converted to HTML entities.
 
 
 Field Configurations
 --------------------
 
 
-Rendering a Form
-----------------
-
-
-Validating a Form
------------------
+Using Templates
+---------------
 
 
 Using Form Elements Only
 ------------------------
+
+
+.. _Using Template: ./forms.html#using-templates
