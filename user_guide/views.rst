@@ -78,9 +78,9 @@ The result of the above example is:
     </html>
 
 As mentioned before, the benefit of using file-based templates is you can fully leverage PHP within the
-script file. Of course, one common thing that can be utilized when using file-based templates is file
-includes. This helps tidy up your template code and makes script files easier to manage by re-using
-template code. Here's an example that would work for the above script:
+script file. One common thing that can be utilized when using file-based templates is file includes.
+This helps tidy up your template code and makes script files easier to manage by re-using template
+code. Here's an example that would work for the above script:
 
 **header.phtml**
 
@@ -125,8 +125,8 @@ While using this method doesn't allow the use of PHP directly in the template li
 do, it does support basic logic and iteration to manipulate your data for display. The benefit of this
 is that it provides some security in locking down a template and not allowing PHP to be directly processed
 within it. Additionally, the template strings can be easily stored and managed within the application and
-remove the need to have to edit and transfer template files to the server. This is a common tactic used by
-content management systems that have template functionality built into them.
+remove the need to have to edit and transfer template files to and from the server. This is a common tactic
+used by content management systems that have template functionality built into them.
 
 Let's look at the same example from above, but with a stream template:
 
@@ -258,6 +258,37 @@ The above template would render like this:
             <li id="li-item-2"><a href="http://popcorn.popphp.org/">Popcorn Micro Framework</a></li>
             <li id="li-item-3"><a href="http://www.phirecms.org/">Phire CMS</a></li>
 
+You can also access nested associated arrays and their values by key name, to give you an additional
+level of control over your data, like so:
+
+.. code-block:: php
+
+    $data = [
+        'pages'   => [
+            [
+                'title' => 'Pop PHP Framework',
+                'url'   => 'http://www.popphp.org/'
+            ],
+            [
+                'title' => 'Popcorn Micro Framework',
+                'url'   => 'http://popcorn.popphp.org/'
+            ]
+        ]
+    ];
+
+.. code-block:: text
+
+    [{links}]
+            <li><a href="[{url}]">[{title}]</a></li>
+    [{/links}]
+
+The above template and data would render like this:
+
+.. code-block:: html
+
+            <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+            <li><a href="http://popcorn.popphp.org/">Popcorn Micro Framework</a></li>
+
 Conditionals
 ~~~~~~~~~~~~
 
@@ -287,6 +318,55 @@ You can also use conditionals to check if a value is set in an array:
     [{if(foo[bar])}]
         <p>The value of '$foo[$bar]' is set to [{foo[bar]}].</p>
     [{/if}]
+
+Furthermore, you can test if a value is set within a loop of an array, like this:
+
+.. code-block:: php
+
+    $data = [
+        'pages'   => [
+            [
+                'title' => 'Pop PHP Framework',
+                'url'   => 'http://www.popphp.org/'
+            ],
+            [
+                'title' => 'Popcorn Micro Framework'
+            ]
+        ]
+    ];
+
+.. code-block:: text
+
+    [{links}]
+    [{if(url)}]
+            <li><a href="[{url}]">[{title}]</a></li>
+    [{/if}]
+    [{/links}]
+
+The above template and data would only render one item because the `url` key is not
+set in the second value:
+
+.. code-block:: html
+
+            <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+
+IF/ELSE also works within an array loop as well:
+
+.. code-block:: text
+
+    [{links}]
+    [{if(url)}]
+            <li><a href="[{url}]">[{title}]</a></li>
+    [{else}]
+            <li>No URL was set</li>
+    [{/if}]
+    [{/links}]
+
+
+.. code-block:: html
+
+            <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+            <li>No URL was set</li>
 
 Includes
 ~~~~~~~~
