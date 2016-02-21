@@ -415,12 +415,12 @@ which will produce the following HTML code:
 In the above example, the `$fields` is an associative array where the keys are the names of the fields and the array
 values contain the field configuration values. The accepted field configuration values are:
 
-* ``'type'`` - field type. Acceptable values are 'button', 'select', 'text', 'textarea', 'checkbox', 'radio', 'csrf', 'captcha', 'input-button'
+* ``'type'`` - field type, i.e. 'button', 'select', 'text', 'textarea', 'checkbox', 'radio', 'input-button'
 * ``'label'`` - field label
-* ``'required'`` - boolean to set whether the field is required or not. Defaults to false
+* ``'required'`` - boolean to set whether the field is required or not. Defaults to false.
 * ``'attributes'`` - an array of attributes to apply to the field.
 * ``'validators'`` - an array of validators to apply to the field. Can be a single callable validator as well.
-* ``'value'`` - the default field value or values (in the case of select, checkbox or radio.)
+* ``'value'`` - the field value (or values in the case of select, checkbox or radio.)
 * ``'marked'`` - the field value or values that are to be marked as 'selected' or 'checked' within the field's values.
 
 Here is an example using fields with multiple values:
