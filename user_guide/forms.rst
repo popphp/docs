@@ -494,9 +494,143 @@ which will produce:
 Using Templates
 ---------------
 
+If you require more control over the form object's overall look and feel, you can render it using a template.
+Much like ``popphp/pop-view``, you can utilize either file-based templates or stream-based templates. Furthermore,
+using templates will allow you to break away from the form object and work with just the form elements themselves
+if that's what is required. Consider the following example:
 
-Using Form Elements Only
-------------------------
+.. code-block:: php
 
+    use Pop\Form\Form;
+    use Pop\Validator;
+
+    $fields = [
+        'username' => [
+            'type'       => 'text',
+            'label'      => 'Username',
+            'required'   => true,
+            'attributes' => [
+                'class' => 'username-field',
+                'size'  => 40
+            ]
+        ],
+        'password' => [
+            'type'       => 'password',
+            'label'      => 'Password',
+            'required'   => true,
+            'attributes' => [
+                'class' => 'password-field',
+                'size'  => 40
+            ]
+        ],
+        'submit' => [
+            'type'       => 'submit',
+            'value'      => 'SUBMIT',
+            'attributes' => [
+                'class' => 'submit-btn'
+            ]
+        ]
+    ];
+
+    $form = new Form($fields);
+    $form->setAttribute('id', 'login-form');
+
+and the following templates:
+
+**form.html, a stream template**
+
+.. code-block:: html
+
+    <table id="login-form-table">
+        <tr>
+            <td>[{username_label}]</td>
+            <td>[{username}]</td>
+        </tr>
+        <tr>
+            <td>[{password_label}]</td>
+            <td>[{password}]</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>[{submit}]</td>
+        </tr>
+    </table>
+
+**form.phtml, a PHP script file**
+
+.. code-block:: php
+
+    <table id="login-form-table">
+        <tr>
+            <td><?=$username_label; ?></td>
+            <td><?=$username; ?></td>
+        </tr>
+        <tr>
+            <td><?=$password_label; ?></td>
+            <td><?=$password; ?></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><?=$submit; ?></td>
+        </tr>
+    </table>
+
+We can set the template of the form object to either:
+
+.. code-block:: php
+
+    $form->setTemplate('form.html');
+
+or
+
+.. code-block:: php
+
+    $form->setTemplate('form.phtml');
+
+and rendering the form like this:
+
+.. code-block:: php
+
+    echo $form;
+
+will yield the same results:
+
+.. code-block:: html
+
+    <table id="login-form-table">
+        <tr>
+            <td><label for="username" class="required">Username</label></td>
+            <td><input type="text" name="username" id="username" value="" required="required" class="username-field" size="40" /></td>
+        </tr>
+        <tr>
+            <td><label for="password" class="required">Password</label></td>
+            <td><input type="password" name="password" id="password" value="" required="required" class="password-field" size="40" /></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" name="submit" id="submit" value="SUBMIT" class="submit-btn" /></td>
+        </tr>
+    </table>
+
+Additionally, if you wish to break away from the form object altogether and just use the form elements, you can
+pass the ``$form`` object into your view and access the elements and their components with the form element API,
+like this:
+
+.. code-block:: php
+
+    <table id="login-form-table">
+        <tr>
+            <td><?=$form->getElement('username')->getLabel(); ?></td>
+            <td><?=$form->getElement('username'); ?></td>
+        </tr>
+        <tr>
+            <td><?=$form->getElement('password')->getLabel(); ?></td>
+            <td><?=$form->getElement('password'); ?></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><?=$form->getElement('submit'); ?></td>
+        </tr>
+    </table>
 
 .. _Using Template: ./forms.html#using-templates
