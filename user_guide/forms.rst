@@ -344,6 +344,153 @@ As you can see, the `<script>` tags were stripped and the quotes were converted 
 Field Configurations
 --------------------
 
+Most of the functionality outlined above can be administered and managed by passing field configuration arrays
+into the form object. This helps facilitate and streamline the form creation process. Consider the following
+example:
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Validator;
+
+    $fields = [
+        'username' => [
+            'type'       => 'text',
+            'label'      => 'Username',
+            'required'   => true,
+            'validators' => new Validator\AlphaNumeric(),
+            'attributes' => [
+                'class' => 'username-field',
+                'size'  => 40
+            ]
+        ],
+        'password' => [
+            'type'       => 'password',
+            'label'      => 'Password',
+            'required'   => true,
+            'validators' => new Validator\GreaterThanEqual(6),
+            'attributes' => [
+                'class' => 'password-field',
+                'size'  => 40
+            ]
+        ],
+        'submit' => [
+            'type'       => 'submit',
+            'value'      => 'SUBMIT',
+            'attributes' => [
+                'class' => 'submit-btn'
+            ]
+        ]
+    ];
+
+    $form = new Form($fields);
+    $form->setAttribute('id', 'login-form');
+
+    echo $form;
+
+which will produce the following HTML code:
+
+.. code-block:: html
+
+    <form action="/" method="post" id="login-form">
+        <dl id="login-form-field-group-1" class="login-form-field-group">
+        <dt>
+            <label for="username" class="required">Username</label>
+        </dt>
+        <dd>
+            <input type="text" name="username" id="username" value="" required="required" class="username-field" size="40" />
+        </dd>
+        <dt>
+            <label for="password" class="required">Password</label>
+        </dt>
+        <dd>
+            <input type="password" name="password" id="password" value="" required="required" class="password-field" size="40" />
+        </dd>
+        <dd>
+            <input type="submit" name="submit" id="submit" value="SUBMIT" class="submit-btn" />
+        </dd>
+        </dl>
+    </form>
+
+In the above example, the `$fields` is an associative array where the keys are the names of the fields and the array
+values contain the field configuration values. The accepted field configuration values are:
+
+* ``'type'`` - field type. Acceptable values are 'button', 'select', 'text', 'textarea', 'checkbox', 'radio', 'csrf',
+'captcha', 'input-button'
+* ``'label'`` - field label
+* ``'required'`` - boolean to set whether the field is required or not. Defaults to false
+* ``'attributes'`` - an array of attributes to apply to the field.
+* ``'validators'`` - an array of validators to apply to the field. Can be a single callable validator as well.
+* ``'value'`` - the default field value or values (in the case of select, checkbox or radio.)
+* ``'marked'`` - the field value or values that are to be marked as 'selected' or 'checked' within the field's values.
+
+Here is an example using fields with multiple values:
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Validator;
+
+    $fields = [
+        'colors' => [
+            'type'  => 'checkbox',
+            'label' => 'Colors',
+            'value' => [
+                'Red'   => 'Red',
+                'Green' => 'Green',
+                'Blue'  => 'Blue'
+            ],
+            'marked' => [
+                'Red', 'Green'
+            ]
+        ],
+        'country' => [
+            'type'  => 'select',
+            'label' => 'Country',
+            'value' => [
+                'United States' => 'United States',
+                'Canada'        => 'Canada',
+                'Mexico'        => 'Mexico'
+            ],
+            'marked' => 'United States'
+        ]
+    ];
+
+    $form = new Form($fields);
+
+    echo $form;
+
+which will produce:
+
+.. code-block:: html
+
+    <form action="/" method="post">
+        <dl id="pop-form-field-group-1" class="pop-form-field-group">
+        <dt>
+            <label for="colors1">Colors</label>
+        </dt>
+        <dd>
+            <fieldset class="checkbox-fieldset">
+                <input type="checkbox" name="colors[]" id="colors" value="Red" class="checkbox" checked="checked" />
+                <span class="checkbox-span">Red</span>
+                <input type="checkbox" name="colors[]" id="colors1" value="Green" class="checkbox" checked="checked" />
+                <span class="checkbox-span">Green</span>
+                <input type="checkbox" name="colors[]" id="colors2" value="Blue" class="checkbox" />
+                <span class="checkbox-span">Blue</span>
+            </fieldset>
+        </dd>
+        <dt>
+            <label for="country">Country</label>
+        </dt>
+        <dd>
+            <select name="country" id="country">
+                <option value="United States" selected="selected">United States</option>
+                <option value="Canada">Canada</option>
+                <option value="Mexico">Mexico</option>
+            </select>
+        </dd>
+        </dl>
+    </form>
 
 Using Templates
 ---------------
