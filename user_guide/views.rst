@@ -350,7 +350,7 @@ set in the second value:
 
             <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
 
-IF/ELSE also works within an array loop as well:
+An "if/else" statement also works within an array loop as well:
 
 .. code-block:: text
 
