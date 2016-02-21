@@ -415,8 +415,7 @@ which will produce the following HTML code:
 In the above example, the `$fields` is an associative array where the keys are the names of the fields and the array
 values contain the field configuration values. The accepted field configuration values are:
 
-* ``'type'`` - field type. Acceptable values are 'button', 'select', 'text', 'textarea', 'checkbox', 'radio', 'csrf',
-'captcha', 'input-button'
+* ``'type'`` - field type. Acceptable values are 'button', 'select', 'text', 'textarea', 'checkbox', 'radio', 'csrf', 'captcha', 'input-button'
 * ``'label'`` - field label
 * ``'required'`` - boolean to set whether the field is required or not. Defaults to false
 * ``'attributes'`` - an array of attributes to apply to the field.
