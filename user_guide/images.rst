@@ -86,7 +86,7 @@ Or create an instance of an image object with a new image via:
 Formats
 -------
 
-The image formats available are dependent on which image adapter you choose. The``Gd`` adapter is limited
+The image formats available are dependent on which image adapter you choose. The ``Gd`` adapter is limited
 to the 3 basic web formats:
 
 - jpg
@@ -184,7 +184,7 @@ All three of the above adapters have the same core API below:
 * ``$img->flop();`` - flip the image over the y-axis
 * ``$img->convert($type);`` - convert image to specified image type
 * ``$img->setQuality($quality);`` - set the image quality, 0 - 100
-* ``$img->save($to = null);`` - save image, either overwriting existing image file, or to specified location
+* ``$img->save($to = null);`` - save image, either to itself or a new location
 * ``$img->output($download = false, $sendHeaders = true);`` - output image via HTTP
 
 Advanced Use
@@ -274,7 +274,7 @@ And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced 
 - solarize [2]_
 
 .. [1] Not available with ``Gmagick``
-.. [2] Available only with ``Gmagick``
+.. [2] Only available with ``Gmagick``
 
 Layer
 ~~~~~
