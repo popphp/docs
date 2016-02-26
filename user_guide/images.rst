@@ -18,37 +18,12 @@ and perform more complex image processing functions.
 .. [*] It must be noted that the ``imagick`` and ``gmagick`` extensions cannot be used at the same
        time as they have conflicts with shared libraries and components that are used by both extensions.
 
-Image Factory
--------------
-
-If you wish to use the factory class, perhaps as an image service, you can do so like this:
-
-.. code-block:: php
-
-    $imageService = new Pop\Image\Factory\Gd();
-
-And then later in your application, you can load an instance of an image object via:
-
-.. code-block:: php
-
-    $image = $imageService->load('image.jpg');
-
-Or create an instance of an image object with a new image via:
-
-.. code-block:: php
-
-    $image = $imageService->create('image.jpg', 640, 480);
-
-This could be useful in a situation where you have to dynamically detect which PHP image extension
-is available within the application and environment before loading up the correct image object instance,
-as demonstrated in the next section.
-
 Choose an Adapter
 -----------------
 
-On the topic of determining which PHP image extensions are available for your application within its
-environment, there is an API to assist you with that. The following example tests each individual adapter
-to see if one is available, and if not, then moves on to the next:
+Before you choose which image adapter to use, you may have to determine which PHP image extensions are
+available for your application within its environment. There is an API to assist you with that. The following
+examples test each individual adapter to see if one is available, and if not, then moves on to the next:
 
 .. code-block:: php
 
@@ -77,14 +52,81 @@ Similarly, you can check their availability like this as well:
 
 As far as which adapter or extension is the "best" for your application, that will really depend on your
 application's needs and what's available in the environment on which your application is running. If you require
-advanced image processing, then you'll need to utilize either the ``Imagick`` or ``Gmagick`` adapters. If
-you only require simple image processing with a limited number of web formats, then the ``Gd`` adapter
-should work well.
+advanced image processing that can work with a large number of image formats, then you'll need to utilize either
+the ``Imagick`` or ``Gmagick`` adapters. If you only require simple image processing with a limited number of
+web formats, then the ``Gd`` adapter should work well.
 
 The point of the way in which the API is written is to help make applications more portable and mitigate
 any issues that may arise should an application need to be installed on a variety of different environments.
 The goal is to achieve a certain amount of "graceful degradation," should one of the more feature-rich image
 extensions not be available on a new environment.
+
+**Using the Image Factory**
+
+If you wish to use the factory class, perhaps as an image service like shown above, you can do so like this:
+
+.. code-block:: php
+
+    $imageService = new Pop\Image\Factory\Gd();
+
+And then later in your application, you can load an instance of an image object via:
+
+.. code-block:: php
+
+    // Returns an instance of Pop\Image\Gd with the existing image resource loaded
+    $image = $imageService->load('image.jpg');
+
+Or create an instance of an image object with a new image via:
+
+.. code-block:: php
+
+    // Returns an instance of Pop\Image\Gd with a new image resource loaded
+    $image = $imageService->create('image.jpg', 640, 480);
+
+Formats
+-------
+
+The image formats available are dependent on which image adapter you choose. The``Gd`` adapter is limited
+to the 3 basic web formats:
+
+- jpg
+- png
+- gif
+
+The ``Imagick`` and ``Gmagick`` adapters support a much larger number of formats, including vector formats,
+if the Ghostscript application and libraries are installed in the environment. The number of formats varies
+depending on the environment, but the default formats are:
+
+- ai
+- avi
+- bmp
+- eps
+- gif
+- ico
+- jpg
+- mov
+- mp4
+- mpg
+- mpeg
+- pdf
+- png
+- ps
+- psb
+- psd
+- svg
+- tif
+
+Within those two adapters, the list may grow or shrink based on what's available in the environment. To check
+or test what formats can be processed, you can use the static ``getFormats()`` method. This method will return
+an associative array with the image file extension as the key and the image mime type as the value:
+
+.. code-block:: php
+
+    $formats = Pop\Image\Imagick::getFormats();
+
+    if (array_key_exists('pdf', $formats)) {
+        // Do something with a PDF
+    }
 
 Basic Use
 ---------
