@@ -5,13 +5,13 @@ Image manipulation and processing is another set of features that is often neede
 application. It is common to have to process images in some way for the web application to
 perform its required functionality. The `popphp/pop-image` component provides that functionality
 with a robust set of image processing and manipulation features. Within the component are
-adapters written to support the ``gd``, ``imagick`` and ``gmagick`` extensions*.
+adapters written to support the ``Gd``, ``Imagick`` and ``Gmagick`` extensions*.
 
 Additionally, there is an ``Svg`` adapter that supports the creation and manipulation of SVG image
 files via an API that is similar to the other raster-based image adapters. With all of the adapters,
 there is a base set of image creation, processing and manipulation features that are available.
 
-By using either the ``imagick`` or ``gmagick`` extensions [*]_, you will open up a larger set of
+By using either the ``Imagick`` or ``Gmagick`` adapters [*]_, you will open up a larger set of
 features and functionality for your application, such as the ability to handle more image formats
 and perform more complex image processing functions.
 
