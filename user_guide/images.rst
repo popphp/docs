@@ -18,9 +18,80 @@ and perform more complex image processing functions.
 .. [*] It must be noted that the ``imagick`` and ``gmagick`` extensions cannot be used at the same
        time as they have conflicts with shared libraries and components that are used by both extensions.
 
-The Basics
-----------
+Basic Use
+---------
 
+The core feature of the main image adapters include basic image functionality, such as resizing or cropping
+an image. Additionally, you can convert an image to a different format and save it under a different file name.
+Here's a look at the shared API of the ``Gd``, ``Imagick`` and ``Gmagick`` adapters.
 
-Extended Features
------------------
+**Loading an existing image**
+
+.. code-block:: php
+
+    $gd = new Pop\Image\Gd('image.jpg');
+
+**Create a new image**
+
+.. code-block:: php
+
+    $gd = new Pop\Image\Gd('image.jpg', 640, 480);
+
+* ``$gd->resizeToWidth($w);`` - resize the image to a specified width
+* ``$gd->resizeToHeight($h);`` - resize the image to a specified height
+* ``$gd->resize($px);`` - resize image to largest dimension
+* ``$gd->scale($scale);`` - scale image by percentage, 0.0 - 1.0
+* ``$gd->crop($w, $h, $x = 0, $y = 0);`` - crop image to specified width and height
+* ``$gd->cropThumb($px, $offset = null);`` - crop image to squared image of specified size
+* ``$gd->rotate($degrees, array $bgColor = [255, 255, 255]);`` - rotate image a certain number of degrees
+* ``$gd->flip();`` - flip the image over the x-axis
+* ``$gd->flop();`` - flip the image over the y-axis
+* ``$gd->convert($type);`` - convert image to specified image type
+* ``$gd->setQuality($quality);`` - set the image quality, 0 - 100
+* ``$gd->save($to = null);`` - save image, either overwriting existing image file, or to specified location
+* ``$gd->output($download = false, $sendHeaders = true);`` - output image via HTTP
+
+**Using the factory**
+
+If you wish to use the factory class, perhaps as an image service, you can do so like this:
+
+.. code-block:: php
+
+    $imageService = new Pop\Image\Factory\Gd();
+
+And then later in your application, you can load an instance of an image object via:
+
+.. code-block:: php
+
+    $image = $imageService->load('image.jpg');
+
+Or create an instance of an image object with a new image via:
+
+.. code-block:: php
+
+    $image = $imageService->create('image.jpg', 640, 480);
+
+Advanced Use
+------------
+
+The `popphp/pop-image` component comes with set of image manipulation objects that provide a robust
+advanced feature set when processing images. You can think of these classes and their object instances
+as the menus at the top of your favorite images editing software.
+
+Adjust
+~~~~~~
+
+Draw
+~~~~
+
+Effect
+~~~~~~
+
+Filter
+~~~~~~
+
+Layer
+~~~~~
+
+Type
+~~~~
