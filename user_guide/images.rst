@@ -8,14 +8,14 @@ with a robust set of image processing and manipulation features. Within the comp
 adapters written to support the ``gd``, ``imagick`` and ``gmagick`` extensions*.
 
 Also, with the ``gd`` extension, there is a base set of image processing and manipulation features
-that are available. However, by using either the ``imagick`` or ``gmagick`` extensions, you will
+that are available. However, by using either the ``imagick`` or ``gmagick`` extensions [*]_, you will
 open up a larger set of features and functionality for your application, such as the ability to
 handle more image formats and perform more complex processing functions.
 
 Additionally, there is an ``Svg`` adapter that supports the creation and manipulation of SVG image
 files via an API that is similar to the other raster-based image adapters.
 
-* - It must be noted that the ``imagick`` and ``gmagick`` extensions cannot be used at the same
+.. [*] It must be noted that the ``imagick`` and ``gmagick`` extensions cannot be used at the same
 time as they have conflicts with shared libraries and components that are used by both extensions.
 
 The Basics
