@@ -22,8 +22,8 @@ Basic Use
 ---------
 
 The core feature of the main image adapters include basic image functionality, such as resizing or cropping
-an image. Additionally, you can convert an image to a different format and save it under a different file name.
-Here's a look at the shared API of the ``Gd``, ``Imagick`` and ``Gmagick`` adapters.
+an image. Additionally, you can convert an image to a different format as well as save the image. Here's a
+look at the shared API of the ``Gd``, ``Imagick`` and ``Gmagick`` adapters.
 
 **Loading an existing image**
 
@@ -43,7 +43,7 @@ Here's a look at the shared API of the ``Gd``, ``Imagick`` and ``Gmagick`` adapt
 * ``$gd->scale($scale);`` - scale image by percentage, 0.0 - 1.0
 * ``$gd->crop($w, $h, $x = 0, $y = 0);`` - crop image to specified width and height
 * ``$gd->cropThumb($px, $offset = null);`` - crop image to squared image of specified size
-* ``$gd->rotate($degrees, array $bgColor = [255, 255, 255]);`` - rotate image a certain number of degrees
+* ``$gd->rotate($degrees, array $bgColor = [255, 255, 255]);`` - rotate image by specified degrees
 * ``$gd->flip();`` - flip the image over the x-axis
 * ``$gd->flop();`` - flip the image over the y-axis
 * ``$gd->convert($type);`` - convert image to specified image type
@@ -76,22 +76,114 @@ Advanced Use
 
 The `popphp/pop-image` component comes with set of image manipulation objects that provide a robust
 advanced feature set when processing images. You can think of these classes and their object instances
-as the menus at the top of your favorite images editing software.
+as the menus at the top of your favorite image editing software.
 
 Adjust
 ~~~~~~
 
+The adjust object allows you to perform the following functions:
+
+- brightness
+- contrast
+- desaturate
+
+And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
+
+- hue
+- saturation
+- brightness
+- hsb
+- level
+
 Draw
 ~~~~
+
+The draw object allows you to perform the following functions:
+
+- line
+- rectangle
+- square
+- ellipse
+- circle
+- arc
+- chord
+- pie
+- polygon
+
+And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
+
+- roundedRectangle
+- roundedSquare
+- brightness
+- hsb
+- level
 
 Effect
 ~~~~~~
 
+The effect object allows you to perform the following functions:
+
+- border
+- fill
+- radialGradient
+- verticalGradient
+- horizontalGradient
+- linearGradient
+
 Filter
 ~~~~~~
+
+The filter object allows you to perform the following functions:
+
+- blur
+- sharpen
+- negate
+- colorize
+- pixelate
+- pencil [1]_
+
+And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
+
+- adaptiveBlur
+- gaussianBlur [1]_
+- motionBlur
+- radialBlur
+- paint
+- posterize
+- noise
+- diffuse
+- skew
+- solarize [2]_
+- swirl
+- wave
+
+.. [1] Not available with ``Gmagick``
+.. [2] Available only with ``Gmagick``
 
 Layer
 ~~~~~
 
+The layer object allows you to perform the following functions:
+
+- overlay
+
+And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
+
+- flatten
+
 Type
 ~~~~
+
+The type object allows you to perform the following functions:
+
+- set the font
+- set the font size
+- set the text coordinates
+- rotate the text
+- set the text string
+
+SVG
+---
+
+Extending the Component
+-----------------------
