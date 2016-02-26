@@ -16,7 +16,7 @@ Additionally, there is an ``Svg`` adapter that supports the creation and manipul
 files via an API that is similar to the other raster-based image adapters.
 
 .. [*] It must be noted that the ``imagick`` and ``gmagick`` extensions cannot be used at the same
-time as they have conflicts with shared libraries and components that are used by both extensions.
+       time as they have conflicts with shared libraries and components that are used by both extensions.
 
 The Basics
 ----------
