@@ -144,8 +144,8 @@ The filter object allows you to perform the following functions:
 
 And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
 
-- adaptiveBlur
 - gaussianBlur [1]_
+- adaptiveBlur
 - motionBlur
 - radialBlur
 - paint
@@ -153,9 +153,9 @@ And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced 
 - noise
 - diffuse
 - skew
-- solarize [2]_
 - swirl
 - wave
+- solarize [2]_
 
 .. [1] Not available with ``Gmagick``
 .. [2] Available only with ``Gmagick``
