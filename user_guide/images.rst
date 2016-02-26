@@ -5,7 +5,7 @@ Image manipulation and processing is another set of features that is often neede
 application. It is common to have to process images in some way for the web application to
 perform its required functionality. The `popphp/pop-image` component provides that functionality
 with a robust set of image processing and manipulation features. Within the component are
-adapters written to support the ``Gd``, ``Imagick`` and ``Gmagick`` extensions*.
+adapters written to support the ``Gd``, ``Imagick`` and ``Gmagick`` extensions.
 
 Additionally, there is an ``Svg`` adapter that supports the creation and manipulation of SVG image
 files via an API that is similar to the other raster-based image adapters. With all of the adapters,
@@ -18,40 +18,8 @@ and perform more complex image processing functions.
 .. [*] It must be noted that the ``imagick`` and ``gmagick`` extensions cannot be used at the same
        time as they have conflicts with shared libraries and components that are used by both extensions.
 
-Basic Use
----------
-
-The core feature of the main image adapters include basic image functionality, such as resizing or cropping
-an image. Additionally, you can convert an image to a different format as well as save the image. Here's a
-look at the shared API of the ``Gd``, ``Imagick`` and ``Gmagick`` adapters.
-
-**Loading an existing image**
-
-.. code-block:: php
-
-    $gd = new Pop\Image\Gd('image.jpg');
-
-**Create a new image**
-
-.. code-block:: php
-
-    $gd = new Pop\Image\Gd('image.jpg', 640, 480);
-
-* ``$gd->resizeToWidth($w);`` - resize the image to a specified width
-* ``$gd->resizeToHeight($h);`` - resize the image to a specified height
-* ``$gd->resize($px);`` - resize image to largest dimension
-* ``$gd->scale($scale);`` - scale image by percentage, 0.0 - 1.0
-* ``$gd->crop($w, $h, $x = 0, $y = 0);`` - crop image to specified width and height
-* ``$gd->cropThumb($px, $offset = null);`` - crop image to squared image of specified size
-* ``$gd->rotate($degrees, array $bgColor = [255, 255, 255]);`` - rotate image by specified degrees
-* ``$gd->flip();`` - flip the image over the x-axis
-* ``$gd->flop();`` - flip the image over the y-axis
-* ``$gd->convert($type);`` - convert image to specified image type
-* ``$gd->setQuality($quality);`` - set the image quality, 0 - 100
-* ``$gd->save($to = null);`` - save image, either overwriting existing image file, or to specified location
-* ``$gd->output($download = false, $sendHeaders = true);`` - output image via HTTP
-
-**Using the factory**
+Image Factory
+-------------
 
 If you wish to use the factory class, perhaps as an image service, you can do so like this:
 
@@ -70,6 +38,112 @@ Or create an instance of an image object with a new image via:
 .. code-block:: php
 
     $image = $imageService->create('image.jpg', 640, 480);
+
+This could be useful in a situation where you have to dynamically detect which PHP image extension
+is available within the application and environment before loading up the correct image object instance,
+as demonstrated in the next section.
+
+Choose an Adapter
+-----------------
+
+On the topic of determining which PHP image extensions are available for your application within its
+environment, there is an API to assist you with that. The following example tests each individual adapter
+to see if one is available, and if not, then moves on to the next:
+
+.. code-block:: php
+
+    if (Pop\Image\Gmagick::isInstalled()) {
+        $imageService = new Pop\Image\Factory\Gmagick();
+    } else if (Pop\Image\Imagick::isInstalled()) {
+        $imageService = new Pop\Image\Factory\Imagick();
+    } else if (Pop\Image\Gd::isInstalled()) {
+        $imageService = new Pop\Image\Factory\Gd();
+    }
+
+Similarly, you can check their availability like this as well:
+
+.. code-block:: php
+
+    // This will work with any of the 3 adapters
+    $adapters = Pop\Image\Gd::getAvailableAdapters();
+
+    if ($adapters['gmagick']) {
+        $imageService = new Pop\Image\Factory\Gmagick();
+    } else if ($adapters['imagick']) {
+        $imageService = new Pop\Image\Factory\Imagick();
+    } else if ($adapters['gd']) {
+        $imageService = new Pop\Image\Factory\Gd();
+    }
+
+As far as which adapter or extension is the "best" for your application, that will really depend on your
+application's needs and what's available in the environment on which your application is running. If you require
+advanced image processing, then you'll need to utilize either the ``Imagick`` or ``Gmagick`` adapters. If
+you only require simple image processing with a limited number of web formats, then the ``Gd`` adapter
+should work well.
+
+The point of the way in which the API is written is to help make applications more portable and mitigate
+any issues that may arise should an application need to be installed on a variety of different environments.
+The goal is to achieve a certain amount of "graceful degradation," should one of the more feature-rich image
+extensions not be available on a new environment.
+
+Basic Use
+---------
+
+The core feature of the main image adapters include basic image functionality, such as resizing or cropping
+an image. Additionally, you can convert an image to a different format as well as save the image. Here's a
+look at the shared API of the ``Gd``, ``Imagick`` and ``Gmagick`` adapters.
+
+**Loading an existing image**
+
+.. code-block:: php
+
+    $img = new Pop\Image\Gd('image.jpg');
+
+Alternatively, you could use:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Imagick('image.jpg');
+
+or, you could use, the ``Gmagick`` extension is available instead:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Gmagick('image.jpg');
+
+**Create a new image**
+
+.. code-block:: php
+
+    $img = new Pop\Image\Gd('image.jpg', 640, 480);
+
+Alternatively, you could use:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Imagick('image.jpg', 640, 480);
+
+or, you could use, the ``Gmagick`` extension is available instead:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Gmagick('image.jpg', 640, 480);
+
+All three of the above adapters have the same core API below:
+
+* ``$img->resizeToWidth($w);`` - resize the image to a specified width
+* ``$img->resizeToHeight($h);`` - resize the image to a specified height
+* ``$img->resize($px);`` - resize image to largest dimension
+* ``$img->scale($scale);`` - scale image by percentage, 0.0 - 1.0
+* ``$img->crop($w, $h, $x = 0, $y = 0);`` - crop image to specified width and height
+* ``$img->cropThumb($px, $offset = null);`` - crop image to squared image of specified size
+* ``$img->rotate($degrees, array $bgColor = [255, 255, 255]);`` - rotate image by specified degrees
+* ``$img->flip();`` - flip the image over the x-axis
+* ``$img->flop();`` - flip the image over the y-axis
+* ``$img->convert($type);`` - convert image to specified image type
+* ``$img->setQuality($quality);`` - set the image quality, 0 - 100
+* ``$img->save($to = null);`` - save image, either overwriting existing image file, or to specified location
+* ``$img->output($download = false, $sendHeaders = true);`` - output image via HTTP
 
 Advanced Use
 ------------
