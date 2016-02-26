@@ -56,7 +56,7 @@ advanced image processing that can work with a large number of image formats, th
 the ``Imagick`` or ``Gmagick`` adapters. If you only require simple image processing with a limited number of
 web formats, then the ``Gd`` adapter should work well.
 
-The point of the way in which the API is written is to help make applications more portable and mitigate
+The point of the API of the `popphp/pop-image` component is to help make applications more portable and mitigate
 any issues that may arise should an application need to be installed on a variety of different environments.
 The goal is to achieve a certain amount of "graceful degradation," should one of the more feature-rich image
 extensions not be available on a new environment.
@@ -137,17 +137,19 @@ look at the shared API of the ``Gd``, ``Imagick`` and ``Gmagick`` adapters.
 
 **Loading an existing image**
 
+To load an existing image resource, you could use the ``Gd`` adapter like this:
+
 .. code-block:: php
 
     $img = new Pop\Image\Gd('image.jpg');
 
-Alternatively, you could use:
+Alternatively, you could use the ``Imagick`` adapter:
 
 .. code-block:: php
 
     $img = new Pop\Image\Imagick('image.jpg');
 
-or, you could use, the ``Gmagick`` extension is available instead:
+or, you could use the ``Gmagick`` adapter if that extension is available instead:
 
 .. code-block:: php
 
@@ -155,17 +157,19 @@ or, you could use, the ``Gmagick`` extension is available instead:
 
 **Create a new image**
 
+To create a new image resource, you could use the ``Gd`` adapter like this:
+
 .. code-block:: php
 
     $img = new Pop\Image\Gd('image.jpg', 640, 480);
 
-Alternatively, you could use:
+Alternatively, you could use the ``Imagick`` adapter:
 
 .. code-block:: php
 
     $img = new Pop\Image\Imagick('image.jpg', 640, 480);
 
-or, you could use, the ``Gmagick`` extension is available instead:
+or, you could use the ``Gmagick`` adapter if that extension is available instead:
 
 .. code-block:: php
 
