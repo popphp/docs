@@ -472,3 +472,48 @@ Here's an example working with text over the image resource:
 
 Extending the Component
 -----------------------
+
+The way that the `popphp/pop-image` component was built was to facilitate extended it and inject
+your own custom image processing features. Knowing that the image processing landscape is vast,
+the component only scratches the surface and provides a fairly basic feature set across the adapters
+that you can use out of the box in your application.
+
+If you are interested in creating and inject your own, more robust set of features into the component
+your application, you can do that by extending the available manipulation classes.
+
+For example, if you wanted to add a couple of methods to the adjust class for the ``Gd`` adapter,
+you can do so like this:
+
+.. code-block:: php
+
+    namespace MyApp\Image;
+
+    use Pop\Image\Adjust\Gd;
+
+    class CustomAdjust extends Gd
+    {
+        public function customAction1() {}
+
+        public function customAction2() {}
+
+        public function customAction3() {}
+    }
+
+Then, later in your application, when you call up the ``Gd`` adapter, you can inject your custom adjust
+adapter like this:
+
+.. code-block:: php
+
+    namespace MyApp;
+
+    $image = new \Pop\Image\Gd\('image.jpg');
+    $image->setAdjust(new MyApp\Image\CustomAdjust());
+
+So when you go you use the image adapter, your custom features will be available along will the
+original set of features:
+
+.. code-block:: php
+
+    $image->adjust->customAction1()
+        ->customAction2()
+        ->customAction3();
