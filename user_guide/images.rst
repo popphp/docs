@@ -201,18 +201,18 @@ as the menus at the top of your favorite image editing software.
 Adjust
 ~~~~~~
 
-The adjust object allows you to perform the following functions:
+The adjust object allows you to perform the following methods:
 
-- brightness
-- contrast
-- desaturate
+* ``$img->adjust->brightness($amount);``
+* ``$img->adjust->contrast($amount);``
+* ``$img->adjust->desaturate();``
 
-And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
+And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced methods:
 
-- hue
-- saturation
-- hsb
-- level
+* ``$img->adjust->hue($amount);``
+* ``$img->adjust->saturation($amount);``
+* ``$img->adjust->hsb($h, $s, $b);``
+* ``$img->adjust->level($black, $gamma, $white);``
 
 Here's an example making some adjustments to the image resource:
 
@@ -221,50 +221,50 @@ Here's an example making some adjustments to the image resource:
     $img = new Pop\Image\Imagick('image.jpg');
     $img->adjust->brightness(50)
         ->contrast(20)
-        ->level(10, 10);
+        ->level(0.7, 1.0, 0.5);
 
 Draw
 ~~~~
 
-The draw object allows you to perform the following functions:
+The draw object allows you to perform the following methods:
 
-- line
-- rectangle
-- square
-- ellipse
-- circle
-- arc
-- chord
-- pie
-- polygon
+* ``$img->draw->line($x1, $y1, $x2, $y2);``
+* ``$img->draw->rectangle($x, $y, $w, $h = null);``
+* ``$img->draw->square($x, $y, $w);``
+* ``$img->draw->ellipse($x, $y, $w, $h = null);``
+* ``$img->draw->circle($x, $y, $w);``
+* ``$img->draw->arc($x, $y, $start, $end, $w, $h = null);``
+* ``$img->draw->chord($x, $y, $start, $end, $w, $h = null);``
+* ``$img->draw->pie($x, $y, $start, $end, $w, $h = null);``
+* ``$img->draw->polygon($points);``
 
-And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
+And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced methods:
 
-- roundedRectangle
-- roundedSquare
+* ``$img->draw->roundedRectangle($x, $y, $w, $h = null, $rx = 10, $ry = null);``
+* ``$img->draw->roundedSquare($x, $y, $w, $rx = 10, $ry = null);``
 
 Here's an example drawing some different shapes with different styles on the image resource:
 
 .. code-block:: php
 
     $img = new Pop\Image\Imagick('image.jpg');
-    $img->draw->setFillColor(255, 0, 0);       // $r, $g, $b
-        ->draw->setStrokeColor(0, 0, 0);       // $r, $g, $b
-        ->draw->setStrokeWidth(5);             // $w
-        ->draw->rectangle(100, 100, 320, 240); // $x, $y, $w, $h
-        ->draw->circle(400, 300, 50);          // $x, $y, $w
+    $img->draw->setFillColor(255, 0, 0);
+        ->draw->setStrokeColor(0, 0, 0);
+        ->draw->setStrokeWidth(5);
+        ->draw->rectangle(100, 100, 320, 240);
+        ->draw->circle(400, 300, 50);
 
 Effect
 ~~~~~~
 
-The effect object allows you to perform the following functions:
+The effect object allows you to perform the following methods:
 
-- border
-- fill
-- radialGradient
-- verticalGradient
-- horizontalGradient
-- linearGradient
+* ``$img->effect->border(array $color, $w, $h = null);``
+* ``$img->effect->fill($r, $g, $b);``
+* ``$img->effect->radialGradient(array $color1, array $color2);``
+* ``$img->effect->verticalGradient(array $color1, array $color2);``
+* ``$img->effect->horizontalGradient(array $color1, array $color2);``
+* ``$img->effect->linearGradient(array $color1, array $color2, $vertical = true);``
 
 Here's an example applying some different effects to the image resource:
 
@@ -276,52 +276,72 @@ Here's an example applying some different effects to the image resource:
 Filter
 ~~~~~~
 
-The filter object allows you to perform the following functions:
+Each filter object is more specific for each image adapter. While a number of the available
+filter methods are available in all 3 of the image adapters, some of their signatures vary
+due the requirements of the underlying image extension.
 
-- blur
-- sharpen
-- negate
-- colorize
-- pixelate
-- pencil [1]_
+The ``Gd` filter object allows you to perform the following methods:
 
-And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
+* ``$img->filter->blur($amount, $type = IMG_FILTER_GAUSSIAN_BLUR);``
+* ``$img->filter->sharpen($amount);``
+* ``$img->filter->negate();``
+* ``$img->filter->colorize($r, $g, $b);``
+* ``$img->filter->pixelate($px);``
+* ``$img->filter->pencil();``
 
-- gaussianBlur [1]_
-- adaptiveBlur
-- motionBlur
-- radialBlur
-- paint
-- posterize
-- noise
-- diffuse
-- skew
-- swirl
-- wave
-- solarize [2]_
+The ``Imagick` filter object allows you to perform the following methods:
+
+* ``$img->filter->blur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL);``
+* ``$img->filter->adaptiveBlur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_DEFAULT);``
+* ``$img->filter->gaussianBlur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL);``
+* ``$img->filter->motionBlur($radius = 0, $sigma = 0, $angle = 0, $channel = \Imagick::CHANNEL_DEFAULT);``
+* ``$img->filter->radialBlur($angle = 0, $channel = \Imagick::CHANNEL_ALL);``
+* ``$img->filter->sharpen($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL);``
+* ``$img->filter->negate();``
+* ``$img->filter->paint($radius);``
+* ``$img->filter->posterize($levels, $dither = false);``
+* ``$img->filter->noise($type = \Imagick::NOISE_MULTIPLICATIVEGAUSSIAN, $channel = \Imagick::CHANNEL_DEFAULT);``
+* ``$img->filter->diffuse($radius);``
+* ``$img->filter->skew($x, $y, $color = 'rgb(255, 255, 255)');``
+* ``$img->filter->swirl($degrees);``
+* ``$img->filter->wave($amp, $length);``
+* ``$img->filter->pixelate($w, $h = null);``
+* ``$img->filter->pencil($radius, $sigma, $angle);``
+
+The ``Gmagick` filter object allows you to perform the following methods:
+
+* ``$img->filter->blur($radius = 0, $sigma = 0, $channel = \Gmagick::CHANNEL_ALL);``
+* ``$img->filter->motionBlur($radius = 0, $sigma = 0, $angle = 0);``
+* ``$img->filter->radialBlur($angle = 0, $channel = \Gmagick::CHANNEL_ALL);``
+* ``$img->filter->sharpen($radius = 0, $sigma = 0, $channel = \Gmagick::CHANNEL_ALL);``
+* ``$img->filter->negate();``
+* ``$img->filter->paint($radius);``
+* ``$img->filter->noise($type = \Gmagick::NOISE_MULTIPLICATIVEGAUSSIAN);``
+* ``$img->filter->diffuse($radius);``
+* ``$img->filter->skew($x, $y, $color = 'rgb(255, 255, 255)');``
+* ``$img->filter->solarize($threshold);``
+* ``$img->filter->swirl($degrees);``
+* ``$img->filter->pixelate($w, $h = null);``
 
 Here's an example applying some different filters to the image resource:
 
 .. code-block:: php
 
     $img = new Pop\Image\Imagick('image.jpg');
-    $img->filter->adaptiveBlur(10)  // $radius
+    $img->filter->gaussianBlur(10)  // $radius
         ->swirl(45)                 // $degrees
         ->negate();
-
-.. [1] Not available with ``Gmagick``
-.. [2] Only available with ``Gmagick``
 
 Layer
 ~~~~~
 
-The layer object allows you to perform the following functions:
+The layer object allows you to perform the following methods:
 
-- overlay
+* ``$img->layer->overlay($image, $x = 0, $y = 0);``
 
-And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced functions:
+And with the ``Imagick`` or ``Gmagick`` adapter, you can perform this advanced method:
 
-- flatten
+* ``$img->layer->flatten();``
 
 Here's an example working with layers over the image resource:
 
@@ -334,20 +354,22 @@ Here's an example working with layers over the image resource:
 Type
 ~~~~
 
-The type object allows you to perform the following functions:
+The type object allows you to perform the following methods:
 
-- set the font
-- set the font size
-- set the text coordinates
-- rotate the text
-- set the text string
+* ``$img->type->font($font);``      // Set the font
+* ``$img->type->size($size);``      // Set the font size
+* ``$img->type->x($x);``            // Set the x-position of the text string
+* ``$img->type->y($y);``            // Set the y-position of the text string
+* ``$img->type->xy($x, $y);``       // Set both the x- and y-position together
+* ``$img->type->rotate($degrees);`` // Set the amount of degrees in which to rotate the text string
+* ``$img->type->text($string);``    // Place the string on the image, using the defined parameters
 
 Here's an example working with text over the image resource:
 
 .. code-block:: php
 
-    $img = new Pop\Image\Imagick('image.psd');
-    $img->type->setFillColor(128, 128, 128)        // $r, $g, $b
+    $img = new Pop\Image\Imagick('image.jpg');
+    $img->type->setFillColor(128, 128, 128)
         ->size(12)
         ->font('fonts/Arial.ttf')
         ->xy(40, 120)
