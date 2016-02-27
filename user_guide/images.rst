@@ -378,5 +378,97 @@ Here's an example working with text over the image resource:
 SVG
 ---
 
+The ``Svg`` adapter has an API that is similar to the raster-based adapters, but is different in other
+areas in that is processing and manipulating a vector image object instead of a bitmap one.
+
+Creating a new SVG image resource is similar to the other adapters:
+
+.. code-block:: php
+
+    $svg = new Pop\Image\Svg('image.svg', 640, 480);
+
+as is loading an existing SVG image resource as well:
+
+.. code-block:: php
+
+    $svg = new Pop\Image\Imagick('image.svg');
+
+The core API of the ``Svg`` adapter looks like this:
+
+* ``$svg->save($to = null);``
+* ``$svg->output($download = false, $sendHeaders = true);``
+
+From there the ``Svg`` adapter has 3 of the advanced manipulation objects available to it: draw, effect
+and type.
+
+Draw
+~~~~
+
+The draw object allows you to perform the following methods:
+
+* ``$svg->draw->line($x1, $y1, $x2, $y2);``
+* ``$svg->draw->rectangle($x, $y, $w, $h = null);``
+* ``$svg->draw->square($x, $y, $w);``
+* ``$svg->draw->roundedRectangle($x, $y, $w, $h = null, $rx = 10, $ry = null);``
+* ``$svg->draw->roundedSquare($x, $y, $w, $rx = 10, $ry = null);``
+* ``$svg->draw->ellipse($x, $y, $w, $h = null);``
+* ``$svg->draw->circle($x, $y, $w);``
+* ``$svg->draw->arc($x, $y, $start, $end, $w, $h = null);``
+* ``$svg->draw->polygon($points);``
+
+Here's an example drawing some different shapes with different styles on the image resource:
+
+.. code-block:: php
+
+    $svg = new Pop\Image\Svg('image.svg');
+    $svg->draw->setFillColor(255, 0, 0);
+        ->draw->setStrokeColor(0, 0, 0);
+        ->draw->setStrokeWidth(5);
+        ->draw->rectangle(100, 100, 320, 240);
+        ->draw->circle(400, 300, 50);
+
+Effect
+~~~~~~
+
+The effect object allows you to perform the following methods:
+
+* ``$svg->effect->border(array $color, $w, $dashLen = null, $dashGap = null);``
+* ``$svg->effect->fill($r, $g, $b);``
+* ``$svg->effect->radialGradient(array $color1, array $color2, $opacity = 1.0);``
+* ``$svg->effect->verticalGradient(array $color1, array $color2, $opacity = 1.0);``
+* ``$svg->effect->horizontalGradient(array $color1, array $color2, $opacity = 1.0);``
+* ``$svg->effect->linearGradient(array $color1, array $color2, $opacity = 1.0, $vertical = true);``
+
+Here's an example applying some different effects to the image resource:
+
+.. code-block:: php
+
+    $svg = new Pop\Image\Svg('image.svg');
+    $svg->effect->verticalGradient([255, 0, 0], [0, 0, 255]);
+
+Type
+~~~~
+
+The type object allows you to perform the following methods:
+
+* ``$svg->type->font($font);`` - set the font
+* ``$svg->type->size($size);`` - set the font size
+* ``$svg->type->x($x);`` - set the x-position of the text string
+* ``$svg->type->y($y);`` - set the y-position of the text string
+* ``$svg->type->xy($x, $y);`` - set both the x- and y-position together
+* ``$svg->type->rotate($degrees);`` - set the amount of degrees in which to rotate the text string
+* ``$svg->type->text($string);`` - place the string on the image, using the defined parameters
+
+Here's an example working with text over the image resource:
+
+.. code-block:: php
+
+    $svg = new Pop\Image\Svg('image.svg');
+    $svg->type->setFillColor(128, 128, 128)
+        ->size(12)
+        ->font('Arial')
+        ->xy(40, 120)
+        ->text('Hello World!');
+
 Extending the Component
 -----------------------
