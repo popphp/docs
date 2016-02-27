@@ -211,9 +211,17 @@ And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced 
 
 - hue
 - saturation
-- brightness
 - hsb
 - level
+
+Here's an example making some adjustments to the image resource:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Imagick('image.jpg');
+    $img->adjust->brightness(50)
+        ->contrast(20)
+        ->level(10, 10);
 
 Draw
 ~~~~
@@ -234,9 +242,17 @@ And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced 
 
 - roundedRectangle
 - roundedSquare
-- brightness
-- hsb
-- level
+
+Here's an example drawing some different shapes with different styles on the image resource:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Imagick('image.jpg');
+    $img->draw->setFillColor(255, 0, 0);       // $r, $g, $b
+    $img->draw->setStrokeColor(0, 0, 0);       // $r, $g, $b
+    $img->draw->setStrokeWidth(5);             // $w
+    $img->draw->rectangle(100, 100, 320, 240); // $x, $y, $w, $h
+    $img->draw->circle(400, 300, 50);          // $x, $y, $w
 
 Effect
 ~~~~~~
@@ -249,6 +265,13 @@ The effect object allows you to perform the following functions:
 - verticalGradient
 - horizontalGradient
 - linearGradient
+
+Here's an example applying some different effects to the image resource:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Imagick('image.jpg');
+    $img->effect->verticalGradient([255, 0, 0], [0, 0, 255]);
 
 Filter
 ~~~~~~
@@ -277,6 +300,15 @@ And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced 
 - wave
 - solarize [2]_
 
+Here's an example applying some different filters to the image resource:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Imagick('image.jpg');
+    $img->filter->adaptiveBlur(10)  // $radius
+        ->swirl(45)                 // $degrees
+        ->negate();
+
 .. [1] Not available with ``Gmagick``
 .. [2] Only available with ``Gmagick``
 
@@ -291,6 +323,14 @@ And with the ``Imagick`` or ``Gmagick`` adapter, you can perform these advanced 
 
 - flatten
 
+Here's an example working with layers over the image resource:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Imagick('image.psd');
+    $img->layer->overlay('watermark.png', 50, 50)  // $image, $x, $y
+        ->flatten();
+
 Type
 ~~~~
 
@@ -301,6 +341,17 @@ The type object allows you to perform the following functions:
 - set the text coordinates
 - rotate the text
 - set the text string
+
+Here's an example working with text over the image resource:
+
+.. code-block:: php
+
+    $img = new Pop\Image\Imagick('image.psd');
+    $img->type->setFillColor(128, 128, 128)        // $r, $g, $b
+        ->size(12)
+        ->font('fonts/Arial.ttf')
+        ->xy(40, 120)
+        ->text('Hello World!');
 
 SVG
 ---
