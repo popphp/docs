@@ -328,8 +328,8 @@ Here's an example applying some different filters to the image resource:
 .. code-block:: php
 
     $img = new Pop\Image\Imagick('image.jpg');
-    $img->filter->gaussianBlur(10)  // $radius
-        ->swirl(45)                 // $degrees
+    $img->filter->gaussianBlur(10)
+        ->swirl(45)
         ->negate();
 
 Layer
@@ -348,7 +348,7 @@ Here's an example working with layers over the image resource:
 .. code-block:: php
 
     $img = new Pop\Image\Imagick('image.psd');
-    $img->layer->overlay('watermark.png', 50, 50)  // $image, $x, $y
+    $img->layer->overlay('watermark.png', 50, 50)
         ->flatten();
 
 Type
@@ -356,13 +356,13 @@ Type
 
 The type object allows you to perform the following methods:
 
-* ``$img->type->font($font);``      // Set the font
-* ``$img->type->size($size);``      // Set the font size
-* ``$img->type->x($x);``            // Set the x-position of the text string
-* ``$img->type->y($y);``            // Set the y-position of the text string
-* ``$img->type->xy($x, $y);``       // Set both the x- and y-position together
-* ``$img->type->rotate($degrees);`` // Set the amount of degrees in which to rotate the text string
-* ``$img->type->text($string);``    // Place the string on the image, using the defined parameters
+* ``$img->type->font($font);`` - set the font
+* ``$img->type->size($size);`` - set the font size
+* ``$img->type->x($x);`` - set the x-position of the text string
+* ``$img->type->y($y);`` - set the y-position of the text string
+* ``$img->type->xy($x, $y);`` - set both the x- and y-position together
+* ``$img->type->rotate($degrees);`` - set the amount of degrees in which to rotate the text string
+* ``$img->type->text($string);`` - place the string on the image, using the defined parameters
 
 Here's an example working with text over the image resource:
 
