@@ -249,10 +249,10 @@ Here's an example drawing some different shapes with different styles on the ima
 
     $img = new Pop\Image\Imagick('image.jpg');
     $img->draw->setFillColor(255, 0, 0);       // $r, $g, $b
-    $img->draw->setStrokeColor(0, 0, 0);       // $r, $g, $b
-    $img->draw->setStrokeWidth(5);             // $w
-    $img->draw->rectangle(100, 100, 320, 240); // $x, $y, $w, $h
-    $img->draw->circle(400, 300, 50);          // $x, $y, $w
+        ->draw->setStrokeColor(0, 0, 0);       // $r, $g, $b
+        ->draw->setStrokeWidth(5);             // $w
+        ->draw->rectangle(100, 100, 320, 240); // $x, $y, $w, $h
+        ->draw->circle(400, 300, 50);          // $x, $y, $w
 
 Effect
 ~~~~~~
