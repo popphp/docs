@@ -19,16 +19,18 @@ during the process of PDF generation. The different assets are outline each with
 section below:
 
 * Documents
-  - Fonts
-  - Forms
+
+ - Fonts
+ - Forms
 
 * Pages
-  - Images
-  - Color
-  - Paths
-  - Text
-  - Annotations
-  - Fields
+
+ - Images
+ - Color
+ - Paths
+ - Text
+ - Annotations
+ - Fields
 
 Importing a PDF
 ---------------
