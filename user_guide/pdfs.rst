@@ -86,14 +86,113 @@ If you wish to import the whole PDF and all of its pages, simply leave the ``$pa
 Documents
 ---------
 
+A document object represents the top-level "container" object of the the PDF document. As you create
+the various assets that are to be placed in the PDF document, you will inject them into the document
+object. At the document level, the main 3 assets that can be added to a document level are **pages**,
+**fonts** and **forms**.  The font and form objects are added at document level as they can be re-used
+on the page level by other assets.
+
 Fonts
 ~~~~~
+
+Font objects are the global document objects that contain information about the fonts that can be used
+by the text objects within the pages of the document. A font can either be one of the standard fonts
+supported by PDF natively, or an embedded font from a font file. The standard set of native PDF fonts
+include:
+
+* Arial
+* Arial,Italic
+* Arial,Bold
+* Arial,BoldItalic
+* Courier
+* Courier-Oblique
+* Courier-Bold
+* Courier-BoldOblique
+* CourierNew
+* CourierNew,Italic
+* CourierNew,Bold
+* CourierNew,BoldItalic
+* Helvetica
+* Helvetica-Oblique
+* Helvetica-Bold
+* Helvetica-BoldOblique
+* Symbol
+* Times-Roman
+* Times-Bold
+* Times-Italic
+* Times-BoldItalic
+* TimesNewRoman
+* TimesNewRoman,Italic
+* TimesNewRoman,Bold
+* TimesNewRoman,BoldItalic
+* ZapfDingbats
+
+The embedded font types that are supported are:
+
+* TrueType
+* OpenType
+* Type1
+
+However, there may be issues embedding a font if certain font data or font files are missing, incomplete
+or corrupted. Furthermore, there may be issues embedding a font if the correct permissions or licensing
+are not provided.
+
+When adding a standard font to the document, you can add it and then reference it by name throughout
+the building of the PDF. For reference, there are constants available in the ``Pop\Pdf\Document\Font``
+that have the correct standard font names stored in them as strings.
+
+.. code-block:: php
+
+    use Pop\Pdf\Document;
+    use Pop\Pdf\Document\Font;
+
+    $font = new Font(Font::TIMES_NEW_ROMAN_BOLDITALIC);
+
+    $document = new Document();
+    $document->addFont($font);
+
+Now, the font defined as "TimesNewRoman,BoldItalic" is available to the document and for any text for which
+you need it.
+
+When embedding an external font, you will need access to its name to correctly reference it by string
+much in the same way you do for a standard font. That name becomes accessible once you create a font object
+with an embedded font and it is successfully parsed.
+
+.. code-block:: php
+
+    use Pop\Pdf\Document;
+    use Pop\Pdf\Document\Font;
+    use Pop\Pdf\Document\Page;
+
+    $customFont = new Font('custom-font.ttf');
+
+    $document = new Document();
+    $document->embedFont($customFont);
+
+    $text = new Page\Text('Hello World!', 24);
+
+    $page = new Page(Page::LETTER);
+    $page->addText($text, $customFont->getName(), 50, 650);
+
+The above example will attach the name and reference of the embedded custom font to that text object.
+Additionally, when a font is added or embedded into a document, its name becomes the current font, which
+is a property you can access like this:
+
+.. code-block:: php
+
+    $page->addText($text, $document->getCurrentFont(), 50, 650);
 
 Forms
 ~~~~~
 
+Form objects are the global document objects that contain information about fields that are to be used
+within a Form object on a page in the document.
+
 Pages
 -----
+
+Page object contain the majority of the assets that you would expect to be
+within a PDF document.
 
 Images
 ~~~~~~
