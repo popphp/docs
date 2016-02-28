@@ -81,7 +81,7 @@ Or create an instance of an image object with a new image via:
 .. code-block:: php
 
     // Returns an instance of Pop\Image\Gd with a new image resource loaded
-    $image = $imageService->create('image.jpg', 640, 480);
+    $image = $imageService->create('new.jpg', 640, 480);
 
 Formats
 -------
