@@ -18,19 +18,19 @@ as a manager or controller of sorts for all of the various PDF assets that will 
 during the process of PDF generation. The different assets are outline each with their own
 section below:
 
-* Documents
+* `Documents`_
 
- - Fonts
- - Forms
+ - `Fonts`_
+ - `Forms`_
 
-* Pages
+* `Pages`_
 
- - Images
- - Color
- - Paths
- - Text
- - Annotations
- - Fields
+ - `Images`_
+ - `Color`_
+ - `Paths`_
+ - `Text`_
+ - `Annotations`_
+ - `Fields`_
 
 Importing a PDF
 ---------------
