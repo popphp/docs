@@ -15,7 +15,7 @@ Building a PDF
 
 At the center of the `popphp/pop-pdf` component is the main ``Pop\Pdf\Pdf`` class. It serves
 as a manager or controller of sorts for all of the various PDF assets that will pass through
-during the process of PDF generation. The different assets are outline each with their own
+during the process of PDF generation. The different assets are each outlinedh with their own
 section below:
 
 * `Documents`_
@@ -31,6 +31,29 @@ section below:
  - `Text`_
  - `Annotations`_
  - `Fields`_
+
+Here's a simple example building and generating a PDF document with some text. The finer points
+of what's happening will be explained more in depth in the later sections.
+
+.. code-block:: php
+
+    use Pop\Pdf\Pdf;
+    use Pop\Pdf\Document;
+    use Pop\Pdf\Document\Font;
+    use Pop\Pdf\Document\Page;
+
+    // Create a page and add the text to it
+    $page = new Page(Page::LETTER);
+    $page->addText(new Page\Text('Hello World!', 24), Font::ARIAL, 50, 650);
+
+    // Create a document, add the font to it and then the page
+    $document = new Document();
+    $document->addFont(new Font(Font::ARIAL));
+    $document->addPage($page);
+
+    // Pass the document to the Pdf object to build it and output it to HTTP
+    $pdf = new Pdf();
+    $pdf->outputToHttp($document);
 
 Importing a PDF
 ---------------
