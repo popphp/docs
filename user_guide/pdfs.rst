@@ -41,6 +41,8 @@ of what's happening will be explained more in depth in the later sections.
     $pdf = new Pdf();
     $pdf->outputToHttp($document);
 
+.. image:: images/pop-pdf1.jpg
+
 Importing a PDF
 ---------------
 
