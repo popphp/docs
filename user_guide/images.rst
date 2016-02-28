@@ -23,7 +23,7 @@ Choose an Adapter
 
 Before you choose which image adapter to use, you may have to determine which PHP image extensions are
 available for your application within its environment. There is an API to assist you with that. The following
-examples test each individual adapter to see if one is available, and if not, then moves on to the next:
+example tests for each individual adapter to see if one is available, and if not, then moves on to the next:
 
 .. code-block:: php
 
@@ -54,7 +54,7 @@ As far as which adapter or extension is the "best" for your application, that wi
 application's needs and what's available in the environment on which your application is running. If you require
 advanced image processing that can work with a large number of image formats, then you'll need to utilize either
 the ``Imagick`` or ``Gmagick`` adapters. If you only require simple image processing with a limited number of
-web formats, then the ``Gd`` adapter should work well.
+image formats, then the ``Gd`` adapter should work well.
 
 The point of the API of the `popphp/pop-image` component is to help make applications more portable and mitigate
 any issues that may arise should an application need to be installed on a variety of different environments.
@@ -87,7 +87,7 @@ Formats
 -------
 
 The image formats available are dependent on which image adapter you choose. The ``Gd`` adapter is limited
-to the 3 basic web formats:
+to the 3 basic web image formats:
 
 - jpg
 - png
@@ -95,19 +95,14 @@ to the 3 basic web formats:
 
 The ``Imagick`` and ``Gmagick`` adapters support a much larger number of formats, including vector formats,
 if the Ghostscript application and libraries are installed in the environment. The number of formats varies
-depending on the environment, but the default formats are:
+depending on the environment, but the default formats include:
 
 - ai
-- avi
 - bmp
 - eps
 - gif
 - ico
 - jpg
-- mov
-- mp4
-- mpg
-- mpeg
 - pdf
 - png
 - ps
@@ -161,19 +156,19 @@ To create a new image resource, you could use the ``Gd`` adapter like this:
 
 .. code-block:: php
 
-    $img = new Pop\Image\Gd('image.jpg', 640, 480);
+    $img = new Pop\Image\Gd('new.jpg', 640, 480);
 
 Alternatively, you could use the ``Imagick`` adapter:
 
 .. code-block:: php
 
-    $img = new Pop\Image\Imagick('image.jpg', 640, 480);
+    $img = new Pop\Image\Imagick('new.jpg', 640, 480);
 
 or, you could use the ``Gmagick`` adapter if that extension is available instead:
 
 .. code-block:: php
 
-    $img = new Pop\Image\Gmagick('image.jpg', 640, 480);
+    $img = new Pop\Image\Gmagick('new.jpg', 640, 480);
 
 All three of the above adapters have the same core API below:
 
@@ -194,7 +189,7 @@ All three of the above adapters have the same core API below:
 Advanced Use
 ------------
 
-The `popphp/pop-image` component comes with set of image manipulation objects that provide a robust
+The `popphp/pop-image` component comes with set of image manipulation objects that provide a more
 advanced feature set when processing images. You can think of these classes and their object instances
 as the menus at the top of your favorite image editing software.
 
@@ -280,7 +275,7 @@ Each filter object is more specific for each image adapter. While a number of th
 filter methods are available in all 3 of the image adapters, some of their signatures vary
 due the requirements of the underlying image extension.
 
-The ``Gd` filter object allows you to perform the following methods:
+The ``Gd`` filter object allows you to perform the following methods:
 
 * ``$img->filter->blur($amount, $type = IMG_FILTER_GAUSSIAN_BLUR);``
 * ``$img->filter->sharpen($amount);``
@@ -289,7 +284,7 @@ The ``Gd` filter object allows you to perform the following methods:
 * ``$img->filter->pixelate($px);``
 * ``$img->filter->pencil();``
 
-The ``Imagick` filter object allows you to perform the following methods:
+The ``Imagick`` filter object allows you to perform the following methods:
 
 * ``$img->filter->blur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL);``
 * ``$img->filter->adaptiveBlur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_DEFAULT);``
@@ -308,7 +303,7 @@ The ``Imagick` filter object allows you to perform the following methods:
 * ``$img->filter->pixelate($w, $h = null);``
 * ``$img->filter->pencil($radius, $sigma, $angle);``
 
-The ``Gmagick` filter object allows you to perform the following methods:
+The ``Gmagick`` filter object allows you to perform the following methods:
 
 * ``$img->filter->blur($radius = 0, $sigma = 0, $channel = \Gmagick::CHANNEL_ALL);``
 * ``$img->filter->motionBlur($radius = 0, $sigma = 0, $angle = 0);``
@@ -348,8 +343,8 @@ Here's an example working with layers over the image resource:
 .. code-block:: php
 
     $img = new Pop\Image\Imagick('image.psd');
-    $img->layer->overlay('watermark.png', 50, 50)
-        ->flatten();
+    $img->layer->flatten()
+        ->overlay('watermark.png', 50, 50);
 
 Type
 ~~~~
@@ -379,13 +374,13 @@ SVG
 ---
 
 The ``Svg`` adapter has an API that is similar to the raster-based adapters, but is different in other
-areas in that is processing and manipulating a vector image object instead of a bitmap one.
+areas in that it is processing and manipulating a vector image object instead of a bitmap image.
 
 Creating a new SVG image resource is similar to the other adapters:
 
 .. code-block:: php
 
-    $svg = new Pop\Image\Svg('image.svg', 640, 480);
+    $svg = new Pop\Image\Svg('new.svg', 640, 480);
 
 as is loading an existing SVG image resource as well:
 
@@ -398,8 +393,8 @@ The core API of the ``Svg`` adapter looks like this:
 * ``$svg->save($to = null);``
 * ``$svg->output($download = false, $sendHeaders = true);``
 
-From there the ``Svg`` adapter has 3 of the advanced manipulation objects available to it: draw, effect
-and type.
+From there the ``Svg`` adapter has 3 of the advanced manipulation objects available to it: **draw**,
+**effect** and **type**.
 
 Draw
 ~~~~
@@ -475,8 +470,8 @@ Extending the Component
 
 The `popphp/pop-image` component was built in a way to facilitate extending it and injecting your own
 custom image processing features. Knowing that the image processing landscape is vast, the component
-only scratches the surface and provides a fairly basic feature set across the adapters that you can
-use out of the box in your application.
+only scratches the surface and provides the core feature set that was outlined above across the different
+adapters.
 
 If you are interested in creating and injecting your own, more robust set of features into the component
 within your application, you can do that by extending the available manipulation classes.
@@ -512,7 +507,8 @@ original set of features:
 
 .. code-block:: php
 
-    $image->adjust->customAction1()
+    $image->adjust->brightness(50)
+        ->customAction1()
         ->customAction2()
         ->customAction3();
 
