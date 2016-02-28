@@ -182,6 +182,13 @@ is a property you can access like this:
 
     $page->addText($text, $document->getCurrentFont(), 50, 650);
 
+If you'd like to override or switch the current document font back to another font that's available,
+you can do so like this:
+
+.. code-block:: php
+
+    $document->setCurrentFont('Arial');
+
 Forms
 ~~~~~
 
