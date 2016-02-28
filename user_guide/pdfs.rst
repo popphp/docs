@@ -53,6 +53,8 @@ import an existing PDF, the method will return a parsed and working document obj
 below, we will import pages 2 and 5 from the existing PDF, add a new page in between them and
 then save the new document:
 
+.. code-block:: php
+
     use Pop\Pdf\Pdf;
     use Pop\Pdf\Document;
     use Pop\Pdf\Document\Font;
