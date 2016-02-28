@@ -18,11 +18,13 @@ as a manager or controller of sorts for all of the various PDF assets that will 
 during the process of PDF generation. The different assets are each outlined with their own
 section below:
 
-**`Documents`_**
+`Documents`_
+
 - `Fonts`_
 - `Forms`_
 
-**`Pages`_**
+`Pages`_
+
 - `Images`_
 - `Color`_
 - `Paths`_
