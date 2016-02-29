@@ -541,14 +541,14 @@ With the ``setTextParams()`` method, you can set the following render parameters
 * ``$rot`` - rotation in degrees
 * ``$rend`` - render mode 0 - 7;
 
-  - 0: Fill
-  - 1: Stroke
-  - 2: Fill and stroke
-  - 3: Invisible
-  - 4: Fill then use for clipping
-  - 5: Stroke the use for clipping
-  - 6: Fill and stroke and use for clipping
-  - 7: Use for clipping
+  - 0 - Fill
+  - 1 - Stroke
+  - 2 - Fill and stroke
+  - 3 - Invisible
+  - 4 - Fill then use for clipping
+  - 5 - Stroke the use for clipping
+  - 6 - Fill and stroke and use for clipping
+  - 7 - Use for clipping
 
 Extending the example above, we can render red text to the page like this:
 
@@ -559,6 +559,7 @@ Extending the example above, we can render red text to the page like this:
     use Pop\Pdf\Document\Font;
     use Pop\Pdf\Document\Page;
 
+    // Create the text object and set the fill color
     $text = new Page\Text('Hello World!', 24);
     $text->setFillColor(new Rgb(255, 0, 0));
 
@@ -580,7 +581,7 @@ Extending the example above, we can render red text to the page like this:
 The ``setWrap`` and ``setLineHeight()`` methods help facilitate larger blocks of text that
 you might add to the PDF page. By setting values with these two methods, you get the PDF
 page the parameters to calculate wrapping the large body of text with the proper line-height
-for you, instead of you having to break the text up manually.
+for you, instead of you having to break the text up and place it manually.
 
 Annotations
 ~~~~~~~~~~~
