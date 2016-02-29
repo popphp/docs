@@ -626,7 +626,8 @@ Fields
 ~~~~~~
 
 As mentioned earlier, field objects are the entities that collect user input and attach that
-data to form objects. The field types that are supported are:
+data to form objects. The benefit of this is the ability to save user input within the document.
+The field types that are supported are:
 
 * Text (single and multi-line)
 * Choice
@@ -650,7 +651,7 @@ Here is an example creating a simple set of fields and attaching them to a form 
     $name->setWidth(200)
          ->setHeight(40);
 
-    $colors = new Page\Field\Text('colors');
+    $colors = new Page\Field\Choice('colors');
     $colors->addOption('Red')
         ->addOption('Green')
         ->addOption('Blue')
