@@ -120,11 +120,10 @@ Documents
 
 A document object represents the top-level "container" object of the the PDF document. As you create
 the various assets that are to be placed in the PDF document, you will inject them into the document
-object. At the document level, the main assets that can be added to a document level are **fonts**,
-**forms**, **metadata** and **pages**.  The font and form objects are added at the document level as they
-can be re-used on the page level by other assets. The metadata object contains informational data about
-the document, such as title and author. And the page objects contain all of the page-level assets, as
-detailed below.
+object. At the document level, the main assets that can be added are **fonts**, **forms**, **metadata**
+and **pages**.  The font and form objects are added at the document level as they can be re-used on the
+page level by other assets. The metadata object contains informational data about the document, such as
+title and author. And the page objects contain all of the page-level assets, as detailed below.
 
 Fonts
 ~~~~~
@@ -295,17 +294,202 @@ metadata object.
 Pages
 -----
 
-Page object contain the majority of the assets that you would expect to be
-within a PDF document.
+Page objects contain the majority of the assets that you would expect to be on a page within a PDF document.
+A page's size can be either custom-defined or one of the predefined sizes. There are constants that define
+those predefine sizes for reference:
+
+* ENVELOPE_10 (297 x 684)
+* ENVELOPE_C5 (461 x 648)
+* ENVELOPE_DL (312 x 624)
+* FOLIO (595 x 935)
+* EXECUTIVE (522 x 756)
+* LETTER (612 x 792)
+* LEGAL (612 x 1008)
+* LEDGER (1224 x 792)
+* TABLOID (792 x 1224)
+* A0 (2384 x 3370)
+* A1 (1684 x 2384)
+* A2 (1191 x 1684)
+* A3 (842 x 1191)
+* A4 (595 x 842)
+* A5 (420 x 595)
+* A6 (297 x 420)
+* A7 (210 x 297)
+* A8 (148 x 210)
+* A9 (105 x 148)
+* B0 (2920 x 4127)
+* B1 (2064 x 2920)
+* B2 (1460 x 2064)
+* B3 (1032 x 1460)
+* B4 (729  x 1032)
+* B5 (516  x 729)
+* B6 (363  x 516)
+* B7 (258  x 363)
+* B8 (181  x 258)
+* B9 (127  x 181)
+* B10 (91 x 127)
+
+.. code-block:: php
+
+    use Pop\Pdf\Document\Page;
+
+    $legal  = new Page(Page::LEGAL);
+    $custom = new Page(640, 480);
+
+The above example creates two pages - one legal size and one a custom size of 640 x 480.
 
 Images
 ~~~~~~
 
+An image object allows you to place an image onto a page in the PDF document, as well as
+control certain aspects of that image, such as size and resolution. The image types that are
+supported are:
+
+* JPG (RGB)
+* JPG (CMYK)
+* PNG (8-Bit Index)
+* PNG (8-Bit Index, w/ Transparency)
+* PNG (24-Bit RGB)
+* GIF (8-Bit Index)
+* GIF (8-Bit Index, w/ Transparency)
+
+Here is an example of embedding a large image and resizing it down before placing on the page:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document\Page;
+
+    $image = new Page\Image('large-image.jpg');
+    $image->resizeToWidth(320);
+
+    $page = new Page(Page::LETTER);
+    $page->addImage($image, 50, 650);
+
+In the above example, the large image is resized to a width of 320 pixels and placed into the page
+at the coordinates of (50, 650).
+
+If you wanted to preserve the image's high resolution, but fit it into a smaller area, you can do
+that by setting the ``$preserveResolution`` flag in the resize method.
+
+.. code-block:: php
+
+    $image->resizeToWidth(320, true);
+
+This way, the high resolution image is not processed and keeps its high quality. It is only placed
+into the page scaled down.
+
 Color
 ~~~~~
 
+With path and text objects, you will need to set colors to render them correctly. The main 3 colorspaces
+that are supported are RGB, CMYK and Grayscale. Each color space object is created by instantiating
+it and passing the color values:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document\Page\Color;
+
+    $red  = new Color\Rgb(255, 0, 0);     // $r, $g, $b (0 - 255)
+    $cyan = new Color\Cmyk(100, 0, 0, 0); // $c, $m, $y, $k (0 - 100)
+    $gray = new Color\Gray(50);           // $gray (0 - 100)
+
+These objects are then passed into the methods that consume them, like ``setFillColor`` and ``setStrokeColor``
+within the path and text objects.
+
 Paths
 ~~~~~
+
+Since vector graphics are at the core of PDF, the path class contains a robust API that allows you
+to no only draw various paths and shapes, but also set their colors and styles. On instantiation,
+you can set the style of the path object:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document\Page\Path;
+    use Pop\Pdf\Document\Page\Color\Rgb;
+
+    $path = new Path(Path::FILL_STROKE);
+    $path->setFillColor(new Rgb(255, 0, 0))
+         ->setStrokeColor(new Rgb(0, 0, 0))
+         ->setStroke(2);
+
+The above example created a path object with the default style of fill and stroke, and set the fill color
+to red, the stroke color to black and the stroke width to 2 points. That means that any paths that are
+drawn from here on out will have those styles until they are changed. You can create and draw more than
+one path or shape with in path object. The path class has constants that reference the different style
+types you can set:
+
+* STROKE
+* STROKE_CLOSE
+* FILL
+* FILL_EVEN_ODD
+* FILL_STROKE
+* FILL_STROKE_EVEN_ODD
+* FILL_STROKE_CLOSE
+* FILL_STROKE_CLOSE_EVEN_ODD
+* CLIPPING
+* CLIPPING_FILL
+* CLIPPING_NO_STYLE
+* CLIPPING_EVEN_ODD
+* CLIPPING_EVEN_ODD_FILL
+* CLIPPING_EVEN_ODD_NO_STYLE
+* NO_STYLE
+
+From there, the core API that available:
+
+``$path->setStyle($style);``
+``$path->setFillColor(Color\ColorInterface $color);``
+``$path->setStrokeColor(Color\ColorInterface $color);``
+``$path->setStroke($width, $dashLength = null, $dashGap = null);``
+``$path->openLayer();``
+``$path->closeLayer();``
+``$path->drawLine($x1, $y1, $x2, $y2);``
+``$path->drawRectangle($x, $y, $w, $h = null);``
+``$path->drawRoundedRectangle($x, $y, $w, $h = null, $rx = 10, $ry = null);``
+``$path->drawSquare($x, $y, $w);``
+``$path->drawRoundedSquare($x, $y, $w, $rx = 10, $ry = null);``
+``$path->drawPolygon($points);``
+``$path->drawEllipse($x, $y, $w, $h = null);``
+``$path->drawCircle($x, $y, $w);``
+``$path->drawArc($x, $y, $start, $end, $w, $h = null);``
+``$path->drawChord($x, $y, $start, $end, $w, $h = null);``
+``$path->drawPie($x, $y, $start, $end, $w, $h = null);``
+``$path->drawOpenCubicBezierCurve($x1, $y1, $x2, $y2, $bezierX1, $bezierY1, $bezierX2, $bezierY2);``
+``$path->drawClosedCubicBezierCurve($x1, $y1, $x2, $y2, $bezierX1, $bezierY1, $bezierX2, $bezierY2);``
+``$path->drawOpenQuadraticBezierCurve($x1, $y1, $x2, $y2, $bezierX, $bezierY, $first = true);``
+``$path->drawClosedQuadraticBezierCurve($x1, $y1, $x2, $y2, $bezierX, $bezierY, $first = true);``
+
+Extending the original code example above, here is an example of drawing a path and placing it on
+a page:
+
+.. code-block:: php
+
+    use Pop\Pdf\Pdf;
+    use Pop\Pdf\Document;
+    use Pop\Pdf\Document\Page;
+    use Pop\Pdf\Document\Page\Path;
+    use Pop\Pdf\Document\Page\Color\Rgb;
+
+    // Create a path object, set the styles and draw a rectangle
+    $path = new Path(Path::FILL_STROKE);
+    $path->setFillColor(new Rgb(255, 0, 0))
+         ->setStrokeColor(new Rgb(0, 0, 0))
+         ->setStroke(2)
+         ->drawRectangle(100, 600, 200, 100);
+
+    // Create a page and add the path to it
+    $page = new Page(Page::LETTER);
+    $page->addPath($path);
+
+    // Create a document and add the page
+    $document = new Document();
+    $document->addPage($page);
+
+    // Pass the document to the Pdf object to build it and output it to HTTP
+    $pdf = new Pdf();
+    $pdf->outputToHttp($document);
+
+.. image:: images/pop-pdf2.jpg
 
 Text
 ~~~~
