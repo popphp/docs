@@ -658,7 +658,7 @@ Here is an example creating a simple set of fields and attaching them to a form 
 
     $comments = new Page\Field\Text('comments');
     $comments->setWidth(200)
-         ->setHeight(40)
+         ->setHeight(100)
          ->setMultiline();
 
     $page = new Page(Page::LETTER);
