@@ -6,9 +6,9 @@ does any type of in-depth reporting or data exporting. Many applications may req
 exported data to be in a concise, well-formatted and portable document and PDF provides this.
 
 The PDF specification, as well as its shared assets' specifications, such as fonts and images,
-are an extremely large and vast set. This component attempts to harness the power and features
-defined by those specifications and present an intuitive API that puts the power of PDF at
-your fingertips.
+are an extremely large and complex set of rules and syntax. This component attempts to harness
+the power and features defined by those specifications and present an intuitive API that puts
+the power of PDF at your fingertips.
 
 Building a PDF
 --------------
@@ -83,6 +83,37 @@ like in the above example.
 
 If you wish to import the whole PDF and all of its pages, simply leave the ``$pages`` parameter blank.
 
+Coordinates
+-----------
+
+It should be noted that the PDF coordinate system has its origin (0, 0) at the bottom left. In the
+example above, the text was placed at the (x, y) coordinate of (50, 650). When placed on a page that
+is set to the size of a letter, which is 612 points x 792 points, that will make the text appear in
+the top left. It the coordinates of the text were set to (50, 50) instead, the text would have appeared
+in the bottom left.
+
+As this coordinate system may or may not suit a developer's personal preference or the requirements
+of the application, the origin point of the document can be set using the following method:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document;
+
+    $document = new Document();
+    $document->setOrigin(Document::ORIGIN_TOP_LEFT);
+
+Now, with the document's origin set to the top left, when you place assets into the document, you can
+use the new origin point. So for the text in the above example to be placed in the same place, the new
+(x, y) coordinates would be (50, 142).
+
+Alternatively, the full list of constants that represent the different origins are:
+
+* ORIGIN_TOP_LEFT
+* ORIGIN_TOP_RIGHT
+* ORIGIN_BOTTOM_LEFT
+* ORIGIN_BOTTOM_RIGHT
+* ORIGIN_CENTER
+
 Documents
 ---------
 
@@ -98,12 +129,6 @@ Fonts
 Font objects are the global document objects that contain information about the fonts that can be used
 by the text objects within the pages of the document. A font can either be one of the standard fonts
 supported by PDF natively, or an embedded font from a font file.
-
-**Notice about embedded fonts**
-
-*There may be issues embedding a font if certain font data or font files are missing, incomplete
-or corrupted. Furthermore, there may be issues embedding a font if the correct permissions or licensing
-are not provided.*
 
 **Standard Fonts**
 
@@ -164,6 +189,12 @@ The embedded font types that are supported are:
 When embedding an external font, you will need access to its name to correctly reference it by string
 much in the same way you do for a standard font. That name becomes accessible once you create a font object
 with an embedded font and it is successfully parsed.
+
+**Notice about embedded fonts**
+
+*There may be issues embedding a font if certain font data or font files are missing, incomplete
+or corrupted. Furthermore, there may be issues embedding a font if the correct permissions or licensing
+are not provided.*
 
 .. code-block:: php
 
