@@ -73,7 +73,7 @@ then save the new document:
     $document->addPage($page);
     $document->orderPages([1, 3, 2]); // 3 being our new page.
 
-    // Pass the document to the Pdf object to build it and output it to HTTP
+    // Pass the document to the Pdf object to build it and write it to a new file
     $pdf = new Pdf();
     $pdf->writeToFile('new-doc.pdf');
 
@@ -97,8 +97,17 @@ Fonts
 
 Font objects are the global document objects that contain information about the fonts that can be used
 by the text objects within the pages of the document. A font can either be one of the standard fonts
-supported by PDF natively, or an embedded font from a font file. The standard set of native PDF fonts
-include:
+supported by PDF natively, or an embedded font from a font file.
+
+**Notice about embedded fonts**
+
+*There may be issues embedding a font if certain font data or font files are missing, incomplete
+or corrupted. Furthermore, there may be issues embedding a font if the correct permissions or licensing
+are not provided.*
+
+**Standard Fonts**
+
+The set of standard, native PDF fonts include:
 
 * Arial
 * Arial,Italic
@@ -127,16 +136,6 @@ include:
 * TimesNewRoman,BoldItalic
 * ZapfDingbats
 
-The embedded font types that are supported are:
-
-* TrueType
-* OpenType
-* Type1
-
-However, there may be issues embedding a font if certain font data or font files are missing, incomplete
-or corrupted. Furthermore, there may be issues embedding a font if the correct permissions or licensing
-are not provided.
-
 When adding a standard font to the document, you can add it and then reference it by name throughout
 the building of the PDF. For reference, there are constants available in the ``Pop\Pdf\Document\Font``
 that have the correct standard font names stored in them as strings.
@@ -153,6 +152,14 @@ that have the correct standard font names stored in them as strings.
 
 Now, the font defined as "TimesNewRoman,BoldItalic" is available to the document and for any text for which
 you need it.
+
+**Embedded Fonts**
+
+The embedded font types that are supported are:
+
+* TrueType
+* OpenType
+* Type1
 
 When embedding an external font, you will need access to its name to correctly reference it by string
 much in the same way you do for a standard font. That name becomes accessible once you create a font object
