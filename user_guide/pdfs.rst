@@ -263,7 +263,7 @@ Then, when you add a field to a page, you can reference the form to attach it to
     $page->addField($name, 'contact_form', 50, 650);
 
 The above example creates a name field for the contact form, giving it a width and height and placing
-it at the (50, 650) coordinated. Fields will be covered more in depth below.
+it at the (50, 650) coordinated. `Fields`_ will be covered more in depth below.
 
 Metadata
 ~~~~~~~~
@@ -345,13 +345,12 @@ An image object allows you to place an image onto a page in the PDF document, as
 control certain aspects of that image, such as size and resolution. The image types that are
 supported are:
 
-* JPG (RGB)
-* JPG (CMYK)
+* JPG (RGB, CMYK or Grayscale)
 * PNG (8-Bit Index)
-* PNG (8-Bit Index, w/ Transparency)
-* PNG (24-Bit RGB)
+* PNG (8-Bit Index w/ Transparency)
+* PNG (24-Bit RGB or Grayscale)
 * GIF (8-Bit Index)
-* GIF (8-Bit Index, w/ Transparency)
+* GIF (8-Bit Index w/ Transparency)
 
 Here is an example of embedding a large image and resizing it down before placing on the page:
 
@@ -365,18 +364,18 @@ Here is an example of embedding a large image and resizing it down before placin
     $page = new Page(Page::LETTER);
     $page->addImage($image, 50, 650);
 
-In the above example, the large image is resized to a width of 320 pixels and placed into the page
-at the coordinates of (50, 650).
+In the above example, the large image is processed (down-sampled) and resized to a width of 320
+pixels and placed into the page at the coordinates of (50, 650).
 
-If you wanted to preserve the image's high resolution, but fit it into a smaller area, you can do
-that by setting the ``$preserveResolution`` flag in the resize method.
+If you wanted to preserve the image's high resolution, but fit it into the smaller dimensions,
+you can do that by setting the ``$preserveResolution`` flag in the resize method.
 
 .. code-block:: php
 
     $image->resizeToWidth(320, true);
 
-This way, the high resolution image is not processed and keeps its high quality. It is only placed
-into the page scaled down.
+This way, the high resolution image is not processed or down-sampled and keeps its high quality.
+It is only placed into scaled down dimensions.
 
 Color
 ~~~~~
@@ -435,7 +434,7 @@ types you can set:
 * CLIPPING_EVEN_ODD_NO_STYLE
 * NO_STYLE
 
-From there, the core API that available:
+From there, this is the core API that is available:
 
 * ``$path->setStyle($style);``
 * ``$path->setFillColor(Color\ColorInterface $color);``
@@ -459,7 +458,7 @@ From there, the core API that available:
 * ``$path->drawOpenQuadraticBezierCurve($x1, $y1, $x2, $y2, $bezierX, $bezierY, $first = true);``
 * ``$path->drawClosedQuadraticBezierCurve($x1, $y1, $x2, $y2, $bezierX, $bezierY, $first = true);``
 
-Extending the original code example above, here is an example of drawing a path and placing it on
+Extending the original code example above, here is an example of drawing a rectangle and placing it on
 a page:
 
 .. code-block:: php
@@ -491,13 +490,13 @@ a page:
 
 .. image:: images/pop-pdf2.jpg
 
-** Layers**
+**Layers**
 
 As the API shows, you can also layer paths using the ``openLayer()`` and ``closeLayer()`` methods
 which open and close an independent graphics state. Any paths added while in this state will render
 onto that "layer." Any paths rendered after the state is closed will render above that layer.
 
-** Clipping Paths**
+**Clipping Paths**
 
 The path object also supports clipping paths via setting the path style to a clipping style. In doing
 so, the path will render as a clipping path or "mask" over any paths before it.
@@ -579,9 +578,9 @@ Extending the example above, we can render red text to the page like this:
 **Wrap and Line-height**
 
 The ``setWrap`` and ``setLineHeight()`` methods help facilitate larger blocks of text that
-you might add to the PDF page. By setting values with these two methods, you get the PDF
-page the parameters to calculate wrapping the large body of text with the proper line-height
-for you, instead of you having to break the text up and place it manually.
+you might add to the PDF page. By setting values with these two methods, you give the PDF
+page the parameters needed to calculate wrapping the large body of text with the proper
+line-height for you, instead of you having to break the text up and place it manually.
 
 Annotations
 ~~~~~~~~~~~
