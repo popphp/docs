@@ -587,7 +587,8 @@ Annotations
 
 Annotation objects give you the functionality to add internal document links and external
 web links to the page. At the base of an annotation object, you would set the width and
-height of the annotation's area or "hot spot." You would always give a target coordinate:
+height of the annotation's click area or "hot spot." For an internal annotation, you would
+pass in a set of target coordinates as well:
 
 .. code-block:: php
 
@@ -595,9 +596,9 @@ height of the annotation's area or "hot spot." You would always give a target co
 
     $link = new Annotation\Link(200, 25, 50, 650); // $width, $height, $xTarget, $yTarget
 
-In the above example, an internal annotation object that is 200 x 25 in width and height
-and is linked to the coordinates of (50, 650) on the current page. If you'd like to target
-coordinates on a different page, you can set that as well:
+In the above example, an internal annotation object that is 200 x 25 in width and height has
+been created and is linked to the coordinates of (50, 650) on the current page. If you'd like
+to target coordinates on a different page, you can set that as well:
 
 .. code-block:: php
 
@@ -623,3 +624,46 @@ to the URL given.
 
 Fields
 ~~~~~~
+
+As mentioned earlier, field objects are the entities that collect user input and attach that
+data to form objects. The field types that are supported are:
+
+* Text (single and multi-line)
+* Choice
+* Button
+
+Here is an example creating a simple set of fields and attaching them to a form object:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document;
+    use Pop\Pdf\Document\Form;
+    use Pop\Pdf\Document\Page;
+
+    // Create the form object and inject it into the document object
+    $form = new Form('contact_form');
+
+    $document = new Document();
+    $document->addForm($form);
+
+    $name = new Page\Field\Text('name');
+    $name->setWidth(200)
+         ->setHeight(40);
+
+    $colors = new Page\Field\Text('colors');
+    $colors->addOption('Red')
+        ->addOption('Green')
+        ->addOption('Blue')
+
+    $comments = new Page\Field\Text('comments');
+    $comments->setWidth(200)
+         ->setHeight(40)
+         ->setMultiline();
+
+    $page = new Page(Page::LETTER);
+    $page->addField($name, 'contact_form', 50, 650)
+         ->addField($colors, 'contact_form', 50, 600)
+         ->addField($comments, 'contact_form', 50, 550);
+
+In the above example, the fields are created, attached to the form object and added
+to the page object.
