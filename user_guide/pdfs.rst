@@ -585,5 +585,41 @@ line-height for you, instead of you having to break the text up and place it man
 Annotations
 ~~~~~~~~~~~
 
+Annotation objects give you the functionality to add internal document links and external
+web links to the page. At the base of an annotation object, you would set the width and
+height of the annotation's area or "hot spot." You would always give a target coordinate:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document\Page\Annotation;
+
+    $link = new Annotation\Link(200, 25, 50, 650); // $width, $height, $xTarget, $yTarget
+
+In the above example, an internal annotation object that is 200 x 25 in width and height
+and is linked to the coordinates of (50, 650) on the current page. If you'd like to target
+coordinates on a different page, you can set that as well:
+
+.. code-block:: php
+
+    $link->setPageTarget(3);
+
+And if you would like to zoom in on the target, you can set the Z target as well:
+
+.. code-block:: php
+
+    $link->setZTarget(2);
+
+For external URL annotations, instead of an internal set of coordinates, you would pass
+the URL into the constructor:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document\Page\Annotation;
+
+    $link = new Annotation\Url(200, 25, 'http://www.mywebsite.com/');
+
+The above example will create an external annotation link that, when clicked, will link out
+to the URL given.
+
 Fields
 ~~~~~~
