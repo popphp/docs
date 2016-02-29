@@ -437,27 +437,27 @@ types you can set:
 
 From there, the core API that available:
 
-``$path->setStyle($style);``
-``$path->setFillColor(Color\ColorInterface $color);``
-``$path->setStrokeColor(Color\ColorInterface $color);``
-``$path->setStroke($width, $dashLength = null, $dashGap = null);``
-``$path->openLayer();``
-``$path->closeLayer();``
-``$path->drawLine($x1, $y1, $x2, $y2);``
-``$path->drawRectangle($x, $y, $w, $h = null);``
-``$path->drawRoundedRectangle($x, $y, $w, $h = null, $rx = 10, $ry = null);``
-``$path->drawSquare($x, $y, $w);``
-``$path->drawRoundedSquare($x, $y, $w, $rx = 10, $ry = null);``
-``$path->drawPolygon($points);``
-``$path->drawEllipse($x, $y, $w, $h = null);``
-``$path->drawCircle($x, $y, $w);``
-``$path->drawArc($x, $y, $start, $end, $w, $h = null);``
-``$path->drawChord($x, $y, $start, $end, $w, $h = null);``
-``$path->drawPie($x, $y, $start, $end, $w, $h = null);``
-``$path->drawOpenCubicBezierCurve($x1, $y1, $x2, $y2, $bezierX1, $bezierY1, $bezierX2, $bezierY2);``
-``$path->drawClosedCubicBezierCurve($x1, $y1, $x2, $y2, $bezierX1, $bezierY1, $bezierX2, $bezierY2);``
-``$path->drawOpenQuadraticBezierCurve($x1, $y1, $x2, $y2, $bezierX, $bezierY, $first = true);``
-``$path->drawClosedQuadraticBezierCurve($x1, $y1, $x2, $y2, $bezierX, $bezierY, $first = true);``
+* ``$path->setStyle($style);``
+* ``$path->setFillColor(Color\ColorInterface $color);``
+* ``$path->setStrokeColor(Color\ColorInterface $color);``
+* ``$path->setStroke($width, $dashLength = null, $dashGap = null);``
+* ``$path->openLayer();``
+* ``$path->closeLayer();``
+* ``$path->drawLine($x1, $y1, $x2, $y2);``
+* ``$path->drawRectangle($x, $y, $w, $h = null);``
+* ``$path->drawRoundedRectangle($x, $y, $w, $h = null, $rx = 10, $ry = null);``
+* ``$path->drawSquare($x, $y, $w);``
+* ``$path->drawRoundedSquare($x, $y, $w, $rx = 10, $ry = null);``
+* ``$path->drawPolygon($points);``
+* ``$path->drawEllipse($x, $y, $w, $h = null);``
+* ``$path->drawCircle($x, $y, $w);``
+* ``$path->drawArc($x, $y, $start, $end, $w, $h = null);``
+* ``$path->drawChord($x, $y, $start, $end, $w, $h = null);``
+* ``$path->drawPie($x, $y, $start, $end, $w, $h = null);``
+* ``$path->drawOpenCubicBezierCurve($x1, $y1, $x2, $y2, $bezierX1, $bezierY1, $bezierX2, $bezierY2);``
+* ``$path->drawClosedCubicBezierCurve($x1, $y1, $x2, $y2, $bezierX1, $bezierY1, $bezierX2, $bezierY2);``
+* ``$path->drawOpenQuadraticBezierCurve($x1, $y1, $x2, $y2, $bezierX, $bezierY, $first = true);``
+* ``$path->drawClosedQuadraticBezierCurve($x1, $y1, $x2, $y2, $bezierX, $bezierY, $first = true);``
 
 Extending the original code example above, here is an example of drawing a path and placing it on
 a page:
@@ -491,8 +491,96 @@ a page:
 
 .. image:: images/pop-pdf2.jpg
 
+** Layers**
+
+As the API shows, you can also layer paths using the ``openLayer()`` and ``closeLayer()`` methods
+which open and close an independent graphics state. Any paths added while in this state will render
+onto that "layer." Any paths rendered after the state is closed will render above that layer.
+
+** Clipping Paths**
+
+The path object also supports clipping paths via setting the path style to a clipping style. In doing
+so, the path will render as a clipping path or "mask" over any paths before it.
+
 Text
 ~~~~
+
+With text objects, you can control a number of parameters that affect how the text is displayed
+beyond which font is used and the size. As with path objects, you can set color and style, as well
+as a few other parameters. As one of the above examples demonstrated, you can create a text object
+like this:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document\Page;
+
+    $text = new Page\Text('Hello World!', 24);
+
+    // Create a page and add the text to it
+    $page = new Page(Page::LETTER);
+    $page->addText($text, 'Arial', 50, 650);
+
+The above code create a text object with the font size of 24 points and added it to a page using
+the Arial font. From there, you can do more with the text object API. Here is what the API looks
+like for a text object:
+
+* ``$text->setFillColor(Color\ColorInterface $color);``
+* ``$text->setStrokeColor(Color\ColorInterface $color);``
+* ``$text->setStroke($width, $dashLength = null, $dashGap = null);``
+* ``$test->setWrap($wrap, $lineHeight = null);``
+* ``$test->setLineHeight($lineHeight);``
+* ``$test->setRotation($rotation);``
+* ``$test->setTextParams($c = 0, $w = 0, $h = 100, $v = 100, $rot = 0, $rend = 0);``
+
+With the ``setTextParams()`` method, you can set the following render parameters:
+
+* ``$c`` - character spacing
+* ``$w`` - word spacing
+* ``$h`` - horizontal stretch
+* ``$v`` - vertical stretch
+* ``$rot`` - rotation in degrees
+* ``$rend`` - render mode 0 - 7;
+
+  - 0: Fill
+  - 1: Stroke
+  - 2: Fill and stroke
+  - 3: Invisible
+  - 4: Fill then use for clipping
+  - 5: Stroke the use for clipping
+  - 6: Fill and stroke and use for clipping
+  - 7: Use for clipping
+
+Extending the example above, we can render red text to the page like this:
+
+.. code-block:: php
+
+    use Pop\Pdf\Pdf;
+    use Pop\Pdf\Document;
+    use Pop\Pdf\Document\Font;
+    use Pop\Pdf\Document\Page;
+
+    $text = new Page\Text('Hello World!', 24);
+    $text->setFillColor(new Rgb(255, 0, 0));
+
+    // Create a page and add the text to it
+    $page = new Page(Page::LETTER);
+    $page->addText($text, Font::ARIAL, 50, 650);
+
+    // Create a document, add the font to it and then the page
+    $document = new Document();
+    $document->addFont(new Font(Font::ARIAL));
+    $document->addPage($page);
+
+    // Pass the document to the Pdf object to build it and output it to HTTP
+    $pdf = new Pdf();
+    $pdf->outputToHttp($document);
+
+**Wrap and Line-height**
+
+The ``setWrap`` and ``setLineHeight()`` methods help facilitate larger blocks of text that
+you might add to the PDF page. By setting values with these two methods, you get the PDF
+page the parameters to calculate wrapping the large body of text with the proper line-height
+for you, instead of you having to break the text up manually.
 
 Annotations
 ~~~~~~~~~~~
