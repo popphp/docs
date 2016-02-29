@@ -103,10 +103,11 @@ of the application, the origin point of the document can be set using the follow
     $document->setOrigin(Document::ORIGIN_TOP_LEFT);
 
 Now, with the document's origin set to the top left, when you place assets into the document, you can
-use the new origin point. So for the text in the above example to be placed in the same place, the new
-(x, y) coordinates would be (50, 142).
+base it off of the new origin point. So for the text in the above example to be placed in the same place,
+the new (x, y) coordinates would be (50, 142).
 
-Alternatively, the full list of constants that represent the different origins are:
+Alternatively, the full list of constants in the ``Pop\Pdf\Document`` class that represent the
+different origins are:
 
 * ORIGIN_TOP_LEFT
 * ORIGIN_TOP_RIGHT
@@ -163,7 +164,7 @@ The set of standard, native PDF fonts include:
 
 When adding a standard font to the document, you can add it and then reference it by name throughout
 the building of the PDF. For reference, there are constants available in the ``Pop\Pdf\Document\Font``
-that have the correct standard font names stored in them as strings.
+class that have the correct standard font names stored in them as strings.
 
 .. code-block:: php
 
