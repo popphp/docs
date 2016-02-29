@@ -120,9 +120,9 @@ Documents
 
 A document object represents the top-level "container" object of the the PDF document. As you create
 the various assets that are to be placed in the PDF document, you will inject them into the document
-object. At the document level, the main 3 assets that can be added to a document level are **pages**,
-**fonts** and **forms**.  The font and form objects are added at document level as they can be re-used
-on the page level by other assets.
+object. At the document level, the main 3 assets that can be added to a document level are **fonts**,
+**forms**, **metatdata** and **pages**.  The font and form objects are added at document level as they
+can be re-used on the page level by other assets.
 
 Fonts
 ~~~~~
@@ -232,7 +232,62 @@ Forms
 ~~~~~
 
 Form objects are the global document objects that contain information about fields that are to be used
-within a Form object on a page in the document.
+within a Form object on a page in the document. By themselves they are fairly simple to use and inject
+into a document object. From there, you would add fields to a their respective pages, while attaching
+them to a form object.
+
+The example below demonstrates how to add a form object to a document:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document;
+    use Pop\Pdf\Document\Form;
+
+    $form = new Form('contact_form');
+
+    $document = new Document();
+    $document->addForm($form);
+
+Then, when you add a field to a page, you can reference the form to attach it to:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document\Page;
+
+    $name = new Page\Field\Text('name');
+    $name->setWidth(200)
+         ->setHeight(40);
+
+    $page = new Page(Page::LETTER);
+    $page->addField($name, 'contact_form', 50, 650);
+
+The above example creates a name field for the contact form, giving it a width and height and placing
+it at the (50, 650) coordinated. Fields will be covered more in depth below.
+
+Metadata
+--------
+
+The metadata object contains the document identifier data such as title, author and date. If you'd like
+to set the metadata of the document, you can with the following API:
+
+.. code-block:: php
+
+    use Pop\Pdf\Document;
+
+    $metadata = new Document\Metadata();
+    $metadata->setTitle('My Document')
+        ->setAuthor('Some Author')
+        ->setSubject('Some Subject')
+        ->setCreator('Some Creator')
+        ->setProducer('Some Producer')
+        ->setCreationDate('August 19, 2015')
+        ->setModDate('August 22, 2015')
+
+    $document = new Document();
+    $document->setMetadata($metadata);
+
+And there are getter methods to retrieve the data from the metadata object. This data will commonly
+be displayed in the the document title bar and info boxes of a PDF reader.
 
 Pages
 -----
