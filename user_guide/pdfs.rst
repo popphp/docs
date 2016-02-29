@@ -121,7 +121,7 @@ Documents
 A document object represents the top-level "container" object of the the PDF document. As you create
 the various assets that are to be placed in the PDF document, you will inject them into the document
 object. At the document level, the main 3 assets that can be added to a document level are **fonts**,
-**forms**, **metatdata** and **pages**.  The font and form objects are added at document level as they
+**forms**, **metadata** and **pages**.  The font and form objects are added at document level as they
 can be re-used on the page level by other assets.
 
 Fonts
@@ -265,9 +265,10 @@ The above example creates a name field for the contact form, giving it a width a
 it at the (50, 650) coordinated. Fields will be covered more in depth below.
 
 Metadata
---------
+~~~~~~~~
 
-The metadata object contains the document identifier data such as title, author and date. If you'd like
+The metadata object contains the document identifier data such as title, author and date. This is the data
+that is commonly displayed in the the document title bar and info boxes of a PDF reader.If you'd like
 to set the metadata of the document, you can with the following API:
 
 .. code-block:: php
@@ -286,8 +287,8 @@ to set the metadata of the document, you can with the following API:
     $document = new Document();
     $document->setMetadata($metadata);
 
-And there are getter methods to retrieve the data from the metadata object. This data will commonly
-be displayed in the the document title bar and info boxes of a PDF reader.
+And there are getter methods that follow the same naming convention to retrieve the data from the
+metadata object.
 
 Pages
 -----
