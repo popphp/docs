@@ -12,5 +12,5 @@ the links below to get started.
     installation
     getting_started/index
     user_guide/index
-    example_application/index
+    tutorial_application/index
     reference/index
