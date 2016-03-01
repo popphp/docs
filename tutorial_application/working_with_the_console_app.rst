@@ -12,7 +12,7 @@ To show the help screen:
 
     script/pop help
 
-.. image:: images/pop-cli1.jpg
+.. image:: images/pop-cli1.png
 
 To show the current posts:
 
@@ -20,7 +20,7 @@ To show the current posts:
 
     script/pop show
 
-.. image:: images/pop-cli2.jpg
+.. image:: images/pop-cli2.png
 
 To delete a post:
 
@@ -28,4 +28,4 @@ To delete a post:
 
     script/pop delete
 
-.. image:: images/pop-cli3.jpg
+.. image:: images/pop-cli3.png
