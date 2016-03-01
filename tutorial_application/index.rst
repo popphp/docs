@@ -14,6 +14,7 @@ your application using Pop.
     :maxdepth: 1
 
     get_the_tutorial_application
+    application_structure
     working_with_the_web_app
     working_with_the_console_app
 
