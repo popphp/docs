@@ -34,7 +34,7 @@ A closer look at the application code in the main ``public/index.php`` file and 
     // Run the app
     $app->run();
 
-In the above file, the Composer autoloader is loaded up, and the new application object is created,
+In the above file, the autoloader is loaded up, and the new application object is created,
 passing the web application configuration file into the application object. From there, the ``run()``
 method is called and the web application is routed and on its way.
 

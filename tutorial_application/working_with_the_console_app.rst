@@ -32,7 +32,7 @@ To delete a post:
 Script File
 ~~~~~~~~~~~
 
-A closer look at the application code in the main ``public/index.php`` file and you'll see:
+A closer look at the application code in the main ``script/pop`` file and you'll see:
 
 .. code-block:: php
 
@@ -51,7 +51,7 @@ Application Object
 ~~~~~~~~~~~~~~~~~~
 
 In the above file, the shell environment is set to PHP. And like the web index file, this script file
-loads the Composer autoloader, and the new application object is created, passing the console application
+loads the autoloader, and the new application object is created, passing the console application
 configuration file into the application object. From there, the ``run()`` method is called and the
 console application is routed and on its way.
 
