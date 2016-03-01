@@ -73,7 +73,7 @@ triggered if the environment is on the console.
 ConsoleController
 ~~~~~~~~~~~~~~~~~
 
-Looking at the main ``ConsoleController`` class in the ``app/src/Controller`` folder, you will see the
+Looking at the main ``ConsoleController`` class in the ``app/src/Controller/`` folder, you will see the
 various method actions that serve as the route end points. Within the constructor of the controller,
 a few object properties are wired up that will be needed, such at the console object and the help
 command. Within the ``help`` method, you can see a basic call to display the help text in the console.

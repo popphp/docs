@@ -58,7 +58,7 @@ to the rest of the application.
 IndexController
 ~~~~~~~~~~~~~~~
 
-Looking at the main ``IndexController`` class in the ``app/src/Controller`` folder, you will see the
+Looking at the main ``IndexController`` class in the ``app/src/Controller/`` folder, you will see the
 various method actions that serve as the route end points. Within the constructor of the controller,
 a few object properties are wired up that will be needed, such at the request and response objects and
 the view path. Within the ``index`` method, you can see a basic call the model, and the setting of
