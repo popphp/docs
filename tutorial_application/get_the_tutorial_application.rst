@@ -1,8 +1,7 @@
 Get the Tutorial Application
 ============================
 
-You can get a copy of the Pop PHP Framework tutorial application over via composer or directly
-from `Github`_.
+You can get the Pop PHP Framework tutorial application over via composer or directly from `Github`_.
 
 **Install via composer:**
 

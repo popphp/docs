@@ -2,13 +2,13 @@ Tutorial Application
 ====================
 
 This section of the documentation will step you through the `tutorial application`_ to demonstrate
-the various concepts explained the previous sections. The tutorial application will step you through
-a basic MVC application with some simple CRUD functionality using a small SQLite database. Contained
-within the application is a demonstration of both a web-based and cli-based application.
+a few of the various concepts explained the previous sections. The tutorial application will step you
+through a basic MVC application with some simple CRUD functionality using a small SQLite database.
+Contained within the application is a demonstration of both a web-based and a console-based application.
 
 There is also a more stripped down and traditional `skeleton application`_ that you can install via
-composer or from GitHub if you are looking for more of a basic foundation on which to begin coding
-your application using Pop.
+composer or from GitHub if you are looking for more of a basic foundation on which to begin directly
+coding your application using Pop.
 
 .. toctree::
     :maxdepth: 1
