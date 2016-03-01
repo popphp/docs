@@ -1,2 +1,2 @@
-Pop\Paginator
-=============
+Pop\\Paginator
+==============
