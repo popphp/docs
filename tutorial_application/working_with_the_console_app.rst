@@ -47,28 +47,15 @@ A closer look at the application code in the main ``script/pop`` file and you'll
 
     $app->run();
 
-Application Object
-~~~~~~~~~~~~~~~~~~
-
-In the above file, the shell environment is set to PHP. And like the web index file, this script file
+In the above file, the shell environment is set to PHP. Like the web index file, this script file
 loads the autoloader, and the new application object is created, passing the console application
 configuration file into the application object. From there, the ``run()`` method is called and the
 console application is routed and on its way.
 
 If you take a look at the ``app/config/application.console.php`` file, you'll see the console routes,
 as well as the database service, are defined in the file. The routes are automatically passed and wired
-up to a router object and the main application sets the database object that is to be used from the
-service. If you look insde the ``Tutorial\Application`` class, you see the lines:
-
-.. code-block:: php
-
-    $this->on('app.init', function($application){
-        Record::setDb($application->services['database']);
-    });
-
-Once those lines of code are executed upon the ``app.init`` event trigger, the database becomes available
-to the rest of the application. Furthermore, you'll see a CLI specific header and footer that is only
-triggered if the environment is on the console.
+up to a router object and the main application object sets the database object that is to be used from the
+service.
 
 ConsoleController
 ~~~~~~~~~~~~~~~~~
