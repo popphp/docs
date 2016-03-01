@@ -6,6 +6,10 @@ hybrid between standard ACL and RBAC user access concepts. Beyond allowing or de
 access, it provides support for roles, resources, inherited permissions and also assertions for
 fine-grain access control.
 
+It is not to be confused with the authentication component, as that deals with whether or not
+a user is whom they claim they are (identity) and not about the resources to which they may or
+may not have access.
+
 Installation
 ------------
 
