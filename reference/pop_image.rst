@@ -1,7 +1,7 @@
 Pop\\Image
 ==========
 
-The `popphp/pop-image` component provides a robust API to image creation and manipulation. Adapters are
+The `popphp/pop-image` component provides a robust API for image creation and manipulation. Adapters are
 provided to utilize either the GD, Imagick or Gmagick extensions. Also, the SVG format is supported with
 its own adapter as well.
 
