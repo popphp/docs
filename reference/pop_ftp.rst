@@ -1,7 +1,8 @@
 Pop\\Ftp
 ========
 
-The `popphp/pop-ftp` component provides a simple API for the managing FTP.
+The `popphp/pop-ftp` component provides a simple API for the managing FTP connections and transferring files
+over FTP.
 
 Installation
 ------------

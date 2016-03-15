@@ -1,7 +1,7 @@
 Pop\\Geo
 ========
 
-The `popphp/pop-geo` component provides a simple API some common geographic needs, such as distance
+The `popphp/pop-geo` component provides a simple API for some common geographic needs, such as distance
 calculation between two sets of coordinates.
 
 Installation

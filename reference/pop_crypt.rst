@@ -1,8 +1,8 @@
 Pop\\Crypt
 ==========
 
-The `popphp/pop-crypt` component is a component for handling data encryption. One-way hashing and encryption
-is supported via `crypt`, `bcrypt`, `md5` and `sha`. Two-way encryption is supported with `mcrypt`.
+The `popphp/pop-crypt` component is a component for handling data encryption. One-way encryption is
+supported via `crypt`, `bcrypt`, `md5` and `sha`. Two-way encryption is supported with `mcrypt`.
 
 Installation
 ------------

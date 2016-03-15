@@ -1,7 +1,7 @@
 Pop\\Filter
 ===========
 
-The `popphp/pop-filter` component provides some basic data filtering for common situations.
+The `popphp/pop-filter` component provides some basic filtering for common situations.
 
 Installation
 ------------
