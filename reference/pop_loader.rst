@@ -5,7 +5,7 @@ The `popphp/pop-loader` component provides an alternative autoloading option for
 require a PHP application to function outside of the Composer eco-system. The API mirrors Composer's
 API so that the two autoloaders are interchangeable. Furthermore, the component provides a class
 mapper class that will parse a provided source folder and generate a static classmap for faster
-auotload times.
+autoload times.
 
 Installation
 ------------
