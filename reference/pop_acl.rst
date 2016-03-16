@@ -64,6 +64,8 @@ has access to which resource, and to what degree.
 
 You can fine-tune the permissions as well, setting which user is denied or allowed.
 
+.. code-block:: php
+
     $acl->allow('admin', 'page')         // Admin can do anything to a page
         ->allow('editor', 'page')        // Editor can do anything to a page
         ->deny('editor', 'page', 'add'); // except add a page
