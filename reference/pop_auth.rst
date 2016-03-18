@@ -32,7 +32,7 @@ You can authenticate using a file, a database, over HTTP or over LDAP.
 File
 ~~~~
 
-For this example, we use a file called '.htmyauth' containing a colon-delimited
+For this example, we use a file called ``.htmyauth`` containing a colon-delimited
 list of usernames and encrypted passwords:
 
 .. code-block:: text

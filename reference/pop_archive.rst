@@ -40,7 +40,8 @@ You can pass it any of the supported archive file types and extract them:
     $archive = new Pop\Archive\Archive('test.zip');
     $archive->extract('/path/to/extract/files');
 
-If the archive file is compressed, it will decompress it first:
+If the archive file is compressed, it will decompress it first. No extra step
+required:
 
 .. code-block:: php
 
