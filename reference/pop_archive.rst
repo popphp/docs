@@ -33,7 +33,7 @@ Or, include it in your composer.json file:
 Extracting Files
 ----------------
 
-You can pass it any of the supported archive files and extract them:
+You can pass it any of the supported archive file types and extract them:
 
 .. code-block:: php
 
@@ -50,7 +50,8 @@ If the archive file is compressed, it will decompress it first:
 Compressing Files
 -----------------
 
-To add files to an archive, you pass it the archive filename, new or existing:
+To add files to an archive, you pass it the archive filename (new or existing),
+and then call either the ``addFile`` method or the ``addFiles`` method:
 
 .. code-block:: php
 
@@ -63,7 +64,7 @@ To add files to an archive, you pass it the archive filename, new or existing:
     ]);
 
 
-To compress an TAR archive file, you call the `compress` method and pass it either
+To compress an TAR archive file, you call the ``compress`` method and pass it either
 `gz` or `bz2`:
 
 .. code-block:: php

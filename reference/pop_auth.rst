@@ -55,12 +55,12 @@ Database
 ~~~~~~~~
 
 For this example, there is a table in a database called 'users' and a correlating table class
-called 'MyApp\Users' that extends 'Pop\Db\Record'.
+called ``MyApp\\Users`` that extends ``Pop\\Db\\Record``.
 
-For simplicity, the table has a column called 'username' and a column called 'password.'
-The value of the 'password' column is encrypted using bcrypt. These are all options that
+For simplicity, the table has a column called `username` and a column called `password`.
+The value of the `password` column is encrypted using bcrypt. These are all options that
 can be set to whatever the user decides them to be. But, by default, the table adapter
-will look for a 'username' column and a 'password' column unless otherwise specified.
+will look for a `username` column and a `password` column unless otherwise specified.
 
 .. code-block:: php
 
