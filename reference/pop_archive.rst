@@ -38,8 +38,6 @@ Extracting Files
     $archive = new Pop\Archive\Archive('test.zip');
     $archive->extract('/path/to/extract/files');
 
-### Extract a tar.gz archive
-
 .. code-block:: php
 
     // It will auto-detect and automatically decompress a compressed TAR file
