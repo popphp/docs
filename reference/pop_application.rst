@@ -39,16 +39,19 @@ application. You can pass it individual instances of the objects your applicatio
 
 .. code-block:: php
 
-    $router  = new Pop\Router\Router();
-    $service = new Pop\Service\Locator();
-    $events  = new Pop\Event\Manager();
+    $autoloader = include __DIR__ . '/vendor/autoload.php';
+    $router     = new Pop\Router\Router();
+    $service    = new Pop\Service\Locator();
+    $events     = new Pop\Event\Manager();
 
     $app = new Pop\Application(
-        $router, $service, $events
+        $autoloader, $router, $service, $events
     );
 
-Or, you can pass it a configuration array and let the application object create and set up the
-objects for you:
+In the above example, the autoloader, a router, a service locator and an event manager all get passed
+into the application so that can be utilized at any given point with the application's life cycle.
+Additionally, you can pass it a configuration array and let the application object create and set up
+the objects for you:
 
 .. code-block:: php
 

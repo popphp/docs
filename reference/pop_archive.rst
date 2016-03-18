@@ -33,21 +33,24 @@ Or, include it in your composer.json file:
 Extracting Files
 ----------------
 
+You can pass it any of the supported archive files and extract them:
+
 .. code-block:: php
 
     $archive = new Pop\Archive\Archive('test.zip');
     $archive->extract('/path/to/extract/files');
 
+If the archive file is compressed, it will decompress it first:
+
 .. code-block:: php
 
-    // It will auto-detect and automatically decompress a compressed TAR file
     $archive = new Pop\Archive\Archive('test.tar.gz');
     $archive->extract('/path/to/extract/files');
 
 Compressing Files
 -----------------
 
-Add files to a zip archive
+To add files to an archive, you pass it the archive filename, new or existing:
 
 .. code-block:: php
 
@@ -60,7 +63,8 @@ Add files to a zip archive
     ]);
 
 
-Add files to a tar archive and compress
+To compress an TAR archive file, you call the `compress` method and pass it either
+`gz` or `bz2`:
 
 .. code-block:: php
 

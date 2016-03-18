@@ -27,6 +27,8 @@ Or, include it in your composer.json file:
 Basic Use
 ---------
 
+You can authenticate using a file, a database, over HTTP or over LDAP.
+
 File
 ~~~~
 
