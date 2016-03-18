@@ -33,5 +33,42 @@ Or, include it in your composer.json file:
 Extracting Files
 ----------------
 
+.. code-block:: php
+
+    $archive = new Pop\Archive\Archive('test.zip');
+    $archive->extract('/path/to/extract/files');
+
+### Extract a tar.gz archive
+
+.. code-block:: php
+
+    // It will auto-detect and automatically decompress a compressed TAR file
+    $archive = new Pop\Archive\Archive('test.tar.gz');
+    $archive->extract('/path/to/extract/files');
+
 Compressing Files
 -----------------
+
+Add files to a zip archive
+
+.. code-block:: php
+
+    $archive = new Pop\Archive\Archive('test.zip');
+    $archive->addFiles('/path/to/single/file.txt');
+    $archive->addFiles([
+        '/path/to/multiple/files1.txt',
+        '/path/to/multiple/files2.txt',
+        '/path/to/multiple/files3.txt',
+    ]);
+
+
+Add files to a tar archive and compress
+
+.. code-block:: php
+
+    $archive = new Pop\Archive\Archive('test.tar');
+    $archive->addFiles('/path/to/folder/of/files');
+
+    // Creates the compressed archive file 'test.tar.bz2'
+    $archive->compress('bz2');
+
