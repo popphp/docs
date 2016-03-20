@@ -125,19 +125,19 @@ adapter your application is currently using so that it can properly build the SQ
 
 The above example will produce:
 
-.. code-block:: text
+.. code-block:: sql
 
     SELECT `id`, `username` FROM `users` WHERE `id` > ?
 
 If the database adapter changed to PostgreSQL, then the output would be:
 
-.. code-block:: text
+.. code-block:: sql
 
     SELECT "id", "username" FROM "users" WHERE "id" > $1
 
 And SQLite would look like:
 
-.. code-block:: text
+.. code-block:: sql
 
     SELECT "id", "username" FROM "users" WHERE "id" > :id
 
@@ -162,7 +162,7 @@ an example using JOIN and ORDER BY:
 
 The above example would produce the following SQL statement for MySQL:
 
-.. code-block:: text
+.. code-block:: sql
 
     SELECT `id` AS `user_id`, `email` AS `user_email` FROM `users`
         LEFT JOIN `user_data` ON `users`.`id` = `user_data`.`user_id`
