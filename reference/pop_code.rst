@@ -30,6 +30,7 @@ Basic Use
 Here's an example to create a class with a property and a method:
 
 .. code-block:: php
+
     use Pop\Code\Generator;
 
     // Create the class object and give it a namespace
@@ -134,7 +135,7 @@ The modified class, with the new method, will look like:
         {
             $this->foo = $foo;
         }
-        
+
         /**
          * This is the method to see if foo is set.
          */
