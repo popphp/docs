@@ -38,7 +38,8 @@ The values of a config object can be access either via object arrow notation or 
     $foo = $config['foo'];
 
 By default, the config object is set to not direct allow changes to its values, unless the ``$allowChanges()``
-property is set to ``true``.
+property is set to ``true``. The following example isn't possible unless the ``$allowChanges()`` property is
+set to ``true``.
 
 .. code-block:: php
 
@@ -65,7 +66,7 @@ And, if you need to convert the configuration object down to a simple array, you
 Parsing a Config File
 ---------------------
 
-Let's look at the following example INI configuration file:
+Let's look at the following example ``ini`` configuration file:
 
 .. code-block:: text
 
@@ -74,7 +75,8 @@ Let's look at the following example INI configuration file:
     bar = 1
     baz = 2
 
-You would just passed that file into the constructor on object instantiation:
+You would just pass that file into the constructor on object instantiation, and then access
+the configuration values like so:
 
 .. code-block:: php
 
