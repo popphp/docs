@@ -30,9 +30,10 @@ The main controller class that is provided is actually an abstract class on whic
 the controller classes for your application. In it, is the main ``dispatch()`` method, as well
 as methods to set and get the default action. The default action is set to ``error`` and that would
 be the method the controller class expect to find and default to if no other method satisfies the
-incoming route.
+incoming route. You can change that to whatever method name you prefer with the ``setDefaultAction()``
+method.
 
-Let take a look at an example controller class:
+Take a look at an example controller class:
 
 .. code-block:: php
 
@@ -65,12 +66,10 @@ Let take a look at an example controller class:
 
     }
 
-As each incoming route's action is matched, it will execute the corresponding method in the
-controller object. If no route match is found, then it will default to the default action,
-which in this case, is the ``error`` method.
-
-So depending on your type of application and how it is configured, an example of a successful
-route could be:
+As each incoming route's action is matched to a method, it will execute the corresponding method
+in the controller object. If no route match is found, then it will default to the default action,
+which in this case, is the ``error`` method. So depending on your type of application and how it
+is configured, an example of a successful route could be:
 
 .. code-block:: text
 
