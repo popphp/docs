@@ -58,7 +58,7 @@ To serialize the data into one of the data types, you can create a data object a
     $xmlString   = $data->serialize('xml');
     $yamlString  = $data->serialize('yaml');
 
-The $csvString variable now contains:
+The ``$csvString`` variable now contains:
 
 .. code-block:: csv
 
@@ -66,7 +66,7 @@ The $csvString variable now contains:
     Bob,Smith
     Jane,Smith
 
-The $jsonString variable now contains:
+The ``$jsonString`` variable now contains:
 
 .. code-block:: json
 
@@ -81,7 +81,7 @@ The $jsonString variable now contains:
         }
     ]
 
-The $sqlString variable now contains:
+The ``$sqlString`` variable now contains:
 
 .. code-block:: sql
 
@@ -89,7 +89,7 @@ The $sqlString variable now contains:
     ('Bob', 'Smith'),
     ('Jane', 'Smith');
 
-The $xmlString variable now contains:
+The ``$xmlString`` variable now contains:
 
 .. code-block:: xml
 
@@ -105,7 +105,7 @@ The $xmlString variable now contains:
       </row>
     </data>
 
-The $yamlString variable now contains:
+The ``$yamlString`` variable now contains:
 
 .. code-block:: yaml
 
@@ -130,8 +130,10 @@ string of serialized data. It will detect which one it is and parse it according
 
     $phpData = $csv->unserialize();
 
-Convert Between Types
-~~~~~~~~~~~~~~~~~~~~~
+Convert Types
+~~~~~~~~~~~~~
+
+To convert a data string to another type, you can call the ``convert()`` method:
 
 .. code-block:: php
 

@@ -12,9 +12,9 @@ Natively, there are adapters that support for the following database drivers:
 + SQLite
 + PDO
 
-One can use the above adapters, or extend the base `Pop\\Db\\Adapter\\AbstractAdapter` class and
+One can use the above adapters, or extend the base ``Pop\\Db\\Adapter\\AbstractAdapter`` class and
 write your own. Additionally, access to individual database tables can be leveraged via the
-`Pop\\Db\\Record` class.
+``Pop\\Db\\Record`` class.
 
 Connecting to a Database
 ------------------------
@@ -64,8 +64,8 @@ The code below would produce the same results:
     $sqlite = new Pop\Db\Adapter\Sqlite($options);
     $pdo    = new Pop\Db\Adapter\Pdo($options);
 
-The above adapter objects are all instances of `Pop\\Db\\Adapter\\AbstractAdapter`, which implements the
-`Pop\\Db\\Adapter\\AdapterInterface` interface. If necessary, you can use that underlying foundation to
+The above adapter objects are all instances of ``Pop\\Db\\Adapter\\AbstractAdapter``, which implements the
+``Pop\\Db\\Adapter\\AdapterInterface`` interface. If necessary, you can use that underlying foundation to
 build your own database adapter to facilitate your database needs for your application.
 
 Querying a Database
@@ -172,9 +172,9 @@ The above example would produce the following SQL statement for MySQL:
 Using Active Record
 -------------------
 
-The `Pop\\Db\\Record` class uses the `Active Record pattern`_ as a base to allow you to work with
+The ``Pop\\Db\\Record`` class uses the `Active Record pattern`_ as a base to allow you to work with
 and query tables in a database directly. To set this up, you create a table class that extends the
-`Pop\\Db\\Record` class:
+``Pop\\Db\\Record`` class:
 
 .. code-block:: php
 
@@ -215,7 +215,7 @@ adapter for the table classes to use. You can do that like this:
     $db = Pop\Db\Db::connect('mysql', $options);
     Pop\Db\Record::setDb($db);
 
-That database adapter will be used for all table classes in your application that extend `Pop\\Db\\Record`.
+That database adapter will be used for all table classes in your application that extend ``Pop\\Db\\Record``.
 If you want a specific database adapter for a particular table class, you can specify that on the table
 sub-class level:
 
@@ -286,7 +286,7 @@ Shorthand SQL Syntax
 --------------------
 
 To help with making custom queries more quickly and without having to utilize the Sql Builder, there is
-shorthand SQL syntax that is supported by the `Pop\\Db\\Record` class. Here's a list of what is supported
+shorthand SQL syntax that is supported by the ``Pop\\Db\\Record`` class. Here's a list of what is supported
 and what it translates into:
 
 **Basic operators**
@@ -309,7 +309,6 @@ and what it translates into:
     $users = Users::findBy(['username' => '-%test']);    => WHERE username NOT LIKE '%test'
     $users = Users::findBy(['username' => 'test%-']);    => WHERE username NOT LIKE 'test%'
     $users = Users::findBy(['username' => '-%test%-']);  => WHERE username NOT LIKE '%test%'
-
 
 **NULL and NOT NULL**
 
