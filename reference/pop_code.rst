@@ -123,7 +123,6 @@ The modified class, with the new method, will look like:
     {
 
         /**
-         *
          * @var   string
          */
         protected $foo = 'bar';
