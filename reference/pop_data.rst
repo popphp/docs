@@ -107,9 +107,57 @@ The $xmlString variable now contains:
 
 The $yamlString variable now contains:
 
+.. code-block:: yaml
+
     ---
     - first_name: Bob
       last_name: Smith
     - first_name: Jane
       last_name: Smith
     ...
+
+Unserialize Data
+~~~~~~~~~~~~~~~~
+
+You can either pass the data object a direct string of serialized data or a file containing a
+string of serialized data. It will detect which one it is and parse it accordingly.
+
+.. code-block:: php
+
+    $csv = new Pop\Data\Data($csvString);
+    // OR
+    $csv = new Pop\Data\Data('/path/to/file.csv');
+
+    $phpData = $csv->unserialize();
+
+Convert Between Types
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: php
+
+    $csv = new Pop\Data\Data($csvString);
+    $xml = $csv->convert('xml');
+
+Write to File
+~~~~~~~~~~~~~
+
+.. code-block:: php
+
+    $data = new Pop\Data\Data($phpData);
+    $data->serialize('csv');
+    $data->writeToFile('/path/to/file.csv');
+
+Output to HTTP
+~~~~~~~~~~~~~~
+
+.. code-block:: php
+
+    $data = new Pop\Data\Data($phpData);
+    $data->serialize('csv');
+    $data->outputToHttp();
+
+If you want to force a download, you can set that parameter:
+
+.. code-block:: php
+
+    $data->outputToHttp('my-file.csv', true);
