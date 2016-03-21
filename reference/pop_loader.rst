@@ -10,7 +10,17 @@ autoload times.
 Installation
 ------------
 
-Install it directly into your project:
+Stand-alone
+~~~~~~~~~~~
+
+If you are installing this component as a stand-alone autoloader and not using composer, you can
+get the component from `the releases page on Github`_. Once you download it and unpack it, you can
+put the source files into your application's source directory.
+
+Composer
+~~~~~~~~
+
+If you want to install it via composer you can install it directly into your project:
 
 .. code-block:: bash
 
@@ -118,3 +128,5 @@ If you'd like to generate a classmap based on your source folder, you can do tha
     $mapper->writeToFile('path/to/my-classmap.php');
 
 From there, you can then set your autoloader to load that classmap for your application.
+
+.. _the releases page on Github: https://github.com/popphp/pop-loader/releases
