@@ -2,7 +2,7 @@ Pop\\Data
 =========
 
 The `popphp/pop-data` component is a component for managing and converting various basic data types,
-such as CSV, JSON, SQL, XML and YAML.
+such as CSV, JSON, SQL, XML and YAML.  For YAML to function, it requires the YAML extension to be installed.
 
 Installation
 ------------
