@@ -95,10 +95,12 @@ Convert Case
 
     MyTableUsers
 
-.. code-block:: text
+.. code-block:: php
 
     // The separator defaults to DIRECTORY_SEPARATOR, but you can pass
     // a custom value in as well
     echo Pop\Filter\ConvertCase::camelCaseToSeparator('MyTableUsers');
+
+.. code-block:: text
 
     My/Table/Users
