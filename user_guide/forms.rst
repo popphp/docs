@@ -2,7 +2,7 @@ Forms
 =====
 
 HTML Forms are common to web applications and present a unique set of challenges in building, rendering and
-validating a form and it's elements. The `popphp/pop-form` component helps to manage those aspects of web forms
+validating a form and its elements. The `popphp/pop-form` component helps to manage those aspects of web forms
 and streamline the process of utilizing forms in your web application.
 
 Form Elements

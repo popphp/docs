@@ -264,7 +264,7 @@ level of control over your data, like so:
 .. code-block:: php
 
     $data = [
-        'pages'   => [
+        'links' => [
             [
                 'title' => 'Pop PHP Framework',
                 'url'   => 'http://www.popphp.org/'
@@ -324,7 +324,7 @@ Furthermore, you can test if a value is set within a loop of an array, like this
 .. code-block:: php
 
     $data = [
-        'pages'   => [
+        'links' => [
             [
                 'title' => 'Pop PHP Framework',
                 'url'   => 'http://www.popphp.org/'
