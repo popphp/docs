@@ -294,6 +294,7 @@ and what it translates into:
 .. code-block:: text
 
     $users = Users::findBy(['id' => 1]);   => WHERE id = 1
+    $users = Users::findBy(['id!=' => 1]); => WHERE id != 1
     $users = Users::findBy(['id>' => 1]);  => WHERE id > 1
     $users = Users::findBy(['id>=' => 1]); => WHERE id >= 1
     $users = Users::findBy(['id<' => 1]);  => WHERE id < 1
