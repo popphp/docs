@@ -63,7 +63,7 @@ and it'll be mapped correctly to the adapter. The main common fields are:
 | address         | shipToFirstName |                 |
 +-----------------+-----------------+-----------------+
 
-*Creating a payment object*
+**Creating a payment object**
 
 .. code-block:: php
 
@@ -72,7 +72,7 @@ and it'll be mapped correctly to the adapter. The main common fields are:
 
     $payment = new Payment(new Authorize('API_LOGIN_ID', 'TRANSACTION_KEY'));
 
-*Using the payment object to process a transaction*
+**Using the payment object to process a transaction**
 
 .. code-block:: php
 
