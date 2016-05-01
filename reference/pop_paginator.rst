@@ -122,8 +122,4 @@ You can set many options to tailor the paginator's look and functionality:
 * Range of the page sets
 * Separator between the page links
 * Classes for the on/off page links
-* Bookend characters
-    + start
-    + previous
-    + next
-    + end
+* Bookend characters (start, previous, next, end)
