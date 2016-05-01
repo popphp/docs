@@ -43,8 +43,8 @@ instead of having to worry that Authorize.net's credit card field is called ``x_
 USAEPay's credit card field is ``UMcard``, you just need to worry about the field ``cardNum``
 and it'll be mapped correctly to the adapter. The main common fields are:
 
-+-----------------+-----------------+-----------------+
-|                 | Common Fields   |                 |
++-----------------------------------------------------+
+|                   Common Fields                     |
 +=================+=================+=================+
 | amount          | city            | shipToLastName  |
 +-----------------+-----------------+-----------------+
