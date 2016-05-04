@@ -282,6 +282,29 @@ You can execute custom SQL to run custom queries on the table. One way to do thi
         echo $user->username;
     }
 
+The basic over of the record class API is as follows, using the child class ``Users`` as an example:
+
+* ``Users::setDb(Adapter\AbstractAdapter $db, $prefix = null, $isDefault = false)`` - Set the DB adapter
+* ``Users::hasDb()`` - Check if the class has a DB adapter set
+* ``Users::db()`` - Get the DB adapter object
+* ``Users::sql()`` - Get the SQL object
+* ``Users::findById($id)`` - Find a single record by ID
+* ``Users::findBy(array $columns = null, array $options = null)`` - Find a record or records by certain column values
+* ``Users::findAll(array $options = null)`` - Find all records in the table
+* ``Users::execute($sql, $params)`` - Execute a custom prepared SQL statement
+* ``Users::query($sql)`` - Execute a simple SQL query
+
+In the ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
+contain values such as:
+
+.. code-block:: php
+
+    $options = [
+        'order'  => 'username ASC',
+        'limit'  => 25,
+        'offset' => 5
+    ];
+
 Shorthand SQL Syntax
 --------------------
 
