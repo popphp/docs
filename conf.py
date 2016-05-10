@@ -9,7 +9,7 @@ master_doc = 'index'
 highlight_language = 'php'
 
 project = u'Pop PHP Framework'
-copyright = u'2015 Nick Sagona, III'
+copyright = u'2016 Nick Sagona, III'
 
 version = '2'
 release = '2.0.0'
