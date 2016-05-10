@@ -52,4 +52,4 @@ documentation`_ is located on the website.
 .. _Gitter chat room: https://gitter.im/popphp/2
 .. _Twitter: https://twitter.com/popphpframework
 .. _IRC channel: irc://freenode/popphp
-.. _API documentation: http://www.popphp.org/api/
+.. _API documentation: http://api.popphp.org/
