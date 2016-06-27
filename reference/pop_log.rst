@@ -137,4 +137,18 @@ your database table would look like this:
 | 2  | 2015-07-11 12:32:33 | 1        | ALERT | Look Out! Something serious happened! |
 +----+---------------------+----------+-------+---------------------------------------+
 
+Custom Logging
+--------------
+
+You can also write a non-standard, custom log that is specific to your app:
+
+.. code-block:: php
+
+    use Pop\Log\Logger;
+    use Pop\Log\Writer;
+
+    $log = new Logger(new Writer\File(__DIR__ . '/logs/app.log'));
+
+    $log->customLog('This is a custom log.');
+
 .. _RFC-3164: http://tools.ietf.org/html/rfc3164
