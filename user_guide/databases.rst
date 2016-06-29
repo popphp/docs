@@ -14,7 +14,7 @@ Natively, there are adapters that support for the following database drivers:
 
 One can use the above adapters, or extend the base ``Pop\\Db\\Adapter\\AbstractAdapter`` class and
 write your own. Additionally, access to individual database tables can be leveraged via the
-``Pop\\Db\\Record`` class.
+``Pop\Db\Record`` class.
 
 Connecting to a Database
 ------------------------
@@ -172,9 +172,9 @@ The above example would produce the following SQL statement for MySQL:
 Using Active Record
 -------------------
 
-The ``Pop\\Db\\Record`` class uses the `Active Record pattern`_ as a base to allow you to work with
+The ``Pop\Db\Record`` class uses the `Active Record pattern`_ as a base to allow you to work with
 and query tables in a database directly. To set this up, you create a table class that extends the
-``Pop\\Db\\Record`` class:
+``Pop\Db\Record`` class:
 
 .. code-block:: php
 
@@ -215,7 +215,7 @@ adapter for the table classes to use. You can do that like this:
     $db = Pop\Db\Db::connect('mysql', $options);
     Pop\Db\Record::setDb($db);
 
-That database adapter will be used for all table classes in your application that extend ``Pop\\Db\\Record``.
+That database adapter will be used for all table classes in your application that extend ``Pop\Db\Record``.
 If you want a specific database adapter for a particular table class, you can specify that on the table
 sub-class level:
 
@@ -282,17 +282,17 @@ You can execute custom SQL to run custom queries on the table. One way to do thi
         echo $user->username;
     }
 
-The basic over of the record class API is as follows, using the child class ``Users`` as an example:
+The basic overview of the record class static API is as follows, using the child class ``Users`` as an example:
 
 * ``Users::setDb(Adapter\AbstractAdapter $db, $prefix = null, $isDefault = false)`` - Set the DB adapter
 * ``Users::hasDb()`` - Check if the class has a DB adapter set
 * ``Users::db()`` - Get the DB adapter object
 * ``Users::sql()`` - Get the SQL object
-* ``Users::findById($id)`` - Find a single record by ID
-* ``Users::findBy(array $columns = null, array $options = null)`` - Find a record or records by certain column values
-* ``Users::findAll(array $options = null)`` - Find all records in the table
-* ``Users::execute($sql, $params)`` - Execute a custom prepared SQL statement
-* ``Users::query($sql)`` - Execute a simple SQL query
+* ``Users::findById($id, $resultsAs = 'ROW_AS_RECORD')`` - Find a single record by ID
+* ``Users::findBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RECORD')`` - Find a record or records by certain column values
+* ``Users::findAll(array $options = null, $resultsAs = 'ROW_AS_RECORD')`` - Find all records in the table
+* ``Users::execute($sql, $params, $resultsAs = 'ROW_AS_RECORD')`` - Execute a custom prepared SQL statement
+* ``Users::query($sql, $resultsAs = 'ROW_AS_RECORD')`` - Execute a simple SQL query
 
 In the ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
 contain values such as:
@@ -305,11 +305,40 @@ contain values such as:
         'offset' => 5
     ];
 
+The ``$resultAs`` parameter allows you to set what the row set is returned as:
+
+* ``ROW_AS_RECORD`` - As instances of the ``Pop\Db\Record``
+* ``ROW_AS_ARRAY`` - As arrays
+* ``ROW_AS_ARRAYOBJECT`` - As array objects
+
+The benefit of ``ROW_AS_RECORD`` is that you can operate on that row in real time, but if there are many
+rows returned in the result set, performance could be hinders. Therefore, you can use something like
+``ROW_AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
+
+**Using the record class non-statically**
+
+You can use the ``Pop\Db\Record`` class in a non-static, instance style of coding as well. You would just
+have to inject your database dependency at the time of instantiation:
+
+.. code-block:: php
+
+    $user = new Users($db);
+    $user->findRecordById(5);
+    echo $user->username;
+
+The basic overview of the record class instance API is as follows, using the child class ``Users`` as an example:
+
+* ``$user->findRecordById($id, $resultsAs = 'ROW_AS_RECORD')`` - Find a single record by ID
+* ``$user->findRecordsBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RECORD')`` - Find a record or records by certain column values
+* ``$user->findAllRecords(array $options = null, $resultsAs = 'ROW_AS_RECORD')`` - Find all records in the table
+* ``$user->executeStatement($sql, $params, $resultsAs = 'ROW_AS_RECORD')`` - Execute a custom prepared SQL statement
+* ``$user->executeQuery($sql, $resultsAs = 'ROW_AS_RECORD')`` - Execute a simple SQL query
+
 Shorthand SQL Syntax
 --------------------
 
 To help with making custom queries more quickly and without having to utilize the Sql Builder, there is
-shorthand SQL syntax that is supported by the ``Pop\\Db\\Record`` class. Here's a list of what is supported
+shorthand SQL syntax that is supported by the ``Pop\Db\Record`` class. Here's a list of what is supported
 and what it translates into:
 
 **Basic operators**
