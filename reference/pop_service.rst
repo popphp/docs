@@ -116,3 +116,36 @@ In the example above, the service ``foo`` is defined by the callable string ``My
 When the service ``foo`` is retrieved, the locator will create a new instance of ``MyApp\SomeService``,
 call the method ``foo`` while passing the params ``bar`` and ``baz`` into the method and returning
 that value from that method.
+
+Service Container
+-----------------
+
+A service container class is available if you prefer to track and access your services through it.
+The first call to create a new service locator object will automatically register it as the 'default'
+service locator.
+
+.. code-block:: php
+
+    $services = new Pop\Service\Locator([
+        'foo' => 'MyApp\SomeService'
+    ]);
+
+At some later point in your application:
+
+.. code-block:: php
+
+    $services = Pop\Service\Container::get('default');
+
+If you would like register additional custom service locator objects, you can do that like so:
+
+.. code-block:: php
+
+    Pop\Service\Container::set('customServices', $myCustomServiceLocator);
+
+And then later in your application:
+
+.. code-block:: php
+
+    if (Pop\Service\Container::has('customServices')) {
+        $myCustomServiceLocator = Pop\Service\Container::get('customServices');
+    }
