@@ -112,4 +112,5 @@ recommended:
     - yaml
 
 \* - The **imagick** and **gmagick** extensions cannot be used simultaneously.
+
 ** - No stable support for this extension in PHP 7 as of July 2, 2016
