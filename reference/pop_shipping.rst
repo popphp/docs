@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-shipping": "2.0.*",
+            "popphp/pop-shipping": "2.1.*",
         }
     }
 

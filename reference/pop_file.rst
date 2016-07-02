@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-file": "2.0.*",
+            "popphp/pop-file": "2.1.*",
         }
     }
 

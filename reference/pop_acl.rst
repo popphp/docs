@@ -25,7 +25,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-acl": "2.0.*",
+            "popphp/pop-acl": "2.1.*",
         }
     }
 

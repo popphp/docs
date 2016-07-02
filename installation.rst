@@ -21,7 +21,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "2.0.*"
+        "popphp/popphp-framework": "2.1.*"
     }
 
 **Add it to an existing project**
@@ -52,7 +52,7 @@ Requirements
 ------------
 
 The only main requirement for the Pop PHP Framework is that you have at least **PHP 5.4.0**
-installed in your environment.
+installed in your environment. It has been tested and works with **PHP 7.0** as well.
 
 Recommendations
 ---------------
@@ -88,27 +88,28 @@ recommended:
     - gmagick*
 
 + pop-cache
-    - apc
-    - memcache
+    - apc**
+    - memcache**
     - sqlite3 or pdo_sqlite
 
 + pop-archive
     - archive_tar (PEAR Extension)
-    - rar (PECL Extension)
     - zip
     - bz2
     - zlib
     - zip
+    - rar** (PECL Extension)
 
 + other
     - curl
     - dom
     - ftp
-    - geoip
+    - geoip**
     - ldap
     - mcrypt
     - soap
     - simplexml
     - yaml
 
-(* - The **imagick** and **gmagick** extensions cannot be used simultaneously.)
+* - The **imagick** and **gmagick** extensions cannot be used simultaneously.
+** - No stable support for this extension in PHP 7 as of July 2, 2016

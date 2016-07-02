@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-cache": "2.0.*",
+            "popphp/pop-cache": "2.1.*",
         }
     }
 

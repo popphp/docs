@@ -20,10 +20,10 @@ and start using the Pop PHP Framework quickly and effectively.
 About the Framework
 -------------------
 
-Pop PHP is an open source, object-oriented PHP framework that uses **PHP 5.4+**.
-It is available on `Github`_, through `Composer`_ or as a `stand-alone installation`_.
-The framework is tested using `PHPUnit`_ and continuous integration is maintained
-using `Travis CI`_.
+Pop PHP is an open source, object-oriented PHP framework. At a minimum, it requires
+PHP 5.4, but has been tested for PHP 7 as well. It is available on `Github`_, through
+`Composer`_ or as a `stand-alone installation`_. The framework is tested using
+`PHPUnit`_ and continuous integration is maintained using `Travis CI`_.
 
 **A Brief History of Pop PHP**
 
