@@ -35,6 +35,9 @@ significant refactor, taking advantage of PHP 5.4, eliminating dependencies amon
 components, separating the components into self-contained repositories, and
 incorporating `Composer`_.
 
+On July 9, 2016, version 3 was released and it continues the development and growth
+that version 2 set forth.
+
 Community & Support
 -------------------
 
