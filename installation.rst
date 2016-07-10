@@ -21,7 +21,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "2.1.*"
+        "popphp/popphp-framework": "3.0.*"
     }
 
 **Add it to an existing project**
@@ -90,6 +90,8 @@ recommended:
 + pop-cache
     - apc**
     - memcache**
+    - memcached**
+    - redis
     - sqlite3 or pdo_sqlite
 
 + pop-archive
@@ -98,13 +100,11 @@ recommended:
     - bz2
     - zlib
     - zip
-    - rar** (PECL Extension)
 
 + other
     - curl
     - dom
     - ftp
-    - geoip**
     - ldap
     - mcrypt
     - soap
