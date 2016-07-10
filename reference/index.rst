@@ -13,6 +13,7 @@ Reference
     pop_config
     pop_console
     pop_controller
+    pop_cookie
     pop_crypt
     pop_data
     pop_db
@@ -20,10 +21,8 @@ Reference
     pop_event
     pop_feed
     pop_file
-    pop_filter
     pop_form
     pop_ftp
-    pop_geo
     pop_http
     pop_i18n
     pop_image
@@ -37,8 +36,8 @@ Reference
     pop_pdf
     pop_router
     pop_service
+    pop_session
     pop_shipping
     pop_validator
     pop_version
     pop_view
-    pop_web

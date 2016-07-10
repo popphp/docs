@@ -288,11 +288,11 @@ The basic overview of the record class static API is as follows, using the child
 * ``Users::hasDb()`` - Check if the class has a DB adapter set
 * ``Users::db()`` - Get the DB adapter object
 * ``Users::sql()`` - Get the SQL object
-* ``Users::findById($id, $resultsAs = 'ROW_AS_RECORD')`` - Find a single record by ID
-* ``Users::findBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RECORD')`` - Find a record or records by certain column values
-* ``Users::findAll(array $options = null, $resultsAs = 'ROW_AS_RECORD')`` - Find all records in the table
-* ``Users::execute($sql, $params, $resultsAs = 'ROW_AS_RECORD')`` - Execute a custom prepared SQL statement
-* ``Users::query($sql, $resultsAs = 'ROW_AS_RECORD')`` - Execute a simple SQL query
+* ``Users::findById($id, $resultsAs = 'ROW_AS_RESULT')`` - Find a single record by ID
+* ``Users::findBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find a record or records by certain column values
+* ``Users::findAll(array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find all records in the table
+* ``Users::execute($sql, $params, $resultsAs = 'ROW_AS_RESULT')`` - Execute a custom prepared SQL statement
+* ``Users::query($sql, $resultsAs = 'ROW_AS_RESULT')`` - Execute a simple SQL query
 
 In the ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
 contain values such as:
@@ -307,32 +307,34 @@ contain values such as:
 
 The ``$resultAs`` parameter allows you to set what the row set is returned as:
 
-* ``ROW_AS_RECORD`` - As instances of the ``Pop\Db\Record``
+* ``ROW_AS_RESULT`` - As instances of the ``Pop\Db\Record``
 * ``ROW_AS_ARRAY`` - As arrays
-* ``ROW_AS_ARRAYOBJECT`` - As array objects
+* ``ROW_AS_OBJECT`` - As array objects
 
-The benefit of ``ROW_AS_RECORD`` is that you can operate on that row in real time, but if there are many
-rows returned in the result set, performance could be hinders. Therefore, you can use something like
+The benefit of ``ROW_AS_RESULT`` is that you can operate on that row in real time, but if there are many
+rows returned in the result set, performance could be hindered. Therefore, you can use something like
 ``ROW_AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
 
-**Using the record class non-statically**
+**Accessing records non-statically**
 
-You can use the ``Pop\Db\Record`` class in a non-static, instance style of coding as well. You would just
-have to inject your database dependency at the time of instantiation:
+If you're interested in an alternative to the active record pattern, you can use the ``Pop\Db\Record\Result``
+class in a non-static, instance style of coding as well. You would just have to inject your dependencies at
+the time of instantiation:
 
 .. code-block:: php
 
-    $user = new Users($db);
-    $user->findRecordById(5);
+    // Inject the db adapter, the full table name and the table's primary key(s)
+    $user = new Result($db, 'users', 'id');
+    $user->findById(5);
     echo $user->username;
 
-The basic overview of the record class instance API is as follows, using the child class ``Users`` as an example:
+The basic overview of the result class API is as follows:
 
-* ``$user->findRecordById($id, $resultsAs = 'ROW_AS_RECORD')`` - Find a single record by ID
-* ``$user->findRecordsBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RECORD')`` - Find a record or records by certain column values
-* ``$user->findAllRecords(array $options = null, $resultsAs = 'ROW_AS_RECORD')`` - Find all records in the table
-* ``$user->executeStatement($sql, $params, $resultsAs = 'ROW_AS_RECORD')`` - Execute a custom prepared SQL statement
-* ``$user->executeQuery($sql, $resultsAs = 'ROW_AS_RECORD')`` - Execute a simple SQL query
+* ``$user->findById($id, $resultsAs = 'ROW_AS_RESULT')`` - Find a single record by ID
+* ``$user->findBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find a record or records by certain column values
+* ``$user->findAll(array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find all records in the table
+* ``$user->execute($sql, $params, $resultsAs = 'ROW_AS_RESULT')`` - Execute a custom prepared SQL statement
+* ``$user->query($sql, $resultsAs = 'ROW_AS_RESULT')`` - Execute a simple SQL query
 
 Shorthand SQL Syntax
 --------------------

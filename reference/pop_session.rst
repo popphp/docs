@@ -1,8 +1,7 @@
-Pop\\Web
-========
+Pop\\Session
+============
 
-The `popphp/pop-web` component provides a basic toolbox of common web sub-components, such
-classes to manage sessions and cookies.
+The `popphp/pop-session` component provides the functionality to manage sessions.
 
 Installation
 ------------
@@ -11,7 +10,7 @@ Install it directly into your project:
 
 .. code-block:: bash
 
-    composer require popphp/pop-web
+    composer require popphp/pop-session
 
 Or, include it in your composer.json file:
 
@@ -19,20 +18,14 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-web": "2.1.*",
+            "popphp/pop-session": "3.0.*",
         }
     }
 
 Basic Use
 ---------
 
-The ``popphp/pop-web`` component has a few useful sub-components that come with it. The two most commonly
-used would be the **session** and **cookie** sub-components.
-
-Sessions
-~~~~~~~~
-
-The session sub-component gives you multiple ways to interact with the ``$_SESSION`` variable and store
+The session component gives you multiple ways to interact with the ``$_SESSION`` variable and store
 and retrieve data to it. The following are supported:
 
 * Managing basic sessions and session values
@@ -116,37 +109,3 @@ support request-based session values.
 
 The above example will allow the value for ``foo`` to be available to the user for 3 requests. After the 3rd
 request, ``foo`` will no longer be available in session. The default value of "hops" is 1.
-
-Cookies
-~~~~~~~
-
-The cookie sub-component allows you to interact with and manage cookies within the user's session. When you
-create a new instance of a cookie object, you can pass it some optional parameters for more control:
-
-.. code-block:: php
-
-    $cookie = Pop\Web\Cookie::getInstance([
-        'expire'   => 300,
-        'path'     => '/system',
-        'domain'   => 'www.domain.com',
-        'secure'   => true,
-        'httponly' => true
-    ]);
-
-These are all options that give you further control over when a cookie value expires and where and how it
-is available to the user. From there, you can store and retrieve cookie values like this:
-
-.. code-block:: php
-
-    $cookie->foo   = 'bar';
-    $cookie['baz'] = 123;
-
-    echo $cookie->foo;   // echos 'bar'
-    echo $cookie['baz']; // echos 123
-
-And then you can delete a cookie value like this:
-
-.. code-block:: php
-
-    $cookie->delete('foo');
-    unset($cookie['baz']);

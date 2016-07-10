@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-version": "2.1.*",
+            "popphp/pop-version": "3.0.*",
         }
     }
 
@@ -30,10 +30,10 @@ Check the version
 
 .. code-block:: php
 
-    // echo '2.0.0'
+    // echo '3.0.0'
     echo Pop\Version\Version::VERSION;
 
-    // echo '2.0.0'
+    // echo '3.0.0'
     echo Pop\Version\Version::getLatest();
 
     // Returns true
@@ -53,14 +53,14 @@ That will return an array will values like this:
     (
         [pop] => Array
             (
-                [installed] => 2.0.0
-                [latest] => 2.0.0
+                [installed] => 3.0.0
+                [latest] => 3.0.0
                 [compare] => 0
             )
 
         [php] => Array
             (
-                [installed] => 5.4.32
+                [installed] => 7.0.8
                 [required] => 5.4.0
                 [compare] => 1
             )
@@ -72,7 +72,6 @@ That will return an array will values like this:
                 [archive] => Array
                     (
                         [tar] =>
-                        [rar] => 1
                         [zip] => 1
                         [bz2] => 1
                         [zlib] => 1
@@ -103,7 +102,6 @@ That will return an array will values like this:
                     )
 
                 [ftp] => 1
-                [geoip] => 1
                 [image] => Array
                     (
                         [gd] => 1
@@ -114,6 +112,8 @@ That will return an array will values like this:
                 [ldap] => 1
                 [mcrypt] => 1
                 [memcache] => 1
+                [memcached] => 1
+                [redis] => 1
                 [soap] => 1
                 [yaml] => 1
             )
