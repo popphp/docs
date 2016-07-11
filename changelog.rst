@@ -20,6 +20,15 @@ Changed Features
   Functionality with this should remain largely the same, but there
   may be some backward compatibility breaks in older code.
 
+Deprecated Features
+-------------------
+
+* Due to the unavailability or instability of the **apc/apcu/apc_bc**
+  extensions, the APC class adapter may not function properly in PHP 7.
+* Due to the unavailability or instability of the **memcache/memcached**
+  extensions, the Memcache & Memcached class adapter may not function
+  properly in PHP 7
+
 Removed Features
 ----------------
 
