@@ -19,9 +19,17 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-cache": "2.1.*",
+            "popphp/pop-cache": "3.0.*",
         }
     }
+
+PHP 7
+-----
+
+While this component has been updated and tested to work with PHP 7, please note:
+
+- Due to the unavailability or instability of the **apc/apcu/apc_bc** extensions, the APC class adapter may not function properly in PHP 7.
+- Due to the unavailability or instability of the **memcache/memcached** extensions, the Memcache & Memcached class adapter may not function properly in PHP 7.
 
 Basic Use
 ---------
@@ -38,7 +46,6 @@ APC
     // Create an APC cache adapter object, with a 5 minute lifetime
     $apcCache = new Adapter\Apc(300);
 
-
 File
 ~~~~
 
@@ -49,6 +56,16 @@ File
     // Create a file cache adapter object, with a 5 minute lifetime
     $cacheAdapter = new Adapter\File('/path/to/my/cache/dir', 300);
 
+Memcache
+~~~~~~~~
+
+.. code-block:: php
+
+    use Pop\Cache\Adapter;
+
+    // Create a Memcache cache adapter object, with a 5 minute lifetime
+    $cacheAdapter = new Adapter\Memcache(300);
+
 Memcached
 ~~~~~~~~~
 
@@ -58,6 +75,26 @@ Memcached
 
     // Create a Memcached cache adapter object, with a 5 minute lifetime
     $cacheAdapter = new Adapter\Memcached(300);
+
+Redis
+~~~~~
+
+.. code-block:: php
+
+    use Pop\Cache\Adapter;
+
+    // Create a Redis cache adapter object, with a 5 minute lifetime
+    $cacheAdapter = new Adapter\Redis(300);
+
+Session
+~~~~~~~
+
+.. code-block:: php
+
+    use Pop\Cache\Adapter;
+
+    // Create a session cache adapter object, with a 5 minute lifetime
+    $cacheAdapter = new Adapter\Session(300);
 
 SQLite
 ~~~~~~
