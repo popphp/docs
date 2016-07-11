@@ -14,3 +14,4 @@ the links below to get started.
     user_guide/index
     tutorial_application/index
     reference/index
+    changelog
