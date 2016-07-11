@@ -24,10 +24,11 @@ Deprecated Features
 -------------------
 
 * Due to the unavailability or instability of the **apc/apcu/apc_bc**
-  extensions, the APC class adapter may not function properly in PHP 7.
+  extensions, the APC adapter in the `pop-cache` component may not
+  function properly in PHP 7.
 * Due to the unavailability or instability of the **memcache/memcached**
-  extensions, the Memcache & Memcached class adapter may not function
-  properly in PHP 7
+  extensions, the Memcache & Memcached adapters in the `pop-cache`
+  component may not function properly in PHP 7
 
 Removed Features
 ----------------
