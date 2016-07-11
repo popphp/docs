@@ -312,7 +312,7 @@ The ``$resultAs`` parameter allows you to set what the row set is returned as:
 * ``ROW_AS_ARRAYOBJECT`` - As array objects
 
 The benefit of ``ROW_AS_RECORD`` is that you can operate on that row in real time, but if there are many
-rows returned in the result set, performance could be hinders. Therefore, you can use something like
+rows returned in the result set, performance could be hindered. Therefore, you can use something like
 ``ROW_AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
 
 **Using the record class non-statically**

@@ -186,12 +186,12 @@ The above example would produce the following SQL statement for MySQL:
         WHERE `id` > ?
         ORDER BY `id` ASC;
 
-Active Record
--------------
+Using Active Record
+-------------------
 
-The ``Pop\\Db\\Record`` class uses the `Active Record pattern`_ as a base to allow you to work with
+The ``Pop\Db\Record`` class uses the `Active Record pattern`_ as a base to allow you to work with
 and query tables in a database directly. To set this up, you create a table class that extends the
-``Pop\\Db\\Record`` class:
+``Pop\Db\Record`` class:
 
 .. code-block:: php
 
@@ -232,7 +232,7 @@ adapter for the table classes to use. You can do that like this:
     $db = Pop\Db\Db::connect('mysql', $options);
     Pop\Db\Record::setDb($db);
 
-That database adapter will be used for all table classes in your application that extend ``Pop\\Db\\Record``.
+That database adapter will be used for all table classes in your application that extend ``Pop\Db\Record``.
 If you want a specific database adapter for a particular table class, you can specify that on the table
 sub-class level:
 
@@ -329,7 +329,7 @@ The ``$resultAs`` parameter allows you to set what the row set is returned as:
 * ``ROW_AS_ARRAYOBJECT`` - As array objects
 
 The benefit of ``ROW_AS_RECORD`` is that you can operate on that row in real time, but if there are many
-rows returned in the result set, performance could be hinders. Therefore, you can use something like
+rows returned in the result set, performance could be hindered. Therefore, you can use something like
 ``ROW_AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
 
 **Using the record class non-statically**
@@ -351,11 +351,11 @@ The basic overview of the record class instance API is as follows, using the chi
 * ``$user->executeStatement($sql, $params, $resultsAs = 'ROW_AS_RECORD')`` - Execute a custom prepared SQL statement
 * ``$user->executeQuery($sql, $resultsAs = 'ROW_AS_RECORD')`` - Execute a simple SQL query
 
-Shorthand Syntax
-----------------
+Shorthand SQL Syntax
+--------------------
 
 To help with making custom queries more quickly and without having to utilize the Sql Builder, there is
-shorthand SQL syntax that is supported by the ``Pop\\Db\\Record`` class. Here's a list of what is supported
+shorthand SQL syntax that is supported by the ``Pop\Db\Record`` class. Here's a list of what is supported
 and what it translates into:
 
 **Basic operators**
@@ -363,6 +363,7 @@ and what it translates into:
 .. code-block:: text
 
     $users = Users::findBy(['id' => 1]);   => WHERE id = 1
+    $users = Users::findBy(['id!=' => 1]); => WHERE id != 1
     $users = Users::findBy(['id>' => 1]);  => WHERE id > 1
     $users = Users::findBy(['id>=' => 1]); => WHERE id >= 1
     $users = Users::findBy(['id<' => 1]);  => WHERE id < 1
