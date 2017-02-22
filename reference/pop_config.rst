@@ -1,5 +1,5 @@
-Pop\\Config
-===========
+pop-config
+==========
 
 The `popphp/pop-config` component is a configuration component that allows you to store configuration
 data for the life cycle of your application. It also has the ability to parse existing and common
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-config": "2.1.*",
+            "popphp/pop-config": "3.0.*",
         }
     }
 

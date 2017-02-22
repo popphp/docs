@@ -1,5 +1,5 @@
-Pop\\Controller
-===============
+pop-controller
+==============
 
 The ``Pop\Controller`` sub-component is part of the core `popphp/popphp` component. It serves as the
 blueprint controller class on which you can build your application's controller classes.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "2.1.*",
+            "popphp/popphp": "3.0.*",
         }
     }
 

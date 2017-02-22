@@ -1,5 +1,5 @@
-Pop\\Router
-===========
+pop-router
+==========
 
 The ``Pop\Router`` sub-component is part of the core `popphp/popphp` component. It serves as the
 primary router to the main application object. With it, you can define routes for both web-based
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "2.1.*",
+            "popphp/popphp": "3.0.*",
         }
     }
 

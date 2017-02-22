@@ -1,5 +1,5 @@
-Pop\\Form
-=========
+pop-form
+========
 
 The `popphp/pop-form` component provides a robust API for the creation and management of HTML web forms,
 their elements and validation.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-form": "2.2.*",
+            "popphp/pop-form": "3.0.*",
         }
     }
 

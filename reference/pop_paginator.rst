@@ -1,5 +1,5 @@
-Pop\\Paginator
-==============
+pop-paginator
+=============
 
 The `popphp/pop-paginator` component is a simple component that provides pagination in a few different
 forms.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-paginator": "2.1.*",
+            "popphp/pop-paginator": "3.0.*",
         }
     }
 

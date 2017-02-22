@@ -1,5 +1,5 @@
-Pop\\Image
-==========
+pop-image
+=========
 
 The `popphp/pop-image` component provides a robust API for image creation and manipulation. Adapters are
 provided to utilize either the GD, Imagick or Gmagick extensions. Also, the SVG format is supported with
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-image": "2.1.*",
+            "popphp/pop-image": "3.0.*",
         }
     }
 

@@ -1,5 +1,5 @@
-Pop\\Auth
-=========
+pop-auth
+========
 
 The `popphp/pop-auth` component is an authentication component that provides different adapters
 to authenticate a user's identity. It is not to be confused with the ACL component, as that deals
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-auth": "2.2.*",
+            "popphp/pop-auth": "3.0.*",
         }
     }
 

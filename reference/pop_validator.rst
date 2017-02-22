@@ -1,5 +1,5 @@
-Pop\\Validator
-==============
+pop-validator
+=============
 
 The `popphp/pop-validator` component provides a basic API to process simple validation of values.
 
@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-validator": "2.1.*",
+            "popphp/pop-validator": "3.0.*",
         }
     }
 

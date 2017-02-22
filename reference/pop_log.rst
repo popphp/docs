@@ -1,5 +1,5 @@
-Pop\\Log
-========
+pop-log
+=======
 
 The `popphp/pop-log` component provides basic logging functionality via a few different writers, including
 file, mail and database logs.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-log": "2.2.*",
+            "popphp/pop-log": "3.0.*",
         }
     }
 

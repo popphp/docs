@@ -1,5 +1,5 @@
-Pop\\Module
-===========
+pop-module
+==========
 
 The ``Pop\Module`` sub-component is part of the core `popphp/popphp` component. It serves as the
 module manager to the main application object. With it, you can inject module objects into the
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "2.1.*",
+            "popphp/popphp": "3.0.*",
         }
     }
 

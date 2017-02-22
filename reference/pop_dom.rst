@@ -1,5 +1,5 @@
-Pop\\Dom
-========
+pop-dom
+=======
 
 The `popphp/pop-dom` component is a component for managing and building DOM objects. It provides an
 easy-to-use API to assist in creating XML and HTML documents, while creating and managing the documents'
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-dom": "2.1.*",
+            "popphp/pop-dom": "3.0.*",
         }
     }
 

@@ -1,5 +1,5 @@
-Pop\\Cache
-==========
+pop-cache
+=========
 
 The `popphp/pop-cache` component is a caching component that provides different adapters
 to cache data and have it persist for a certain length of time.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-cache": "3.0.*",
+            "popphp/pop-cache": "3.1.*",
         }
     }
 

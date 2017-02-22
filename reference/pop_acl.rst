@@ -1,5 +1,5 @@
-Pop\\Acl
-========
+pop-acl
+=======
 
 The `popphp/pop-acl` component is an authorization and access control component the serves as a
 hybrid between standard ACL and RBAC user access concepts. Beyond allowing or denying basic user
@@ -25,7 +25,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-acl": "2.1.*",
+            "popphp/pop-acl": "3.0.*",
         }
     }
 

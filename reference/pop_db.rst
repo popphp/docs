@@ -1,5 +1,5 @@
-Pop\\Db
-=======
+pop-db
+======
 
 The `popphp/pop-db` component is a database component for interfacing with databases. By default, it provides
 adapters for MySQL, PostgreSQL, Oracle, SQLServer and SQLite. Other adapters can be built by extending the core
@@ -23,7 +23,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-db": "3.0.*",
+            "popphp/pop-db": "4.0.*",
         }
     }
 

@@ -1,5 +1,5 @@
-Pop\\Console
-============
+pop-console
+===========
 
 The `popphp/pop-console` component is a component for integration and managing a console user interface
 with your application. It supports the various aspect of the CLI user experience, including commands and
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-console": "2.1.*",
+            "popphp/pop-console": "3.0.*",
         }
     }
 

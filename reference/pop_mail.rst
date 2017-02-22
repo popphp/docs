@@ -1,5 +1,5 @@
-Pop\\Mail
-=========
+pop-mail
+========
 
 The `popphp/pop-mail` component provides an API to manage sending mail from your application.
 Support is built-in for multi-mimetype emails and attachments, as well as multiple recipients and
@@ -27,7 +27,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-mail": "2.1.*",
+            "popphp/pop-mail": "3.0.*",
         }
     }
 

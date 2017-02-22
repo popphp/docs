@@ -1,5 +1,5 @@
-Pop\\Loader
-===========
+pop-loader
+==========
 
 The `popphp/pop-loader` component provides an alternative autoloading option for those who may
 require a PHP application to function outside of the Composer eco-system. The API mirrors Composer's
@@ -32,7 +32,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-loader": "2.1.*",
+            "popphp/pop-loader": "3.0.*",
         }
     }
 

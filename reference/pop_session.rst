@@ -1,5 +1,5 @@
-Pop\\Session
-============
+pop-session
+===========
 
 The `popphp/pop-session` component provides the functionality to manage sessions.
 
@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-session": "3.0.*",
+            "popphp/pop-session": "3.1.*",
         }
     }
 
@@ -37,7 +37,7 @@ and retrieve data to it. The following are supported:
 
 .. code-block:: php
 
-    $sess = Pop\Web\Session::getInstance();
+    $sess = Pop\Session\Session::getInstance();
     $sess->user_id    = 1001;
     $sess['username'] = 'admin';
 
@@ -45,7 +45,7 @@ The above snippet saves values to the user's session. To recall it later, you ca
 
 .. code-block:: php
 
-    $sess = Pop\Web\Session::getInstance();
+    $sess = Pop\Session\Session::getInstance();
     echo $sess->user_id;    // echos out 1001
     echo $sess['username']; // echos out 'admin'
 
@@ -53,7 +53,7 @@ And to destroy the session and its values, you can call the ``kill()`` method:
 
 .. code-block:: php
 
-    $sess = Pop\Web\Session::getInstance();
+    $sess = Pop\Session\Session::getInstance();
     $sess->kill();
 
 **Namespaced Sessions**
@@ -63,7 +63,7 @@ from the normal session data.
 
 .. code-block:: php
 
-    $sessFoo = new Pop\Web\SessionNamespace('foo');
+    $sessFoo = new Pop\Session\SessionNamespace('foo');
     $sessFoo->bar = 'baz'
 
 What's happening "under the hood" is that an array is being created with the key ``foo`` in the main ``$_SESSION``
@@ -71,17 +71,17 @@ variable and any data that is saved or recalled by the ``foo`` namespaced sessio
 
 .. code-block:: php
 
-    $sessFoo = new Pop\Web\SessionNamespace('foo');
+    $sessFoo = new Pop\Session\SessionNamespace('foo');
     echo $sessFoo->bar; // echos out 'baz'
 
-    $sess = Pop\Web\Session::getInstance();
+    $sess = Pop\Session\Session::getInstance();
     echo $sess->bar; // echos out null, because it was only stored in the namespaced session
 
 And you can unset a value under a session namespace like this:
 
 .. code-block:: php
 
-    $sessFoo = new Pop\Web\SessionNamespace('foo');
+    $sessFoo = new Pop\Session\SessionNamespace('foo');
     unset($sessFoo->bar);
 
 **Session Value Expirations**
@@ -90,7 +90,7 @@ Both basic sessions and namespaced sessions support timed values used to "expire
 
 .. code-block:: php
 
-    $sess = Pop\Web\Session::getInstance();
+    $sess = Pop\Session\Session::getInstance();
     $sess->setTimedValue('foo', 'bar', 60);
 
 The above example will set the value for ``foo`` with an expiration of 60 seconds. That means that if another
@@ -104,7 +104,7 @@ support request-based session values.
 
 .. code-block:: php
 
-    $sess = Pop\Web\Session::getInstance();
+    $sess = Pop\Session\Session::getInstance();
     $sess->setRequestValue('foo', 'bar', 3);
 
 The above example will allow the value for ``foo`` to be available to the user for 3 requests. After the 3rd

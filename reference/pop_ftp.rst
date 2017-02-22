@@ -1,5 +1,5 @@
-Pop\\Ftp
-========
+pop-ftp
+=======
 
 The `popphp/pop-ftp` component provides a simple API for the managing FTP connections and transferring files
 over FTP.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-ftp": "2.1.*",
+            "popphp/pop-ftp": "3.0.*",
         }
     }
 

@@ -21,7 +21,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "3.0.*"
+        "popphp/popphp-framework": "3.5.*"
     }
 
 **Add it to an existing project**
@@ -51,7 +51,7 @@ The ``/vendor/`` folder contains the autoloader, the framework and all of the ne
 Requirements
 ------------
 
-The only main requirement for the Pop PHP Framework is that you have at least **PHP 5.4.0**
+The only main requirement for the Pop PHP Framework is that you have at least **PHP 5.6.0**
 installed in your environment. It has been tested and works with **PHP 7.0** as well.
 
 Recommendations
@@ -74,7 +74,6 @@ recommended:
 
 + pop-db
     - mysqli
-    - oci8
     - pdo_mysql
     - pdo_pgsql
     - pdo_sqlite
@@ -94,22 +93,10 @@ recommended:
     - redis
     - sqlite3 or pdo_sqlite
 
-+ pop-archive
-    - archive_tar (PEAR Extension)
-    - zip
-    - bz2
-    - zlib
-    - zip
-
 + other
     - curl
-    - dom
     - ftp
     - ldap
-    - mcrypt
-    - soap
-    - simplexml
-    - yaml
 
 \* - The **imagick** and **gmagick** extensions cannot be used simultaneously.
 
