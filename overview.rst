@@ -54,4 +54,4 @@ is located on the website.
 .. _Travis CI: https://travis-ci.org/popphp/
 .. _Gitter chat room: https://gitter.im/popphp/2
 .. _Twitter: https://twitter.com/popphpframework
-.. _API documentation: http://api.popphp.org/3/
+.. _API documentation: http://api.popphp.org/3.5/
