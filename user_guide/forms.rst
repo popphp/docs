@@ -589,6 +589,52 @@ The default is 'dl', but 'table', 'div' and 'p' are supported as well.
 .. code-block:: php
     $form->createFieldset('Second Fieldset', 'table');
 
+Alternately, you can inject and entire fieldset configuration array. The code below is a more simple way to inject
+the fieldset configurations and their legends. And, it will generate the same HTML as above.
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Validator;
+
+    $fieldsets = [
+        'First Fieldset' => [
+            'username' => [
+                'type'       => 'text',
+                'label'      => 'Username',
+                'required'   => true,
+                'validators' => new Validator\AlphaNumeric(),
+                'attributes' => [
+                    'class' => 'username-field',
+                    'size'  => 40
+                ]
+            ],
+            'password' => [
+                'type'       => 'password',
+                'label'      => 'Password',
+                'required'   => true,
+                'validators' => new Validator\GreaterThanEqual(6),
+                'attributes' => [
+                    'class' => 'password-field',
+                    'size'  => 40
+                ]
+            ]
+        ],
+        'Second Fieldset' => [
+            'submit' => [
+                'type'       => 'submit',
+                'value'      => 'SUBMIT',
+                'attributes' => [
+                    'class' => 'submit-btn'
+                ]
+            ]
+        ]
+    ];
+
+    $form = Form::createFromFieldsetConfig($fieldsets);
+
+    echo $form;
+
 Using Views
 -----------
 
