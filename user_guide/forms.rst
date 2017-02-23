@@ -571,22 +571,22 @@ the components like this:
                 </dt>
                 <dd>
                     <?=$form->getField('username'); ?>
-<?php if ($form->getField('username')->hasErrors(): ?>
-<?php foreach ($form->getField('username')->getErrors() as $error): ?>
+    <?php if ($form->getField('username')->hasErrors(): ?>
+    <?php foreach ($form->getField('username')->getErrors() as $error): ?>
                     <div class="error"><?=$error; ?></div>
-<?php endforeach; ?>
-<?php endif; ?>
+    <?php endforeach; ?>
+    <?php endif; ?>
                 </dd>
                 <dt>
                     <label for="password" class="required"><?=$form->getField('password')->getLabel(); ?></label>
                 </dt>
                 <dd>
                     <?=$form->getField('password'); ?>
-<?php if ($form->getField('password')->hasErrors(): ?>
-<?php foreach ($form->getField('password')->getErrors() as $error): ?>
+    <?php if ($form->getField('password')->hasErrors(): ?>
+    <?php foreach ($form->getField('password')->getErrors() as $error): ?>
                     <div class="error"><?=$error; ?></div>
-<?php endforeach; ?>
-<?php endif; ?>
+    <?php endforeach; ?>
+    <?php endif; ?>
                 </dd>
                 <dd>
                     <?=$form->getField('submit'); ?>
@@ -594,3 +594,4 @@ the components like this:
             </dl>
         </fieldset>
     </form>
+
