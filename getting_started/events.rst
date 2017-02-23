@@ -60,7 +60,6 @@ be injected. The default hook points within a Pop application object are:
 
 * app.init
 * app.route.pre
-* app.route.post
 * app.dispatch.pre
 * app.dispatch.post
 * app.error

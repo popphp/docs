@@ -114,90 +114,41 @@ Here's a look at the basic API:
 
 * ``$console->setWidth(80);`` - sets the character width of the console
 * ``$console->setIndent(4);`` - sets the indentation in spaces at the start of a line
-* ``$console->request();`` - gets the console request object
-* ``$console->response();`` - gets the console response object
 * ``$console->colorize($string, $fg, $bg);`` - colorize the string and return the value
 * ``$console->prompt($prompt, $options, $caseSensitive, $length);`` - call a prompt and return the answer
-* ``$console->append($text);`` - appends text to the current console response body
-* ``$console->write($text);`` - appends text to the current console response body and sends the response
+* ``$console->append($text = null, $newline = true);`` - appends text to the current console response body
+* ``$console->write($text = null, $newline = true);`` - appends text to the current console response body and sends the response
 * ``$console->send();`` - sends the response
 * ``$console->clear();`` - clears the console screen (Linux/Unix only)
 
-Commands & Options
-~~~~~~~~~~~~~~~~~~
+Commands
+~~~~~~~~
 
-When using the `popphp/pop-console` component, you can create and define which parameters you would like
-your CLI application to accept in the form of commands and options. This helps provide a level of validation
-for what comes through the CLI interface from the user to you application, as well as provide an interface
-to access those command and option values. Additionally, you can set default help values to trigger a help
-screen to display for the command or option.
+When using the `popphp/pop-console` component, you can create command objects and add them to the console object.
+This is useful for storing and calling help screens on a per-command basis
 
 **Using a Command**
 
 .. code-block:: php
 
     use Pop\Console\Console;
-    use Pop\Console\Input\Command;
+    use Pop\Console\Command;
 
-    $edit = new Command('edit', Command::VALUE_REQUIRED);
+    $edit = new Command('edit');
     $edit->setHelp('This is the help screen for the edit command.');
 
     $console = new Console();
     $console->addCommand($edit);
 
-    $console->parseRequest();
-
-    if ($console->isRequestValid()) {
-        if ($console->hasCommand('edit')) {
-            if ($console['edit'] == 'help') {
-                $console->write($console->getCommand('edit')->getHelp());
-            } else {
-                $console->write('You have selected to edit ' . $console['edit']);
-            }
-        }
-    }
-
+    $console->append($console->help('edit'));
     $console->send();
 
-And the following example would be how you use the above script:
+And if you wire up your controller correctly, the following example would be output like below:
 
 .. code-block:: bash
 
-    $ ./pop edit foo
-      You have selected to edit foo
     $ ./pop edit help
       This is the help screen for the edit command.
-
-**Using an Option**
-
-.. code-block:: php
-
-    use Pop\Console\Console;
-    use Pop\Console\Input\Option;
-
-    $name = new Option('-n|--name', Option::VALUE_REQUIRED);
-
-    $console = new Console();
-    $console->addOption($name);
-
-    $console->parseRequest();
-
-    if ($console->isRequestValid()) {
-        if ($console->hasOption('-n')) {
-            $console->write('You have passed the name option with the value of ' . $console['-n']);
-        }
-    }
-
-    $console->send();
-
-And the following example would be how you use the above script:
-
-.. code-block:: bash
-
-    $ ./pop -nfoo
-      You have passed the name option with the value of foo
-    $ ./pop --name=bar
-      You have passed the name option with the value of bar
 
 Prompts
 ~~~~~~~
@@ -221,7 +172,9 @@ you can colorize your text:
 
 .. code-block:: php
 
-    $coloredText = $console->colorize('Hello World!', Pop\Console\Console::BOLD_CYAN);
+    use Pop\Console\Console;
+
+    $coloredText = $console->colorize('Hello World!', Console::BOLD_CYAN);
     $console->append($coloredText);
 
 The list of available color constants are:
