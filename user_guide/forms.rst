@@ -498,6 +498,97 @@ which will produce:
         </fieldset>
     </form>
 
+Fieldsets
+---------
+
+As you've seen in the above examples, the fields that are added to the form object are enclosed in a fieldset group.
+This can be leveraged to create other fieldset groups as well as give them legends to better define the fieldsets.
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Validator;
+
+    $fields1 = [
+        'username' => [
+            'type'       => 'text',
+            'label'      => 'Username',
+            'required'   => true,
+            'validators' => new Validator\AlphaNumeric(),
+            'attributes' => [
+                'class' => 'username-field',
+                'size'  => 40
+            ]
+        ],
+        'password' => [
+            'type'       => 'password',
+            'label'      => 'Password',
+            'required'   => true,
+            'validators' => new Validator\GreaterThanEqual(6),
+            'attributes' => [
+                'class' => 'password-field',
+                'size'  => 40
+            ]
+        ]
+    ];
+    $fields2 = [
+        'submit' => [
+            'type'       => 'submit',
+            'value'      => 'SUBMIT',
+            'attributes' => [
+                'class' => 'submit-btn'
+            ]
+        ]
+    ];
+
+    $form = Form::createFromConfig($fields1);
+    $form->getFieldset()->setLegend('First Fieldset');
+    $form->createFieldset('Second Fieldset');
+    $form->addFieldsFromConfig($fields2);
+
+    echo $form;
+
+In the above code, the first set of fields are added to an initial fieldset that's automatically created.
+After that, if you want to add more fieldsets, you call the ``createFieldset`` method like above. Then
+the current fieldset is changed to the newly created one and the next fields are added to that one. You can
+always change to any other fieldset by using the ``setCurrent($i)`` method. The above code would render like this:
+
+.. code-block:: html
+
+    <form action="/" method="post">
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <legend>First Fieldset</legend>
+            <dl>
+                <dt>
+                    <label for="username" class="required">Username:</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" required="required" size="40" />
+                </dd>
+                <dt>
+                    <label for="email" class="required">Email:</label>
+                </dt>
+                <dd>
+                    <input type="email" name="email" id="email" value="" required="required" size="40" />
+                </dd>
+            </dl>
+        </fieldset>
+        <fieldset id="pop-form-fieldset-2" class="pop-form-fieldset">
+            <legend>Second Fieldset</legend>
+            <dl>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="SUBMIT" />
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
+
+The container elements within the fieldset can be controlled by passing a value to the ``$container`` parameter.
+The default is 'dl', but 'table', 'div' and 'p' are supported as well.
+
+.. code-block:: php
+    $form->createFieldset('Second Fieldset', 'table');
+
 Using Views
 -----------
 
