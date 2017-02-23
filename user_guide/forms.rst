@@ -584,12 +584,13 @@ always change to any other fieldset by using the ``setCurrent($i)`` method. The 
     </form>
 
 The container elements within the fieldset can be controlled by passing a value to the ``$container`` parameter.
-The default is 'dl', but 'table', 'div' and 'p' are supported as well.
+The default is `dl`, but `table`, `div` and `p` are supported as well.
 
 .. code-block:: php
+
     $form->createFieldset('Second Fieldset', 'table');
 
-Alternately, you can inject and entire fieldset configuration array. The code below is a more simple way to inject
+Alternately, you can inject an entire fieldset configuration array. The code below is a more simple way to inject
 the fieldset configurations and their legends. And, it will generate the same HTML as above.
 
 .. code-block:: php
