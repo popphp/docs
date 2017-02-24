@@ -7,7 +7,6 @@ Natively, there are adapters that support for the following database drivers:
 
 + MySQL
 + PostgreSQL
-+ Oracle
 + SQLServer
 + SQLite
 + PDO
@@ -35,7 +34,6 @@ And for other database connections:
 .. code-block:: php
 
     $pgsql  = Pop\Db\Db::connect('pgsql', $options);
-    $oracle = Pop\Db\Db::connect('oracle', $options);
     $sqlsrv = Pop\Db\Db::connect('sqlsrv', $options);
     $sqlite = Pop\Db\Db::connect('sqlite', $options);
 
@@ -59,7 +57,6 @@ The code below would produce the same results:
 
     $mysql  = new Pop\Db\Adapter\Mysql($options);
     $pgsql  = new Pop\Db\Adapter\Pgsql($options);
-    $oracle = new Pop\Db\Adapter\Oracle($options);
     $sqlsrv = new Pop\Db\Adapter\Sqlsrv($options);
     $sqlite = new Pop\Db\Adapter\Sqlite($options);
     $pdo    = new Pop\Db\Adapter\Pdo($options);
@@ -105,8 +102,8 @@ from above also has and `id` column.
         echo $row['username'];
     }
 
-Using the SQL Builder
----------------------
+Using the Query Builder
+-----------------------
 
 The SQL Builder is a part of the component that provides an interface that will produce syntactically correct
 SQL for whichever type of database you have elected to use. One of the main goals of this is portability across
@@ -117,8 +114,9 @@ adapter your application is currently using so that it can properly build the SQ
 
     $db = Pop\Db\Db::connect('mysql', $options);
 
-    $sql = new Pop\Db\Sql($db, 'users');
+    $sql = $db->createSql();
     $sql->select(['id', 'username'])
+        ->from('users')
         ->where('id > :id');
 
     echo $sql;
@@ -148,15 +146,14 @@ an example using JOIN and ORDER BY:
 
     $db = Pop\Db\Db::connect('mysql', $options);
 
-    $sql = new Pop\Db\Sql($db, 'users');
+    $sql = $db->createSql();
     $sql->select([
         'user_id'    => 'id',
         'user_email' => 'email'
-    ]);
-
-    $sql->select()->join('user_data', ['users.id' => 'user_data.user_id']);
-    $sql->select()->orderBy('id', 'ASC');
-    $sql->select->where('id > :id');
+    ])->from('users')
+      ->leftJoin('user_data', ['users.id' => 'user_data.user_id'])
+      ->orderBy('id', 'ASC');
+      ->where('id > :id');
 
     echo $sql;
 
@@ -168,6 +165,35 @@ The above example would produce the following SQL statement for MySQL:
         LEFT JOIN `user_data` ON `users`.`id` = `user_data`.`user_id`
         WHERE `id` > ?
         ORDER BY `id` ASC;
+
+Using the Schema Builder
+------------------------
+
+In addition to the query builder, there is also a schema builder to assist with database table
+structures and their management. In a similar fashion to the query builder, the schema builder
+has an API that mirrors the SQL that would be used to create, alter and drop tables in a database.
+
+.. code-block:: php
+
+    $db = Pop\Db\Db::connect('mysql', $options);
+
+    $schema = $db->createSchema();
+    $schema->create('users')
+        ->int('id', 16)
+        ->varchar('username', 255)
+        ->varchar('password', 255);
+
+    echo $schema;
+
+The above code would produced the following SQL:
+
+.. code-block:: sql
+
+    CREATE TABLE `users` (
+      `id` INT(16),
+      `username` VARCHAR(255),
+      `password` VARCHAR(255)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 Using Active Record
 -------------------
@@ -217,7 +243,7 @@ adapter for the table classes to use. You can do that like this:
 
 That database adapter will be used for all table classes in your application that extend ``Pop\Db\Record``.
 If you want a specific database adapter for a particular table class, you can specify that on the table
-sub-class level:
+class level:
 
 .. code-block:: php
 
@@ -225,7 +251,6 @@ sub-class level:
     Users::setDb($userDb);
 
 From there, the API to query the table in the database directly like in the following examples:
-
 
 **Fetch multiple rows**
 
@@ -236,7 +261,7 @@ From there, the API to query the table in the database directly like in the foll
         'limit' => 25
     ]);
 
-    foreach ($users->rows() as $user) {
+    foreach ($users as $user) {
         echo $user->username;
     }
 
@@ -246,7 +271,7 @@ From there, the API to query the table in the database directly like in the foll
         echo $user->username;
     }
 
-**Fetch a single row, update data**
+**Fetch a single row by ID, update data**
 
 .. code-block:: php
 
@@ -272,13 +297,15 @@ You can execute custom SQL to run custom queries on the table. One way to do thi
 
 .. code-block:: php
 
-    $sql = Users::sql();
+    $sql = Users::db()->createSql();
 
-    $sql->select()->where('id > :id');
+    $sql->select()
+        ->from(Users::table())
+        ->where('id > :id');
 
     $users = Users::execute($sql, ['id' => 1000]);
 
-    foreach ($users->rows() as $user) {
+    foreach ($users as $user) {
         echo $user->username;
     }
 
@@ -288,13 +315,14 @@ The basic overview of the record class static API is as follows, using the child
 * ``Users::hasDb()`` - Check if the class has a DB adapter set
 * ``Users::db()`` - Get the DB adapter object
 * ``Users::sql()`` - Get the SQL object
-* ``Users::findById($id, $resultsAs = 'ROW_AS_RESULT')`` - Find a single record by ID
-* ``Users::findBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find a record or records by certain column values
-* ``Users::findAll(array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find all records in the table
-* ``Users::execute($sql, $params, $resultsAs = 'ROW_AS_RESULT')`` - Execute a custom prepared SQL statement
-* ``Users::query($sql, $resultsAs = 'ROW_AS_RESULT')`` - Execute a simple SQL query
+* ``Users::findById($id)`` - Find a single record by ID
+* ``Users::findOne(array $columns = null, array $options = null)`` - Find a single record
+* ``Users::findBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
+* ``Users::findAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
+* ``Users::execute($sql, $params, $resultAs = Record::AS_RECORD)`` - Execute a custom prepared SQL statement
+* ``Users::query($sql, $resultAs = Record::AS_RECORD)`` - Execute a simple SQL query
 
-In the ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
+In the ``findOne``, ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
 contain values such as:
 
 .. code-block:: php
@@ -307,34 +335,36 @@ contain values such as:
 
 The ``$resultAs`` parameter allows you to set what the row set is returned as:
 
-* ``ROW_AS_RESULT`` - As instances of the ``Pop\Db\Record``
-* ``ROW_AS_ARRAY`` - As arrays
-* ``ROW_AS_OBJECT`` - As array objects
+* ``AS_ARRAY`` - As arrays
+* ``AS_OBJECT`` - As array objects
+* ``AS_RECORD`` - As instances of the ``Pop\Db\Record``
 
-The benefit of ``ROW_AS_RESULT`` is that you can operate on that row in real time, but if there are many
+The benefit of ``AS_RECORD`` is that you can operate on that row in real time, but if there are many
 rows returned in the result set, performance could be hindered. Therefore, you can use something like
-``ROW_AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
+``AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
 
 **Accessing records non-statically**
 
-If you're interested in an alternative to the active record pattern, you can use the ``Pop\Db\Record\Result``
-class in a non-static, instance style of coding as well. You would just have to inject your dependencies at
-the time of instantiation:
+If you're interested in an alternative to the active record pattern, there is a non-static API within the
+``Pop\Db\Record`` class:
 
 .. code-block:: php
 
-    // Inject the db adapter, the full table name and the table's primary key(s)
-    $user = new Result($db, 'users', 'id');
-    $user->findById(5);
+    $user = new Users();
+    $user->getById(5);
     echo $user->username;
 
 The basic overview of the result class API is as follows:
 
-* ``$user->findById($id, $resultsAs = 'ROW_AS_RESULT')`` - Find a single record by ID
-* ``$user->findBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find a record or records by certain column values
-* ``$user->findAll(array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find all records in the table
-* ``$user->execute($sql, $params, $resultsAs = 'ROW_AS_RESULT')`` - Execute a custom prepared SQL statement
-* ``$user->query($sql, $resultsAs = 'ROW_AS_RESULT')`` - Execute a simple SQL query
+* ``$user->getById($id)`` - Find a single record by ID
+* ``$user->getOneBy(array $columns = null, array $options = null)`` - Find a single record by ID
+* ``$user->getBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
+* ``$user->getAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
+
+Relationships & Associations
+----------------------------
+
+Relationships and associations are supported to allow for a simple way to select related data within the database.
 
 Shorthand SQL Syntax
 --------------------
@@ -358,12 +388,12 @@ and what it translates into:
 
 .. code-block:: text
 
-    $users = Users::findBy(['username' => '%test%']);    => WHERE username LIKE '%test%'
-    $users = Users::findBy(['username' => 'test%']);     => WHERE username LIKE 'test%'
-    $users = Users::findBy(['username' => '%test']);     => WHERE username LIKE '%test'
-    $users = Users::findBy(['username' => '-%test']);    => WHERE username NOT LIKE '%test'
-    $users = Users::findBy(['username' => 'test%-']);    => WHERE username NOT LIKE 'test%'
-    $users = Users::findBy(['username' => '-%test%-']);  => WHERE username NOT LIKE '%test%'
+    $users = Users::findBy(['%username%'   => 'test']);    => WHERE username LIKE '%test%'
+    $users = Users::findBy(['username%'    => 'test']);     => WHERE username LIKE 'test%'
+    $users = Users::findBy(['%username'    => 'test']);     => WHERE username LIKE '%test'
+    $users = Users::findBy(['-%username'   => 'test']);    => WHERE username NOT LIKE '%test'
+    $users = Users::findBy(['username%-'   => 'test']);    => WHERE username NOT LIKE 'test%'
+    $users = Users::findBy(['-%username%-' => 'test']);  => WHERE username NOT LIKE '%test%'
 
 **NULL and NOT NULL**
 
@@ -417,5 +447,12 @@ to that part of the predicate like this:
 .. code-block:: text
 
     WHERE (id > 1) OR (username LIKE '%test')
+
+Database Migrations
+-------------------
+
+Database migrations are scripts that assist in implementing new changes to the database, as well
+rolling back any changes to a previous state.
+
 
 .. _Active Record pattern: https://en.wikipedia.org/wiki/Active_record_pattern
