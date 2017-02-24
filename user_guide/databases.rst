@@ -364,7 +364,69 @@ The basic overview of the result class API is as follows:
 Relationships & Associations
 ----------------------------
 
-Relationships and associations are supported to allow for a simple way to select related data within the database.
+Relationships and associations are supported to allow for a simple way to select related data within the database. Building
+on the example above with the `Users` table, let's add an `Info` and an `Orders` table. The user will have a 1:1 relationship
+with a row in the `Info` table, and the user will have a 1:many relationship with the `Orders` table:
+
+.. code-block:: php
+
+    class Users extends Pop\Db\Record
+    {
+
+        // Define a 1:1 relationship
+        public function info()
+        {
+            return $this->hasOne('Info', 'user_id')
+        }
+
+        // Define a 1:many relationship
+        public function orders()
+        {
+            return $this->hasMany('Orders', 'user_id');
+        }
+
+    }
+
+    // Foreign key to the related user is `user_id`
+    class Info extends Pop\Db\Record
+    {
+
+    }
+
+    // Foreign key to the related user is `user_id`
+    class Orders extends Pop\Db\Record
+    {
+
+        // Define the parent relationship up to the user that owns this order record
+        public function user()
+        {
+            return $this->belongsTo('User', 'user_id');
+        }
+
+    }
+
+So with those table classes wired up, there now exists a useful network of relationships among the database
+entities that can be accessed like this:
+
+.. code-block:: php
+
+    $user = Users::findById(1);
+
+    // Loop through all of the user's orders
+    foreach ($user->orders() as $order) {
+        echo $order->id;
+    }
+
+    // Display the user's title stored in the `info` table
+    echo $user->info()->title;
+
+Or, in this case, if you have selected an order already and want to access the user that owns it:
+
+.. code-block:: php
+
+    $order = Orders::findById(2);
+    echo $order->user()->username;
+
 
 Shorthand SQL Syntax
 --------------------
