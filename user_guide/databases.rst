@@ -413,19 +413,19 @@ entities that can be accessed like this:
     $user = Users::findById(1);
 
     // Loop through all of the user's orders
-    foreach ($user->orders() as $order) {
+    foreach ($user->orders as $order) {
         echo $order->id;
     }
 
     // Display the user's title stored in the `info` table
-    echo $user->info()->title;
+    echo $user->info->title;
 
 Or, in this case, if you have selected an order already and want to access the parent user that owns it:
 
 .. code-block:: php
 
     $order = Orders::findById(2);
-    echo $order->user()->username;
+    echo $order->user->username;
 
 **Eager-Loading**
 
@@ -456,9 +456,23 @@ set up, you'll actually access it using the static ``with()`` method, like this:
     $user = Users::with('orders')->getById(10592005);
 
     // Loop through all of the user's orders
-    foreach ($user->orders() as $order) {
+    foreach ($user->orders as $order) {
         echo $order->id;
     }
+
+A note about the access in the example given above. Even though a method was defined to access the different
+relationships, you can use a magic property to access them as well, and it will route to that method. Also,
+object and array notation is supported throughout any record object. The following example all produce the
+same result:
+
+.. code-block:: php
+
+    $user = Users::findById(1);
+
+    echo $user->info()->title;
+    echo $user->info()['title'];
+    echo $user->info->title;
+    echo $user->info['title'];
 
 Shorthand SQL Syntax
 --------------------
@@ -482,12 +496,12 @@ and what it translates into:
 
 .. code-block:: text
 
-    $users = Users::findBy(['%username%'   => 'test']);    => WHERE username LIKE '%test%'
-    $users = Users::findBy(['username%'    => 'test']);     => WHERE username LIKE 'test%'
-    $users = Users::findBy(['%username'    => 'test']);     => WHERE username LIKE '%test'
-    $users = Users::findBy(['-%username'   => 'test']);    => WHERE username NOT LIKE '%test'
-    $users = Users::findBy(['username%-'   => 'test']);    => WHERE username NOT LIKE 'test%'
-    $users = Users::findBy(['-%username%-' => 'test']);  => WHERE username NOT LIKE '%test%'
+    $users = Users::findBy(['%username%'   => 'test']); => WHERE username LIKE '%test%'
+    $users = Users::findBy(['username%'    => 'test']); => WHERE username LIKE 'test%'
+    $users = Users::findBy(['%username'    => 'test']); => WHERE username LIKE '%test'
+    $users = Users::findBy(['-%username'   => 'test']); => WHERE username NOT LIKE '%test'
+    $users = Users::findBy(['username%-'   => 'test']); => WHERE username NOT LIKE 'test%'
+    $users = Users::findBy(['-%username%-' => 'test']); => WHERE username NOT LIKE '%test%'
 
 **NULL and NOT NULL**
 
@@ -516,8 +530,8 @@ stitched together with AND:
 .. code-block:: php
 
     $users = Users::findBy([
-        'id>'      => 1,
-        'username' => '%user1'
+        'id>'       => 1,
+        '%username' => 'user1'
     ]);
 
 which will be translated into:
@@ -531,8 +545,8 @@ If you need to use OR instead, you can specify it like this:
 .. code-block:: php
 
     $users = Users::findBy([
-        'id>'      => 1,
-        'username' => '%user1 OR'
+        'id>'       => 1,
+        '%username' => 'user1 OR'
     ]);
 
 Notice the ' OR' added as a suffix to the second condition's value. That will apply the OR
