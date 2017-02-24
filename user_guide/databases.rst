@@ -420,13 +420,45 @@ entities that can be accessed like this:
     // Display the user's title stored in the `info` table
     echo $user->info()->title;
 
-Or, in this case, if you have selected an order already and want to access the user that owns it:
+Or, in this case, if you have selected an order already and want to access the parent user that owns it:
 
 .. code-block:: php
 
     $order = Orders::findById(2);
     echo $order->user()->username;
 
+**Eager-Loading**
+
+In the 1:many example given above, the orders are "lazy-loaded," meaning that they aren't called from of the
+database until you call the ``orders()`` method. However, you can access a 1:many relationship with what is
+called "eager-loading." However, to take full advantage of this, you would have alter the method in the `Users`
+table:
+
+.. code-block:: php
+
+    class Users extends Pop\Db\Record
+    {
+
+        // Define a 1:many relationship
+        public function orders($options = null, $eager = false)
+        {
+            return $this->hasMany('Orders', 'user_id', $options, $eager);
+        }
+
+    }
+
+The ``$options`` parameter is a way to pass additional select criteria to the selection of the order rows,
+such as `order` and `limit`. The ``$eager`` parameter is what triggers the eager-loading, however, with this
+set up, you'll actually access it using the static ``with()`` method, like this:
+
+.. code-block:: php
+
+    $user = Users::with('orders')->getById(10592005);
+
+    // Loop through all of the user's orders
+    foreach ($user->orders() as $order) {
+        echo $order->id;
+    }
 
 Shorthand SQL Syntax
 --------------------
