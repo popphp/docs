@@ -102,10 +102,10 @@ from above also has and `id` column.
         echo $row['username'];
     }
 
-Using the Query Builder
------------------------
+The Query Builder
+-----------------
 
-The SQL Builder is a part of the component that provides an interface that will produce syntactically correct
+The query builder is a part of the component that provides an interface that will produce syntactically correct
 SQL for whichever type of database you have elected to use. One of the main goals of this is portability across
 different systems and environments. In order for it to function correctly, you need to pass it the database
 adapter your application is currently using so that it can properly build the SQL.
@@ -166,8 +166,8 @@ The above example would produce the following SQL statement for MySQL:
         WHERE `id` > ?
         ORDER BY `id` ASC;
 
-Using the Schema Builder
-------------------------
+The Schema Builder
+------------------
 
 In addition to the query builder, there is also a schema builder to assist with database table
 structures and their management. In a similar fashion to the query builder, the schema builder
@@ -195,8 +195,8 @@ The above code would produced the following SQL:
       `password` VARCHAR(255)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-Using Active Record
--------------------
+Active Record
+-------------
 
 The ``Pop\Db\Record`` class uses the `Active Record pattern`_ as a base to allow you to work with
 and query tables in a database directly. To set this up, you create a table class that extends the
