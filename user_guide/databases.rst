@@ -581,7 +581,7 @@ and it will contain a blank class template:
 
     use Pop\Db\Sql\Migration\AbstractMigration;
 
-    class Migration1 extends AbstractMigration
+    class MyNewMigration extends AbstractMigration
     {
 
         public function up()
@@ -663,7 +663,7 @@ To roll back the migration, you would call the migrator like this:
     ]);
 
     $migrator = new Migrator($db, 'migrations');
-    $migrator->run();
+    $migrator->rollback();
 
 And the above code here would have dropped the table ``users`` from the database.
 
