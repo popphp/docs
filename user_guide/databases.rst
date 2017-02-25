@@ -576,6 +576,7 @@ The code above will create a file that look like ``migrations/20170225100742_my_
 and it will contain a blank class template:
 
 .. code-block:: php
+
     <?php
 
     use Pop\Db\Sql\Migration\AbstractMigration;
@@ -599,8 +600,8 @@ From there, you can write your forward migration steps in the ``up()`` method, o
 in the ``down()`` method. Here's an example that creates a table when stepped forward, and drops
 that table when rolled back:
 
-
 .. code-block:: php
+
     <?php
 
     use Pop\Db\Sql\Migration\AbstractMigration;
@@ -646,8 +647,8 @@ To step forward, you would call the migrator like this:
     $migrator = new Migrator($db, 'migrations');
     $migrator->run();
 
-And to roll back the migration, you would call the migrator like this:
-
+The above code would have created the table ``users`` with the defined columns.
+To roll back the migration, you would call the migrator like this:
 
 .. code-block:: php
 
@@ -664,5 +665,6 @@ And to roll back the migration, you would call the migrator like this:
     $migrator = new Migrator($db, 'migrations');
     $migrator->run();
 
+And the above code here would have dropped the table ``users`` from the database.
 
 .. _Active Record pattern: https://en.wikipedia.org/wiki/Active_record_pattern
