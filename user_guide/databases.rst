@@ -606,7 +606,7 @@ that table when rolled back:
 
     use Pop\Db\Sql\Migration\AbstractMigration;
 
-    class Migration1 extends AbstractMigration
+    class MyNewMigration extends AbstractMigration
     {
 
         public function up()
