@@ -65,14 +65,14 @@ different methods to do so:
 **Getting path segments**
 
 If you need to break apart a URI into its segments access them for your application, you can do it with
-the ``getPath()`` method. Consider the URI ``/users/edit/1001``:
+the ``getSegment()`` method. Consider the URI ``/users/edit/1001``:
 
-* ``$request->getPath(0);`` - returns 'users'
-* ``$request->getPath(1);`` - returns 'edit'
-* ``$request->getPath(2);`` - returns '1001'
-* ``$request->getPath();`` - returns an array containing all of the path segments
+* ``$request->getSegment(0);`` - returns 'users'
+* ``$request->getSegment(1);`` - returns 'edit'
+* ``$request->getSegment(2);`` - returns '1001'
+* ``$request->getSegments();`` - returns an array containing all of the path segments
 
-**Test the HTTP Method**
+**Check the HTTP Method**
 
 * ``$request->isGet();``
 * ``$request->isHead();``

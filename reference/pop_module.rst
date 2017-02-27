@@ -38,6 +38,7 @@ of what a module might look like and how you'd register it with an application:
     $application = new Pop\Application();
 
     $moduleConfig = [
+        'name'   => 'myModule',
         'routes' => [
             '/' => [
                 'controller' => 'MyModule\Controller\IndexController',
@@ -47,7 +48,7 @@ of what a module might look like and how you'd register it with an application:
         'prefix' => 'MyModule\\'
     ];
 
-    $application->register('myModule', $moduleConfig);
+    $application->register($moduleConfig);
 
 In the above example, the module configuration is passed into the application object. From there,
 an instance of the base module object is created and the configuration is passed into it. The newly
@@ -69,6 +70,7 @@ so that the application can properly detect and load the module's source files.
     $application->autoloader->addPsr4('MyModule\\', __DIR__ . '/modules/mymodule/src');
 
     $myModule = new MyModule\Module([
+        'name'   => 'myModule',
         'routes' => [
             '/' => [
                 'controller' => 'MyModule\Controller\IndexController',
@@ -77,7 +79,7 @@ so that the application can properly detect and load the module's source files.
         ]
     ]);
 
-    $application->register('myModule', $myModule);
+    $application->register($myModule);
 
 The Module Manager
 ------------------

@@ -30,25 +30,25 @@ Here's a list of the available built-in validators:
 +----------------------------------------------------------+
 |                     Built-in Validators                  |
 +===================+======================+===============+
-| AlphaNumeric      | Included             | Length        |
+| AlphaNumeric      | Ipv4                 | LessThanEqual |
 +-------------------+----------------------+---------------+
-| Alpha             | Ipv4                 | LessThanEqual |
+| Alpha             | Ipv6                 | LessThan      |
 +-------------------+----------------------+---------------+
-| BetweenInclude    | Ipv6                 | LessThan      |
+| BetweenInclude    | IsSubnetOf           | NotContains   |
 +-------------------+----------------------+---------------+
-| Between           | IsSubnetOf           | NotEmpty      |
+| Between           | LengthBetweenInclude | NotEmpty      |
 +-------------------+----------------------+---------------+
-| CreditCard        | LengthBetweenInclude | NotEqual      |
+| Contains          | LengthBetween        | NotEqual      |
 +-------------------+----------------------+---------------+
-| Email             | LengthBetween        | Numeric       |
+| CreditCard        | LengthGte            | Numeric       |
 +-------------------+----------------------+---------------+
-| Equal             | LengthGte            | RegEx         |
+| Email             | LengthGt             | RegEx         |
 +-------------------+----------------------+---------------+
-| Excluded          | LengthGt             | Subnet        |
+| Equal             | LengthLte            | Subnet        |
 +-------------------+----------------------+---------------+
-| GreaterThanEqual  | LengthLte            | Url           |
+| GreaterThanEqual  | LengthLt             | Url           |
 +-------------------+----------------------+---------------+
-| GreaterThan       | LengthLt             |               |
+| GreaterThan       | Length               |               |
 +-------------------+----------------------+---------------+
 
 Here's an example testing an email value

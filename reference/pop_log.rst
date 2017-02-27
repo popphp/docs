@@ -42,11 +42,11 @@ are:
 
 and are available via their respective methods:
 
-* ``$log->emerg($message);``
+* ``$log->emergency($message);``
 * ``$log->alert($message);``
-* ``$log->crit($message);``
-* ``$log->err($message);``
-* ``$log->warn($message);``
+* ``$log->critical($message);``
+* ``$log->error($message);``
+* ``$log->warning($message);``
 * ``$log->notice($message);``
 * ``$log->info($message);``
 * ``$log->debug($message);``
@@ -83,8 +83,10 @@ Here's an example using email, which requires you to install `popphp/pop-mail`:
 
     use Pop\Log\Logger;
     use Pop\Log\Writer;
+    use Pop\Mail;
 
-    $log = new Logger(new Writer\Mail([
+    $mailer = new Mail\Mailer(new Mail\Transport\Sendmail());
+    $log    = new Logger(new Writer\Mail($mailer, [
         'sysadmin@mydomain.com', 'logs@mydomain.com'
     ]));
 
@@ -113,42 +115,25 @@ Writing a log to a table in a database requires you to install `popphp/pop-db`:
 .. code-block:: php
 
     use Pop\Db\Db;
-    use Pop\Db\Sql;
     use Pop\Log\Logger;
     use Pop\Log\Writer;
 
     $db  = Db::connent('sqlite', __DIR__ . '/logs/.htapplog.sqlite');
-    $sql = new Sql($db);
-
-    $log = new Logger(new Writer\Db($sql, 'system_logs'));
+    $log = new Logger(new Writer\Db($db, 'system_logs'));
 
     $log->info('Just a info message.');
     $log->alert('Look Out! Something serious happened!');
 
 In this case, the logs are written to a database table that has the columns
-`id`, `timestamp`, `priority`, `name` and `message`. So, after the example above,
+`id`, `timestamp`, `level`, `name` and `message`. So, after the example above,
 your database table would look like this:
 
 +----+---------------------+----------+-------+---------------------------------------+
-| Id | Timestamp           | Priority | Name  | Message                               |
+| Id | Timestamp           | Level    | Name  | Message                               |
 +====+=====================+==========+=======+=======================================+
 | 1  | 2015-07-11 12:32:32 | 6        | INFO  | Just a info message.                  |
 +----+---------------------+----------+-------+---------------------------------------+
 | 2  | 2015-07-11 12:32:33 | 1        | ALERT | Look Out! Something serious happened! |
 +----+---------------------+----------+-------+---------------------------------------+
-
-Custom Logging
---------------
-
-You can also write a non-standard, custom log that is specific to your app:
-
-.. code-block:: php
-
-    use Pop\Log\Logger;
-    use Pop\Log\Writer;
-
-    $log = new Logger(new Writer\File(__DIR__ . '/logs/app.log'));
-
-    $log->customLog('This is a custom log.');
 
 .. _RFC-3164: http://tools.ietf.org/html/rfc3164

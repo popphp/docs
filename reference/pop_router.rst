@@ -117,8 +117,7 @@ into all controllers. You can also define controller parameters within the route
                 'controller'       => 'MyApp\Controller\ProductsController',
                 'action'           => 'index',
                 'controllerParams' => [
-                    'baz'    => 789,
-                    'append' => true
+                    'baz'    => 789
                 ]
             ]
         ]
@@ -126,8 +125,6 @@ into all controllers. You can also define controller parameters within the route
 
     $app = new Pop\Application($config);
 
-The ``append`` flag tells the router to append the controller parameters on to the existing controller
-parameters if set to ``true``. If set to ``false``, they will override any existing controller parameters.
 
 Dispatch Parameters
 -------------------
@@ -138,13 +135,13 @@ particular route:
 .. code-block:: php
 
     $router->addRoute('/hello/:name', function($name) {
-        echo 'Hello ' . ucfisrt($name);
+        echo 'Hello ' . ucfirst($name);
     });
 
 .. code-block:: php
 
     $router->addRoute('hello <name>', function($name) {
-        echo 'Hello ' . ucfisrt($name);
+        echo 'Hello ' . ucfirst($name);
     });
 
 The HTTP request of ``http://localhost/hello/pop`` and the CLI command of ``./app hello pop`` will each
@@ -163,7 +160,7 @@ Consider the following controller class and method:
             if (null === $name) {
                 echo 'Hello World!';
             } else {
-                echo 'Hello ' . ucfisrt($name);
+                echo 'Hello ' . ucfirst($name);
             }
         }
     }
@@ -253,11 +250,7 @@ HTTP
 +=================================+=====================================================================+
 | /foo/:bar/:baz                  | The 2 params are required                                           |
 +---------------------------------+---------------------------------------------------------------------+
-| /foo[/:bar][/:baz]              | The 2 params are optional                                           |
-+---------------------------------+---------------------------------------------------------------------+
 | /foo/:bar[/:baz]                | First param required, last one is optional                          |
-+---------------------------------+---------------------------------------------------------------------+
-| /foo/:bar/:baz[/:some][/:other] | Two required, two optional                                          |
 +---------------------------------+---------------------------------------------------------------------+
 | /foo/:bar/:baz*                 | One required param, one required param that is a collection (array) |
 +---------------------------------+---------------------------------------------------------------------+

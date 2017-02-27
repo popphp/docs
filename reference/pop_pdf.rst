@@ -384,7 +384,7 @@ Here is an example of embedding a large image and resizing it down before placin
 
     use Pop\Pdf\Document\Page;
 
-    $image = new Page\Image('large-image.jpg');
+    $image = Page\Image::createImageFromFile('/path/to/some/image.jpg')
     $image->resizeToWidth(320);
 
     $page = new Page(Page::LETTER);
