@@ -7,7 +7,7 @@ you'll see the following:
 * app/
 
   - config/
-  - data/
+  - database/
   - src/
   - view/
 
@@ -16,7 +16,7 @@ you'll see the following:
 * vendor/
 
 The ``app/`` folder contains the main set of folders and files that main the application work.
-The ``data/`` folder contains the SQLite database file. The ``public/`` folder is the web document
+The ``database/`` folder contains the SQLite database file. The ``public/`` folder is the web document
 root that contains the main index file. And the ``script/`` folder contains the main script to
 execute the CLI side of the application.
 
@@ -25,10 +25,12 @@ expect to see within an application. Within the ``app/config/`` and ``app/src/Co
 see files specific to the current environment of the application, web or console. Each environment
 is explained more in depth in the next sections.
 
-Application Object
+Application Module
 ~~~~~~~~~~~~~~~~~~
 
-If you look inside the ``Tutorial\Application`` class, you see the lines:
+Application development with Pop PHP promotes modular development, meaning that it aides creating
+smaller "mini-application" modules that can be registered with the main application object.
+If you look inside the ``Tutorial\Module`` class, you see the lines:
 
 .. code-block:: php
 
@@ -40,10 +42,18 @@ Once those lines of code are executed upon the ``app.init`` event trigger, the d
 to the rest of the application. Furthermore, you'll see a CLI specific header and footer that is only
 triggered if the environment is on the console.
 
+Front Controllers
+~~~~~~~~~~~~~~~~~
+
+You can see the main front controllers in the ``public/`` and ``scripts/`` folders: ``public/index.php``
+and ``script/app`` respectively. Looking into each of those, you can see that the main ``Pop\Application``
+object is created and wired up, with the ``Tutorial\Module`` object being registered with the main application
+object so that it will be wired up and function correctly.
+
 Application Classes
 ~~~~~~~~~~~~~~~~~~~
 
-Beyond the main application class, there are classes for the following, each in its own folder:
+Beyond the front controllers and the main module class, there are classes for the following, each in its own folder:
 
 * controllers - ``app/src/Controller``
 * forms - ``app/src/Form``
