@@ -2,7 +2,7 @@ Application Structure
 =====================
 
 After installation, if you take a look at the files and folders in the tutorial application,
-you'll see the following:
+you'll see the following basic application structure:
 
 * app/
 
@@ -15,10 +15,49 @@ you'll see the following:
 * script/
 * vendor/
 
-The ``app/`` folder contains the main set of folders and files that main the application work.
+The ``app/`` folder contains the main set of folders and files that make the application work.
 The ``database/`` folder contains the SQLite database file. The ``public/`` folder is the web document
 root that contains the main index file. And the ``script/`` folder contains the main script to
 execute the CLI side of the application.
+
+A more expanded version of an Pop application structure may look like this:
+
+* app/
+
+  - config/
+
+    - forms/
+    - resources/
+    - routes/
+
+      - web.php
+      - cli.php
+
+    - app.web.php
+    - app.cli.php
+
+  - database/
+
+    - migrations/
+    - app.sql
+
+  - src/
+
+    - Controller/
+    - Module.php
+
+  - view/
+
+* data/
+
+  - logs/
+  - tmp/
+
+* logs/
+* public/
+* script/
+* tests/
+* vendor/
 
 This structure isn't necessarily set in stone, but it follows a typical structure that one might
 expect to see within an application. Within the ``app/config/`` and ``app/src/Controller/``, you'll
