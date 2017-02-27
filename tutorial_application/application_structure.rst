@@ -34,7 +34,7 @@ If you look inside the ``Tutorial\Module`` class, you see the lines:
 
 .. code-block:: php
 
-    $this->on('app.init', function($application){
+    $this->application->on('app.init', function($application){
         Record::setDb($application->services['database']);
     });
 
