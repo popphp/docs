@@ -15,8 +15,8 @@ you can see the new post is now displayed in the feed of posts at the bottom of 
 
 .. image:: images/pop-web3.png
 
-Index File
-~~~~~~~~~~
+The Index File
+~~~~~~~~~~~~~~
 
 A closer look at the application code in the main ``public/index.php`` file and you'll see:
 

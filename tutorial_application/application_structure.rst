@@ -26,9 +26,9 @@ A more expanded version of an Pop application structure may look like this:
 
   - config/
 
-    - forms/
-    - resources/
-    - routes/
+    - forms/       `(Form and form field configurations)`
+    - resources/   `(ACL resources and permissions)`
+    - routes/      `(Route configurations)`
 
       - web.php
       - cli.php
@@ -36,33 +36,34 @@ A more expanded version of an Pop application structure may look like this:
     - app.web.php
     - app.cli.php
 
-  - database/
+  - database/      `(Database structure and seed files; database migrations)`
 
     - migrations/
     - app.sql
 
-  - src/
+  - src/           `(Main application source files)`
 
     - Controller/
+    - Form/
+    - Model/
+    - Table/
     - Module.php
 
-  - view/
+  - view/          `(Application view scripts)`
 
-* data/
+* data/            `(Application data store for logs, files, etc.)`
 
   - logs/
   - tmp/
 
-* logs/
-* public/
-* script/
-* tests/
-* vendor/
+* logs/            `(Web server log files)`
+* public/          `(Web server document root)`
+* script/          `(CLI-based application scripts)`
+* tests/           `(Application tests)`
+* vendor/          `(3rd-party vendor packages)`
 
 This structure isn't necessarily set in stone, but it follows a typical structure that one might
-expect to see within an application. Within the ``app/config/`` and ``app/src/Controller/``, you'll
-see files specific to the current environment of the application, web or console. Each environment
-is explained more in depth in the next sections.
+expect to see within a PHP application.
 
 Application Module
 ~~~~~~~~~~~~~~~~~~
@@ -87,7 +88,7 @@ Front Controllers
 You can see the main front controllers in the ``public/`` and ``scripts/`` folders: ``public/index.php``
 and ``script/app`` respectively. Looking into each of those, you can see that the main ``Pop\Application``
 object is created and wired up, with the ``Tutorial\Module`` object being registered with the main application
-object so that it will be wired up and function correctly.
+object so that it will be wired up and function correctly. We will look at these more in-depth in the next sections.
 
 Application Classes
 ~~~~~~~~~~~~~~~~~~~
