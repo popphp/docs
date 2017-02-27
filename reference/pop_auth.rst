@@ -1,5 +1,5 @@
-Pop\\Auth
-=========
+pop-auth
+========
 
 The `popphp/pop-auth` component is an authentication component that provides different adapters
 to authenticate a user's identity. It is not to be confused with the ACL component, as that deals
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-auth": "2.2.*",
+            "popphp/pop-auth": "3.0.*",
         }
     }
 
@@ -43,10 +43,9 @@ list of usernames and encrypted passwords:
 
 .. code-block:: php
 
-    use Pop\Auth\Auth;
-    use Pop\Auth\Adapter\File;
+    use Pop\Auth;
 
-    $auth = new Auth(new File('/path/to/.htmyauth', Auth::ENCRYPT_CRYPT));
+    $auth = new Auth\File('/path/to/.htmyauth');
     $auth->authenticate('admin', '12admin34');
 
     if ($auth->isValid()) { } // Returns true
@@ -58,16 +57,14 @@ For this example, there is a table in a database called 'users' and a correlatin
 called ``MyApp\\Users`` that extends ``Pop\\Db\\Record``.
 
 For simplicity, the table has a column called `username` and a column called `password`.
-The value of the `password` column is encrypted using bcrypt. These are all options that
-can be set to whatever the user decides them to be. But, by default, the table adapter
-will look for a `username` column and a `password` column unless otherwise specified.
+By default, the table adapter will look for a `username` column and a `password` column
+unless otherwise specified.
 
 .. code-block:: php
 
-    use Pop\Auth\Auth;
-    use Pop\Auth\Adapter\Table;
+    use Pop\Auth;
 
-    $auth = new Auth(new Table('MyApp\Users'), Auth::ENCRYPT_BCRYPT);
+    $auth = new Auth\Table('MyApp\Users');
 
     // Attempt #1
     $auth->authenticate('admin', 'bad-password');
@@ -92,10 +89,9 @@ auto-detect most things, like the the auth type (Basic or Digest), content encod
 
 .. code-block:: php
 
-    use Pop\Auth\Auth;
-    use Pop\Auth\Adapter\Http;
+    use Pop\Auth;
 
-    $auth = new Auth(new Http('https://www.domain.com/auth', 'post'));
+    $auth = new Auth\Http('https://www.domain.com/auth', 'post');
     $auth->authenticate('admin', '12admin34');
 
     if ($auth->isValid()) { } // Returns true
@@ -109,10 +105,9 @@ to communicate with the LDAP server.
 
 .. code-block:: php
 
-    use Pop\Auth\Auth;
-    use Pop\Auth\Adapter\Ldap;
+    use Pop\Auth;
 
-    $auth = new Auth(new Ldap('ldap.domain', 389, [LDAP_OPT_PROTOCOL_VERSION => 3]));
+    $auth = new Auth\Ldap('ldap.domain', 389, [LDAP_OPT_PROTOCOL_VERSION => 3]);
     $auth->authenticate('admin', '12admin34');
 
     if ($auth->isValid()) { } // Returns true

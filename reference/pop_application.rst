@@ -1,5 +1,5 @@
-Pop\\Application
-================
+pop-application
+===============
 
 The ``Pop\Application`` class is the main application class of the Pop PHP Framework. It comes with
 the core `popphp/popphp` component and serves as the main application container within an application
@@ -21,7 +21,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "2.1.*",
+            "popphp/popphp": "3.0.*",
         }
     }
 

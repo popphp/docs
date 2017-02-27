@@ -1,5 +1,5 @@
-Pop\\Service
-============
+pop-service
+===========
 
 The ``Pop\Service`` sub-component is part of the core `popphp/popphp` component. It serves as the
 service locator for the main application object. With it, you can wire up services that may be needed
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "2.1.*",
+            "popphp/popphp": "3.0.*",
         }
     }
 

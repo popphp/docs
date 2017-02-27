@@ -1,5 +1,5 @@
-Pop\\Image
-==========
+pop-image
+=========
 
 The `popphp/pop-image` component provides a robust API for image creation and manipulation. Adapters are
 provided to utilize either the GD, Imagick or Gmagick extensions. Also, the SVG format is supported with
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-image": "2.1.*",
+            "popphp/pop-image": "3.0.*",
         }
     }
 
@@ -32,10 +32,6 @@ application. It is common to have to process images in some way for the web appl
 perform its required functionality. The `popphp/pop-image` component provides that functionality
 with a robust set of image processing and manipulation features. Within the component are
 adapters written to support the ``Gd``, ``Imagick`` and ``Gmagick`` extensions.
-
-Additionally, there is an ``Svg`` adapter that supports the creation and manipulation of SVG image
-files via an API that is similar to the other raster-based image adapters. With all of the adapters,
-there is a base set of image creation, processing and manipulation features that are available.
 
 By using either the ``Imagick`` or ``Gmagick`` adapters [*]_, you will open up a larger set of
 features and functionality for your application, such as the ability to handle more image formats
@@ -53,12 +49,12 @@ example tests for each individual adapter to see if one is available, and if not
 
 .. code-block:: php
 
-    if (Pop\Image\Gmagick::isInstalled()) {
-        $imageService = new Pop\Image\Factory\Gmagick();
-    } else if (Pop\Image\Imagick::isInstalled()) {
-        $imageService = new Pop\Image\Factory\Imagick();
-    } else if (Pop\Image\Gd::isInstalled()) {
-        $imageService = new Pop\Image\Factory\Gd();
+    if (Pop\Image\Gmagick::isAvailable()) {
+        $image = Pop\Image\Gmagick::load('image.jpg');
+    } else if (Pop\Image\Imagick::isAvailable()) {
+        $image = Pop\Image\Imagick::load('image.jpg');
+    } else if (Pop\Image\Gd::isAvailable()) {
+        $image = Pop\Image\Gd::load('image.jpg');
     }
 
 Similarly, you can check their availability like this as well:
@@ -66,14 +62,14 @@ Similarly, you can check their availability like this as well:
 .. code-block:: php
 
     // This will work with any of the 3 adapters
-    $adapters = Pop\Image\Gd::getAvailableAdapters();
+    $adapters = Pop\Image\Image::getAvailableAdapters();
 
     if ($adapters['gmagick']) {
-        $imageService = new Pop\Image\Factory\Gmagick();
+        $image = Pop\Image\Gmagick::load('image.jpg');
     } else if ($adapters['imagick']) {
-        $imageService = new Pop\Image\Factory\Imagick();
+        $image = Pop\Image\Imagick::load('image.jpg');
     } else if ($adapters['gd']) {
-        $imageService = new Pop\Image\Factory\Gd();
+        $image = Pop\Image\Gd::load('image.jpg');
     }
 
 As far as which adapter or extension is the "best" for your application, that will really depend on your
@@ -87,114 +83,31 @@ any issues that may arise should an application need to be installed on a variet
 The goal is to achieve a certain amount of "graceful degradation," should one of the more feature-rich image
 extensions not be available on a new environment.
 
-**Using the Image Factory**
+Basic Use
+---------
 
-If you wish to use the factory class, perhaps as an image service like shown above, you can do so like this:
+**Loading an Image**
 
-.. code-block:: php
-
-    $imageService = new Pop\Image\Factory\Gd();
-
-And then later in your application, you can load an instance of an image object via:
+You can load an existing image from disk like this:
 
 .. code-block:: php
 
-    // Returns an instance of Pop\Image\Gd with the existing image resource loaded
-    $image = $imageService->load('image.jpg');
+    // Returns an instance of Pop\Image\Adapter\Gd with the image resource loaded
+    $image = Pop\Image\Gd::load('path/to/image.jpg');
 
-Or create an instance of an image object with a new image via:
+Or you can load an image from a data source like this:
+
+.. code-block:: php
+
+    // Returns an instance of Pop\Image\Adapter\Gd with the image resource loaded
+    $image = Pop\Image\Gd::loadFromString($imageData);
+
+Or create an instance of an image object with a new image resource via:
 
 .. code-block:: php
 
     // Returns an instance of Pop\Image\Gd with a new image resource loaded
-    $image = $imageService->create('new.jpg', 640, 480);
-
-Formats
--------
-
-The image formats available are dependent on which image adapter you choose. The ``Gd`` adapter is limited
-to the 3 basic web image formats:
-
-- jpg
-- png
-- gif
-
-The ``Imagick`` and ``Gmagick`` adapters support a much larger number of formats, including vector formats,
-if the Ghostscript application and libraries are installed in the environment. The number of formats varies
-depending on the environment, but the default formats include:
-
-- ai
-- bmp
-- eps
-- gif
-- ico
-- jpg
-- pdf
-- png
-- ps
-- psb
-- psd
-- svg
-- tif
-
-Within those two adapters, the list may grow or shrink based on what's available in the environment. To check
-or test what formats can be processed, you can use the static ``getFormats()`` method. This method will return
-an associative array with the image file extension as the key and the image mime type as the value:
-
-.. code-block:: php
-
-    $formats = Pop\Image\Imagick::getFormats();
-
-    if (array_key_exists('pdf', $formats)) {
-        // Do something with a PDF
-    }
-
-Basic Use
----------
-
-The core feature of the main image adapters include basic image functionality, such as resizing or cropping
-an image. Additionally, you can convert an image to a different format as well as save the image. Here's a
-look at the shared API of the ``Gd``, ``Imagick`` and ``Gmagick`` adapters.
-
-**Loading an existing image**
-
-To load an existing image resource, you could use the ``Gd`` adapter like this:
-
-.. code-block:: php
-
-    $img = new Pop\Image\Gd('image.jpg');
-
-Alternatively, you could use the ``Imagick`` adapter:
-
-.. code-block:: php
-
-    $img = new Pop\Image\Imagick('image.jpg');
-
-or, you could use the ``Gmagick`` adapter if that extension is available instead:
-
-.. code-block:: php
-
-    $img = new Pop\Image\Gmagick('image.jpg');
-
-**Create a new image**
-
-To create a new image resource, you could use the ``Gd`` adapter like this:
-
-.. code-block:: php
-
-    $img = new Pop\Image\Gd('new.jpg', 640, 480);
-
-Alternatively, you could use the ``Imagick`` adapter:
-
-.. code-block:: php
-
-    $img = new Pop\Image\Imagick('new.jpg', 640, 480);
-
-or, you could use the ``Gmagick`` adapter if that extension is available instead:
-
-.. code-block:: php
-
-    $img = new Pop\Image\Gmagick('new.jpg', 640, 480);
+    $image =  Pop\Image\Gd::create(640, 480, 'new.jpg');
 
 All three of the above adapters have the same core API below:
 
@@ -204,13 +117,12 @@ All three of the above adapters have the same core API below:
 * ``$img->scale($scale);`` - scale image by percentage, 0.0 - 1.0
 * ``$img->crop($w, $h, $x = 0, $y = 0);`` - crop image to specified width and height
 * ``$img->cropThumb($px, $offset = null);`` - crop image to squared image of specified size
-* ``$img->rotate($degrees, array $bgColor = [255, 255, 255]);`` - rotate image by specified degrees
+* ``$img->rotate($degrees, Color\ColorInterface $bgColor = null, $alpha = null);`` - rotate image by specified degrees
 * ``$img->flip();`` - flip the image over the x-axis
 * ``$img->flop();`` - flip the image over the y-axis
-* ``$img->convert($type);`` - convert image to specified image type
-* ``$img->setQuality($quality);`` - set the image quality, 0 - 100
-* ``$img->save($to = null);`` - save image, either to itself or a new location
-* ``$img->output($download = false, $sendHeaders = true);`` - output image via HTTP
+* ``$img->convert($to);`` - convert image to specified image type
+* ``$img->writeToFile($to = null, $quality = 100);`` - save image, either to itself or a new location
+* ``$img->outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true);`` - output image via HTTP
 
 Advanced Use
 ------------
@@ -393,101 +305,6 @@ Here's an example working with text over the image resource:
     $img->type->setFillColor(128, 128, 128)
         ->size(12)
         ->font('fonts/Arial.ttf')
-        ->xy(40, 120)
-        ->text('Hello World!');
-
-SVG
----
-
-The ``Svg`` adapter has an API that is similar to the raster-based adapters, but is different in other
-areas in that it is processing and manipulating a vector image object instead of a bitmap image.
-
-Creating a new SVG image resource is similar to the other adapters:
-
-.. code-block:: php
-
-    $svg = new Pop\Image\Svg('new.svg', 640, 480);
-
-as is loading an existing SVG image resource as well:
-
-.. code-block:: php
-
-    $svg = new Pop\Image\Imagick('image.svg');
-
-The core API of the ``Svg`` adapter looks like this:
-
-* ``$svg->save($to = null);``
-* ``$svg->output($download = false, $sendHeaders = true);``
-
-From there the ``Svg`` adapter has 3 of the advanced manipulation objects available to it: **draw**,
-**effect** and **type**.
-
-Draw
-~~~~
-
-The draw object allows you to perform the following methods:
-
-* ``$svg->draw->line($x1, $y1, $x2, $y2);``
-* ``$svg->draw->rectangle($x, $y, $w, $h = null);``
-* ``$svg->draw->square($x, $y, $w);``
-* ``$svg->draw->roundedRectangle($x, $y, $w, $h = null, $rx = 10, $ry = null);``
-* ``$svg->draw->roundedSquare($x, $y, $w, $rx = 10, $ry = null);``
-* ``$svg->draw->ellipse($x, $y, $w, $h = null);``
-* ``$svg->draw->circle($x, $y, $w);``
-* ``$svg->draw->arc($x, $y, $start, $end, $w, $h = null);``
-* ``$svg->draw->polygon($points);``
-
-Here's an example drawing some different shapes with different styles on the image resource:
-
-.. code-block:: php
-
-    $svg = new Pop\Image\Svg('image.svg');
-    $svg->draw->setFillColor(255, 0, 0);
-        ->draw->setStrokeColor(0, 0, 0);
-        ->draw->setStrokeWidth(5);
-        ->draw->rectangle(100, 100, 320, 240);
-        ->draw->circle(400, 300, 50);
-
-Effect
-~~~~~~
-
-The effect object allows you to perform the following methods:
-
-* ``$svg->effect->border(array $color, $w, $dashLen = null, $dashGap = null);``
-* ``$svg->effect->fill($r, $g, $b);``
-* ``$svg->effect->radialGradient(array $color1, array $color2, $opacity = 1.0);``
-* ``$svg->effect->verticalGradient(array $color1, array $color2, $opacity = 1.0);``
-* ``$svg->effect->horizontalGradient(array $color1, array $color2, $opacity = 1.0);``
-* ``$svg->effect->linearGradient(array $color1, array $color2, $opacity = 1.0, $vertical = true);``
-
-Here's an example applying some different effects to the image resource:
-
-.. code-block:: php
-
-    $svg = new Pop\Image\Svg('image.svg');
-    $svg->effect->verticalGradient([255, 0, 0], [0, 0, 255]);
-
-Type
-~~~~
-
-The type object allows you to perform the following methods:
-
-* ``$svg->type->font($font);`` - set the font
-* ``$svg->type->size($size);`` - set the font size
-* ``$svg->type->x($x);`` - set the x-position of the text string
-* ``$svg->type->y($y);`` - set the y-position of the text string
-* ``$svg->type->xy($x, $y);`` - set both the x- and y-position together
-* ``$svg->type->rotate($degrees);`` - set the amount of degrees in which to rotate the text string
-* ``$svg->type->text($string);`` - place the string on the image, using the defined parameters
-
-Here's an example working with text over the image resource:
-
-.. code-block:: php
-
-    $svg = new Pop\Image\Svg('image.svg');
-    $svg->type->setFillColor(128, 128, 128)
-        ->size(12)
-        ->font('Arial')
         ->xy(40, 120)
         ->text('Hello World!');
 

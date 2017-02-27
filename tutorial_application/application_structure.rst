@@ -2,12 +2,12 @@ Application Structure
 =====================
 
 After installation, if you take a look at the files and folders in the tutorial application,
-you'll see the following:
+you'll see the following basic application structure:
 
 * app/
 
   - config/
-  - data/
+  - database/
   - src/
   - view/
 
@@ -15,24 +15,66 @@ you'll see the following:
 * script/
 * vendor/
 
-The ``app/`` folder contains the main set of folders and files that main the application work.
-The ``data/`` folder contains the SQLite database file. The ``public/`` folder is the web document
+The ``app/`` folder contains the main set of folders and files that make the application work.
+The ``database/`` folder contains the SQLite database file. The ``public/`` folder is the web document
 root that contains the main index file. And the ``script/`` folder contains the main script to
 execute the CLI side of the application.
 
-This structure isn't necessarily set in stone, but it follows a typical structure that one might
-expect to see within an application. Within the ``app/config/`` and ``app/src/Controller/``, you'll
-see files specific to the current environment of the application, web or console. Each environment
-is explained more in depth in the next sections.
+A more expanded version of an Pop application structure may look like this:
 
-Application Object
+* app/
+
+  - config/
+
+    - forms/       `(Form and form field configurations)`
+    - resources/   `(ACL resources and permissions)`
+    - routes/      `(Route configurations)`
+
+      - web.php
+      - cli.php
+
+    - app.web.php
+    - app.cli.php
+
+  - database/      `(Database structure and seed files; database migrations)`
+
+    - migrations/
+    - app.sql
+
+  - src/           `(Main application source files)`
+
+    - Controller/
+    - Form/
+    - Model/
+    - Table/
+    - Module.php
+
+  - view/          `(Application view scripts)`
+
+* data/            `(Application data store for logs, files, etc.)`
+
+  - logs/
+  - tmp/
+
+* logs/            `(Web server log files)`
+* public/          `(Web server document root)`
+* script/          `(CLI-based application scripts)`
+* tests/           `(Application tests)`
+* vendor/          `(3rd-party vendor packages)`
+
+This structure isn't necessarily set in stone, but it follows a typical structure that one might
+expect to see within a PHP application.
+
+Application Module
 ~~~~~~~~~~~~~~~~~~
 
-If you look inside the ``Tutorial\Application`` class, you see the lines:
+Application development with Pop PHP promotes modular development, meaning that it aides creating
+smaller "mini-application" modules that can be registered with the main application object.
+If you look inside the ``Tutorial\Module`` class, you see the lines:
 
 .. code-block:: php
 
-    $this->on('app.init', function($application){
+    $this->application->on('app.init', function($application){
         Record::setDb($application->services['database']);
     });
 
@@ -40,10 +82,18 @@ Once those lines of code are executed upon the ``app.init`` event trigger, the d
 to the rest of the application. Furthermore, you'll see a CLI specific header and footer that is only
 triggered if the environment is on the console.
 
+Front Controllers
+~~~~~~~~~~~~~~~~~
+
+You can see the main front controllers in the ``public/`` and ``scripts/`` folders: ``public/index.php``
+and ``script/app`` respectively. Looking into each of those, you can see that the main ``Pop\Application``
+object is created and wired up, with the ``Tutorial\Module`` object being registered with the main application
+object so that it will be wired up and function correctly. We will look at these more in-depth in the next sections.
+
 Application Classes
 ~~~~~~~~~~~~~~~~~~~
 
-Beyond the main application class, there are classes for the following, each in its own folder:
+Beyond the front controllers and the main module class, there are classes for the following, each in its own folder:
 
 * controllers - ``app/src/Controller``
 * forms - ``app/src/Form``

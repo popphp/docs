@@ -1,5 +1,5 @@
-Pop\\Paginator
-==============
+pop-paginator
+=============
 
 The `popphp/pop-paginator` component is a simple component that provides pagination in a few different
 forms.
@@ -19,18 +19,20 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-paginator": "2.1.*",
+            "popphp/pop-paginator": "3.0.*",
         }
     }
 
 Basic Use
 ---------
 
+Basic example of a list:
+
 .. code-block:: php
 
-    use Pop\Paginator\Paginator;
+    use Pop\Paginator\Range;
 
-    $paginator = new Paginator(42);
+    $paginator = new Range(42);
     echo $paginator;
 
 
@@ -54,14 +56,14 @@ And if you clicked on page 3, it would render:
     <a href="/?page=4">4</a>
     <a href="/?page=5">5</a>
 
-Using Bookends
---------------
+Using Bookends for a Large Range
+--------------------------------
 
 .. code-block:: php
 
-    use Pop\Paginator\Paginator;
+    use Pop\Paginator\Range;
 
-    $paginator = new Paginator(4512);
+    $paginator = new Range(4512);
     echo $paginator;
 
 If we go to page 12, it would render:
@@ -86,16 +88,16 @@ If we go to page 12, it would render:
 As you can see, it renders the "bookends" to navigate to the next set of pages,
 the previous set, the beginning of the set or the end.
 
-Using an Input Field
---------------------
+Using an Form Input Field
+-------------------------
 
 To have a cleaner way of displaying a large set of pages, you can use an input field
 within a form like this:
 
 .. code-block:: php
 
-    $paginator = new Paginator(558);
-    $paginator->useInput(true);
+    use Pop\Paginator\Form;
+    $paginator = new Form(558);
     echo $paginator;
 
 This will produce:

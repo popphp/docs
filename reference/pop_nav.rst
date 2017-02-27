@@ -1,5 +1,5 @@
-Pop\\Nav
-========
+pop-nav
+=======
 
 The `popphp/pop-nav` component provides an API for managing the creation of web-based navigation
 objects. It also supports an ACL object from the `popphp/pop-acl` component to enforce access rights
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-nav": "2.1.*",
+            "popphp/pop-nav": "3.0.*",
         }
     }
 
@@ -114,8 +114,8 @@ First, let's set up the ACL object with some roles and resources:
 .. code-block:: php
 
     use Pop\Acl\Acl;
-    use Pop\Acl\Role\Role;
-    use Pop\Acl\Resource\Resource;
+    use Pop\Acl\AclRole as Role;
+    use Pop\Acl\AclResource as Resource;
 
     $acl = new Acl();
 

@@ -1,16 +1,14 @@
-Pop\\Mail
-=========
+pop-mail
+========
 
 The `popphp/pop-mail` component provides an API to manage sending mail from your application.
 Support is built-in for multi-mimetype emails and attachments, as well as multiple recipients and
 queuing. It has a full feature set that supports:
 
-* Send to multiple emails
-* Send as group
-* Manage headers
-* Attach files
-* Send multiple mime-types (i.e., text, HTML, etc.)
+* Send to email via sendmail, SMTP or any custom-written mail transport adapters
+* Send emails to a queue of recipients, with individual message customization
 * Save emails to be sent later
+* Retrieve and manage emails from email mailboxes.
 
 Installation
 ------------
@@ -27,174 +25,190 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-mail": "2.1.*",
+            "popphp/pop-mail": "3.0.*",
         }
     }
+
+**A Note about SMTP**
+
+The SMTP transport component within `pop-mail` is forked from and built on top of the SMTP features and
+functionality of the `Swift Mailer Library`_ and the great work the Swift Mailer team has accomplished
+over the past years.
 
 Basic Use
 ---------
 
-Here's an example sending a basic email:
+Here's an example sending a basic email using ``sendmail``:
 
 .. code-block:: php
 
-    use Pop\Mail\Mail;
+    use Pop\Mail;
 
-    $mail = new Mail('Test Email Subject');
+    $transport = new Mail\Transport\Sendmail()
 
-    $mail->to('test@test.com');
-    $mail->cc('cc@test.com');
-    $mail->from('somebody@test.com');
+    $mailer = new Mail\Mailer($transport);
 
-    $mail->setText('Hello World! This is a test email.');
+    $message = new Mail\Message('Hello World');
+    $message->setTo('you@domain.com');
+    $message->setFrom('me@domain.com');
+    $message->attachFile(__DIR__ . '/image.jpg');
+    $message->setBody('Hello World! This is a test!');
 
-    $mail->send();
+    $mailer->send($message);
 
-And the email sent would look like this:
+Here's an example sending a basic email using SMTP (MS Exchange):
 
-.. code-block:: text
+.. code-block:: php
 
-    To: test@test.com
-    Subject: Test Email Subject
-    Cc: cc@test.com
-    From: somebody@test.com
-    Reply-To: somebody@test.com
-    Content-Type: text/plain; charset=utf-8
+    use Pop\Mail;
 
-    Hello World! This is a test email.
+    $transport = new Mail\Transport\Smtp('mail.msdomain.com', 587);
+    $transport->setUsername('me')
+        ->setPassword('password');
+
+    $mailer = new Mail\Mailer($transport);
+
+    $message = new Mail\Message('Hello World');
+    $message->setTo('you@domain.com');
+    $message->setFrom('me@domain.com');
+    $message->attachFile(__DIR__ . '/image.jpg');
+    $message->setBody('Hello World! This is a test!');
+
+    $mailer->send($message);
+
+Here's an example sending a basic email using SMTP (Gmail Exchange):
+
+.. code-block:: php
+
+    use Pop\Mail;
+
+    $transport = new Mail\Transport\Smtp('smtp.gmail.com', 587, 'tls');
+    $transport->setUsername('me@mydomain.com')
+        ->setPassword('password');
+
+    $mailer = new Mail\Mailer($transport);
+
+    $message = new Mail\Message('Hello World');
+    $message->setTo('you@domain.com');
+    $message->setFrom('me@domain.com');
+    $message->attachFile(__DIR__ . '/image.jpg');
+    $message->setBody('Hello World! This is a test!');
+
+    $mailer->send($message);
 
 Attaching a File
 ----------------
 
 .. code-block:: php
 
-    use Pop\Mail\Mail;
+    use Pop\Mail;
 
-    $mail = new Mail('Attaching a File');
+    $mailer = new Mail\Mailer(new Mail\Transport\Sendmail());
 
-    $mail->to('test@test.com');
-    $mail->from('somebody@test.com');
+    $message = new Mail\Message('Hello World');
+    $message->setTo('you@domain.com');
+    $message->setFrom('me@domain.com');
 
-    $mail->setText('Check out this file.');
-    $mail->attachFile('lorem.docx');
+    $fileData = file_get_contents($fileData);
 
-    $mail->send();
+    $message->attachFile($fileData, 'image/jpeg', 'myimage.jpg');
+    $message->setBody('Hello World! This is a test!');
 
-.. code-block:: text
-
-    To: test@test.com
-    Subject: Attaching a File
-    From: somebody@test.com
-    Reply-To: somebody@test.com
-    MIME-Version: 1.0
-    Content-Type: multipart/mixed; boundary="7dbf357ee8df3d00a00cda688da71a8523f8123c"
-    This is a multi-part message in MIME format.
-
-    --7dbf357ee8df3d00a00cda688da71a8523f8123c
-    Content-Type: file; name="lorem.docx"
-    Content-Transfer-Encoding: base64
-    Content-Description: lorem.docx
-    Content-Disposition: attachment; filename="lorem.docx"
-
-    UEsDBBQACAgIAKmB9UYAAAAAAAAAAAAAAAALAAAAX3JlbHMvLnJlbHOtkk1LA0EMhu/9FUPu3Wwr
-    iMjO9iJCbyL1B4SZ7O7Qzgczaa3/3kEKulCKoMe8efPwHNJtzv6gTpyLi0HDqmlBcTDRujBqeNs9
-    [ ... Big long block of base 64 encoded data ... ]
-    L2NvcmUueG1sUEsBAhQAFAAICAgAqYH1RhkaEIMtAQAAXgQAABMAAAAAAAAAAAAAAAAAcRAAAFtD
-    b250ZW50X1R5cGVzXS54bWxQSwUGAAAAAAkACQA8AgAA3xEAAAAA
-
-
-    --7dbf357ee8df3d00a00cda688da71a8523f8123c
-    Content-type: text/plain; charset=utf-8
-
-    Check out this file.
-
-    --7dbf357ee8df3d00a00cda688da71a8523f8123c--
-
-
+    $mailer->send($message);
 
 Sending an HTML/Text Email
 --------------------------
 
 .. code-block:: php
 
-    $mail = new Mail('Sending an HTML Email');
+    use Pop\Mail;
+    $mailer = new Mail\Mailer(new Mail\Transport\Sendmail());
 
-    $mail->to('test@test.com');
-    $mail->from('somebody@test.com');
+    $message = new Mail\Message('Hello World');
+    $message->setTo('you@domain.com');
+    $message->setFrom('me@domain.com');
 
-    $html = <<<HTML
-    <html>
-    <head>
-    <title>Hello World!</title>
-    </head>
-    <body>
-    <h1>Hello World!</h1>
-    <p>This is a cool HTML email, huh?</p>
-    </body>
-    </html>
-    HTML;
+    $message->addText('Hello World! This is a test!');
+    $message->addHtml('<html><body><h1>Hello World!</h1><p>This is a test!</p></body></html>');
 
-    $mail->setHtml($html);
-    $mail->setText(
-        'This is the text message in case your email client cannot display HTML.'
+    $mailer->send($message);
+
+Sending Emails to a Queue
+-------------------------
+
+.. code-block:: php
+
+    use Pop\Mail;
+
+    $queue = new Queue();
+    $queue->addRecipient([
+        'email'   => 'me@domain.com',
+        'name'    => 'My Name',
+        'company' => 'My Company',
+        'url'     => 'http://www.domain1.com/'
+    ]);
+    $queue->addRecipient([
+        'email'   => 'another@domain.com',
+        'name'    => 'Another Name',
+        'company' => 'Another Company',
+        'url'     => 'http://www.domain2.com/'
+    ]);
+
+    $message = new Mail\Message('Hello [{name}]!');
+    $message->setFrom('noreply@domain.com');
+    $message->setBody(
+    <<<TEXT
+    How are you doing? Your [{company}] is great!
+    I checked it out at [{url}]
+    TEXT
     );
 
-    $mail->send();
+    $queue->addMessage($message);
 
-.. code-block:: text
-
-    To: test@test.com
-    Subject: Sending an HTML Email
-    From: somebody@test.com
-    Reply-To: somebody@test.com
-    MIME-Version: 1.0
-    Content-Type: multipart/alternative; boundary="d08ae99249fe6d0a03a8436ce3bea4ceffd208cb"
-    This is a multi-part message in MIME format.
-
-    --d08ae99249fe6d0a03a8436ce3bea4ceffd208cb
-    Content-type: text/plain; charset=utf-8
-
-    This is the text message in case your email client cannot display HTML.
-
-    --d08ae99249fe6d0a03a8436ce3bea4ceffd208cb
-    Content-type: text/html; charset=utf-8
-
-    <html>
-    <head>
-    <title>Hello World!</title>
-    </head>
-    <body>
-    <h1>Hello World!</h1>
-    <p>This is a cool HTML email, huh?</p>
-    </body>
-    </html>
-
-    --d08ae99249fe6d0a03a8436ce3bea4ceffd208cb--
+    $mailer = new Mail\Mailer(new Mail\Transport\Sendmail());
+    $mailer->sendFromQueue($queue);
 
 Saving an Email to Send Later
 -----------------------------
 
 .. code-block:: php
 
-    use Pop\Mail\Mail;
+    use Pop\Mail;
 
-    $mail = new Mail('Test Email Subject');
+    $message = new Mail\Message('Hello World');
+    $message->setTo('you@domain.com');
+    $message->setFrom('me@domain.com');
 
-    $mail->to('test@test.com');
-    $mail->cc('cc@test.com');
-    $mail->from('somebody@test.com');
+    $message->addText('Hello World! This is a test!');
+    $message->addHtml('<html><body><h1>Hello World!</h1><p>This is a test!</p></body></html>');
 
-    $mail->setText('Hello World! This is a test email.');
-    $mail->saveTo(__DIR__ . '/email-queue');
+    $message->save(__DIR__ . '/mailqueue/test.msg');
 
-That will write the email or emails to a file in the folder.
-Then, when you're ready to send them, you can simply do this:
+    $mailer = new Mail\Mailer(new Mail\Transport\Sendmail());
+    $mailer->sendFromDir(__DIR__ . '/mailqueue');
+
+Retrieving Emails from a Client
+-------------------------------
 
 .. code-block:: php
 
-    use Pop\Mail\Mail;
+    use Pop\Mail\Client;
 
-    $mail = new Mail();
-    $mail->sendFrom(__DIR__ . '/email-queue', true);
+    $imap = new Client\Imap('imap.gmail.com', 993);
+    $imap->setUsername('me@domain.com')
+         ->setPassword('password');
 
-The ``true`` parameter is the flag to delete the email from the folder once it's sent.
+    $imap->setFolder('INBOX');
+    $imap->open('/ssl');
+
+    // Sorted by date, reverse order (newest first)
+    $ids     = $imap->getMessageIdsBy(SORTDATE, true);
+    $headers = $imap->getMessageHeadersById($ids[0]);
+    $parts   = $imap->getMessageParts($ids[0]);
+
+    // Assuming the first part is an image attachement, display image
+    header('Content-Type: image/jpeg');
+    header('Content-Length: ' . strlen($parts[0]->content));
+    echo $parts[0]->content;
+
+.. _Swift Mailer Library: https://github.com/swiftmailer/swiftmailer

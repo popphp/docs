@@ -1,5 +1,5 @@
-Pop\\Cookie
-===========
+pop-cookie
+==========
 
 The `popphp/pop-cookie` component provides the basic functionality to manage cookies.
 
@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-cookie": "3.0.*",
+            "popphp/pop-cookie": "3.1.*",
         }
     }
 

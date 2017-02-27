@@ -1,5 +1,5 @@
-Pop\\Validator
-==============
+pop-validator
+=============
 
 The `popphp/pop-validator` component provides a basic API to process simple validation of values.
 
@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-validator": "2.1.*",
+            "popphp/pop-validator": "3.0.*",
         }
     }
 
@@ -30,25 +30,25 @@ Here's a list of the available built-in validators:
 +----------------------------------------------------------+
 |                     Built-in Validators                  |
 +===================+======================+===============+
-| AlphaNumeric      | Included             | Length        |
+| AlphaNumeric      | Ipv4                 | LessThanEqual |
 +-------------------+----------------------+---------------+
-| Alpha             | Ipv4                 | LessThanEqual |
+| Alpha             | Ipv6                 | LessThan      |
 +-------------------+----------------------+---------------+
-| BetweenInclude    | Ipv6                 | LessThan      |
+| BetweenInclude    | IsSubnetOf           | NotContains   |
 +-------------------+----------------------+---------------+
-| Between           | IsSubnetOf           | NotEmpty      |
+| Between           | LengthBetweenInclude | NotEmpty      |
 +-------------------+----------------------+---------------+
-| CreditCard        | LengthBetweenInclude | NotEqual      |
+| Contains          | LengthBetween        | NotEqual      |
 +-------------------+----------------------+---------------+
-| Email             | LengthBetween        | Numeric       |
+| CreditCard        | LengthGte            | Numeric       |
 +-------------------+----------------------+---------------+
-| Equal             | LengthGte            | RegEx         |
+| Email             | LengthGt             | RegEx         |
 +-------------------+----------------------+---------------+
-| Excluded          | LengthGt             | Subnet        |
+| Equal             | LengthLte            | Subnet        |
 +-------------------+----------------------+---------------+
-| GreaterThanEqual  | LengthLte            | Url           |
+| GreaterThanEqual  | LengthLt             | Url           |
 +-------------------+----------------------+---------------+
-| GreaterThan       | LengthLt             |               |
+| GreaterThan       | Length               |               |
 +-------------------+----------------------+---------------+
 
 Here's an example testing an email value

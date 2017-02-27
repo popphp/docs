@@ -1,5 +1,5 @@
-Pop\\Pdf
-========
+pop-pdf
+=======
 
 The `popphp/pop-pdf` component provides a robust API for the creation and management of PDF documents.
 Many features of the PDF format are supported, including embedding images and fonts, as well as
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-pdf": "2.1.*",
+            "popphp/pop-pdf": "3.0.*",
         }
     }
 
@@ -384,7 +384,7 @@ Here is an example of embedding a large image and resizing it down before placin
 
     use Pop\Pdf\Document\Page;
 
-    $image = new Page\Image('large-image.jpg');
+    $image = Page\Image::createImageFromFile('/path/to/some/image.jpg')
     $image->resizeToWidth(320);
 
     $page = new Page(Page::LETTER);

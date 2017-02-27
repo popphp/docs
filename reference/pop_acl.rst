@@ -1,5 +1,5 @@
-Pop\\Acl
-========
+pop-acl
+=======
 
 The `popphp/pop-acl` component is an authorization and access control component the serves as a
 hybrid between standard ACL and RBAC user access concepts. Beyond allowing or denying basic user
@@ -25,7 +25,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-acl": "2.1.*",
+            "popphp/pop-acl": "3.0.*",
         }
     }
 
@@ -38,8 +38,8 @@ has access to which resource, and to what degree.
 .. code-block:: php
 
     use Pop\Acl\Acl;
-    use Pop\Acl\Role\Role;
-    use Pop\Acl\Resource\Resource;
+    use Pop\Acl\AclRole as Role;
+    use Pop\Acl\AclResource as Resource;
 
     $acl = new Acl();
 
@@ -78,8 +78,8 @@ You can have roles inherit access rules as well.
 .. code-block:: php
 
     use Pop\Acl\Acl;
-    use Pop\Acl\Role\Role;
-    use Pop\Acl\Resource\Resource;
+    use Pop\Acl\AclRole as Role;
+    use Pop\Acl\AclResource as Resource;
 
     $acl = new Acl();
 
@@ -125,15 +125,16 @@ that the user "owns" the resource via a matching user ID.
 .. code-block:: php
 
     use Pop\Acl\Acl;
-    use Pop\Acl\Role\AbstractRole;
-    use Pop\Acl\Resource\AbstractResource;
+    use Pop\Acl\AclRole;
+    use Pop\Acl\AclResource;
+    use Pop\Acl\Assertion\AssertionInterface;
 
     class UserCanEditPage implements AssertionInterface
     {
 
         public function assert(
-            Acl $acl, AbstractRole $role,
-            AbstractResource $resource = null,
+            Acl $acl, AclRole $role,
+            AclResource $resource = null,
             $permission = null
         )
         {
@@ -147,8 +148,8 @@ Then, within the application, you can use the assertions like this:
 .. code-block:: php
 
     use Pop\Acl\Acl;
-    use Pop\Acl\Role\Role;
-    use Pop\Acl\Resource\Resource;
+    use Pop\Acl\AclRole as Role;
+    use Pop\Acl\AclResource as Resource;
 
     $acl = new Acl();
 

@@ -1,5 +1,5 @@
-Pop\\Config
-===========
+pop-config
+==========
 
 The `popphp/pop-config` component is a configuration component that allows you to store configuration
 data for the life cycle of your application. It also has the ability to parse existing and common
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-config": "2.1.*",
+            "popphp/pop-config": "3.0.*",
         }
     }
 
@@ -37,8 +37,8 @@ The values of a config object can be access either via object arrow notation or 
     // OR
     $foo = $config['foo'];
 
-By default, the config object is set to not direct allow changes to its values, unless the ``$allowChanges()``
-property is set to ``true``. The following example isn't possible unless the ``$allowChanges()`` property is
+By default, the config object is set to not direct allow changes to its values, unless the ``$allowChanges``
+property is set to ``true``. The following example isn't possible unless the ``$allowChanges`` property is
 set to ``true``.
 
 .. code-block:: php
@@ -48,7 +48,7 @@ set to ``true``.
     // OR
     $config['foo'] = 'new';
 
-However, if the ``allowChanges()`` property is set to false, you can append new values to the
+However, if the ``$allowChanges`` property is set to false, you can append new values to the
 config object with the ``merge()`` method.
 
 .. code-block:: php

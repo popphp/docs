@@ -1,5 +1,5 @@
-Pop\\Module
-===========
+pop-module
+==========
 
 The ``Pop\Module`` sub-component is part of the core `popphp/popphp` component. It serves as the
 module manager to the main application object. With it, you can inject module objects into the
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "2.1.*",
+            "popphp/popphp": "3.0.*",
         }
     }
 
@@ -38,6 +38,7 @@ of what a module might look like and how you'd register it with an application:
     $application = new Pop\Application();
 
     $moduleConfig = [
+        'name'   => 'myModule',
         'routes' => [
             '/' => [
                 'controller' => 'MyModule\Controller\IndexController',
@@ -47,7 +48,7 @@ of what a module might look like and how you'd register it with an application:
         'prefix' => 'MyModule\\'
     ];
 
-    $application->register('myModule', $moduleConfig);
+    $application->register($moduleConfig);
 
 In the above example, the module configuration is passed into the application object. From there,
 an instance of the base module object is created and the configuration is passed into it. The newly
@@ -69,6 +70,7 @@ so that the application can properly detect and load the module's source files.
     $application->autoloader->addPsr4('MyModule\\', __DIR__ . '/modules/mymodule/src');
 
     $myModule = new MyModule\Module([
+        'name'   => 'myModule',
         'routes' => [
             '/' => [
                 'controller' => 'MyModule\Controller\IndexController',
@@ -77,7 +79,7 @@ so that the application can properly detect and load the module's source files.
         ]
     ]);
 
-    $application->register('myModule', $myModule);
+    $application->register($myModule);
 
 The Module Manager
 ------------------

@@ -1,5 +1,5 @@
-Pop\\Event
-==========
+pop-event
+=========
 
 The ``Pop\Event`` sub-component is part of the core `popphp/popphp` component. It serves as the
 event manager and listener of the event-driven portion of an application written with Pop.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "2.1.*",
+            "popphp/popphp": "3.0.*",
         }
     }
 

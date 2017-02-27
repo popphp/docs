@@ -1,5 +1,5 @@
-Pop\\View
-=========
+pop-view
+========
 
 The `popphp/pop-view` component provides an API to build and manage views to display to the user
 interface. Both file-based and stream-based templates are supported.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-view": "2.1.*",
+            "popphp/pop-view": "3.0.*",
         }
     }
 

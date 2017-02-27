@@ -1,5 +1,5 @@
-Pop\\Code
-=========
+pop-code
+========
 
 The `popphp/pop-code` component is a code generation and reflection component that provides an
 API to generate and save PHP code, as well as utilize reflection to parse existing code and
@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-code": "2.1.*",
+            "popphp/pop-code": "3.0.*",
         }
     }
 

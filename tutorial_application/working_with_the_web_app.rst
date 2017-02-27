@@ -15,8 +15,8 @@ you can see the new post is now displayed in the feed of posts at the bottom of 
 
 .. image:: images/pop-web3.png
 
-Index File
-~~~~~~~~~~
+The Index File
+~~~~~~~~~~~~~~
 
 A closer look at the application code in the main ``public/index.php`` file and you'll see:
 
@@ -24,21 +24,19 @@ A closer look at the application code in the main ``public/index.php`` file and 
 
     <?php
 
-    require_once __DIR__  . '/../vendor/autoload.php';
+    // Require autoloader
+    $autoloader = include __DIR__ . '/../vendor/autoload.php';
 
-    // Create the app, loading the config file
-    $app = new Tutorial\Application(
-        include __DIR__ . '/../app/config/application.web.php'
-    );
-
-    // Run the app
+    // Create main app object, register the app module and run the app
+    $app = new Pop\Application($autoloader, include __DIR__ . '/../app/config/app.web.php');
+    $app->register(new Tutorial\Module());
     $app->run();
 
-In the above file, the autoloader is loaded up, and the new application object is created,
-passing the web application configuration file into the application object. From there, the ``run()``
-method is called and the web application is routed and on its way.
+In the above file, the autoloader is loaded up, and the new application object is created. Then,
+the module object is created, passing the web application configuration file into the module object.
+From there, the ``run()`` method is called and the web application is routed and on its way.
 
-If you take a look at the ``app/config/application.web.php`` file, you'll see the web routes, as well
+If you take a look at the ``app/config/app.web.php`` file, you'll see the web routes, as well
 as the database service, are defined in the file. The routes are automatically passed and wired up
 to a router object and the main application sets the database object that is to be used from the
 service.

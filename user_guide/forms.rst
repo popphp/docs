@@ -42,6 +42,7 @@ Other available form element classes are:
 
 * `Pop\\Form\\Element\\Button`
 * `Pop\\Form\\Element\\Select`
+* `Pop\\Form\\Element\\SelectMultiple`
 * `Pop\\Form\\Element\\Textarea`
 
 Special form element collection classes include:
@@ -98,7 +99,7 @@ Here's an example of a select element:
         'Green' => 'Green',
         'Blue'  => 'Blue'
     ]);
-    $text->setAttribute('class', 'drop-down');
+    $select->setAttribute('class', 'drop-down');
     echo $select;
 
 The above code will produce:
@@ -208,9 +209,7 @@ Form Objects
 
 The form object serves as the center of the functionality. You can create a form object and inject form elements into
 it. The form object then manages those elements, their values and processes the validation, if any, attached to the
-form elements. The form object object also provides a default way to render an HTML form object using a DL tag with
-nested DT and DD tags that contain the field elements and their labels. This default setting can be overridden using
-templates, as outlined in the `Using Templates`_ section below. Consider the following code:
+form elements. Consider the following code:
 
 .. code-block:: php
 
@@ -234,15 +233,15 @@ templates, as outlined in the `Using Templates`_ section below. Consider the fol
 
     $submit = new Input\Submit('submit', 'SUBMIT');
 
-    $form->addElements([$username, $email, $submit]);
+    $form->addFields([$username, $email, $submit]);
 
     if ($_POST) {
         $form->setFieldValues($_POST);
         if (!$form->isValid()) {
-            echo $form; // Has errors
+            echo $form; // Re-render, form has errors
         } else {
             echo 'Valid!';
-            print_r($form->getFields());
+            print_r($form->toArray());
         }
     } else {
         echo $form;
@@ -255,23 +254,25 @@ HTML as the initial render by default:
 .. code-block:: html
 
     <form action="/" method="post" id="my-form">
-        <dl id="my-form-field-group-1" class="my-form-field-group">
-        <dt>
-            <label for="username" class="required">Username:</label>
-        </dt>
-        <dd>
-            <input type="text" name="username" id="username" value="" required="required" size="40" />
-        </dd>
-        <dt>
-            <label for="email" class="required">Email:</label>
-        </dt>
-        <dd>
-            <input type="email" name="email" id="email" value="" required="required" size="40" />
-        </dd>
-        <dd>
-            <input type="submit" name="submit" id="submit" value="SUBMIT" />
-        </dd>
-        </dl>
+        <fieldset id="my-form-fieldset-1" class="my-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username" class="required">Username:</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" required="required" size="40" />
+                </dd>
+                <dt>
+                    <label for="email" class="required">Email:</label>
+                </dt>
+                <dd>
+                    <input type="email" name="email" id="email" value="" required="required" size="40" />
+                </dd>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="SUBMIT" />
+                </dd>
+            </dl>
+        </fieldset>
     </form>
 
 If the user were to input non-valid data into on of the fields, and then submit the form, then the script would
@@ -280,30 +281,31 @@ be processed again, this time, it would trigger the form validation and render w
 .. code-block:: html
 
     <form action="/" method="post" id="my-form">
-        <dl id="my-form-field-group-1" class="my-form-field-group">
-        <dt>
-            <label for="username" class="required">Username:</label>
-        </dt>
-        <dd>
-            <input type="text" name="username" id="username" value="dfvdfv##$dfv" required="required" size="40" />
-            <div class="error">The value must only contain alphanumeric characters.</div>
-        </dd>
-        <dt>
-            <label for="email" class="required">Email:</label>
-        </dt>
-        <dd>
-            <input type="email" name="email" id="email" value="test@test.com" required="required" size="40" />
-        </dd>
-        <dd>
-            <input type="submit" name="submit" id="submit" value="SUBMIT" />
-        </dd>
-        </dl>
+        <fieldset id="my-form-fieldset-1" class="my-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username" class="required">Username:</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="dfvdfv##$dfv" required="required" size="40" />
+                    <div class="error">The value must only contain alphanumeric characters.</div>
+                </dd>
+                <dt>
+                    <label for="email" class="required">Email:</label>
+                </dt>
+                <dd>
+                    <input type="email" name="email" id="email" value="" required="required" size="40" />
+                </dd>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="SUBMIT" />
+                </dd>
+            </dl>
+        </fieldset>
     </form>
 
 As you can see above, the values entered by the user are retained so that they may correct any errors and re-submit
 the form. Once the form is corrected and re-submitted, it will pass validation and then move on to the portion of
 the script that will handle what to do with the form data.
-
 
 Using Filters
 -------------
@@ -339,7 +341,6 @@ one of the fields, it would get filtered and re-rendered like this:
     <input type="text" name="username" id="username" value="alert(&quot;Bad Code&quot;);" required="required" size="40" />
 
 As you can see, the `<script>` tags were stripped and the quotes were converted to HTML entities.
-
 
 Field Configurations
 --------------------
@@ -383,7 +384,7 @@ example:
         ]
     ];
 
-    $form = new Form($fields);
+    $form = Form::createFromConfig($fields);
     $form->setAttribute('id', 'login-form');
 
     echo $form;
@@ -393,35 +394,39 @@ which will produce the following HTML code:
 .. code-block:: html
 
     <form action="/" method="post" id="login-form">
-        <dl id="login-form-field-group-1" class="login-form-field-group">
-        <dt>
-            <label for="username" class="required">Username</label>
-        </dt>
-        <dd>
-            <input type="text" name="username" id="username" value="" required="required" class="username-field" size="40" />
-        </dd>
-        <dt>
-            <label for="password" class="required">Password</label>
-        </dt>
-        <dd>
-            <input type="password" name="password" id="password" value="" required="required" class="password-field" size="40" />
-        </dd>
-        <dd>
-            <input type="submit" name="submit" id="submit" value="SUBMIT" class="submit-btn" />
-        </dd>
-        </dl>
+        <fieldset id="login-form-fieldset-1" class="login-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username" class="required">Username</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" required="required" class="username-field" size="40" />
+                </dd>
+                <dt>
+                    <label for="password" class="required">Password</label>
+                </dt>
+                <dd>
+                    <input type="password" name="password" id="password" value="" required="required" class="password-field" size="40" />
+                </dd>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="SUBMIT" class="submit-btn" />
+                </dd>
+            </dl>
+        </fieldset>
     </form>
 
 In the above example, the `$fields` is an associative array where the keys are the names of the fields and the array
-values contain the field configuration values. The accepted field configuration values are:
+values contain the field configuration values. Some of the accepted field configuration values are:
 
 * ``'type'`` - field type, i.e. 'button', 'select', 'text', 'textarea', 'checkbox', 'radio', 'input-button'
 * ``'label'`` - field label
 * ``'required'`` - boolean to set whether the field is required or not. Defaults to false.
 * ``'attributes'`` - an array of attributes to apply to the field.
 * ``'validators'`` - an array of validators to apply to the field. Can be a single callable validator as well.
-* ``'value'`` - the field value (or values in the case of select, checkbox or radio.)
-* ``'marked'`` - the field value or values that are to be marked as 'selected' or 'checked' within the field's values.
+* ``'value'`` - the value to be set for the field
+* ``'values'`` - the option values to be set for the field (for selects, checkboxes and radios)
+* ``'selected'`` - the field value or values that are to be marked as 'selected' within the field's values.
+* ``'checked'`` - the field value or values that are to be marked as 'checked' within the field's values.
 
 Here is an example using fields with multiple values:
 
@@ -432,30 +437,30 @@ Here is an example using fields with multiple values:
 
     $fields = [
         'colors' => [
-            'type'  => 'checkbox',
-            'label' => 'Colors',
-            'value' => [
+            'type'   => 'checkbox',
+            'label'  => 'Colors',
+            'values' => [
                 'Red'   => 'Red',
                 'Green' => 'Green',
                 'Blue'  => 'Blue'
             ],
-            'marked' => [
+            'checked' => [
                 'Red', 'Green'
             ]
         ],
         'country' => [
-            'type'  => 'select',
-            'label' => 'Country',
-            'value' => [
+            'type'   => 'select',
+            'label'  => 'Country',
+            'values' => [
                 'United States' => 'United States',
                 'Canada'        => 'Canada',
                 'Mexico'        => 'Mexico'
             ],
-            'marked' => 'United States'
+            'selected' => 'United States'
         ]
     ];
 
-    $form = new Form($fields);
+    $form = Form::createFromConfig($fields);
 
     echo $form;
 
@@ -464,40 +469,178 @@ which will produce:
 .. code-block:: html
 
     <form action="/" method="post">
-        <dl id="pop-form-field-group-1" class="pop-form-field-group">
-        <dt>
-            <label for="colors1">Colors</label>
-        </dt>
-        <dd>
-            <fieldset class="checkbox-fieldset">
-                <input type="checkbox" name="colors[]" id="colors" value="Red" class="checkbox" checked="checked" />
-                <span class="checkbox-span">Red</span>
-                <input type="checkbox" name="colors[]" id="colors1" value="Green" class="checkbox" checked="checked" />
-                <span class="checkbox-span">Green</span>
-                <input type="checkbox" name="colors[]" id="colors2" value="Blue" class="checkbox" />
-                <span class="checkbox-span">Blue</span>
-            </fieldset>
-        </dd>
-        <dt>
-            <label for="country">Country</label>
-        </dt>
-        <dd>
-            <select name="country" id="country">
-                <option value="United States" selected="selected">United States</option>
-                <option value="Canada">Canada</option>
-                <option value="Mexico">Mexico</option>
-            </select>
-        </dd>
-        </dl>
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="colors1">Colors</label>
+                </dt>
+                <dd>
+                    <fieldset class="checkbox-fieldset">
+                        <input type="checkbox" name="colors[]" id="colors" value="Red" class="checkbox" checked="checked" />
+                        <span class="checkbox-span">Red</span>
+                        <input type="checkbox" name="colors[]" id="colors1" value="Green" class="checkbox" checked="checked" />
+                        <span class="checkbox-span">Green</span>
+                        <input type="checkbox" name="colors[]" id="colors2" value="Blue" class="checkbox" />
+                        <span class="checkbox-span">Blue</span>
+                    </fieldset>
+                </dd>
+                <dt>
+                    <label for="country">Country</label>
+                </dt>
+                <dd>
+                    <select name="country" id="country">
+                        <option value="United States" selected="selected">United States</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Mexico">Mexico</option>
+                    </select>
+                </dd>
+            </dl>
+        </fieldset>
     </form>
 
-Using Templates
----------------
+Fieldsets
+---------
 
-If you require more control over the form object's overall look and feel, you can render it using a template.
-Much like ``popphp/pop-view``, you can utilize either file-based templates or stream-based templates. Furthermore,
-using templates will allow you to break away from the form object and work with just the form elements themselves
-if that's what is required. Consider the following example:
+As you've seen in the above examples, the fields that are added to the form object are enclosed in a fieldset group.
+This can be leveraged to create other fieldset groups as well as give them legends to better define the fieldsets.
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Validator;
+
+    $fields1 = [
+        'username' => [
+            'type'       => 'text',
+            'label'      => 'Username',
+            'required'   => true,
+            'validators' => new Validator\AlphaNumeric(),
+            'attributes' => [
+                'class' => 'username-field',
+                'size'  => 40
+            ]
+        ],
+        'password' => [
+            'type'       => 'password',
+            'label'      => 'Password',
+            'required'   => true,
+            'validators' => new Validator\GreaterThanEqual(6),
+            'attributes' => [
+                'class' => 'password-field',
+                'size'  => 40
+            ]
+        ]
+    ];
+    $fields2 = [
+        'submit' => [
+            'type'       => 'submit',
+            'value'      => 'SUBMIT',
+            'attributes' => [
+                'class' => 'submit-btn'
+            ]
+        ]
+    ];
+
+    $form = Form::createFromConfig($fields1);
+    $form->getFieldset()->setLegend('First Fieldset');
+    $form->createFieldset('Second Fieldset');
+    $form->addFieldsFromConfig($fields2);
+
+    echo $form;
+
+In the above code, the first set of fields are added to an initial fieldset that's automatically created.
+After that, if you want to add more fieldsets, you call the ``createFieldset`` method like above. Then
+the current fieldset is changed to the newly created one and the next fields are added to that one. You can
+always change to any other fieldset by using the ``setCurrent($i)`` method. The above code would render like this:
+
+.. code-block:: html
+
+    <form action="/" method="post">
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <legend>First Fieldset</legend>
+            <dl>
+                <dt>
+                    <label for="username" class="required">Username:</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" required="required" size="40" />
+                </dd>
+                <dt>
+                    <label for="email" class="required">Email:</label>
+                </dt>
+                <dd>
+                    <input type="email" name="email" id="email" value="" required="required" size="40" />
+                </dd>
+            </dl>
+        </fieldset>
+        <fieldset id="pop-form-fieldset-2" class="pop-form-fieldset">
+            <legend>Second Fieldset</legend>
+            <dl>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="SUBMIT" />
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
+
+The container elements within the fieldset can be controlled by passing a value to the ``$container`` parameter.
+The default is `dl`, but `table`, `div` and `p` are supported as well.
+
+.. code-block:: php
+
+    $form->createFieldset('Second Fieldset', 'table');
+
+Alternately, you can inject an entire fieldset configuration array. The code below is a more simple way to inject
+the fieldset configurations and their legends. And, it will generate the same HTML as above.
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Validator;
+
+    $fieldsets = [
+        'First Fieldset' => [
+            'username' => [
+                'type'       => 'text',
+                'label'      => 'Username',
+                'required'   => true,
+                'validators' => new Validator\AlphaNumeric(),
+                'attributes' => [
+                    'class' => 'username-field',
+                    'size'  => 40
+                ]
+            ],
+            'password' => [
+                'type'       => 'password',
+                'label'      => 'Password',
+                'required'   => true,
+                'validators' => new Validator\GreaterThanEqual(6),
+                'attributes' => [
+                    'class' => 'password-field',
+                    'size'  => 40
+                ]
+            ]
+        ],
+        'Second Fieldset' => [
+            'submit' => [
+                'type'       => 'submit',
+                'value'      => 'SUBMIT',
+                'attributes' => [
+                    'class' => 'submit-btn'
+                ]
+            ]
+        ]
+    ];
+
+    $form = Form::createFromFieldsetConfig($fieldsets);
+
+    echo $form;
+
+Using Views
+-----------
+
+You can still use the form object for managing and validating your form fields and still send the individual
+components to a view for you to control how they render as needed. You can do that like this:
 
 .. code-block:: php
 
@@ -509,6 +652,7 @@ if that's what is required. Consider the following example:
             'type'       => 'text',
             'label'      => 'Username',
             'required'   => true,
+            'validators' => new Validator\AlphaNumeric(),
             'attributes' => [
                 'class' => 'username-field',
                 'size'  => 40
@@ -518,6 +662,7 @@ if that's what is required. Consider the following example:
             'type'       => 'password',
             'label'      => 'Password',
             'required'   => true,
+            'validators' => new Validator\GreaterThanEqual(6),
             'attributes' => [
                 'class' => 'password-field',
                 'size'  => 40
@@ -532,105 +677,59 @@ if that's what is required. Consider the following example:
         ]
     ];
 
-    $form = new Form($fields);
-    $form->setAttribute('id', 'login-form');
+    $form = Form::createFromConfig($fields);
+    $formData = $form->prepareForView();
 
-and the following templates:
-
-**form.html, a stream template**
-
-.. code-block:: html
-
-    <table id="login-form-table">
-        <tr>
-            <td>[{username_label}]</td>
-            <td>[{username}]</td>
-        </tr>
-        <tr>
-            <td>[{password_label}]</td>
-            <td>[{password}]</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>[{submit}]</td>
-        </tr>
-    </table>
-
-**form.phtml, a PHP script file**
+You can then pass the array ``$formData`` off to your view object to be rendered as you need it to be. That
+array will contain the following ``key => value`` entries:
 
 .. code-block:: php
 
-    <table id="login-form-table">
-        <tr>
-            <td><?=$username_label; ?></td>
-            <td><?=$username; ?></td>
-        </tr>
-        <tr>
-            <td><?=$password_label; ?></td>
-            <td><?=$password; ?></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td><?=$submit; ?></td>
-        </tr>
-    </table>
+    $formData = [
+        'username'        => '<input type="text" name="username"...',
+        'username_label'  => '<label for="username" ...',
+        'username_errors' => [],
+        'password'        => '<input type="text" name="username"...',
+        'password_label'  => '<label for="username" ...',
+        'password_errors' => [],
+        'submit'          => '<input type="submit" name="submit"...',
+        'submit_label'    => '',
+    ]
 
-We can set the template of the form object to either:
+Or, if you want even more control, you can send the form object itself into your view object and access
+the components like this:
 
 .. code-block:: php
 
-    $form->setTemplate('form.html');
+    <form action="/" method="post" id="login-form">
+        <fieldset id="login-form-fieldset-1" class="login-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username" class="required"><?=$form->getField('username')->getLabel(); ?></label>
+                </dt>
+                <dd>
+                    <?=$form->getField('username'); ?>
+    <?php if ($form->getField('username')->hasErrors(): ?>
+    <?php foreach ($form->getField('username')->getErrors() as $error): ?>
+                    <div class="error"><?=$error; ?></div>
+    <?php endforeach; ?>
+    <?php endif; ?>
+                </dd>
+                <dt>
+                    <label for="password" class="required"><?=$form->getField('password')->getLabel(); ?></label>
+                </dt>
+                <dd>
+                    <?=$form->getField('password'); ?>
+    <?php if ($form->getField('password')->hasErrors(): ?>
+    <?php foreach ($form->getField('password')->getErrors() as $error): ?>
+                    <div class="error"><?=$error; ?></div>
+    <?php endforeach; ?>
+    <?php endif; ?>
+                </dd>
+                <dd>
+                    <?=$form->getField('submit'); ?>
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
 
-or
-
-.. code-block:: php
-
-    $form->setTemplate('form.phtml');
-
-and rendering the form like this:
-
-.. code-block:: php
-
-    echo $form;
-
-will yield the same results:
-
-.. code-block:: html
-
-    <table id="login-form-table">
-        <tr>
-            <td><label for="username" class="required">Username</label></td>
-            <td><input type="text" name="username" id="username" value="" required="required" class="username-field" size="40" /></td>
-        </tr>
-        <tr>
-            <td><label for="password" class="required">Password</label></td>
-            <td><input type="password" name="password" id="password" value="" required="required" class="password-field" size="40" /></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td><input type="submit" name="submit" id="submit" value="SUBMIT" class="submit-btn" /></td>
-        </tr>
-    </table>
-
-Additionally, if you wish to break away from the form object altogether and just use the form elements, you can
-pass the ``$form`` object into your view and access the elements and their components with the form element API,
-like this:
-
-.. code-block:: php
-
-    <table id="login-form-table">
-        <tr>
-            <td><?=$form->getElement('username')->getLabel(); ?></td>
-            <td><?=$form->getElement('username'); ?></td>
-        </tr>
-        <tr>
-            <td><?=$form->getElement('password')->getLabel(); ?></td>
-            <td><?=$form->getElement('password'); ?></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td><?=$form->getElement('submit'); ?></td>
-        </tr>
-    </table>
-
-.. _Using Template: ./forms.html#using-templates

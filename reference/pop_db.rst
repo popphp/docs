@@ -1,11 +1,11 @@
-Pop\\Db
-=======
+pop-db
+======
 
 The `popphp/pop-db` component is a database component for interfacing with databases. By default, it provides
-adapters for MySQL, PostgreSQL, Oracle, SQLServer and SQLite. Other adapters can be built by extending the core
+adapters for MySQL, PDO, PostgreSQL, SQLServer and SQLite. Other adapters can be built by extending the core
 abstract adapter. The component provides a SQL builder to assist with writing portable standard SQL queries
 that can be used across the different database platforms. And, it also provides a record class that services as
-an active record/row gateway hybrid. The record sub-component provides easy set up of database tables, along
+an active record/table gateway hybrid. The record sub-component provides easy set up of database tables, along
 with an easy API to access the database tables and the data in them.
 
 Installation
@@ -23,74 +23,66 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-db": "3.0.*",
+            "popphp/pop-db": "4.0.*",
         }
     }
 
 Basic Use
 ---------
 
-The quickest way to connect to a database and start executing queries is to use the factory:
+You can use the database factory to create the appropriate adapter instance and connect to a database:
 
 .. code-block:: php
 
-    use Pop\Db\Db;
-
-    $options = [
-        'database' => 'database',
-        'username' => 'username',
-        'password' => 'password',
-        'host'     => 'localhost'
-    ];
-
-    $mysql = Db::connect('mysql', $options);
-
-The above code returns an instance of the ``Pop\Db\Adapter\Mysql`` adapter. Other adapters
-can be created like this:
-
-.. code-block:: php
-
-    $pgsql  = Db::connect('pgsql', $options);
-    $sqlite = Db::connect('sqlite', [
-        'database' => '/path/to/database.sqlite'
+    $mysql = Pop\Db\Db::connect('mysql', [
+        'database' => 'my_database',
+        'username' => 'my_db_user',
+        'password' => 'my_db_password',
+        'host'     => 'mydb.server.com'
     ]);
 
-The component supports using the ``PDO`` class as well. You just have to add the `type` parameter
-in the options array:
+And for other database connections:
 
 .. code-block:: php
 
-    $pdoMysql = Db::connect('pdo', [
-        'database' => 'database',
-        'username' => 'username',
-        'password' => 'password',
-        'host'     => 'localhost'
+    $pgsql  = Pop\Db\Db::connect('pgsql', $options);
+    $sqlsrv = Pop\Db\Db::connect('sqlsrv', $options);
+    $sqlite = Pop\Db\Db::connect('sqlite', $options);
+
+If you'd like to use the PDO adapter, it requires the `type` option to be defined so it can set
+up the proper DSN:
+
+.. code-block:: php
+
+    $pdo = Pop\Db\Db::connect('pdo', [
+        'database' => 'my_database',
+        'username' => 'my_db_user',
+        'password' => 'my_db_password',
+        'host'     => 'mydb.server.com',
         'type'     => 'mysql'
     ]);
 
-    $pdoSqlite = Db::connect('pdo', [
-        'database' => '/path/to/database.sqlite',
-        'type'     => 'sqlite'
-    ]);
-
-The ``connect()`` factory method provides the shorthand to actually calling the database adapters'
-constructors directly.
+The database factory outlined above is simply creating new instances of the database adapter objects.
+The code below would produce the same results:
 
 .. code-block:: php
 
-    use Pop\Db\Adapter;
+    $mysql  = new Pop\Db\Adapter\Mysql($options);
+    $pgsql  = new Pop\Db\Adapter\Pgsql($options);
+    $sqlsrv = new Pop\Db\Adapter\Sqlsrv($options);
+    $sqlite = new Pop\Db\Adapter\Sqlite($options);
+    $pdo    = new Pop\Db\Adapter\Pdo($options);
 
-    $mysql = new Adapter\Mysql([
-        'database' => 'mysql_database',
-        'username' => 'mysql_username',
-        'password' => 'mysql_password',
-        'host'     => 'localhost'
-    ]);
+The above adapter objects are all instances of ``Pop\\Db\\Adapter\\AbstractAdapter``, which implements the
+``Pop\\Db\\Adapter\\AdapterInterface`` interface. If necessary, you can use that underlying foundation to
+build your own database adapter to facilitate your database needs for your application.
 
-Queries
-~~~~~~~
+Querying a Database
+-------------------
 
-Once you have a database adapter object, you can run simple queries and access the results like this:
+Once you've created a database adapter object, you can then use the API to interact with and
+query the database. Let's assume the database has a table `users` in it with the column `username`
+in the table.
 
 .. code-block:: php
 
@@ -102,8 +94,8 @@ Once you have a database adapter object, you can run simple queries and access t
         echo $row['username'];
     }
 
-Prepared Statements
-~~~~~~~~~~~~~~~~~~~
+Using Prepared Statements
+-------------------------
 
 You can also query the database using prepared statements as well. Let's assume the `users` table
 from above also has and `id` column.
@@ -122,10 +114,10 @@ from above also has and `id` column.
         echo $row['username'];
     }
 
-SQL Query Builder
+The Query Builder
 -----------------
 
-The SQL Builder is a part of the component that provides an interface that will produce syntactically correct
+The query builder is a part of the component that provides an interface that will produce syntactically correct
 SQL for whichever type of database you have elected to use. One of the main goals of this is portability across
 different systems and environments. In order for it to function correctly, you need to pass it the database
 adapter your application is currently using so that it can properly build the SQL.
@@ -134,8 +126,9 @@ adapter your application is currently using so that it can properly build the SQ
 
     $db = Pop\Db\Db::connect('mysql', $options);
 
-    $sql = new Pop\Db\Sql($db, 'users');
+    $sql = $db->createSql();
     $sql->select(['id', 'username'])
+        ->from('users')
         ->where('id > :id');
 
     echo $sql;
@@ -165,15 +158,14 @@ an example using JOIN and ORDER BY:
 
     $db = Pop\Db\Db::connect('mysql', $options);
 
-    $sql = new Pop\Db\Sql($db, 'users');
+    $sql = $db->createSql();
     $sql->select([
         'user_id'    => 'id',
         'user_email' => 'email'
-    ]);
-
-    $sql->select()->join('user_data', ['users.id' => 'user_data.user_id']);
-    $sql->select()->orderBy('id', 'ASC');
-    $sql->select->where('id > :id');
+    ])->from('users')
+      ->leftJoin('user_data', ['users.id' => 'user_data.user_id'])
+      ->orderBy('id', 'ASC');
+      ->where('id > :id');
 
     echo $sql;
 
@@ -186,8 +178,37 @@ The above example would produce the following SQL statement for MySQL:
         WHERE `id` > ?
         ORDER BY `id` ASC;
 
-Using Active Record
--------------------
+The Schema Builder
+------------------
+
+In addition to the query builder, there is also a schema builder to assist with database table
+structures and their management. In a similar fashion to the query builder, the schema builder
+has an API that mirrors the SQL that would be used to create, alter and drop tables in a database.
+
+.. code-block:: php
+
+    $db = Pop\Db\Db::connect('mysql', $options);
+
+    $schema = $db->createSchema();
+    $schema->create('users')
+        ->int('id', 16)
+        ->varchar('username', 255)
+        ->varchar('password', 255);
+
+    echo $schema;
+
+The above code would produced the following SQL:
+
+.. code-block:: sql
+
+    CREATE TABLE `users` (
+      `id` INT(16),
+      `username` VARCHAR(255),
+      `password` VARCHAR(255)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+Active Record
+-------------
 
 The ``Pop\Db\Record`` class uses the `Active Record pattern`_ as a base to allow you to work with
 and query tables in a database directly. To set this up, you create a table class that extends the
@@ -234,7 +255,7 @@ adapter for the table classes to use. You can do that like this:
 
 That database adapter will be used for all table classes in your application that extend ``Pop\Db\Record``.
 If you want a specific database adapter for a particular table class, you can specify that on the table
-sub-class level:
+class level:
 
 .. code-block:: php
 
@@ -242,7 +263,6 @@ sub-class level:
     Users::setDb($userDb);
 
 From there, the API to query the table in the database directly like in the following examples:
-
 
 **Fetch multiple rows**
 
@@ -253,7 +273,7 @@ From there, the API to query the table in the database directly like in the foll
         'limit' => 25
     ]);
 
-    foreach ($users->rows() as $user) {
+    foreach ($users as $user) {
         echo $user->username;
     }
 
@@ -263,7 +283,7 @@ From there, the API to query the table in the database directly like in the foll
         echo $user->username;
     }
 
-**Fetch a single row, update data**
+**Fetch a single row by ID, update data**
 
 .. code-block:: php
 
@@ -289,13 +309,15 @@ You can execute custom SQL to run custom queries on the table. One way to do thi
 
 .. code-block:: php
 
-    $sql = Users::sql();
+    $sql = Users::db()->createSql();
 
-    $sql->select()->where('id > :id');
+    $sql->select()
+        ->from(Users::table())
+        ->where('id > :id');
 
     $users = Users::execute($sql, ['id' => 1000]);
 
-    foreach ($users->rows() as $user) {
+    foreach ($users as $user) {
         echo $user->username;
     }
 
@@ -305,13 +327,14 @@ The basic overview of the record class static API is as follows, using the child
 * ``Users::hasDb()`` - Check if the class has a DB adapter set
 * ``Users::db()`` - Get the DB adapter object
 * ``Users::sql()`` - Get the SQL object
-* ``Users::findById($id, $resultsAs = 'ROW_AS_RESULT')`` - Find a single record by ID
-* ``Users::findBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find a record or records by certain column values
-* ``Users::findAll(array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find all records in the table
-* ``Users::execute($sql, $params, $resultsAs = 'ROW_AS_RESULT')`` - Execute a custom prepared SQL statement
-* ``Users::query($sql, $resultsAs = 'ROW_AS_RESULT')`` - Execute a simple SQL query
+* ``Users::findById($id)`` - Find a single record by ID
+* ``Users::findOne(array $columns = null, array $options = null)`` - Find a single record
+* ``Users::findBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
+* ``Users::findAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
+* ``Users::execute($sql, $params, $resultAs = Record::AS_RECORD)`` - Execute a custom prepared SQL statement
+* ``Users::query($sql, $resultAs = Record::AS_RECORD)`` - Execute a simple SQL query
 
-In the ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
+In the ``findOne``, ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
 contain values such as:
 
 .. code-block:: php
@@ -324,40 +347,150 @@ contain values such as:
 
 The ``$resultAs`` parameter allows you to set what the row set is returned as:
 
-* ``ROW_AS_RESULT`` - As instances of the ``Pop\Db\Record``
-* ``ROW_AS_ARRAY`` - As arrays
-* ``ROW_AS_OBJECT`` - As array objects
+* ``AS_ARRAY`` - As arrays
+* ``AS_OBJECT`` - As array objects
+* ``AS_RECORD`` - As instances of the ``Pop\Db\Record``
 
-The benefit of ``ROW_AS_RESULT`` is that you can operate on that row in real time, but if there are many
+The benefit of ``AS_RECORD`` is that you can operate on that row in real time, but if there are many
 rows returned in the result set, performance could be hindered. Therefore, you can use something like
-``ROW_AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
+``AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
 
 **Accessing records non-statically**
 
-If you're interested in an alternative to the active record pattern, you can use the ``Pop\Db\Record\Result``
-class in a non-static, instance style of coding as well. You would just have to inject your dependencies at
-the time of instantiation:
+If you're interested in an alternative to the active record pattern, there is a non-static API within the
+``Pop\Db\Record`` class:
 
 .. code-block:: php
 
-    // Inject the db adapter, the full table name and the table's primary key(s)
-    $user = new Result($db, 'users', 'id');
-    $user->findById(5);
+    $user = new Users();
+    $user->getById(5);
     echo $user->username;
 
 The basic overview of the result class API is as follows:
 
-* ``$user->findById($id, $resultsAs = 'ROW_AS_RESULT')`` - Find a single record by ID
-* ``$user->findBy(array $columns = null, array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find a record or records by certain column values
-* ``$user->findAll(array $options = null, $resultsAs = 'ROW_AS_RESULT')`` - Find all records in the table
-* ``$user->execute($sql, $params, $resultsAs = 'ROW_AS_RESULT')`` - Execute a custom prepared SQL statement
-* ``$user->query($sql, $resultsAs = 'ROW_AS_RESULT')`` - Execute a simple SQL query
+* ``$user->getById($id)`` - Find a single record by ID
+* ``$user->getOneBy(array $columns = null, array $options = null)`` - Find a single record by ID
+* ``$user->getBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
+* ``$user->getAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
 
-Shorthand Syntax
-----------------
+Relationships & Associations
+----------------------------
+
+Relationships and associations are supported to allow for a simple way to select related data within the database. Building
+on the example above with the `Users` table, let's add an `Info` and an `Orders` table. The user will have a 1:1 relationship
+with a row in the `Info` table, and the user will have a 1:many relationship with the `Orders` table:
+
+.. code-block:: php
+
+    class Users extends Pop\Db\Record
+    {
+
+        // Define a 1:1 relationship
+        public function info()
+        {
+            return $this->hasOne('Info', 'user_id')
+        }
+
+        // Define a 1:many relationship
+        public function orders()
+        {
+            return $this->hasMany('Orders', 'user_id');
+        }
+
+    }
+
+    // Foreign key to the related user is `user_id`
+    class Info extends Pop\Db\Record
+    {
+
+    }
+
+    // Foreign key to the related user is `user_id`
+    class Orders extends Pop\Db\Record
+    {
+
+        // Define the parent relationship up to the user that owns this order record
+        public function user()
+        {
+            return $this->belongsTo('User', 'user_id');
+        }
+
+    }
+
+So with those table classes wired up, there now exists a useful network of relationships among the database
+entities that can be accessed like this:
+
+.. code-block:: php
+
+    $user = Users::findById(1);
+
+    // Loop through all of the user's orders
+    foreach ($user->orders as $order) {
+        echo $order->id;
+    }
+
+    // Display the user's title stored in the `info` table
+    echo $user->info->title;
+
+Or, in this case, if you have selected an order already and want to access the parent user that owns it:
+
+.. code-block:: php
+
+    $order = Orders::findById(2);
+    echo $order->user->username;
+
+**Eager-Loading**
+
+In the 1:many example given above, the orders are "lazy-loaded," meaning that they aren't called from of the
+database until you call the ``orders()`` method. However, you can access a 1:many relationship with what is
+called "eager-loading." However, to take full advantage of this, you would have alter the method in the `Users`
+table:
+
+.. code-block:: php
+
+    class Users extends Pop\Db\Record
+    {
+
+        // Define a 1:many relationship
+        public function orders($options = null, $eager = false)
+        {
+            return $this->hasMany('Orders', 'user_id', $options, $eager);
+        }
+
+    }
+
+The ``$options`` parameter is a way to pass additional select criteria to the selection of the order rows,
+such as `order` and `limit`. The ``$eager`` parameter is what triggers the eager-loading, however, with this
+set up, you'll actually access it using the static ``with()`` method, like this:
+
+.. code-block:: php
+
+    $user = Users::with('orders')->getById(10592005);
+
+    // Loop through all of the user's orders
+    foreach ($user->orders as $order) {
+        echo $order->id;
+    }
+
+A note about the access in the example given above. Even though a method was defined to access the different
+relationships, you can use a magic property to access them as well, and it will route to that method. Also,
+object and array notation is supported throughout any record object. The following example all produce the
+same result:
+
+.. code-block:: php
+
+    $user = Users::findById(1);
+
+    echo $user->info()->title;
+    echo $user->info()['title'];
+    echo $user->info->title;
+    echo $user->info['title'];
+
+Shorthand SQL Syntax
+--------------------
 
 To help with making custom queries more quickly and without having to utilize the Sql Builder, there is
-shorthand SQL syntax that is supported by the ``Pop\\Db\\Record`` class. Here's a list of what is supported
+shorthand SQL syntax that is supported by the ``Pop\Db\Record`` class. Here's a list of what is supported
 and what it translates into:
 
 **Basic operators**
@@ -365,6 +498,7 @@ and what it translates into:
 .. code-block:: text
 
     $users = Users::findBy(['id' => 1]);   => WHERE id = 1
+    $users = Users::findBy(['id!=' => 1]); => WHERE id != 1
     $users = Users::findBy(['id>' => 1]);  => WHERE id > 1
     $users = Users::findBy(['id>=' => 1]); => WHERE id >= 1
     $users = Users::findBy(['id<' => 1]);  => WHERE id < 1
@@ -374,12 +508,12 @@ and what it translates into:
 
 .. code-block:: text
 
-    $users = Users::findBy(['username' => '%test%']);    => WHERE username LIKE '%test%'
-    $users = Users::findBy(['username' => 'test%']);     => WHERE username LIKE 'test%'
-    $users = Users::findBy(['username' => '%test']);     => WHERE username LIKE '%test'
-    $users = Users::findBy(['username' => '-%test']);    => WHERE username NOT LIKE '%test'
-    $users = Users::findBy(['username' => 'test%-']);    => WHERE username NOT LIKE 'test%'
-    $users = Users::findBy(['username' => '-%test%-']);  => WHERE username NOT LIKE '%test%'
+    $users = Users::findBy(['%username%'   => 'test']); => WHERE username LIKE '%test%'
+    $users = Users::findBy(['username%'    => 'test']); => WHERE username LIKE 'test%'
+    $users = Users::findBy(['%username'    => 'test']); => WHERE username LIKE '%test'
+    $users = Users::findBy(['-%username'   => 'test']); => WHERE username NOT LIKE '%test'
+    $users = Users::findBy(['username%-'   => 'test']); => WHERE username NOT LIKE 'test%'
+    $users = Users::findBy(['-%username%-' => 'test']); => WHERE username NOT LIKE '%test%'
 
 **NULL and NOT NULL**
 
@@ -408,8 +542,8 @@ stitched together with AND:
 .. code-block:: php
 
     $users = Users::findBy([
-        'id>'      => 1,
-        'username' => '%user1'
+        'id>'       => 1,
+        '%username' => 'user1'
     ]);
 
 which will be translated into:
@@ -423,8 +557,8 @@ If you need to use OR instead, you can specify it like this:
 .. code-block:: php
 
     $users = Users::findBy([
-        'id>'      => 1,
-        'username' => '%user1 OR'
+        'id>'       => 1,
+        '%username' => 'user1 OR'
     ]);
 
 Notice the ' OR' added as a suffix to the second condition's value. That will apply the OR
@@ -433,5 +567,116 @@ to that part of the predicate like this:
 .. code-block:: text
 
     WHERE (id > 1) OR (username LIKE '%test')
+
+Database Migrations
+-------------------
+
+Database migrations are scripts that assist in implementing new changes to the database, as well
+rolling back any changes to a previous state. It works by storing a directory of migration class
+files and keeping track of the current state, or the last one that was processed. From that, you
+can write scripts to run the next migration state or rollback to the previous one.
+
+You can create a blank template migration class like this:
+
+.. code-block:: php
+
+    use Pop\Db\Sql\Migrator;
+
+    Migrator::create('MyNewMigration', 'migrations');
+
+The code above will create a file that look like ``migrations/20170225100742_my_new_migration.php``
+and it will contain a blank class template:
+
+.. code-block:: php
+
+    <?php
+
+    use Pop\Db\Sql\Migration\AbstractMigration;
+
+    class MyNewMigration extends AbstractMigration
+    {
+
+        public function up()
+        {
+
+        }
+
+        public function down()
+        {
+
+        }
+
+    }
+
+From there, you can write your forward migration steps in the ``up()`` method, or your rollback steps
+in the ``down()`` method. Here's an example that creates a table when stepped forward, and drops
+that table when rolled back:
+
+.. code-block:: php
+
+    <?php
+
+    use Pop\Db\Sql\Migration\AbstractMigration;
+
+    class MyNewMigration extends AbstractMigration
+    {
+
+        public function up()
+        {
+            $schema = $this->db->createSchema();
+            $schema->create('users')
+                ->int('id', 16)->increment()
+                ->varchar('username', 255)
+                ->varchar('password', 255)
+                ->primary('id');
+
+            $this->db->query($schema);
+        }
+
+        public function down()
+        {
+            $schema = $this->db->createSchema();
+            $schema->drop('users');
+            $this->db->query($schema);
+        }
+
+    }
+
+To step forward, you would call the migrator like this:
+
+.. code-block:: php
+
+    use Pop\Db\Db;
+    use Pop\Db\Sql\Migrator;
+
+    $db = Pop\Db\Db::connect('mysql', [
+        'database' => 'my_database',
+        'username' => 'my_db_user',
+        'password' => 'my_db_password',
+        'host'     => 'mydb.server.com'
+    ]);
+
+    $migrator = new Migrator($db, 'migrations');
+    $migrator->run();
+
+The above code would have created the table ``users`` with the defined columns.
+To roll back the migration, you would call the migrator like this:
+
+.. code-block:: php
+
+    use Pop\Db\Db;
+    use Pop\Db\Sql\Migrator;
+
+    $db = Pop\Db\Db::connect('mysql', [
+        'database' => 'my_database',
+        'username' => 'my_db_user',
+        'password' => 'my_db_password',
+        'host'     => 'mydb.server.com'
+    ]);
+
+    $migrator = new Migrator($db, 'migrations');
+    $migrator->rollback();
+
+And the above code here would have dropped the table ``users`` from the database.
 
 .. _Active Record pattern: https://en.wikipedia.org/wiki/Active_record_pattern

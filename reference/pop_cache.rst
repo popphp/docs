@@ -1,5 +1,5 @@
-Pop\\Cache
-==========
+pop-cache
+=========
 
 The `popphp/pop-cache` component is a caching component that provides different adapters
 to cache data and have it persist for a certain length of time.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-cache": "3.0.*",
+            "popphp/pop-cache": "3.1.*",
         }
     }
 
@@ -116,17 +116,17 @@ to begin storing and recalling data.
     $cache = new Cache($cacheAdapter);
 
     // Save some data to the cache
-    $cache->save('foo', $myData);
+    $cache->saveItem('foo', $myData);
 
     // Recall that data later in the app.
     // Returns false is the data does not exist or has expired.
-    $foo = $cache->load('foo');
+    $foo = $cache->getItem('foo');
 
-To remove data from cache, you call the ``remove`` method:
+To remove data from cache, you call the ``deleteItem`` method:
 
 .. code-block:: php
 
-    $cache->remove('foo');
+    $cache->deleteItem('foo');
 
 And to clear all data from cache, you call the ``clear`` method:
 
