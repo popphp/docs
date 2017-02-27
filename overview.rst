@@ -52,6 +52,6 @@ is located on the website.
 .. _stand-alone installation: http://www.popphp.org/
 .. _PHPUnit: https://phpunit.de/
 .. _Travis CI: https://travis-ci.org/popphp/
-.. _Gitter chat room: https://gitter.im/popphp/2
+.. _Gitter chat room: https://gitter.im/pop-php-framework/Lobby
 .. _Twitter: https://twitter.com/popphpframework
 .. _API documentation: http://api.popphp.org/3.5/
