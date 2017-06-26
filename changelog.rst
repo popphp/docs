@@ -1,6 +1,28 @@
 Changelog
 =========
 
+3.5.2
+-----
+
+**Updated Components**
+
+* pop-config
+* pop-image
+* pop-pdf
+* pop-session
+* popphp
+* popcorn
+
+3.5.1
+-----
+
+**Updated Components**
+
+* pop-auth
+* popcorn
+* pop-http
+* pop-db
+
 3.5.0
 -----
 
