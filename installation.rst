@@ -21,7 +21,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "3.5.*"
+        "popphp/popphp-framework": ">=3.6.0"
     }
 
 **Add it to an existing project**
@@ -90,6 +90,10 @@ recommended:
     - apc**
     - memcache**
     - memcached**
+    - redis
+    - sqlite3 or pdo_sqlite
+
++ pop-debug
     - redis
     - sqlite3 or pdo_sqlite
 

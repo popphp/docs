@@ -15,6 +15,7 @@ Reference
     pop_cookie
     pop_csv
     pop_db
+    pop_debug
     pop_dir
     pop_dom
     pop_event

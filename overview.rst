@@ -35,7 +35,7 @@ significant refactor, taking advantage of PHP 5.4, eliminating dependencies amon
 components, separating the components into self-contained repositories, and
 incorporating `Composer`_.
 
-On February 22, 2017, version 3.5 was released and it continues the development and growth
+On August 31, 2017, version 3.6 was released and it continues the development and growth
 that the previous versions set forth.
 
 Community & Support
@@ -54,4 +54,4 @@ is located on the website.
 .. _Travis CI: https://travis-ci.org/popphp/
 .. _Gitter chat room: https://gitter.im/pop-php-framework/Lobby
 .. _Twitter: https://twitter.com/popphpframework
-.. _API documentation: http://api.popphp.org/3.5/
+.. _API documentation: http://api.popphp.org/3.6/
