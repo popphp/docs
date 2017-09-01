@@ -1,7 +1,7 @@
 pop-debug
 =========
 
-The `popphp/pop-dom` is a simple debugging component that can be used to hooked into an application to track
+The `popphp/pop-debug` is a simple debugging component that can be used to hooked into an application to track
 certain aspects of the application's lifecycle.
 
 Installation
@@ -67,7 +67,7 @@ The above code will save the following output to the `log` folder in a plain tex
 
 .. code-block:: text
 
-    <1504213206.00000	Hey! Something happened!
+    1504213206.00000	Hey! Something happened!
 
 
 Setting up multiple handlers
