@@ -1,6 +1,17 @@
 Changelog
 =========
 
+3.6.0
+-----
+
+**New Components**
+
+* pop-debug
+
+**Updated Components**
+
+* pop-db
+
 3.5.2
 -----
 
