@@ -10,6 +10,7 @@ Changelog
 
 **Updated Components**
 
+* pop-cache
 * pop-db
 
 3.5.2
