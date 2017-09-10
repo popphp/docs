@@ -87,9 +87,9 @@ recommended:
     - gmagick*
 
 + pop-cache
-    - apc**
-    - memcache**
-    - memcached**
+    - apc
+    - memcache
+    - memcached
     - redis
     - sqlite3 or pdo_sqlite
 
@@ -103,5 +103,3 @@ recommended:
     - ldap
 
 \* - The **imagick** and **gmagick** extensions cannot be used simultaneously.
-
-** - No stable support for this extension in PHP 7 as of July 2, 2016

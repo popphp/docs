@@ -19,17 +19,9 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-cache": "3.1.*",
+            "popphp/pop-cache": "3.2.*",
         }
     }
-
-PHP 7
------
-
-While this component has been updated and tested to work with PHP 7, please note:
-
-- Due to the unavailability or instability of the **apc/apcu/apc_bc** extensions, the APC class adapter may not function properly in PHP 7.
-- Due to the unavailability or instability of the **memcache/memcached** extensions, the Memcache & Memcached class adapter may not function properly in PHP 7.
 
 Basic Use
 ---------
