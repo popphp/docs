@@ -22,6 +22,7 @@ Reference
     pop_form
     pop_ftp
     pop_http
+    pop_i18n
     pop_image
     pop_loader
     pop_log
