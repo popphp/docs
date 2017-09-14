@@ -1,6 +1,13 @@
 Changelog
 =========
 
+3.6.1
+-----
+
+**Reinstated Components**
+
+* pop-i18n
+
 3.6.0
 -----
 
