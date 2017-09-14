@@ -1,5 +1,5 @@
-Pop\\I18n
-=========
+pop-i18n
+========
 
 The `popphp/pop-i18n` component is the internationalization and localization component. It handles
 the translation of strings into the correct and necessary language for the country and region.
@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-i18n": "2.1.*",
+            "popphp/pop-i18n": "3.0.*",
         }
     }
 
