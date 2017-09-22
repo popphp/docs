@@ -62,6 +62,16 @@ up the proper DSN:
         'type'     => 'mysql'
     ]);
 
+And there are shorthand methods as well:
+
+.. code-block:: php
+
+    $mysql  = Pop\Db\Db::mysqlConnect($options);
+    $pgsql  = Pop\Db\Db::pgsqlConnect($options);
+    $sqlsrv = Pop\Db\Db::sqlsrvConnect($options);
+    $sqlite = Pop\Db\Db::sqliteConnect($options);
+    $pdo    = Pop\Db\Db::pdoConnect($options);
+
 The database factory outlined above is simply creating new instances of the database adapter objects.
 The code below would produce the same results:
 
@@ -264,6 +274,28 @@ class level:
 
 From there, the API to query the table in the database directly like in the following examples:
 
+**Fetch a single row by ID, update data**
+
+.. code-block:: php
+
+    $user = Users::findById(1001);
+
+    if (isset($user->id)) {
+        $user->username = 'admin2';
+        $user->save();
+    }
+
+**Fetch a single row by another column**
+
+.. code-block:: php
+
+    $user = Users::findOne(['username' => 'admin2']);
+
+    if (isset($user->id)) {
+        $user->username = 'admin3';
+        $user->save();
+    }
+
 **Fetch multiple rows**
 
 .. code-block:: php
@@ -277,21 +309,26 @@ From there, the API to query the table in the database directly like in the foll
         echo $user->username;
     }
 
-    $user = Users::findBy(['username' => 'admin']);
+    $users = Users::findBy(['logins' => 0]);
 
-    if (isset($user->id)) {
-        echo $user->username;
+    foreach ($users as $user) {
+        echo $user->username . ' has never logged in.';
     }
 
-**Fetch a single row by ID, update data**
+**Fetch and return only certain columns**
 
 .. code-block:: php
 
-    $user = Users::findById(1001);
+    $users = Users::findAll(['select' => ['id', 'username']]);
 
-    if (isset($user->id)) {
-        $user->username = 'admin2';
-        $user->save();
+    foreach ($users as $user) {
+        echo $user->id . ': ' . $user->username;
+    }
+
+    $users = Users::findBy(['logins' => 0], ['select' => ['id', 'username']]);
+
+    foreach ($users as $user) {
+        echo $user->id . ': ' . $user->username . ' has never logged in.';
     }
 
 **Create a new record**
@@ -340,10 +377,15 @@ contain values such as:
 .. code-block:: php
 
     $options = [
+        'select' => ['id', 'username'],
         'order'  => 'username ASC',
         'limit'  => 25,
         'offset' => 5
     ];
+
+The `select` key value can be an array of only the columns you would like to select. Otherwise it will select all columns `*`.
+The `order`, `limit` and `offset` key values all relate to those values to control the order, limit and offset of the
+SQL query.
 
 The ``$resultAs`` parameter allows you to set what the row set is returned as:
 
