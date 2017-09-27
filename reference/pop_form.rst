@@ -837,7 +837,7 @@ You would have to create a script the generates the image CAPTCHA:
 
     use Pop\Image\Captcha;
 
-    $captcha = new Pop\Image\Captcha('/captcha.php');
+    $captcha = new Captcha('/captcha.php');
     header('Content-Type: image/gif');
     echo $captcha;
 
