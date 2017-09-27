@@ -4,6 +4,11 @@ Changelog
 3.6.1
 -----
 
+**Updated Components**
+
+* pop-form
+* pop-image
+
 **Reinstated Components**
 
 * pop-i18n

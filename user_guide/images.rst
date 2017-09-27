@@ -282,6 +282,48 @@ Here's an example working with text over the image resource:
         ->xy(40, 120)
         ->text('Hello World!');
 
+CAPTCHA Images
+--------------
+
+The `popphp/pop-image` component has the ability to generate simple CAPTCHA images that are compatible
+with the `popphp/pop-form` component. Using the ``Pop\Image\Captcha`` class you can generate a CAPTCHA
+image like this:
+
+.. code-block:: php
+
+    $captcha = new Pop\Image\Captcha('/captcha.php');
+    header('Content-Type: image/gif');
+    echo $captcha;
+
+The code above will generate a CAPTCHA image with the default settings:
+
+.. image:: images/captcha.gif
+
+The CAPTCHA image is somewhat customizable and you can set the following configuration settings:
+
+* ``adapter`` - Gd, Imagick or Gmagick
+* ``width`` - width of the image
+* ``height`` - height of the image
+* ``lineSpacing`` - space between the lines of the obscuring grid
+* ``lineColor`` -  color of the lines of the obscuring grid (an array with 3 RGB values)
+* ``textColor`` -  color of the text (an array with 3 RGB values)
+* ``font`` - font to use, if supported
+* ``size`` - font size, if supported
+* ``rotate`` - font rotation, if supported
+
+You can set the configuration settings by passing an array with key => value pairs in it, like this:
+
+.. code-block:: php
+
+    $captcha = new Pop\Image\Captcha('/captcha.php');
+    $captcha->setConfig([
+        'adapter'     => 'Imagick',
+        'width'       => 71,
+        'height'      => 26,
+        'lineSpacing' => 5,
+        'lineColor'   => [175, 175, 175]
+    ]);
+
 Extending the Component
 -----------------------
 
