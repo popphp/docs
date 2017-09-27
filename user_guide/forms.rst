@@ -33,11 +33,6 @@ The standard available input element classes extend the above class are:
 * `Pop\\Form\\Element\\Input\\Text`
 * `Pop\\Form\\Element\\Input\\Url`
 
-Special case input element classes include:
-
-* `Pop\\Form\\Element\\Input\\Captcha`
-* `Pop\\Form\\Element\\Input\\Csrf`
-
 Other available form element classes are:
 
 * `Pop\\Form\\Element\\Button`
@@ -50,9 +45,14 @@ Special form element collection classes include:
 * `Pop\\Form\\Element\\CheckboxSet`
 * `Pop\\Form\\Element\\RadioSet`
 
-In the case of the CAPTCHA and CSRF input element classes, they have special parameters that are required for
-them to perform their functions. In the case of the form element collection classes, they provide a grouping of
-elements within a fieldset for easier management.
+Special case input element classes include:
+
+* `Pop\\Form\\Element\\Input\\Captcha`
+* `Pop\\Form\\Element\\Input\\Csrf`
+
+In the case of the form element collection classes, they provide a grouping of elements within a fieldset for easier
+management. In the case of the CAPTCHA and CSRF input element classes, they have special parameters that are required
+for them to perform their functions.
 
 Here's an example that creates and renders a simple input text element:
 
@@ -733,3 +733,169 @@ the components like this:
         </fieldset>
     </form>
 
+Input CAPTCHA
+-------------
+
+The CAPTCHA field element is a special input field that generates a simple, but random math equation to be answered
+by the user.
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+
+    $fields = [
+        'username' => [
+            'type'  => 'text',
+            'label' => 'Username',
+            'attributes' => [
+                'size'   => 15
+            ]
+        ],
+        'captcha' => [
+            'type'  => 'captcha',
+            'label' => 'Please Enter Answer: ',
+            'attributes' => [
+                'size'   => 15
+            ]
+        ],
+        'submit' => [
+            'type'  => 'submit',
+            'label' => '&nbsp;',
+            'value' => 'Submit'
+        ]
+    ];
+
+    $form = Form::createFromConfig($fields);
+
+    if ($_POST) {
+        $form->setFieldValues($_POST);
+        if ($form->isValid()) {
+            $form->clearTokens();
+            echo 'Good!';
+        } else {
+            echo $form;
+        }
+    } else {
+        echo $form;
+    }
+
+And that will append the math equation to the CAPTCHA field's label. The HTML would like like this:
+
+.. code-block:: html
+
+    <form action="/" method="post" id="pop-form" class="pop-form">
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username">Username</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" size="15" />
+                </dd>
+                <dt>
+                    <label for="captcha" class="required">Please Enter Answer: (7 &#215; 3)</label>
+                </dt>
+                <dd>
+                    <input type="text" name="captcha" id="captcha" value="" required="required" size="15" />
+                </dd>
+                <dt>
+                    <label for="submit">&nbsp;</label>
+                </dt>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="Submit" />
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
+
+The `popphp/pop-image` component provides an image CAPTCHA that is compatible with the `popphp/pop-form` component.
+You would have to create a script the generates the image CAPTCHA:
+
+.. code-block:: php
+
+    use Pop\Image\Captcha;
+
+    $captcha = new Pop\Image\Captcha('/captcha.php');
+    header('Content-Type: image/gif');
+    echo $captcha;
+
+And then hook it into the form that uses the CAPTCHA field:
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Image\Captcha;
+
+    $captcha = new Captcha('/captcha.php');
+
+    $fields = [
+        'username' => [
+            'type'  => 'text',
+            'label' => 'Username',
+            'attributes' => [
+                'size'   => 15
+            ]
+        ],
+        'captcha' => [
+            'type'  => 'captcha',
+            'label' => 'Please Enter Answer: ',
+            'attributes' => [
+                'size'   => 15
+            ]
+        ],
+        'submit' => [
+            'type'  => 'submit',
+            'label' => '&nbsp;',
+            'value' => 'Submit'
+        ]
+    ];
+
+    $form = Form::createFromConfig($fields);
+
+    if ($_POST) {
+        $form->setFieldValues($_POST);
+        if ($form->isValid()) {
+            $form->clearTokens();
+            echo 'Good!';
+        } else {
+            echo $form;
+        }
+    } else {
+        echo $form;
+    }
+
+When rendering the field, it will detect that the CAPTCHA is an image, override the math equation and append the
+image with a reload link to the CAPTCHA field's label:
+
+.. code-block:: html
+
+    <form action="/" method="post" id="pop-form" class="pop-form">
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username">Username</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" size="15" />
+                </dd>
+                <dt>
+                    <label for="captcha" class="required">
+                        Please Enter Answer:
+                        <img id="pop-captcha-image" class="pop-captcha-image" src="/captcha.php" />
+                        <a class="pop-captcha-reload" href="#" onclick="document.getElementById('pop-captcha-image').src = '/captcha.php?captcha=1'; return false;">Reload</a>
+                    </label>
+                </dt>
+                <dd>
+                    <input type="text" name="captcha" id="captcha" value="" required="required" size="15" />
+                </dd>
+                <dt>
+                    <label for="submit">&nbsp;</label>
+                </dt>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="Submit" />
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
+
+The image elements will have CSS classes to facilitate styling them as needed.
