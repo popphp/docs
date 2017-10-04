@@ -76,16 +76,18 @@ You can also evaluate multiple roles at once by passing an array of roles to the
 
 .. code-block:: php
 
-    if ($acl->isAllowedMany(['editor', 'reader], 'page', 'edit'))  { } // Returns true
-    if ($acl->isDeniedMany(['admin', 'editor], 'page', 'edit'))   { } // Returns false
+    if ($acl->isAllowedMany(['editor', 'reader'], 'page', 'edit'))  { } // Returns true
+    if ($acl->isDeniedMany(['admin', 'editor'], 'page', 'edit'))   { } // Returns false
 
 The purpose is that if you need to utilize an ACL-based system where users can hold multiple roles
 at a time, you can then evaluate a user's permissions based on the user's set of assigned roles.
 When passing the array of roles to the methods above, only one role has to satisfy the
 logic to pass. If you need to be more strict about it, you can use:
 
-    if ($acl->isAllowedManyStrict(['editor', 'reader], 'page', 'edit'))  { } // Returns false
-    if ($acl->isDeniedManyStrict(['admin', 'editor], 'page', 'edit'))   { } // Returns false
+.. code-block:: php
+
+    if ($acl->isAllowedManyStrict(['editor', 'reader'], 'page', 'edit'))  { } // Returns false
+    if ($acl->isDeniedManyStrict(['admin', 'editor'], 'page', 'edit'))   { } // Returns false
 
 In the above examples, all roles passed must satisfy the logic to pass.
 
