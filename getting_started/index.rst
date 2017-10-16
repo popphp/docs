@@ -11,6 +11,7 @@ and concepts will be explored later in the `User Guide`_ and `Reference`_ sectio
     applications
     routing
     controllers
+    models
     services
     events
     modules

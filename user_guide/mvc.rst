@@ -61,17 +61,16 @@ of the user guide.
 Models
 ------
 
-There is no official "model component" with Pop PHP. This is because the model component of your
-application should be specific to your application. It is the thing that knows all about your application's
-business logic and data and knows how to handle it. So a component with that responsibility within
-you application should be written specifically for your application.
-
-Model objects could be simple repositories that handle data transactions and provide data to views.
-They could integrate with your data source, such as a database, to save and retrieve data for your
-application. There are many different ways you can go with how you build and utilize model objects
-within your application.
+There is a base abstract model class provided that can be extended to create the model classes
+needed for your application. The abstract model class is a simple and bare-bones data object that
+can be extended with whatever methods or properties you need to work with your model. Data from
+the abstract model object is accessible via array access and magic methods, and the model object
+is countable and iterable. You can reference the `Models`_ section in `Getting Started`_ to see a
+simple example.
 
 More in-depth examples connecting all of these concepts will be covered later in the user guide.
 
 .. _MVC design pattern: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
+.. _Getting Started: ../getting_started/index.html
+.. _Models: ../getting_started/models.html
 .. _Views: ./views.html
