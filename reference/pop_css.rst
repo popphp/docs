@@ -31,9 +31,6 @@ parse existing ones. There is support for media queries and comments as well.
 Creating CSS
 ~~~~~~~~~~~~
 
-To serialize the data into one of the data types, you can create a data object and call the
-``serialize()`` method:
-
 .. code-block:: php
 
     use Pop\Css\Css;
@@ -73,9 +70,6 @@ The above code will produce:
 
 Parsing a CSS file
 ~~~~~~~~~~~~~~~~~~
-
-You can either pass the data object a direct string of serialized data or a file containing a
-string of serialized data. It will detect which one it is and parse it accordingly.
 
 .. code-block:: php
 
