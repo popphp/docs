@@ -12,7 +12,7 @@ project = u'Pop PHP Framework'
 copyright = u'2016 Nick Sagona, III'
 
 version = '3'
-release = '3.6.1'
+release = '3.6.2'
 
 lexers['php'] = PhpLexer(startinline=True)
 

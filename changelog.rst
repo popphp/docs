@@ -1,6 +1,13 @@
 Changelog
 =========
 
+3.6.2
+-----
+
+**New Components**
+
+* pop-css
+
 3.6.1
 -----
 
