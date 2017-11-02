@@ -240,6 +240,7 @@ Minify the CSS like this:
 Which produces:
 
 .. code-block:: css
+
     html{margin:0;padding:0;background-color:#fff;font-family:Arial, sans-serif;}
     #login{margin:0;padding:0;width:50%;}
 
