@@ -1,6 +1,17 @@
 Changelog
 =========
 
+3.6.4
+-----
+
+* Updated license & copyright
+* Updated composer.json
+
+3.6.3
+-----
+
+* Updated pop-dom
+
 3.6.2
 -----
 
