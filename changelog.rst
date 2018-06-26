@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.6.5
+-----
+
+* Updated pop-pdf
+
 3.6.4
 -----
 
