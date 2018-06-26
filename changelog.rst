@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.7.0
+-----
+
+* Added bootstrap functionality to provide basic application scaffolding
+
 3.6.5
 -----
 
