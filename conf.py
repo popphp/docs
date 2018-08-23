@@ -9,10 +9,10 @@ master_doc = 'index'
 highlight_language = 'php'
 
 project = u'Pop PHP Framework'
-copyright = u'2016 Nick Sagona, III'
+copyright = u'2018 Nick Sagona, III'
 
 version = '3'
-release = '3.7.0'
+release = '3.8.0'
 
 lexers['php'] = PhpLexer(startinline=True)
 

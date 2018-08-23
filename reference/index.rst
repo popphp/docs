@@ -6,6 +6,7 @@ Reference
 
     pop_acl
     pop_application
+    pop_audit
     pop_auth
     pop_cache
     pop_code
