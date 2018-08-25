@@ -362,9 +362,9 @@ referred to a "dirty attributes."
         $dirty = $user->getDirty();
     }
 
-The ``$sdirty`` value will contain two arrays: `old` and `new`:
+The ``$dirty`` variable will contain two arrays: `old` and `new`:
 
-.. code-block:: php
+.. code-block:: text
 
     [old] => [
         "username" => "admin"
