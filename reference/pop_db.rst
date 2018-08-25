@@ -358,6 +358,37 @@ You can execute custom SQL to run custom queries on the table. One way to do thi
         echo $user->username;
     }
 
+**Tracking changed values**
+
+The ``Pop\Db\Record`` class the ability to track changed values within the record object. This is often times
+referred to a "dirty attributes."
+
+.. code-block:: php
+
+    $user = Users::findById(1001);
+
+    if (isset($user->id)) {
+        $user->username = 'admin2';
+        $user->save();
+
+        $dirty = $user->getDirty();
+    }
+
+The ``$sdirty`` value will contain two arrays: `old` and `new`:
+
+.. code-block:: php
+
+    [old] => [
+        "username" => "admin"
+    ],
+    [new] => [
+        "username" => "admin2"
+    ]
+
+And as you can see, only the field or fields that have been changed are stored.
+
+**Common API Calls**
+
 The basic overview of the record class static API is as follows, using the child class ``Users`` as an example:
 
 * ``Users::setDb(Adapter\AbstractAdapter $db, $prefix = null, $isDefault = false)`` - Set the DB adapter

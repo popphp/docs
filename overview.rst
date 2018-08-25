@@ -35,7 +35,7 @@ significant refactor, taking advantage of PHP 5.4, eliminating dependencies amon
 components, separating the components into self-contained repositories, and
 incorporating `Composer`_.
 
-On June 26, 2018, version 3.7.0 was released and it continues the development and growth
+On August 25, 2018, version 3.8.0 was released and it continues the development and growth
 that the previous versions set forth.
 
 Community & Support
