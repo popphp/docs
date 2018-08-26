@@ -44,7 +44,7 @@ Here's an example sending a basic email using ``sendmail``:
 
     use Pop\Mail;
 
-    $transport = new Mail\Transport\Sendmail()
+    $transport = new Mail\Transport\Sendmail();
 
     $mailer = new Mail\Mailer($transport);
 
