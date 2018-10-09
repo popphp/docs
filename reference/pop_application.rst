@@ -81,11 +81,11 @@ with the application object through the appropriate API calls.
 
 * ``$app->bootstrap($autoloader = null)`` - Bootstrap the application
 * ``$app->init()`` - Initialize the application
-* ``$app->loadConfig($config)`` - Load a new configuration
-* ``$app->loadRouter($router)`` - Load a new router object
-* ``$app->loadServices($services)`` - Load a new service locator
-* ``$app->loadEvents($events)`` - Load a new event manager
-* ``$app->loadModules($modules)`` - Load a new module manager
+* ``$app->registerConfig($config)`` - Register a new configuration
+* ``$app->registerRouter($router)`` - Register a new router object
+* ``$app->registerServices($services)`` - Register a new service locator
+* ``$app->registerEvents($events)`` - Register a new event manager
+* ``$app->registerModules($modules)`` - Register a new module manager
 * ``$app->registerAutoloader($autoloader)`` - Register an autoloader with the application
 * ``$app->mergeConfig($config, $replace = false)`` - Merge config values into the application
 * ``$app->run()`` - Run the application
