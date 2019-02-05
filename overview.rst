@@ -21,9 +21,8 @@ About the Framework
 -------------------
 
 Pop PHP is an open source, object-oriented PHP framework. At a minimum, it requires
-PHP 5.6, but has been tested for PHP 7 as well. It is available on `Github`_, through
-`Composer`_ or as a `stand-alone installation`_. The framework is tested using
-`PHPUnit`_ and continuous integration is maintained using `Travis CI`_.
+PHP 7.1. It is available on `Github`_, through `Composer`_ or as a `stand-alone installation`_.
+The framework is tested using `PHPUnit`_ and continuous integration is maintained using `Travis CI`_.
 
 **A Brief History of Pop PHP**
 
@@ -35,7 +34,7 @@ significant refactor, taking advantage of PHP 5.4, eliminating dependencies amon
 components, separating the components into self-contained repositories, and
 incorporating `Composer`_.
 
-On August 25, 2018, version 3.8.0 was released and it continues the development and growth
+On February 5, 2019, version 4.0.0 was released and it continues the development and growth
 that the previous versions set forth.
 
 Community & Support
@@ -54,4 +53,4 @@ is located on the website.
 .. _Travis CI: https://travis-ci.org/popphp/
 .. _Gitter chat room: https://gitter.im/pop-php-framework/Lobby
 .. _Twitter: https://twitter.com/popphpframework
-.. _API documentation: http://api.popphp.org/3.7/
+.. _API documentation: http://api.popphp.org/4.0/
