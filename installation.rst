@@ -51,8 +51,8 @@ The ``/vendor/`` folder contains the autoloader, the framework and all of the ne
 Requirements
 ------------
 
-The only main requirement for the Pop PHP Framework is that you have at least **PHP 5.6.0**
-installed in your environment. It has been tested and works with **PHP 7.0** as well.
+The only main requirement for the Pop PHP Framework is that you have at least **PHP 7.1.0**
+installed in your environment.
 
 Recommendations
 ---------------
