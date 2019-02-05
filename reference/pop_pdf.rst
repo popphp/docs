@@ -552,8 +552,6 @@ like for a text object:
 * ``$text->setFillColor(Color\ColorInterface $color);``
 * ``$text->setStrokeColor(Color\ColorInterface $color);``
 * ``$text->setStroke($width, $dashLength = null, $dashGap = null);``
-* ``$test->setWrap($wrap, $lineHeight = null);``
-* ``$test->setLineHeight($lineHeight);``
 * ``$test->setRotation($rotation);``
 * ``$test->setTextParams($c = 0, $w = 0, $h = 100, $v = 100, $rot = 0, $rend = 0);``
 
@@ -600,13 +598,6 @@ Extending the example above, we can render red text to the page like this:
     // Pass the document to the Pdf object to build it and output it to HTTP
     $pdf = new Pdf();
     $pdf->outputToHttp($document);
-
-**Wrap and Line-height**
-
-The ``setWrap`` and ``setLineHeight()`` methods help facilitate larger blocks of text that
-you might add to the PDF page. By setting values with these two methods, you give the PDF
-page the parameters needed to calculate wrapping the large body of text with the proper
-line-height for you, instead of you having to break the text up and place it manually.
 
 Annotations
 ~~~~~~~~~~~

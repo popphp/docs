@@ -526,7 +526,6 @@ like for a text object:
 * ``$text->setFillColor(Color\ColorInterface $color);``
 * ``$text->setStrokeColor(Color\ColorInterface $color);``
 * ``$text->setStroke($width, $dashLength = null, $dashGap = null);``
-* ``$test->setLineHeight($lineHeight);``
 * ``$test->setRotation($rotation);``
 * ``$test->setTextParams($c = 0, $w = 0, $h = 100, $v = 100, $rot = 0, $rend = 0);``
 
