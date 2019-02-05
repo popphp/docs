@@ -18,4 +18,3 @@ and concepts will be explored later in the `User Guide`_ and `Reference`_ sectio
 
 .. _User Guide: ../user_guide/index.html
 .. _Reference: ../reference/index.html
-
