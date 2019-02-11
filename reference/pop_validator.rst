@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-validator": "3.0.*",
+            "popphp/pop-validator": "^3.0.2",
         }
     }
 

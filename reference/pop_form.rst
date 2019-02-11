@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-form": "3.0.*",
+            "popphp/pop-form": "^3.3.0",
         }
     }
 

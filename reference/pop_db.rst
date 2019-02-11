@@ -23,7 +23,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-db": "4.0.*",
+            "popphp/pop-db": "^4.4.1",
         }
     }
 

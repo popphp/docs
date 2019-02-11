@@ -106,76 +106,61 @@ Console
 Using the `popphp/pop-console` component when building a CLI-based application with Pop gives you
 access to a set of features that facilitate the routing and display of your application.
 
-.. code-block:: php
-
-    $console = new Pop\Console\Console();
-
 Here's a look at the basic API:
 
 * ``$console->setWidth(80);`` - sets the character width of the console
 * ``$console->setIndent(4);`` - sets the indentation in spaces at the start of a line
+* ``$console->setHeader($header);`` - sets a header to prepend to the output
+* ``$console->setFooter($footer);`` - sets a footer to append to the output
 * ``$console->colorize($string, $fg, $bg);`` - colorize the string and return the value
-* ``$console->prompt($prompt, $options, $caseSensitive, $length);`` - call a prompt and return the answer
+* ``$console->setHelpColors($color1, $color2, $color3);`` - set colors to use for the help screen
+* ``$console->addCommand($command);`` - add a command to the console object
+* ``$console->addCommands($commands);`` - add an array of commands to the console object
+* ``$console->prompt($prompt, $options, $caseSensitive, $length, $withHeaders);`` - call a prompt and return the answer
 * ``$console->append($text = null, $newline = true);`` - appends text to the current console response body
-* ``$console->write($text = null, $newline = true);`` - appends text to the current console response body and sends the response
+* ``$console->write($text = null, $newline = true, $withHeaders = true);`` - appends text to the current console response body and sends the response
 * ``$console->send();`` - sends the response
+* ``$console->help();`` - sends the auto-generated help screen
 * ``$console->clear();`` - clears the console screen (Linux/Unix only)
 
-Commands
-~~~~~~~~
-
-When using the `popphp/pop-console` component, you can create command objects and add them to the console object.
-This is useful for storing and calling help screens on a per-command basis
-
-**Using a Command**
+You can use a console object to manage and deploy output to the console, including a prepended
+header and appended footer.
 
 .. code-block:: php
 
-    use Pop\Console\Console;
-    use Pop\Console\Command;
+    $console = new Pop\Console\Console();
+    $console->setHeader('My Application');
+    $console->setFooter('The End');
 
-    $edit = new Command('edit');
-    $edit->setHelp('This is the help screen for the edit command.');
+    $console->append('Here is some console information.');
+    $console->append('Hope you enjoyed it!');
 
-    $console = new Console();
-    $console->addCommand($edit);
-
-    $console->append($console->help('edit'));
     $console->send();
 
-And if you wire up your controller correctly, the following example would be output like below:
+The above will output:
 
-.. code-block:: bash
+.. code-block:: text
 
-    $ ./pop edit help
-      This is the help screen for the edit command.
+        My Application
 
-Prompts
-~~~~~~~
+        Here is some console information.
+        Hope you enjoyed it!
 
-With the `popphp/pop-console` component, you can call a prompt to read in user input:
+        The End
 
-.. code-block:: php
+Console Colors
+~~~~~~~~~~~~~~
 
-    $input = $console->prompt('Are you sure? [Y/N]', ['Y', 'N']);
-
-What the above line of code does is echo the prompt to the user and once the user enters an answer,
-that answer gets returned back and stored in the variable `$input`. The `$options` array allows you
-to enforce a certain set of options. Failure to input one of those options will result in the prompt
-being printed to the console screen again.
-
-Colors
-~~~~~~
-
-As mentioned before, on terminals that support basic ANSI color, such as on a Linux or Unix machine,
-you can colorize your text:
+On consoles that support it, you can colorize text outputted to the console with the
+``colorize()`` method:
 
 .. code-block:: php
 
-    use Pop\Console\Console;
-
-    $coloredText = $console->colorize('Hello World!', Console::BOLD_CYAN);
-    $console->append($coloredText);
+    $console->append(
+        'Here is some ' .
+        $console->colorize('IMPORTANT', Console::BOLD_RED) .
+        ' console information.'
+    );
 
 The list of available color constants are:
 
@@ -196,3 +181,64 @@ The list of available color constants are:
 * BOLD_MAGENTA
 * BOLD_CYAN
 * BOLD_WHITE
+
+Using a Prompt
+~~~~~~~~~~~~~~
+
+You can also trigger a prompt to get information from the user. You can enforce
+a certain set of options as well as whether or not they are case-sensitive:
+
+.. code-block:: php
+
+    $console = new Pop\Console\Console();
+    $letter  = $console->prompt(
+        'Which is your favorite letter: A, B, C, or D? ',
+        ['A', 'B', 'C', 'D'],
+        true
+    );
+    echo 'Your favorite letter is ' . $letter . '.';
+
+
+.. code-block:: bash
+
+    ./pop
+    Which is your favorite letter: A, B, C, or D? B   // <- User types 'B'
+    Your favorite letter is B.
+
+Help Screen
+~~~~~~~~~~~
+
+You can register commands with the console object to assist in auto-generating
+a well-formatted, colorized help screen.
+
+.. code-block:: php
+
+    use Pop\Console\Console;
+    use Pop\Console\Command;
+
+    $edit = new Command(
+        'user edit', '<id>', 'This is the help for the user edit command'
+    );
+
+    $remove = new Command(
+        'user remove', '<id>', 'This is the help for the user remove command'
+    );
+
+    $console = new Console();
+    $console->addCommand($edit);
+    $console->addCommand($remove);
+    $console->setHelpColors(
+        Console::BOLD_CYAN,
+        Console::BOLD_GREEN,
+        Console::BOLD_YELLOW
+    );
+
+Once the commands are registered with the main `$console` object, we can generate
+the help screen like this:
+
+.. code-block:: php
+
+    $console->help();
+
+The above command will output an auto-generated, colorized help screen with the commands
+that are registered with the console object.
