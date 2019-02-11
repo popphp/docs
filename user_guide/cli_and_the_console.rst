@@ -116,6 +116,7 @@ Here's a look at the basic API:
 * ``$console->setHelpColors($color1, $color2, $color3);`` - set colors to use for the help screen
 * ``$console->addCommand($command);`` - add a command to the console object
 * ``$console->addCommands($commands);`` - add an array of commands to the console object
+* ``$console->addCommandsFromRoutes($routeMatch, $scriptName = null);`` - add commands based on routes config
 * ``$console->prompt($prompt, $options, $caseSensitive, $length, $withHeaders);`` - call a prompt and return the answer
 * ``$console->append($text = null, $newline = true);`` - appends text to the current console response body
 * ``$console->write($text = null, $newline = true, $withHeaders = true);`` - appends text to the current console response body and sends the response

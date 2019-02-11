@@ -339,9 +339,13 @@ is callable, like this:
 
 .. code-block:: php
 
+    use Pop\Form\Filter\Filter;
+
+    /** ...Code to create the form ...**/
+
     if ($_POST) {
-        $form->addFilter('strip_tags');
-        $form->addFilter('htmlentities', [ENT_QUOTES, 'UTF-8']);
+        $form->addFilter(new Filter('strip_tags'));
+        $form->addFilter(new Filter('htmlentities', [ENT_QUOTES, 'UTF-8']));
         $form->setFieldValues($_POST);
         if (!$form->isValid()) {
             echo $form; // Has errors

@@ -107,6 +107,25 @@ and
     Subject: Log Entry: ALERT (1)
     2015-07-11 12:32:33    1    ALERT   Look Out! Something serious happened!
 
+HTTP
+----
+
+Here's an example using an HTTP service:
+
+.. code-block:: php
+
+    use Pop\Log\Logger;
+    use Pop\Log\Writer;
+    use Pop\Http\Client;
+
+    $stream = new Client\Stream('http://logs.mydomain.com/');
+    $log    = new Logger(new Writer\Http($stream);
+
+    $log->info('Just a info message.');
+    $log->alert('Look Out! Something serious happened!');
+
+The log writer will send HTTP requests with the log data to the HTTP service.
+
 Database
 --------
 

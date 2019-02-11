@@ -196,7 +196,7 @@ will be created:
 
 .. code-block:: php
 
-    $response = Pop\Http\Response::parse('http://www.domain.com/some-page');
+    $response = Pop\Http\Response\Parser::parseFromUri('http://www.domain.com/some-page');
 
     if ($response->getCode() == 200) {
         // Do something with the response
