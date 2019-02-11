@@ -17,3 +17,4 @@ common programming topics that utilize a set of the more common components from 
     images
     pdfs
     popcorn
+    kettle

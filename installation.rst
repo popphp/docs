@@ -21,7 +21,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "^4.0.0"
+        "popphp/popphp-framework": "^4.0.1"
     }
 
 **Add it to an existing project**
@@ -45,8 +45,12 @@ as well. The following files and folders are included:
     * ``index.php``
     * ``.htaccess``
 * ``/vendor/``
+* ``kettle``
 
 The ``/vendor/`` folder contains the autoloader, the framework and all of the necessary components.
+The ``kettle`` script is the CLI-based helper script that assists with application scaffolding and
+database management.
+
 
 Requirements
 ------------

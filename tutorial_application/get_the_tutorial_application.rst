@@ -7,9 +7,9 @@ You can get the Pop PHP Framework tutorial application over via composer or dire
 
 .. code-block:: bash
 
-    composer create-project popphp/popphp-tutorial project-folder
-    cd project-folder
-    sudo php -S localhost:8000 -t public
+    $ composer create-project popphp/popphp-tutorial project-folder
+    $ cd project-folder
+    $ ./kettle serve
 
 If you run the commands above, you should be able to see Pop welcome screen in your browser at
 the ``http://localhost:8000`` address.
@@ -20,12 +20,12 @@ You can clone the repository directly and install it and play around with it the
 
 .. code-block:: bash
 
-    git clone https://github.com/popphp/popphp-tutorial.git
-    cd popphp-tutorial
-    composer install
-    sudo php -S localhost:8000 -t public
+    $ git clone https://github.com/popphp/popphp-tutorial.git
+    $ cd popphp-tutorial
+    $ composer install
+    $ ./kettle serve
 
 Again, running the above commands, you should be able to visit the Pop welcome screen in
-your browser.
+your browser at the ``http://localhost:8000`` address.
 
 .. _Github: https://github.com/popphp/popphp-tutorial

@@ -26,6 +26,7 @@ Reference
     pop_http
     pop_i18n
     pop_image
+    pop_kettle
     pop_loader
     pop_log
     pop_mail

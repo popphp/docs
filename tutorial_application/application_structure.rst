@@ -7,10 +7,10 @@ you'll see the following basic application structure:
 * app/
 
   - config/
-  - database/
   - src/
   - view/
 
+* database/
 * public/
 * script/
 * vendor/
@@ -36,11 +36,6 @@ A more expanded version of an Pop application structure may look like this:
     - app.web.php
     - app.cli.php
 
-  - database/      `(Database structure and seed files; database migrations)`
-
-    - migrations/
-    - app.sql
-
   - src/           `(Main application source files)`
 
     - Controller/
@@ -55,6 +50,12 @@ A more expanded version of an Pop application structure may look like this:
 
   - logs/
   - tmp/
+
+* database/      `(Database seed and migration files)`
+
+  - migrations/
+  - seeds/
+  - app.sql
 
 * logs/            `(Web server log files)`
 * public/          `(Web server document root)`
