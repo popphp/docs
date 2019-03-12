@@ -434,6 +434,110 @@ The basic overview of the result class API is as follows:
 * ``$user->getBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
 * ``$user->getAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
 
+Encoded Record
+~~~~~~~~~~~~~~
+
+As of ``pop-db`` version 4.5.0 (included in Pop PHP Framework 4.0.2), there is now support for an encoded record class,
+which provides the functionality to more easily store and retrieve data that needs to be encoded in some way. The
+five ways supported out of the box are:
+
+* JSON-encoded values
+* PHP-serialized values
+* Base64-encoded values
+* Password hash values (one-way hashing)
+* OpenSSL-encrypted values
+
+Similar to the example above, you would create and wire up a table class, filling in the necessary configuration details,
+like below:
+
+.. code-block:: php
+
+    class Users extends Pop\Db\Record\Encoded
+    {
+        protected $jsonFields      = ['info'];
+        protected $phpFields       = ['metadata'];
+        protected $base64Fields    = ['contents'];
+        protected $hashFields      = ['password'];
+        protected $encryptedFields = ['ssn'];
+        protected $hashAlgorithm   = PASSWORD_BCRYPT;
+        protected $hashOptions     = ['cost' => 10];
+        protected $cipherMethod    = 'AES-256-CBC';
+        protected $key             = 'SOME_KEY';
+        protected $iv              = 'SOME_BASE64_ENCODED_IV';
+    }
+
+In the above example, you configure the fields that will need to be encoded and decoded, as well as pertinent configuration
+options for hashing and encryption. Now, when you save and retrieve data, the encoding and decoding will be handled for you:
+
+.. code-block:: php
+
+    $user = new Users([
+        'username' => 'editor',
+        'password' => '12edit34',
+        'info'     => [
+            'foo' => 'bar'
+        ],
+        'metadata' => [
+            'attrib' => 'value'
+        ],
+        'contents' => 'Some text from a file.',
+        'ssn'      => '123-45-6789'
+    ]);
+
+    $user->save();
+
+The values will be correctly encoded and stored in the database, like such:
+
+.. code-block:: text
+
+    password: $2y$10$juVQwg2Gndy/sH5jxFcO/.grehHDvhs8QaRWFQ7hPkvCLHjDUdkNe
+    info: {"foo":"bar"}
+    metadata: a:1:{s:6:"attrib";s:5:"value";}
+    contents: U29tZSB0ZXh0IGZyb20gYSBmaWxlLg==
+    ssn: zoVgGSiYu4QvIt2XIREe3Q==
+
+And then retrieving the record will automatically decode the values for you to access:
+
+.. code-block:: php
+
+    $user = Users::findById(1);
+    print_r($user->toArray());
+
+which will display:
+
+.. code-block:: text
+
+    Array
+    (
+        [username] => editor
+        [password] => $2y$10$juVQwg2Gndy/sH5jxFcO/.grehHDvhs8QaRWFQ7hPkvCLHjDUdkNe
+        [info] => Array
+            (
+                [foo] => bar
+            )
+
+        [metadata] => Array
+            (
+                [attrib] => value
+            )
+
+        [contents] => Some text from a file.
+        [ssn] => 123-45-6789
+    )
+
+Please note that the password hashing functionality supports one-way hashing only. So the value of those fields will
+only be encoded once, and then never decoded. You can call the ``verify($key, $value)`` method to verify a password
+attempt against the hash:
+
+.. code-block:: php
+
+    $user = Users::findById(1);
+    if ($user->verify('password', '12edit34')) {
+        // Login
+    } else {
+        // Deny user
+    }
+
 Relationships & Associations
 ----------------------------
 

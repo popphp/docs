@@ -1,6 +1,10 @@
 Changelog
 =========
 
+4.0.2
+-----
+* Updated to pop-db v4.5.0, which includes support for the encoded record class
+
 4.0.1
 -----
 * Added pop-kettle component for CLI-based helper functionality
