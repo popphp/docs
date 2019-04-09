@@ -437,7 +437,7 @@ The basic overview of the result class API is as follows:
 Encoded Record
 ~~~~~~~~~~~~~~
 
-As of ``pop-db`` version 4.5.0 (included in Pop PHP Framework 4.0.2), there is now support for an encoded record class,
+As of ``pop-db`` version 4.5.0 (included as of Pop PHP Framework 4.0.2), there is now support for an encoded record class,
 which provides the functionality to more easily store and retrieve data that needs to be encoded in some way. The
 five ways supported out of the box are:
 

@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-csv": "^3.0.2",
+            "popphp/pop-csv": "^3.1.0",
         }
     }
 
