@@ -34,7 +34,7 @@ significant refactor, taking advantage of PHP 5.4, eliminating dependencies amon
 components, separating the components into self-contained repositories, and
 incorporating `Composer`_.
 
-On April 9, 2019, version 4.0.3 was released and it continues the development and growth
+On October 17, 2019, version 4.1.0 was released and it continues the development and growth
 that the previous versions set forth.
 
 Community & Support
