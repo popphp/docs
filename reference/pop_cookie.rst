@@ -30,7 +30,7 @@ create a new instance of a cookie object, you can pass it some optional paramete
 
 .. code-block:: php
 
-    $cookie = Pop\Web\Cookie::getInstance([
+    $cookie = Pop\Cookie\Cookie::getInstance([
         'expire'   => 300,
         'path'     => '/system',
         'domain'   => 'www.domain.com',

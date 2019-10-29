@@ -70,7 +70,7 @@ the objects for you:
             ]
         ],
         'services' => [
-            'session' => 'Pop\Web\Session::getInstance'
+            'session' => 'Pop\Session\Session::getInstance'
         ]
     ];
 
