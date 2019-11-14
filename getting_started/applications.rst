@@ -1,17 +1,18 @@
-Applications
+Aplicaciones
 ============
 
-The application object of the Pop PHP Framework is the main object that helps control and provide
-access to the application's elements, configuration and current state. Within the application object
-are ways to create, store and manipulate common elements that you may need during an application's
-life-cycle, such as the router, service locator, event manager and module manager. Additionally,
-you can also have access to the config object and the autoloader, if needed.
+El objeto Application del Framework Pop PHP es el objeto principal que ayuda a controlar y provee
+acceso a los elementos de la aplicación, configuración y estado actual. Dentro del objeto Application
+hay maneras de crear, almacenar y manipular elementos comunes que puedes necesitar durante el ciclo
+de vida de una aplicación, tál como el router, el localizador de servicios, y los manejadores de evento
+y módulo. Adicionalmente, puedes tener acceso a la configuración del objeto y el autoloader, si lo
+necesitas.
 
-Configuring an Application
+Configurando una Aplicación
 --------------------------
 
-The application object's constructor is flexible in what it can accept when setting up your
-application. You can pass it individual instances of the objects your application will need:
+El constructor del objeto Application es flexible en lo que puede aceptar cuando configuras tu
+aplicación. Puedes pasarle instancias individuales de los objetos que tu aplicación necesitará:
 
 .. code-block:: php
 
@@ -23,8 +24,8 @@ application. You can pass it individual instances of the objects your applicatio
         $router, $service, $events
     );
 
-Or, you can pass it a configuration array and let the application object create and set up the
-objects for you:
+Ó, puedes pasarle un arreglo de configuración y dejar que el objeto Application cree y configure
+los objetos por tí:
 
 .. code-block:: php
 
@@ -49,7 +50,7 @@ objects for you:
 
     $app = new Pop\Application($config);
 
-**The Autoloader**
+**El Autoloader**
 
 You can also pass in the autoloader and access it through the application object if it is
 needed to register other components of the application. However, it is required that the

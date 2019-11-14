@@ -1,9 +1,9 @@
-Getting Started
+Empezando
 ===============
 
-This part of the documentation is intended to give you an introduction to the core components of the
-Pop PHP Framework and a basic understanding of how they work and how to use them. More in-depth examples
-and concepts will be explored later in the `User Guide`_ and `Reference`_ sections.
+Esta parte de la documentación intenta darte una introducción a los componentes centrales del Framework
+Pop PHP y un entendimiento básico de cómo funcionan y cómo usarlos. Más conceptos y ejemplos en profundidad
+se explorarán luego en la `Guía de Usuario`_ y las secciones de `Referencia`_.
 
 .. toctree::
     :maxdepth: 1
@@ -16,5 +16,5 @@ and concepts will be explored later in the `User Guide`_ and `Reference`_ sectio
     events
     modules
 
-.. _User Guide: ../user_guide/index.html
-.. _Reference: ../reference/index.html
+.. _Guía de Usuario: ../user_guide/index.html
+.. _Referencia: ../reference/index.html

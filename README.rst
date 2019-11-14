@@ -1,8 +1,8 @@
-Pop PHP Framework
+Framework Pop PHP
 =================
 
-This is the repository for the documentation for the Pop PHP Framework. It uses readthedocs.org
-and its platform to render the the documentation, which is accessible at `http://docs.popphp.org/`_
+Éste es el repositorio para la documentación del Framework Pop PHP en español. Usa readthedocs.org y su
+plataforma para renderizar la documentación, la cuál es accesible en `http://docs.popphp.org/`_
 
 .. _http://docs.popphp.org/: http://docs.popphp.org/
 

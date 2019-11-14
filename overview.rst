@@ -1,56 +1,55 @@
-Overview
+Visión General
 ========
 
 Introducción
 ------------
 
-The Pop PHP Framework is a lightweight, yet robust PHP framework that can be used for
-rapid application development. The framework itself has a base set of core components
-as well as numerous other additional components to facilitate many of the common features
-needed for a PHP application.
+El Framework Pop PHP es un framework ligero pero robusto que se puede usar para el desarrollo
+rápido de aplicaciones. El framework mismo tiene un conjunto base de componentes principales
+así como otros numerosos componentes adicionales para facilitar muchas de las características
+comunes necesarias de una aplicacion PHP.
 
-The two main concepts behind the Pop PHP Framework have always been:
+Los dos conceptos principales detrás del Framework Pop PHP siempre han sido:
 
-1. To be easy to use and lightweight
-2. To promote standards in development while maintaining a manageable learning curve
+1. Ser ligero y fácil de usar
+2. Promover estándares en el desarrollo mientras mantiene una curva de aprendizaje manejable
 
-The goal is so that anyone from an advanced programmer to a novice developer can install
-and start using the Pop PHP Framework quickly and effectively.
+La meta es que cualquiera, desde un programador novato hasta uno avanzado, pueda instalar
+y comenzar a usar el Framework Pop PHP rápida y efectivamente.
 
-About the Framework
+Acerca del Framework
 -------------------
 
-Pop PHP is an open source, object-oriented PHP framework. At a minimum, it requires
-PHP 7.1. It is available on `Github`_, through `Composer`_ or as a `stand-alone installation`_.
-The framework is tested using `PHPUnit`_ and continuous integration is maintained using `Travis CI`_.
+Pop PHP es un framework orientado a objetos de código abierto. Como mínimo, requiere PHP 7.1.
+Está disponible en `Github`_, a través de `Composer`_ o como una `instalación independiente`_.
+El framework es testeado usando `PHPUnit`_ y la integración contínua es mantenida usando `Travis CI`_.
 
-**A Brief History of Pop PHP**
+**Una Breve Historia de Pop PHP**
 
-The humble beginnings of the framework started back in 2009 as a small library of
-components. From that, the Pop PHP Framework began to take shape and the very first
-version of it was released in early 2012. That version made it to 1.7 in 2014, where
-support for version 1 ended and work on version 2 began. Pop PHP 2 ushered in a
-significant refactor, taking advantage of PHP 5.4, eliminating dependencies among
-components, separating the components into self-contained repositories, and
-incorporating `Composer`_.
+Los humildes inicios del framework comenzaron en 2009 como una librería pequeña de componentes.
+Desde entonces, el Framework Pop PHP comenzó a tomar forma y la primera versión se lanzó a
+principios de 2012. Esa versión llegó hasta la 1.7 en 2014, donde el soporte para la versión 1
+terminó y comenzó el trabajo en la versión 2. Pop PHP 2 marcó el comienzo de una refactorización
+significativa, aprovechando PHP 5.4, eliminando dependencias entre componentes y separándolos en
+repositorios independientes, e incorporando `Composer`_.
 
-On October 17, 2019, version 4.1.0 was released and it continues the development and growth
-that the previous versions set forth.
+El 17 de Octubre de 2019 se lanzó la versión 4.1.0, y continúa el desarrollo y el crecimiento que
+establecieron las versiones anteriores.
 
-Community & Support
+Comunidad y Soporte
 -------------------
 
-Being an open source project, Pop PHP welcomes input and collaboration from the
-community and maintains an open dialogue with the community. Issues can be submitted
-to the appropriate repository on `Github`_. Additional support and communication is
-maintained in the `Gitter chat room`_ and `Twitter`_. The `API documentation`_
-is located on the website.
+Siendo un proyecto de código abierto, Pop PHP agradece las aportaciones y la colaboración de la
+comunidad, y mantiene un diálogo abierto con ella. Los issues pueden ser subidos a los
+repositorios apropiados en `Github`_. Las comunicaciones y soporte adicional se mantienen en el
+`Chat Room de Gitter`_ y en `Twitter`_. La `documentación de la API`_ está localizada en el sitio web.
+
 
 .. _Github: https://github.com/popphp
 .. _Composer: https://packagist.org/packages/popphp/
-.. _stand-alone installation: http://www.popphp.org/
+.. _instalación independiente: http://www.popphp.org/
 .. _PHPUnit: https://phpunit.de/
 .. _Travis CI: https://travis-ci.org/popphp/
-.. _Gitter chat room: https://gitter.im/pop-php-framework/Lobby
+.. _Chat Room de Gitter: https://gitter.im/pop-php-framework/Lobby
 .. _Twitter: https://twitter.com/popphpframework
-.. _API documentation: http://api.popphp.org/4.0/
+.. _documentación de la API: http://api.popphp.org/4.0/

@@ -1,22 +1,22 @@
-Installation
+Instalación
 ============
 
-There are a couple of different options to install the Pop PHP Framework. You can use Composer
-or you can download the stand-alone version from the website http://www.popphp.org/.
+Hay un par de opciones diferentes para instalar el Framework Pop PHP. Puedes usar composer
+o puedes descargar la versión independiente desde el sitio web http://www.popphp.org/.
 
-Using Composer
+Usando Composer
 --------------
 
-If you want to use the full framework and all of its components, you can install
-the ``popphp/popphp-framework`` repository in the following ways:
+Si quieres usar el framework completo y todos sus componentes, puedes instalar el
+repositorio ``popphp/popphp-framework`` de las siguientes maneras:
 
-**Create a new project**
+**Crear un nuevo proyecto**
 
 .. code-block:: bash
 
     composer create-project popphp/popphp-framework project-folder
 
-**Add it to the composer.json file**
+**Agregarlo al archivo composer.json**
 
 .. code-block:: json
 
@@ -24,22 +24,22 @@ the ``popphp/popphp-framework`` repository in the following ways:
         "popphp/popphp-framework": "^4.1.0"
     }
 
-**Add it to an existing project**
+**Agregarlo a un proyecto existente**
 
 .. code-block:: bash
 
     composer require popphp/popphp-framework
 
-If you only want to use the core components, you can use the ``popphp/popphp`` repository
-instead of the full ``popphp/popphp-framework`` repository.
+Si sólo quieres usar los componentes centrales, puedes usar el repositorio ``popphp/popphp``
+en lugar del repositorio completo ``popphp/popphp-framework``.
 
-Stand-alone Installation
+Instalación Independiente
 ------------------------
 
-If you do not wish to use Composer and want to install a stand-alone version of Pop, you
-can download a full version of the framework from the website http://www.popphp.org/. It
-is set up for web applications by default, but can be used to handle CLI applications
-as well. The following files and folders are included:
+Si no deseas usar Composer y quieres instalar una version independiente de Pop, puedes
+descargar una version comepleta del framework desde el sitio web http://www.popphp.org/.
+Está configurada para aplicaciones web por defecto, pero se puede usar para manejar
+aplicaciones CLI (de consola) también. Se incluyen los siguientes archivos:
 
 * ``/public/``
     * ``index.php``
@@ -47,34 +47,35 @@ as well. The following files and folders are included:
 * ``/vendor/``
 * ``kettle``
 
-The ``/vendor/`` folder contains the autoloader, the framework and all of the necessary components.
-The ``kettle`` script is the CLI-based helper script that assists with application scaffolding and
-database management.
+La carpeta ``/vendor/`` contiene el autoloader, el framework y todos los componentes necesarios.
+El script ``kettle`` es el script de ayuda basado en CLI que asiste en el scaffolding de la
+aplicación y administración de la base de datos.
 
 
-Requirements
+Requerimientos
 ------------
 
-The only main requirement for the Pop PHP Framework is that you have at least **PHP 7.1.0**
-installed in your environment.
+El único requerimiento para el Framework Pop PHP es que tengas instalado al menos **PHP 7.1.0**
+en tu ambiente.
 
-Recommendations
+Recomendaciones
 ---------------
 
-**Web Server**
+**Servidor Web**
 
-When writing web applications, a web server that supports URL rewrites is recommended, such as:
+Cuando se escriban aplicaciones web, es recomendable un servidor web que soporte reescrituras de URL,
+como:
 
 + Apache
 + Nginx
 + Lighttpd
 + IIS
 
-**Extensions**
+**Extensiones**
 
-Various components of the Pop PHP Framework require different PHP extensions to function correctly.
-If you wish to take advantage of the many components of Pop PHP, the following extensions are
-recommended:
+Varios componentes del Framework Pop PHP requieren deferentes extensiones de PHP para funcionar
+correctamente. Si deseas tomar ventaja de los muchos componentes de Pop PHP, se recomiendan las
+siguientes extensiones:
 
 + pop-db
     - mysqli
@@ -106,4 +107,4 @@ recommended:
     - ftp
     - ldap
 
-\* - The **imagick** and **gmagick** extensions cannot be used simultaneously.
+\* - Las extensiones **imagick** y **gmagick** no se pueden usar simultáneamente.

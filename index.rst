@@ -1,9 +1,9 @@
-Pop PHP Framework
+Framework Pop PHP
 =================
 
-Welcome to the Pop PHP Framework documentation. Here, you should find what you need
-to get familiar with the framework and start building applications with it. Follow
-the links below to get started.
+Bienvenido/a a la documentación del Framework Pop PHP. Aquí, deberías encontrar
+lo que necesitas para familiarizarte con el framework y comenzar a construir
+aplicaciones con él. Sigue los siguientes enlaces para comenzar.
 
 .. toctree::
     :maxdepth: 2
