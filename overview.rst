@@ -1,7 +1,7 @@
 Overview
 ========
 
-Introduction
+Introducción
 ------------
 
 The Pop PHP Framework is a lightweight, yet robust PHP framework that can be used for
