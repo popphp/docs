@@ -1,6 +1,106 @@
 Changelog
 =========
 
+4.5.0
+-----
+* ``pop-db``updated to v5.0.5
+    + Refactored the predicate set parser/generator classes
+    + Refactored "helper" parser classes (expressions, tables, etc.)
+    + Improved SQL builder and schema builder classes
+    + Improved connect/disconnect functionality of adapter classes
+    + Improved support for standard SQL functions
+    + Remove references to ArrayObjects
+    + Improved unit tests/code coverage
+* ``pop-pdf`` updated to v4.0.0
+    + Fixed field issues
+    + Improved text support
+    + Improved HTML support
+    + Code review/clean up
+* ``pop-acl``updated to v3.3.0
+    + Added policy functionality
+* ``pop-audit``updated to v1.2.0
+    + Refactored Http adapter to work with newly refactored ``pop-http`` component
+    + Refactored Table adapter to include check and create table schema
+    + General code review/clean up
+* ``pop-auth`` updated to v3.2.0
+    + Refactored Http class to use the pop-http component
+* ``pop-cache`` updated to v3.3.0
+    + Refactored the Sqlite adapter class into a full Db adapter
+    + Deprecated and removed the Memcache adapter (in favor of the Memcached adapter)
+    + Refactored the Apc adapter to only use the APCu extension
+    + Refactored/improved unit tests
+    + Code review/clean up
+* ``pop-code`` updated to v4.0.0
+    + Support for traits
+    + Support for constants
+    + Better support for namespaces
+    + Improved reflection/parsing support
+    + Refactored/improved unit tests
+    + Code review/clean up
+* ``pop-debug``updated to v1.2.0
+    + Refactored the Sqlite storage class into full Db storage class
+    + Refactored the Request handler to use the newly refactored ``pop-http`` component
+    + Code review/clean up
+* ``pop-mail`` updated to v3.5.0
+    + Incorporated the new ``pop-mime`` component to be used within the ``pop-mail``
+      component for better and more consistent parsing of mail messages
+    + Refactored the attachment class
+* ``pop-form`` updated to v3.5.0
+    + Added ``AclForm`` class to enforce ACL-based roles and permissions for which form
+      fields are accessible by certain users
+    + Removed the native filter classes in favor of using the newly refactored
+      ``pop-filter`` component
+    + Added ``FormValidator`` class to simply perform field value validations without
+      the weight of a full form object
+    + Added ``FormConfig`` class for more robust support of form configuration
+    + Better support for conditional validation
+* ``pop-http`` updated to v4.0.0
+    + Refactored code-base, better class structure (abstract classes, interfaces, etc.)
+    + Better support for the HTTP client classes, including better support for form data
+    + Moved server request, response and upload classes under their own new namespace
+      ``Pop\Http\Server\`` to better organize the code and differentiate between the server
+      and client classes.
+    + Incorporated the new ``pop-mime`` component for better multipart form data generation
+    + Incorporated the newly refactored ``pop-filter`` component for input data filtering
+    + Better support of large raw data streams storing to file (instead of in memory)
+* ``pop-filter`` reinstated and re-purposed in v3.0.0
+    + Refactored the previously deprecated ``pop-filter`` component to handle filtering
+      of data and values for multiple components that need filtering functionality
+* ``pop-kettle`` updated to v1.2.1
+    + Updated to work with newly refactored and updated components of Pop PHP v4.5
+    + Added ``db:create-seed`` command
+    + Added better support for Windows
+* ``pop-log`` updated to v3.2.0
+    + Added log limits
+* ``pop-mime`` new release v1.0.0
+    + New component to handle generating and parsing MIME content
+* ``pop-queue`` new release v1.0.0
+    + New component to manage job queues
+* ``pop-utils`` new release v1.1.0
+    + New component to provide simple common utilities, classes and interfaces
+* ``pop-view`` updated to v3.2.0
+    + Added ``pop-filter`` component for the filtering functionality.
+* ``pop-session`` updated to v3.2.0
+    + Refactored code-base, better class structure (abstract classes, interfaces, etc.)
+    + Added unit tests
+* ``pop-cookie`` updated to v3.2.0
+    + Added ArrayAccess, Countable and Iterator
+    + Added unit tests
+* ``pop-dir`` updated to v3.1.0
+    + Added support for unlinking/unsetting files from directory object (if writable/accessible)
+* ``pop-i18n`` updated to v3.1.0
+    + Added support for output variations under one source.
+* ``pop-image`` updated to v3.4.0
+    + Added support for animated GIFs under the Imagick adapter
+    + Deprecated the Gmagick adapter
+* ``popphp`` updated to v3.4.0
+    + Added better support for dynamic array params in the HTTP and CLI route objects
+    + Refactored to use the new ``pop-utils`` component, including the array and callable features
+* ``popcorn`` updated to v3.3.0
+    + Added support for custom HTTP methods
+    + Add ``any()`` method
+    + Better exception error messaging
+
 4.1.0
 -----
 * Updated to pop-csv v3.1.4, better appending, newline, escape and limit support
@@ -15,7 +115,7 @@ Changelog
       and the Mailer classes
     + Support for auto-detection of content-type for attachments,
       better handling of newlines in message parts
-* Update to popphp v3.3.1, adding a force route parameter to the `run()` method
+* Update to popphp v3.3.1, adding a force route parameter to the ``run()`` method
 
 4.0.3
 -----
@@ -139,24 +239,24 @@ Changelog
 **New or Changed Features**
 
 * The Database component has been significantly refactored for v4.
-* The Data compoenent has been deprecated and the CSV functionality has been moved into its own component, `pop-csv`.
+* The Data compoenent has been deprecated and the CSV functionality has been moved into its own component, ``pop-csv``.
 * The File Component has been deprecated and the upload functionality has been moved to the Http component and the directory
-  functionality has been moved into its own component, `pop-dir`.
+  functionality has been moved into its own component, ``pop-dir``.
 
 **Removed Features**
 
-* The `pop-archive` component has been removed.
-* The `pop-crypt` component has been removed.
-* The `pop-data` component has been removed (see above.)
-* The `pop-feed` component has been removed.
-* The `pop-file` component has been removed (see above.)
-* The `pop-filter` component has been removed.
-* The `pop-geo` component has been removed.
-* The `pop-i18n` component has been removed.
-* The `pop-payment` component has been removed.
-* The `pop-shipping` component has been removed.
-* The `pop-version` component has been removed.
-* The `pop-web` component has been removed (see above.)
+* The ``pop-archive`` component has been removed.
+* The ``pop-crypt`` component has been removed.
+* The ``pop-data`` component has been removed (see above.)
+* The ``pop-feed`` component has been removed.
+* The ``pop-file`` component has been removed (see above.)
+* The ``pop-filter`` component has been removed.
+* The ``pop-geo`` component has been removed.
+* The ``pop-i18n`` component has been removed.
+* The ``pop-payment`` component has been removed.
+* The ``pop-shipping`` component has been removed.
+* The ``pop-version`` component has been removed.
+* The ``pop-web`` component has been removed (see above.)
 
 
 3.0.1
@@ -172,10 +272,10 @@ Changelog
 **New Features**
 
 * The Cache component now supports Redis and Session adapters.
-* The Session and Cookie classes of the deprecated `pop-web` component
-  have been broken out into their own individual components, `pop-session`
-  and `pop-cookie`.
-* The `pop-version` component now can pull its source from the Pop website
+* The Session and Cookie classes of the deprecated ``pop-web`` component
+  have been broken out into their own individual components, ``pop-session``
+  and ``pop-cookie``.
+* The ``pop-version`` component now can pull its source from the Pop website
   or from GitHub.
 
 **Changed Features**
@@ -187,17 +287,17 @@ Changelog
 **Deprecated Features**
 
 * Due to the unavailability or instability of the **apc/apcu/apc_bc**
-  extensions, the APC adapter in the `pop-cache` component may not
+  extensions, the APC adapter in the ``pop-cache`` component may not
   function properly in PHP 7.
 * Due to the unavailability or instability of the **memcache/memcached**
-  extensions, the Memcache & Memcached adapters in the `pop-cache`
+  extensions, the Memcache & Memcached adapters in the ``pop-cache``
   component may not function properly in PHP 7
 
 **Removed Features**
 
-* The `pop-web` component has been removed. The cookie and session
+* The ``pop-web`` component has been removed. The cookie and session
   sub-components have been ported into their own individual components
   respectively.
-* The `pop-filter` component has been removed.
-* The `pop-geo` component has been removed.
-* The Rar adapter in the `pop-archive` component has been removed.
+* The ``pop-filter`` component has been removed.
+* The ``pop-geo`` component has been removed.
+* The Rar adapter in the ``pop-archive`` component has been removed.

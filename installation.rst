@@ -21,7 +21,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "^4.1.0"
+        "popphp/popphp-framework": "^4.5.0"
     }
 
 **Add it to an existing project**
@@ -32,25 +32,6 @@ the ``popphp/popphp-framework`` repository in the following ways:
 
 If you only want to use the core components, you can use the ``popphp/popphp`` repository
 instead of the full ``popphp/popphp-framework`` repository.
-
-Stand-alone Installation
-------------------------
-
-If you do not wish to use Composer and want to install a stand-alone version of Pop, you
-can download a full version of the framework from the website http://www.popphp.org/. It
-is set up for web applications by default, but can be used to handle CLI applications
-as well. The following files and folders are included:
-
-* ``/public/``
-    * ``index.php``
-    * ``.htaccess``
-* ``/vendor/``
-* ``kettle``
-
-The ``/vendor/`` folder contains the autoloader, the framework and all of the necessary components.
-The ``kettle`` script is the CLI-based helper script that assists with application scaffolding and
-database management.
-
 
 Requirements
 ------------

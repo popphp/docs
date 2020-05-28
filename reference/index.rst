@@ -21,6 +21,7 @@ Reference
     pop_dir
     pop_dom
     pop_event
+    pop_filter
     pop_form
     pop_ftp
     pop_http
@@ -30,13 +31,16 @@ Reference
     pop_loader
     pop_log
     pop_mail
+    pop_mime
     pop_module
     pop_nav
     pop_paginator
     pop_pdf
+    pop_queue
     pop_router
     pop_service
     pop_session
+    pop_utils
     pop_validator
     pop_view
     popcorn
