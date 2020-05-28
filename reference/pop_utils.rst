@@ -22,10 +22,8 @@ Or, include it in your composer.json file:
         }
     }
 
-Basic Use
----------
-
-**Array Object**
+Array Object
+------------
 
 The ``Pop\Utils\ArrayObject`` class implements a number of interfaces to allow it to behave like
 array, but with much more functionality built in. With it, you can access the array data within
@@ -69,7 +67,8 @@ array object as JSON-string or PHP-serialized string
     $arrayObject = ArrayObject::createFromSerialized('a:1:{s:3:"foo";s:3:"bar";}');
     echo $arrayObject->serialize();
 
-**Callable Object**
+Callable Object
+---------------
 
 The ``Pop\Utils\CallableObject`` class helps to manage callable objects and their parameters.
 This includes functions, closures, classes and their methods (both static and instance.)
@@ -79,7 +78,7 @@ instantiation via the constructor, via the set/add methods or at the time of cal
 Parameters passed into the callable object can be callable themselves and will be invoked
 at the time the parent callable object is called.
 
-***Function Callable***
+**Function Callable**
 
 .. code-block:: php
 
@@ -88,7 +87,7 @@ at the time the parent callable object is called.
     $callable = new CallableObject('trim', ' Hello World! ');
     echo $callable->call(); // Outputs 'Hello World!'
 
-***Closure Callable***
+**Closure Callable**
 
 .. code-block:: php
 
@@ -107,7 +106,7 @@ Here's an alternate way to call by passing the parameter in at the time of the c
     $callable = new CallableObject(function ($var) { echo strtoupper($var) . '!';});
     echo $callable->call('hello world'); // Outputs 'HELLO WORLD!'
 
-***Static Method Callable***
+**Static Method Callable**
 
 .. code-block:: php
 
@@ -116,7 +115,7 @@ Here's an alternate way to call by passing the parameter in at the time of the c
     $callable = new CallableObject('MyClass::someMethod');
     echo $callable->call(); // Executes the static 'someMethod()' from class 'MyClass'
 
-***Instance Method Callable***
+**Instance Method Callable**
 
 .. code-block:: php
 
@@ -125,7 +124,7 @@ Here's an alternate way to call by passing the parameter in at the time of the c
     $callable = new CallableObject('MyClass->someMethod');
     echo $callable->call(); // Executes the 'someMethod()' in an instance of 'MyClass'
 
-***Constructor Callable***
+**Constructor Callable**
 
 .. code-block:: php
 
@@ -153,12 +152,13 @@ Here's an alternate way to call by passing the parameter in at the time of the c
     $myInstance = $callable->call();
     $myInstance->printString() ;
 
-**String Helper**
+String Helper
+-------------
 
 The ``Pop\Utils\Str`` class has a number of static methods to assist in
 manipulating and generating strings.
 
-***Slugs***
+**Slugs**
 
 .. code-block:: php
 
@@ -166,7 +166,7 @@ manipulating and generating strings.
 
     echo Str::createSlug('Hello World | Home Page'); // hello-world-home-page
 
-***Links***
+**Links**
 
 .. code-block:: php
 
@@ -176,7 +176,7 @@ manipulating and generating strings.
     // Test Email <a href="mailto:test@test.com">test@test.com</a> and
     // Test Website <href="http://www.test.com/">http://www.test.com/</a>
 
-***Random Strings***
+**Random Strings**
 
 .. code-block:: php
 
@@ -186,7 +186,7 @@ manipulating and generating strings.
     echo Str::createRandomAlpha(10, Str::LOWERCASE);    // wvjvvsmnjw
     echo Str::createRandomAlphaNum(10, Str::UPPERCASE); // 6S73HQ629R
 
-***Convert Case***
+**Convert Case**
 
 The convert case feature allows for the following case and string format types:
 
