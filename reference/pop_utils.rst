@@ -1,5 +1,5 @@
-pop-nav
-=======
+pop-utils
+=========
 
 The `popphp/pop-utils` is a basic utilities component for the Pop PHP Framework
 
