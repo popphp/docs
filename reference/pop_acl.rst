@@ -54,7 +54,7 @@ has access to which resource, and to what degree.
 
     $acl->allow('admin', 'page')           // Admin can do anything to a page
         ->allow('editor', 'page', 'edit')  // Editor can only edit a page
-        ->allow('reader', 'page', 'read'); // Editor can only edit a page
+        ->allow('reader', 'page', 'read'); // Reader can only read a page
 
     if ($acl->isAllowed('admin', 'page', 'add'))   { } // Returns true
     if ($acl->isAllowed('editor', 'page', 'edit')) { } // Returns true
