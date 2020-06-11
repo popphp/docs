@@ -75,6 +75,9 @@ unless otherwise specified.
 
     // Attempt #2
     $auth->authenticate('admin', '12admin34');
+    
+    // Returns the id for the user in the database (for later use)
+    $userId = $auth->getUser()->id;
 
     // Returns true because the value of the hashed attempted
     // password matches the hash in the database
