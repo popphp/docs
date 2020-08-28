@@ -65,7 +65,7 @@ Valid callable service strings are as follows:
 3. 'SomeClass->foo'
 4. 'SomeClass::bar'
 
-The first example is the name of a callable function. The 2nd callable string example creates a new instance
+The first example is the name of a callable function. The second callable string example creates a new instance
 of ``SomeClass`` and returns it. The third callable string example creates a new instance of ``SomeClass``,
 calls the method ``foo()`` and returns the value from it. The forth callable string example calls the static
 method ``bar()`` in the class ``SomeClass`` and returns the value from it.

@@ -3,7 +3,7 @@ MVC
 
 Pop PHP Framework is an MVC framework. It is assumed that you have some familiarity with the
 `MVC design pattern`_. An overly simple description of it is that the "controller" (C) serves
-as the bridge between the "models" (M) and "view" (V). It calls the proper models to handle
+as the bridge between the "model" (M) and the "view" (V). It calls the models required to handle
 the business logic of the request, returning the results of what was requested back to the
 user in a view. The basic idea is separation of concerns in that each component of the MVC
 pattern is only concerned with the one area it is assigned to handle, and that there is very

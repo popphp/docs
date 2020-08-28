@@ -29,7 +29,7 @@ In the above example, a web request of ``http://localhost/hello`` will execute t
 In the above example, a CLI command of ``./app hello`` will execute the closure as the controller and echo
 ``Hello World`` out to the console.
 
-A reference to controller class and a method within that controller class can be used instead of a closure
+A reference to a controller class and a method within that controller class can be used instead of a closure
 for more control over what happens for each route. This works for both HTTP and CLI routes.
 
 **HTTP Controller Route Example**
