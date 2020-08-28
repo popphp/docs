@@ -73,14 +73,11 @@ recommended:
 
 + pop-cache
     - apc
-    - memcache
     - memcached
     - redis
-    - sqlite3 or pdo_sqlite
 
 + pop-debug
     - redis
-    - sqlite3 or pdo_sqlite
 
 + other
     - curl
