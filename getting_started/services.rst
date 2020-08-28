@@ -2,7 +2,7 @@ Services
 ========
 
 If you need access to various services throughout the life-cycle of the application, you can
-register them with the service locator and recall them later. You can pass an array of services
+register them with the service locator and call upon them later. You can pass an array of services
 into the constructor, or you can set them individually as needed.
 
 .. code-block:: php
@@ -60,14 +60,15 @@ needed, you can define parameters that will be passed into the service being cal
 
 Valid callable service strings are as follows:
 
-1. 'SomeClass'
-2. 'SomeClass->foo'
-3. 'SomeClass::bar'
+1. 'someFunction'
+2. 'SomeClass'
+3. 'SomeClass->foo'
+4. 'SomeClass::bar'
 
-The first callable string example creates a new instance of ``SomeClass`` and returns it. The second
-callable string example creates a new instance of ``SomeClass``, calls the method ``foo()`` and returns the value
-from it. The third callable string example calls the static method ``bar()`` in the class ``SomeClass``
-and returns the value from it.
+The first example is the name of a callable function. The 2nd callable string example creates a new instance
+of ``SomeClass`` and returns it. The third callable string example creates a new instance of ``SomeClass``,
+calls the method ``foo()`` and returns the value from it. The forth callable string example calls the static
+method ``bar()`` in the class ``SomeClass`` and returns the value from it.
 
 **Parameters**
 
@@ -94,7 +95,7 @@ that value from that method.
 Service Container
 -----------------
 
-A service container class is available if you prefer to track and access your services through it.
+A static service container class is available if you prefer to track and access your services through it.
 The first call to create a new service locator object will automatically register it as the 'default'
 service locator.
 

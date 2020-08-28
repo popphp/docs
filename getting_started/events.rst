@@ -17,9 +17,10 @@ could be potentially less efficient.
 
 Similar to `services`_, the valid callable strings for events are as follows:
 
-1. 'SomeClass'
-2. 'SomeClass->foo'
-3. 'SomeClass::bar'
+1. 'someFunction'
+2. 'SomeClass'
+3. 'SomeClass->foo'
+4. 'SomeClass::bar'
 
 With events, you can also inject parameters into them as they are called, so that they may have access to
 any required elements or values of your application. For example, perhaps you need the events to have access
@@ -36,7 +37,7 @@ To detach an event listener, you call the ``off`` method:
 
 .. code-block:: php
 
-    $events->off('foo', 'MyApp\Event->bootstrap');
+    $events->off('foo', 'MyApp\Event::someEvent');
 
 Event Priority
 --------------
@@ -86,10 +87,7 @@ And then in your controller method, right before you send then response, you wou
         }
     }
 
-The above example assumes that the application object is injected into the controller object and stored
-as a property. Also, it injects the controller object into the event listener in case the event called
-requires interaction with the controller or any of its properties. By default, the application object is
-injected into the events that are triggered from a Pop application object, but as demonstrated above,
-you can inject your own required parameters into an event call as well.
+The above example injects the controller object into the event listener in case the event called
+requires interaction with the controller or any of its properties.
 
 .. _services: ./services.html#syntax-parameters

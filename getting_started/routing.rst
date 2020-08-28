@@ -3,7 +3,9 @@ Routing
 
 The router object facilitates the configuration and matching of the routes to access your application.
 It supports both HTTP and CLI routing. With it, you can establish valid routes along with any parameters
-that may be required with them.
+that may be required with them. When the router object is created, it auto-detects in which environment the
+application is running and creates the appropriate route match object (HTTP or CLI) within the router object.
+The routes are then added to that route match object to be used to evaluate incoming application requests.
 
 **HTTP Route Example**
 
@@ -27,12 +29,14 @@ In the above example, a web request of ``http://localhost/hello`` will execute t
 In the above example, a CLI command of ``./app hello`` will execute the closure as the controller and echo
 ``Hello World`` out to the console.
 
-A controller object can be, and usually is, an instance of a class instead of a closure
-for more control over what happens for each route:
+A reference to controller class and a method within that controller class can be used instead of a closure
+for more control over what happens for each route. This works for both HTTP and CLI routes.
+
+**HTTP Controller Route Example**
 
 .. code-block:: php
 
-    class MyApp\Controller\IndexController extends \Pop\Controller\AbstractController
+    class MyApp\Http\Controller\IndexController extends \Pop\Controller\AbstractController
     {
         public function index()
         {
@@ -41,11 +45,30 @@ for more control over what happens for each route:
     }
 
     $router->addRoute('/', [
-        'controller' => 'MyApp\Controller\IndexController',
+        'controller' => 'MyApp\Http\Controller\IndexController',
         'action'     => 'index'
     ]);
 
-In the above example, the request ``/`` is routed to the ``index()`` method in the defined controller class.
+In the above example, the request ``/`` is routed to the ``index()`` method in the HTTP controller class.
+
+**CLI Controller Route Example**
+
+.. code-block:: php
+
+    class MyApp\Console\Controller\IndexController extends \Pop\Controller\AbstractController
+    {
+        public function hello()
+        {
+            echo 'Hello World!';
+        }
+    }
+
+    $router->addRoute('hello', [
+        'controller' => 'MyApp\Console\Controller\IndexController',
+        'action'     => 'hello'
+    ]);
+
+In the above example, the command ``./app hello`` is routed to the ``hello()`` method in the console controller class.
 
 Controller Parameters
 ---------------------
@@ -91,14 +114,13 @@ into all controllers. You can also define controller parameters within the route
                 'controller'       => 'MyApp\Controller\ProductsController',
                 'action'           => 'index',
                 'controllerParams' => [
-                    'baz'    => 789
+                    'baz' => 789
                 ]
             ]
         ]
     ];
 
     $app = new Pop\Application($config);
-
 
 Dispatch Parameters
 -------------------
