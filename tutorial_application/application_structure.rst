@@ -11,9 +11,12 @@ you'll see the following basic application structure:
   - view/
 
 * database/
+
+  - migrations/
+  - seeds/
+
 * public/
 * script/
-* vendor/
 
 The ``app/`` folder contains the main set of folders and files that make the application work.
 The ``database/`` folder contains the SQLite database file. The ``public/`` folder is the web document

@@ -8,8 +8,33 @@ manage database functions from the command line.
 Application Scaffolding
 -----------------------
 
-By running the following command, you can set up the basic files and folders
-required to run an application:
+While a particular application structure isn't strictly enfored, applications built with the
+``pop-kettle`` component follow a fairly straight-forward application structure:
+
+* app/
+
+  - config/
+  - src/
+  - view/
+
+* database/
+
+  - migrations/
+  - seeds/
+
+* public/
+* script/
+* kettle
+
+The ``app/`` folder contains the main set of folders and files that make the application work, like ``config/``,
+``src/`` and ``view/``. The ``database/`` folder contains the database ``migrations`` and ``seeds`` folders.
+The ``public/`` folder is the web document root that contains the main ``index.php`` front controller script file
+that runs the main web application. And the ``script/`` folder contains the main script that would run the console
+version of the application. And the ``kettle`` script file is kept in the main root level, and should be set to be
+executable.
+
+The ``kettle`` allows you to run a simple command that will wire up some basic application files to get started.
+By running the following command, you can set up the basic files and folders required to run an application:
 
 .. code-block:: bash
 
@@ -23,6 +48,61 @@ application, a CLI-driven console application or any combination thereof.
 After the application files and folders are copied over, you will be asked if you
 would like to configure a database. Follow those steps to configure a database and
 create the database configuration file.
+
+**A Note About Folder Structure**
+
+Once the script creates the starter files, you will see certain folders created based on the configuration
+options used. If you used no options, or just the ``--web`` option, it will create the files and folders for
+a basic web application:
+
+* app/config
+* app/src
+* app/src/Http
+* app/src/Http/Controller
+* app/view
+* public
+
+If you use the ``--cli`` option, it will create the files and folders for a basic console application:
+
+* app/config
+* app/src
+* app/src/Console
+* app/src/Console/Controller
+* script
+
+If you use both ``--web`` and ``--cli`` options, it will create both sets of files and folders:
+
+* app/config
+* app/src
+* app/src/Console
+* app/src/Console/Controller
+* app/src/Http
+* app/src/Http/Controller
+* app/view
+* public
+* script
+
+If you use all 3 options together, ``--web``, ``--api`` and ``--cli`, it will create both sets of files and folders,
+but it will break the ``Http`` namespace into 2 separate namespaces for the public-facing web application as well
+as the API web application:
+
+* app/config
+* app/src
+* app/src/Console
+* app/src/Console/Controller
+* app/src/Http
+* app/src/Http/Controller
+* app/src/Http/Api
+* app/src/Http/Api/Controller
+* app/src/Http/Web
+* app/src/Http/Web/Controller
+* app/view
+* public
+* script
+
+The idea here being to keep both access points of the web application separate. So, for example, if a user's
+browser requests ``http://localhost:8000/``, it would render an HTML page. And if an API request is sent to
+``http://localhost:8000/api``, it would render a appropriate API response, like a set of JSON data.
 
 Database Management
 -------------------
@@ -46,7 +126,16 @@ it will default to the ``default`` database.
     ./kettle migrate:rollback [<steps>] [<database>]    Perform backward database migration
     ./kettle migrate:reset [<database>]                 Perform complete rollback of the database
 
-Seeding The Database
+Installing the Database
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The command to install the database is a convenient combination the ``db:config``, ``db:test`` and ``db:seed`` commands.
+Running the ``db:install`` command will prompt you to enter the database configuration parameters. Once those are entered,
+it will test the database, and on a successful test, it will run the seed command and install any initial data it finds
+in the seeds folder. The ``db:install`` command is what is run at the end of the ``app:init`` command if you answer 'Y'
+the question "Would you like to configure a database?"
+
+Seeding the Database
 ~~~~~~~~~~~~~~~~~~~~
 
 You can seed the database with data in one of two ways. You can either utilize a SQL file with the extension ``.sql``
