@@ -234,4 +234,4 @@ likely have to prepend all of the command calls with the ``php`` command, for ex
 
 .. code-block:: bash
 
-    C:\popphp\pop-kettle>php kettle help
+    C:\\popphp\\pop-kettle>php kettle help
