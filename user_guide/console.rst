@@ -269,13 +269,23 @@ Consider the following CLI routes config file:
             'controller' => 'MyApp\Console\Controller\UsersController',
             'action'     => 'create',
             'help'       => "Create user"
-        ]
+        ],
+        'help' => [
+            'controller' => 'MyApp\Console\Controller\ConsoleController',
+            'action'     => 'help',
+            'help'       => "Display help"
+        ],
     ];
 
 Then, when you are setting up your console controller and the console object in that controller,
 you can wire up the help commands like this:
 
 .. code-block:: php
+
+    namespace MyApp\Console\Controller;
+
+    use Pop\Application;
+    use Pop\Console\Console;
 
     class ConsoleController extends AbstractController
     {
@@ -288,7 +298,7 @@ you can wire up the help commands like this:
 
         /**
          * Console object
-         * @var \Pop\Console\Console
+         * @var Console
          */
         protected $console = null;
 
@@ -312,4 +322,22 @@ you can wire up the help commands like this:
             );
         }
 
+        /**
+         * Help command
+         *
+         * @return void
+         */
+        public function help()
+        {
+            $this->console->help();
+        }
+
     }
+
+Using the method ``setHelpColors()`` provides some control to allow the help screen text to be
+divided into different colors for readability. With this set up, you can then run the following
+command to display the help screen:
+
+.. code-block:: bash
+
+    $ ./app help
