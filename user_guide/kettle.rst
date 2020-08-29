@@ -27,71 +27,59 @@ create the database configuration file.
 Database Management
 -------------------
 
-Once the application is initialized, you can manage the database by using the database
-and migration commands.
+Once the application is initialized, you can manage the database, or multiple databases, by using the
+``db`` and ``migrate`` commands. If you don't pass anything in the optional ``[<database>]`` parameter,
+it will default to the ``default`` database.
 
 .. code-block:: bash
 
-    ./kettle db:config                  Configure the database
-    ./kettle db:test                    Test the database connection
-    ./kettle db:seed                    Seed the database with data
-    ./kettle db:reset                   Reset the database with original seed data
-    ./kettle db:clear                   Clear the database of all data
+    ./kettle db:install [<database>]                    Install the database (Runs the config, test and seed commands)
+    ./kettle db:config [<database>]                     Configure the database
+    ./kettle db:test [<database>]                       Test the database connection
+    ./kettle db:create-seed <seed> [<database>]         Create database seed class
+    ./kettle db:seed [<database>]                       Seed the database with data
+    ./kettle db:reset [<database>]                      Reset the database with original seed data
+    ./kettle db:clear [<database>]                      Clear the database of all data
 
-    ./kettle migrate:create <class>     Create new database migration
-    ./kettle migrate:run [<steps>]      Perform forward database migration
-    ./kettle migrate:rollback [<steps>] Perform backward database migration
-    ./kettle migrate:reset              Perform complete rollback of the database
+    ./kettle migrate:create <class> [<database>]        Create new database migration class
+    ./kettle migrate:run [<steps>] [<database>]         Perform forward database migration
+    ./kettle migrate:rollback [<steps>] [<database>]    Perform backward database migration
+    ./kettle migrate:reset [<database>]                 Perform complete rollback of the database
 
-You can create the initial database migration that would create the tables by running
-the command:
+Seeding The Database
+~~~~~~~~~~~~~~~~~~~~
+
+You can seed the database with data in one of two ways. You can either utilize a SQL file with the extension ``.sql``
+in the ``/database/seeds/<database>`` folder or you can write a seeder class using PHP. To get a seed started,
+you can run:
 
 .. code-block:: bash
 
-    $ ./kettle migrate:create <class>
+    $ ./kettle db:create-seed <seed> [<database>]
 
-Where the ``<class>`` is the base class name of the migration class that will be created.
-From there, you can populate the initial migration class with the initial schema:
+Where the ``<seed>`` is either the base class name of the seeder class that will be created, or the name of a
+SQL file (i.e., ``seed.sql``) that will be populated later with raw SQL by the user. The template seeder class
+will be copied to the ``/database/seeds/<database>`` folder:
 
 .. code-block:: php
 
     <?php
 
-    use Pop\Db\Sql\Migration\AbstractMigration;
+    use Pop\Db\Adapter\AbstractAdapter;
+    use Pop\Db\Sql\Seeder\AbstractSeeder;
 
-    class MyNewMigration extends AbstractMigration
+    class MyFirstSeeder extends AbstractSeeder
     {
 
-        public function up()
+        public function run(AbstractAdapter $db)
         {
-            $schema = $this->db->createSchema();
-            $schema->create('users')
-                ->int('id', 16)->increment()
-                ->varchar('username', 255)
-                ->varchar('password', 255)
-                ->primary('id');
 
-            $this->db->query($schema);
-        }
-
-        public function down()
-        {
-            $schema = $this->db->createSchema();
-            $schema->drop('users');
-            $this->db->query($schema);
         }
 
     }
 
-Then by running the command:
-
-.. code-block:: bash
-
-    $ ./kettle migrate:run
-
-it will run the initial migration and create the ``users`` table, which can then been seeded,
-as shown below. You can write your own seed files under the ``/database/seeds`` folder. An
-example be:
+From there, you can populate your SQL file with the raw SQL needed, or you can fill in the ``run()`` method in
+the seeder class with the SQL you need to seed your data:
 
 .. code-block:: php
 
@@ -118,27 +106,132 @@ example be:
 
     }
 
-Then running the command:
+Then running the following command will execute any SQL in any SQL files or any of the SQL in the seeder classes:
 
 .. code-block:: bash
 
     $ ./kettle db:seed
 
-will execute any seed files in the ``seeds`` folder and populate the database with the initial data.
+Database Migrations
+~~~~~~~~~~~~~~~~~~~
 
-**Seeding with SQL files**
+You can create the initial database migration that would modify your database schema as your application
+grows by running the command:
 
-Alternatively, you can place SQL files with the extension ``.sql`` in the ``/database/seeds`` folder
-and they will be executed when you run the ``./kettle db:seed`` command.
+.. code-block:: bash
 
-The Web Server
---------------
+    $ ./kettle migrate:create <class> [<database>]
 
-A simple simple way to run PHP's built-in web-server is also provided by running the command:
+Where the ``<class>`` is the base class name of the migration class that will be created. You will see your new
+migration class template in the ``/database/migrations/<database>`` folder:
+
+.. code-block:: php
+
+    <?php
+
+    use Pop\Db\Sql\Migration\AbstractMigration;
+
+    class MyFirstMigration5dd822cdede29 extends AbstractMigration
+    {
+
+        public function up()
+        {
+
+        }
+
+        public function down()
+        {
+
+        }
+
+    }
+
+From there, you can populate the ``up()`` and ``down()`` with the schema to modify your database:
+
+.. code-block:: php
+
+    <?php
+
+    use Pop\Db\Sql\Migration\AbstractMigration;
+
+    class MyFirstMigration5dd822cdede29 extends AbstractMigration
+    {
+
+        public function up()
+        {
+            $schema = $this->db->createSchema();
+            $schema->create('users')
+                ->int('id', 16)->increment()
+                ->varchar('username', 255)
+                ->varchar('password', 255)
+                ->varchar('email', 255)
+                ->primary('id');
+
+            $schema->execute();
+        }
+
+        public function down()
+        {
+            $schema = $this->db->createSchema();
+            $schema->drop('users');
+            $schema->execute();
+        }
+
+    }
+
+You can run the migration and create the ``users`` table by running the command:
+
+.. code-block:: bash
+
+    $ ./kettle migrate:run
+
+And you can rollback the migration and drop the users table by running the command:
+
+.. code-block:: bash
+
+    $ ./kettle migrate:rollback
+
+
+Running the Web Server
+----------------------
+
+The ``pop-kettle`` component also provides a simple way to run PHP's built-in web-server, by running the command:
 
 .. code-block:: bash
 
     $ ./kettle serve [--host=] [--port=] [--folder=]
 
-This is for development environments only and it is strongly advised against using the built-in
-web server in a production environment in any way.
+This is for development environments only and it is strongly advised against using the built-in web server
+in a production environment in any way.
+
+Accessing the Application
+-------------------------
+
+If you have wired up the beginnings of an application, you can then access the default routes in the following ways.
+Assuming you've started the web server as described above using ``./kettle serve``, you can access the web application
+by going to the address ``http://localhost:8000/`` in any web browser and seeing the default index HTML page.
+
+If you want to access the API application, the default route for that is http://localhost:8000/api and you can
+access it like this to see the default JSON response:
+
+.. code-block:: bash
+
+    $ curl -i -X GET http://localhost:8000/api
+
+And, if you cd ``script``, you'll see the default CLI application that was created. The default route available
+to the CLI application is the help route:
+
+.. code-block:: bash
+
+    $ ./myapp help
+
+**Using on Windows**
+
+Most UNIX-based environments should recognize the main ``kettle`` application script as a PHP script and run it
+accordingly, without having to explicitly call the php command and pass the script and its parameters into it.
+However, if you're on an environment like Windows, depending on your exact environment set up, you will most
+likely have to prepend all of the command calls with the ``php`` command, for example:
+
+.. code-block:: bash
+
+    C:\popphp\pop-kettle>php kettle help

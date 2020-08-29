@@ -667,7 +667,7 @@ The main data fields are pulled from the database table and the submit field is 
 
 .. code-block:: html
 
-    <form action="/fields2.php" method="post">
+    <form action="/" method="post">
         <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
             <dl>
                 <dt>
