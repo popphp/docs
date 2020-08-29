@@ -45,9 +45,8 @@ through an array of links with the ``$links`` variable.
         'title'   => 'View Example',
         'content' => '    <p>Some page content.</p>',
         'links'   => [
-            'http://www.popphp.org/'     => 'Pop PHP Framework',
-            'http://popcorn.popphp.org/' => 'Popcorn Micro Framework',
-            'http://www.phirecms.org/'   => 'Phire CMS'
+            'http://www.popphp.org/'          => 'Pop PHP Framework',
+            'https://www.popphp.org/#popcorn' => 'Popcorn Micro Framework'
         ]
     ];
 
@@ -70,8 +69,7 @@ The result of the above example is:
         <p>Some page content.</p>
         <ul>
             <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
-            <li><a href="http://popcorn.popphp.org/">Popcorn Micro Framework</a></li>
-            <li><a href="http://www.phirecms.org/">Phire CMS</a></li>
+            <li><a href="https://www.popphp.org/#popcorn">Popcorn Micro Framework</a></li>
         </ul>
     </body>
 
@@ -168,9 +166,8 @@ constructor:
         'title'   => 'View Example',
         'content' => '    <p>Some page content.</p>',
         'links'   => [
-            'http://www.popphp.org/'     => 'Pop PHP Framework',
-            'http://popcorn.popphp.org/' => 'Popcorn Micro Framework',
-            'http://www.phirecms.org/'   => 'Phire CMS'
+            'http://www.popphp.org/'          => 'Pop PHP Framework',
+            'https://www.popphp.org/#popcorn' => 'Popcorn Micro Framework'
         ]
     ];
 
@@ -193,8 +190,7 @@ We can achieve exact same results as above:
         <p>Some page content.</p>
         <ul>
             <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
-            <li><a href="http://popcorn.popphp.org/">Popcorn Micro Framework</a></li>
-            <li><a href="http://www.phirecms.org/">Phire CMS</a></li>
+            <li><a href="https://www.popphp.org/#popcorn">Popcorn Micro Framework</a></li>
         </ul>
     </body>
 
@@ -229,9 +225,8 @@ of code in the template to define what to display for each iteration:
 
     $data = [
         'links'   => [
-            'http://www.popphp.org/'     => 'Pop PHP Framework',
-            'http://popcorn.popphp.org/' => 'Popcorn Micro Framework',
-            'http://www.phirecms.org/'   => 'Phire CMS'
+            'http://www.popphp.org/'          => 'Pop PHP Framework',
+            'https://www.popphp.org/#popcorn' => 'Popcorn Micro Framework'
         ]
     ];
 
@@ -255,8 +250,7 @@ The above template would render like this:
 .. code-block:: html
 
             <li id="li-item-1"><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
-            <li id="li-item-2"><a href="http://popcorn.popphp.org/">Popcorn Micro Framework</a></li>
-            <li id="li-item-3"><a href="http://www.phirecms.org/">Phire CMS</a></li>
+            <li id="li-item-2"><a href="https://www.popphp.org/#popcorn">Popcorn Micro Framework</a></li>
 
 You can also access nested associated arrays and their values by key name, to give you an additional
 level of control over your data, like so:
@@ -271,7 +265,7 @@ level of control over your data, like so:
             ],
             [
                 'title' => 'Popcorn Micro Framework',
-                'url'   => 'http://popcorn.popphp.org/'
+                'url'   => 'https://www.popphp.org/#popcorn'
             ]
         ]
     ];
@@ -287,7 +281,7 @@ The above template and data would render like this:
 .. code-block:: html
 
             <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
-            <li><a href="http://popcorn.popphp.org/">Popcorn Micro Framework</a></li>
+            <li><a href="https://www.popphp.org/#popcorn">Popcorn Micro Framework</a></li>
 
 Conditionals
 ~~~~~~~~~~~~
