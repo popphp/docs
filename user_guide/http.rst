@@ -1,22 +1,21 @@
-HTTP and the Web
-================
+HTTP
+====
 
 In building a web application with the Pop PHP Framework, there are a few concepts and components
 with which you'll need to be familiar. Along with the core components, one would commonly leverage
-the ``popphp/pop-http`` and ``popphp/pop-session`` components to get started on building a web
-application with Pop PHP.
+the ``popphp/pop-http`` component to get started on building a web application with Pop PHP.
 
-HTTP
-----
+Server
+------
 
-The ``popphp/pop-http`` component contains a **request object** and a **response object** that can assist in
-capturing and managing the incoming requests to your application and handle assembling the appropriate
-response back to the user.
+The ``popphp/pop-http`` component contains a server **request object** and a server **response object**
+that can assist in capturing and managing the incoming requests to your application and handle assembling
+the appropriate response back to the user.
 
 Requests
 ~~~~~~~~
 
-The main request class is ``Pop\Http\Request``. It has a robust API to allow you to interact with the
+The main request class is ``Pop\Http\Server\Request``. It has a robust API to allow you to interact with the
 incoming request and extract data from it. If you pass nothing to the constructor a new request object,
 it will attempt to parse the value contained in ``$_SERVER['REQUEST_URI']``. You can, however, pass it
 a ``$uri`` to force a specific request, and also a ``$basePath`` to let the request object know that the
@@ -35,7 +34,7 @@ incoming request after the ``/system`` base path.
 
 .. code-block:: php
 
-    $request = new Pop\Http\Request(null, '/system');
+    $request = new Pop\Http\Server\Request(null, '/system');
 
 For example, if a request of ``/system/users`` came in, the application would know to use ``/users`` as
 the request and route it accordingly. If you need to reference the request URI, there are a couple of
@@ -101,13 +100,13 @@ If you need to access the raw request data or the parsed request data, you can d
 Responses
 ~~~~~~~~~
 
-The ``Pop\Http\Response`` class has a full-featured API that allows you to create a outbound response to send
+The ``Pop\Http\Server\Response`` class has a full-featured API that allows you to create a outbound response to send
 back to the user or parse an inbound response from a request. The main constructor of the response object accepts
 a configuration array with the basic data to get the response object started:
 
 .. code-block:: php
 
-    $response = new Pop\Http\Response([
+    $response = new Pop\Http\Server\Response([
         'code'    => 200,
         'message' => 'OK',
         'version' => '1.1',
@@ -148,7 +147,7 @@ And you can get the appropriate response message from the code like this:
 
 .. code-block:: php
 
-    use Pop\Http\Response;
+    use Pop\Http\Server\Response;
 
     $response = new Response();
     $response->setCode(403);
@@ -158,13 +157,13 @@ And you can get the appropriate response message from the code like this:
 
 .. code-block:: php
 
-    $response = new Pop\Http\Response([
+    $response = new Pop\Http\Server\Response([
         'code'    => 200,
         'message' => 'OK',
         'version' => '1.1',
         'body'    => 'Some body content',
         'headers' => [
-            'Content-Type'   => 'text/plain'
+            'Content-Type' => 'text/plain'
         ]
     ]);
 
@@ -185,8 +184,7 @@ The above example would produce something like:
 
 .. code-block:: php
 
-    Pop\Http\Response::redirect('http://www.domain.com/some-new-page');
-    exit();
+    Pop\Http\Server\Response::redirect('http://www.domain.com/some-new-page');
 
 **Parsing a Response**
 
@@ -196,7 +194,7 @@ will be created:
 
 .. code-block:: php
 
-    $response = Pop\Http\Response\Parser::parseFromUri('http://www.domain.com/some-page');
+    $response = Pop\Http\Parser::parseResponseFromUri('http://www.domain.com/some-page');
 
     if ($response->getCode() == 200) {
         // Do something with the response
@@ -204,91 +202,148 @@ will be created:
         // Uh oh. Something went wrong
     }
 
+File Uploads
+~~~~~~~~~~~~
 
-Sessions
---------
-
-The session component gives you multiple ways to interact with the ``$_SESSION`` variable and store
-and retrieve data to it. The following are supported:
-
-* Managing basic sessions and session values
-* Creating namespaced sessions
-* Setting session value expirations
-* Setting request-based session values
-
-**Basic Sessions**
+Management of HTTP file uploads is also available under the ``popphp/pop-http`` component's server
+features. With it, you can set parameters such as where to route the uploaded files as well
+enforce certain requirements, like file types and file size.
 
 .. code-block:: php
 
-    $sess = Pop\Session\Session::getInstance();
-    $sess->user_id    = 1001;
-    $sess['username'] = 'admin';
+    use Pop\Http\Server\Upload;
 
-The above snippet saves values to the user's session. To recall it later, you can access the session like this:
+    $upload = new Upload('/path/to/uploads');
+    $upload->setDefaults();
 
-.. code-block:: php
+    $upload->upload($_FILES['file_upload']);
 
-    $sess = Pop\Session\Session::getInstance();
-    echo $sess->user_id;    // echos out 1001
-    echo $sess['username']; // echos out 'admin'
+    // Do something with the newly uploaded file
+    if ($upload->isSuccess()) {
+        $file = $upload->getUploadedFile();
+    } else {
+        echo $upload->getErrorMessage();
+    }
 
-And to destroy the session and its values, you can call the ``kill()`` method:
+The above code creates the upload object, sets the upload path and sets the basic defaults, which includes a max
+file size of 10MBs, and an array of allowed common file types as well as an array of common disallowed file types.
 
-.. code-block:: php
+**File upload names and overwrites**
 
-    $sess = Pop\Session\Session::getInstance();
-    $sess->kill();
+By default, the file upload object will not overwrite a file of the same name. In the above example, if
+``$_FILES['file_upload']['name']`` is set to 'my_document.docx' and that file already exists in the upload path,
+it will be renamed to 'my_document_1.docx'.
 
-**Namespaced Sessions**
-
-Namespaced sessions allow you to store session under a namespace to protect and preserve that data away
-from the normal session data.
-
-.. code-block:: php
-
-    $sessFoo = new Pop\Session\SessionNamespace('foo');
-    $sessFoo->bar = 'baz'
-
-What's happening "under the hood" is that an array is being created with the key ``foo`` in the main ``$_SESSION``
-variable and any data that is saved or recalled by the ``foo`` namespaced session object will be stored in that array.
+If you want to enable file overwrites, you can do this:
 
 .. code-block:: php
 
-    $sessFoo = new Pop\Session\SessionNamespace('foo');
-    echo $sessFoo->bar; // echos out 'baz'
+    $upload->overwrite(true);
 
-    $sess = Pop\Session\Session::getInstance();
-    echo $sess->bar; // echos out null, because it was only stored in the namespaced session
-
-And you can unset a value under a session namespace like this:
+Also, you can give the file a direct name on upload like this:
 
 .. code-block:: php
 
-    $sessFoo = new Pop\Session\SessionNamespace('foo');
-    unset($sessFoo->bar);
+    $upload->upload($_FILES['file_upload'], 'my-custom-filename.docx');
 
-**Session Value Expirations**
-
-Both basic sessions and namespaced sessions support timed values used to "expire" a value stored in session.
-
-.. code-block:: php
-
-    $sess = Pop\Session\Session::getInstance();
-    $sess->setTimedValue('foo', 'bar', 60);
-
-The above example will set the value for ``foo`` with an expiration of 60 seconds. That means that if another
-request is made after 60 seconds, ``foo`` will no longer be available in session.
-
-**Request-Based Session Values**
-
-Request-based session values can be stored as well, which sets a number of time, or "hops", that a value is
-available in session. This is useful for **flash messaging**. Both basic sessions and namespaced sessions
-support request-based session values.
+And if you need to check for a duplicate filename first, you can use the checkFilename method. If the filename exists,
+it will append a '_1' to the end of the filename, or loop through until it finds a number that doesn't exist yet (_#).
+If the filename doesn't exist yet, it returns the original name.
 
 .. code-block:: php
 
-    $sess = Pop\Session\Session::getInstance();
-    $sess->setRequestValue('foo', 'bar', 3);
+    $filename = $upload->checkFilename('my-custom-filename.docx');
 
-The above example will allow the value for ``foo`` to be available to the user for 3 requests. After the 3rd
-request, ``foo`` will no longer be available in session. The default value of "hops" is 1.
+    // $filename is set to 'my-custom-filename_1.docx'
+    $upload->upload($_FILES['file_upload'], $filename);
+
+Client
+------
+
+The ``popphp/pop-http`` component also has two client classes that extend the functionality of both the
+PHP cURL extension and PHP's built-in stream functionality. The clients also have their own request and
+response classes. The request object is built as you construct the request via the client classes and the
+response object is created and returned once the request is sent to a server and a response is returned.
+
+cURL
+~~~~
+
+The cURL class gives you control to set up an HTTP request using the underlying PHP cURL extension.
+
+.. code-block:: php
+
+    $client = new Pop\Http\Client\Curl('http://www.mydomain.com/user', 'POST');
+    $client->setReturnHeader(true)
+           ->setReturnTransfer(true);
+
+    $client->setFields([
+        'id'    => 1001,
+        'name'  => 'Test Person',
+        'email' => 'test@test.com'
+    ]);
+
+    $client->send();
+
+    // 200
+    echo $client->getResponseCode();
+
+    // Display the body of the returned response
+    echo $client->getResponseBody();
+
+Streams
+~~~~~~~
+
+.. code-block:: php
+
+    $client = new Pop\Http\Client\Stream('http://www.mydomain.com/', 'POST');
+
+    $client->setFields([
+        'id'    => 1001,
+        'name'  => 'Test Person',
+        'email' => 'test@test.com'
+    ]);
+
+    $client->send();
+
+    // 200
+    echo $client->getResponseCode();
+
+    // Display the body of the returned response
+    echo $client->getResponseBody();
+
+The two examples are almost identical in use. Both client classes are very similar in their API with only
+minor differences in the configuration for the client type. Both clients support some shorthand methods to
+assist in creating more complex requests, like forms or JSON payloads.
+
+**Creating a JSON Payload**
+
+If you want the request payload to go across as a JSON payload, you can call this method:
+
+.. code-block:: php
+
+    $client->createAsJson();
+
+This will prep the request for JSON formatting and append the proper ``Content-Type: application/json``
+header to the request object.
+
+**Creating a URL-encoded Form**
+
+If you want the request payload to go across as a URL-encoded form, you can call this method:
+
+.. code-block:: php
+
+    $client->createUrlEncodedForm();
+
+This will prep the request for formatting the request field data as a URL-encoded form and append the
+proper ``Content-Type: aapplication/x-www-form-urlencoded`` header to the request object.
+
+**Creating a Multipart Form**
+
+If you want the request payload to go across as a multipart form, you can call this method:
+
+.. code-block:: php
+
+    $client->createMultipartForm();
+
+This will prep the request for formatting the request field data as a multipart form and append the
+proper ``Content-Type: multipart/form-data`` header to the request object.

@@ -26,14 +26,21 @@ Or, include it in your composer.json file:
 Basic Use
 ---------
 
-The ``popphp/pop-http`` component contains a **request object** and a **response object** that can assist in
-capturing and managing the incoming requests to your application and handle assembling the appropriate
-response back to the user.
+In building a web application with the Pop PHP Framework, there are a few concepts and components
+with which you'll need to be familiar. Along with the core components, one would commonly leverage
+the ``popphp/pop-http`` component to get started on building a web application with Pop PHP.
+
+Server
+------
+
+The ``popphp/pop-http`` component contains a server **request object** and a server **response object**
+that can assist in capturing and managing the incoming requests to your application and handle assembling
+the appropriate response back to the user.
 
 Requests
 ~~~~~~~~
 
-The main request class is ``Pop\Http\Request``. It has a robust API to allow you to interact with the
+The main request class is ``Pop\Http\Server\Request``. It has a robust API to allow you to interact with the
 incoming request and extract data from it. If you pass nothing to the constructor a new request object,
 it will attempt to parse the value contained in ``$_SERVER['REQUEST_URI']``. You can, however, pass it
 a ``$uri`` to force a specific request, and also a ``$basePath`` to let the request object know that the
@@ -52,7 +59,7 @@ incoming request after the ``/system`` base path.
 
 .. code-block:: php
 
-    $request = new Pop\Http\Request(null, '/system');
+    $request = new Pop\Http\Server\Request(null, '/system');
 
 For example, if a request of ``/system/users`` came in, the application would know to use ``/users`` as
 the request and route it accordingly. If you need to reference the request URI, there are a couple of
@@ -118,13 +125,13 @@ If you need to access the raw request data or the parsed request data, you can d
 Responses
 ~~~~~~~~~
 
-The ``Pop\Http\Response`` class has a full-featured API that allows you to create a outbound response to send
+The ``Pop\Http\Server\Response`` class has a full-featured API that allows you to create a outbound response to send
 back to the user or parse an inbound response from a request. The main constructor of the response object accepts
 a configuration array with the basic data to get the response object started:
 
 .. code-block:: php
 
-    $response = new Pop\Http\Response([
+    $response = new Pop\Http\Server\Response([
         'code'    => 200,
         'message' => 'OK',
         'version' => '1.1',
@@ -165,7 +172,7 @@ And you can get the appropriate response message from the code like this:
 
 .. code-block:: php
 
-    use Pop\Http\Response;
+    use Pop\Http\Server\Response;
 
     $response = new Response();
     $response->setCode(403);
@@ -175,13 +182,13 @@ And you can get the appropriate response message from the code like this:
 
 .. code-block:: php
 
-    $response = new Pop\Http\Response([
+    $response = new Pop\Http\Server\Response([
         'code'    => 200,
         'message' => 'OK',
         'version' => '1.1',
         'body'    => 'Some body content',
         'headers' => [
-            'Content-Type'   => 'text/plain'
+            'Content-Type' => 'text/plain'
         ]
     ]);
 
@@ -202,8 +209,7 @@ The above example would produce something like:
 
 .. code-block:: php
 
-    Pop\Http\Response::redirect('http://www.domain.com/some-new-page');
-    exit();
+    Pop\Http\Server\Response::redirect('http://www.domain.com/some-new-page');
 
 **Parsing a Response**
 
@@ -213,7 +219,7 @@ will be created:
 
 .. code-block:: php
 
-    $response = Pop\Http\Response\Parser::parseFromUri('http://www.domain.com/some-page');
+    $response = Pop\Http\Parser::parseResponseFromUri('http://www.domain.com/some-page');
 
     if ($response->getCode() == 200) {
         // Do something with the response
@@ -224,16 +230,16 @@ will be created:
 File Uploads
 ~~~~~~~~~~~~
 
-With the file upload class, you can not only control basic file uploads, but also enforce a set of rules
-and conditions to control what type of files are uploaded. Please note, the ``upload()`` method expects
-to have an element from the ``$_FILES`` array passed into it.
+Management of HTTP file uploads is also available under the ``popphp/pop-http`` component's server
+features. With it, you can set parameters such as where to route the uploaded files as well
+enforce certain requirements, like file types and file size.
 
 .. code-block:: php
 
-    use Pop\Http\Upload;
+    use Pop\Http\Server\Upload;
 
     $upload = new Upload('/path/to/uploads');
-    $upload->useDefaults();
+    $upload->setDefaults();
 
     $upload->upload($_FILES['file_upload']);
 
@@ -244,47 +250,125 @@ to have an element from the ``$_FILES`` array passed into it.
         echo $upload->getErrorMessage();
     }
 
-The ``setDefaults()`` method sets a standard group of rules and conditions for basic web file uploads.
-The max filesize is set to 10 MBs and a set of media and document file types (jpg, pdf, doc, etc.) are
-set as `allowed` and a set of web and script file types (js, php, html, etc.) are set as `disallowed`.
+The above code creates the upload object, sets the upload path and sets the basic defaults, which includes a max
+file size of 10MBs, and an array of allowed common file types as well as an array of common disallowed file types.
 
-If you'd like to set your own custom rules, you can do so like this:
+**File upload names and overwrites**
 
-.. code-block:: php
+By default, the file upload object will not overwrite a file of the same name. In the above example, if
+``$_FILES['file_upload']['name']`` is set to 'my_document.docx' and that file already exists in the upload path,
+it will be renamed to 'my_document_1.docx'.
 
-    use Pop\Http\Upload;
-
-    $upload = new Upload('/path/to/uploads');
-    $upload->setMaxSize(25000000)
-           ->setAllowedTypes('pdf')
-           ->setDisallowedTypes('php');
-
-The example above sets the max filesize to 25 MBs and allows only PDF files and disallows PHP files.
-
-**Checking file names**
-
-The upload object is set to NOT overwrite existing files on upload. It will perform a check and rename
-the uploaded file accordingly with a underscore and a number ('filename_1.doc', 'filename_2.doc', etc.)
-If you may want to test the filename on your own you can like this:
-
-.. code-block:: php
-
-    use Pop\Http\Upload;
-
-    $upload   = new Upload('/path/to/uploads');
-    $fileName = $upload->checkFilename($_FILES['file_upload']['name']);
-
-If the name of the file being uploaded is found on disk in the upload directory, the returned value of
-the newly renamed file will be something like 'filename_1.doc'. You can then pass that value (or any
-other custom filename value) into the ``upload()`` method:
-
-.. code-block:: php
-
-    $upload->upload($_FILES['file_upload'], $fileName);
-
-If you want to override this behavior and overwrite any existing files, you can set the overwrite property
-before you upload the file:
+If you want to enable file overwrites, you can do this:
 
 .. code-block:: php
 
     $upload->overwrite(true);
+
+Also, you can give the file a direct name on upload like this:
+
+.. code-block:: php
+
+    $upload->upload($_FILES['file_upload'], 'my-custom-filename.docx');
+
+And if you need to check for a duplicate filename first, you can use the checkFilename method. If the filename exists,
+it will append a '_1' to the end of the filename, or loop through until it finds a number that doesn't exist yet (_#).
+If the filename doesn't exist yet, it returns the original name.
+
+.. code-block:: php
+
+    $filename = $upload->checkFilename('my-custom-filename.docx');
+
+    // $filename is set to 'my-custom-filename_1.docx'
+    $upload->upload($_FILES['file_upload'], $filename);
+
+Client
+------
+
+The ``popphp/pop-http`` component also has two client classes that extend the functionality of both the
+PHP cURL extension and PHP's built-in stream functionality. The clients also have their own request and
+response classes. The request object is built as you construct the request via the client classes and the
+response object is created and returned once the request is sent to a server and a response is returned.
+
+cURL
+~~~~
+
+The cURL class gives you control to set up an HTTP request using the underlying PHP cURL extension.
+
+.. code-block:: php
+
+    $client = new Pop\Http\Client\Curl('http://www.mydomain.com/user', 'POST');
+    $client->setReturnHeader(true)
+           ->setReturnTransfer(true);
+
+    $client->setFields([
+        'id'    => 1001,
+        'name'  => 'Test Person',
+        'email' => 'test@test.com'
+    ]);
+
+    $client->send();
+
+    // 200
+    echo $client->getResponseCode();
+
+    // Display the body of the returned response
+    echo $client->getResponseBody();
+
+Streams
+~~~~~~~
+
+.. code-block:: php
+
+    $client = new Pop\Http\Client\Stream('http://www.mydomain.com/', 'POST');
+
+    $client->setFields([
+        'id'    => 1001,
+        'name'  => 'Test Person',
+        'email' => 'test@test.com'
+    ]);
+
+    $client->send();
+
+    // 200
+    echo $client->getResponseCode();
+
+    // Display the body of the returned response
+    echo $client->getResponseBody();
+
+The two examples are almost identical in use. Both client classes are very similar in their API with only
+minor differences in the configuration for the client type. Both clients support some shorthand methods to
+assist in creating more complex requests, like forms or JSON payloads.
+
+**Creating a JSON Payload**
+
+If you want the request payload to go across as a JSON payload, you can call this method:
+
+.. code-block:: php
+
+    $client->createAsJson();
+
+This will prep the request for JSON formatting and append the proper ``Content-Type: application/json``
+header to the request object.
+
+**Creating a URL-encoded Form**
+
+If you want the request payload to go across as a URL-encoded form, you can call this method:
+
+.. code-block:: php
+
+    $client->createUrlEncodedForm();
+
+This will prep the request for formatting the request field data as a URL-encoded form and append the
+proper ``Content-Type: aapplication/x-www-form-urlencoded`` header to the request object.
+
+**Creating a Multipart Form**
+
+If you want the request payload to go across as a multipart form, you can call this method:
+
+.. code-block:: php
+
+    $client->createMultipartForm();
+
+This will prep the request for formatting the request field data as a multipart form and append the
+proper ``Content-Type: multipart/form-data`` header to the request object.

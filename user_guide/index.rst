@@ -10,9 +10,10 @@ common programming topics that utilize a set of the more common components from 
 
     mvc
     views
-    http_and_the_web
-    cli_and_the_console
+    http
+    console
     databases
+    sessions
     forms
     images
     pdfs
