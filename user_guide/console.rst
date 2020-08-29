@@ -243,3 +243,68 @@ the help screen like this:
 
 The above command will output an auto-generated, colorized help screen with the commands
 that are registered with the console object.
+
+**Auto-Wire Help from Console Routes**
+
+You can add a ``help`` value to the routes configuration and then auto-wire the commands
+and their respective help messages into the console object. You can do this with the method:
+
+* ``$console->addCommandsFromRoutes($routeMatch, $scriptName = null);``
+
+The ``$scriptName`` parameter will set the correct script name in the help screen output.
+
+Consider the following CLI routes config file:
+
+.. code-block:: php
+
+    <?php
+
+    return [
+        'users show' => [
+            'controller' => 'MyApp\Console\Controller\UsersController',
+            'action'     => 'index',
+            'help'       => "Display users"
+        ],
+        'user:create' => [
+            'controller' => 'MyApp\Console\Controller\UsersController',
+            'action'     => 'create',
+            'help'       => "Create user"
+        ]
+    ];
+
+Then, when you are setting up your console controller and the console object in that controller,
+you can wire up the help commands like this:
+
+.. code-block:: php
+
+    class ConsoleController extends AbstractController
+    {
+
+        /**
+         * Application object
+         * @var Application
+         */
+        protected $application = null;
+
+        /**
+         * Console object
+         * @var \Pop\Console\Console
+         */
+        protected $console = null;
+
+        /**
+         * Constructor for the console controller
+         *
+         * @param  Application $application
+         * @param  Console     $console
+         */
+        public function __construct(Application $application, Console $console)
+        {
+            $this->application = $application;
+            $this->console     = $console;
+
+            $this->console->setHelpColors(Console::BOLD_CYAN, Console::BOLD_GREEN, Console::BOLD_MAGENTA);
+            $this->console->addCommandsFromRoutes($application->router()->getRouteMatch(), './app);
+        }
+
+    }
