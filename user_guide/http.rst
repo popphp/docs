@@ -265,6 +265,23 @@ PHP cURL extension and PHP's built-in stream functionality. The clients also hav
 response classes. The request object is built as you construct the request via the client classes and the
 response object is created and returned once the request is sent to a server and a response is returned.
 
+The two examples sets below are almost identical in use. Both client classes are very similar in their API
+with only minor differences in the configuration for the client type. Shared methods within both client classes'
+APIs include:
+
+* ``$client->setField($name, $value);`` - Set field data to be sent in the request
+* ``$client->setFields($fields);`` - Set all field data to be sent in the request
+* ``$client->addRequestHeader($name, $value);`` - Add a request header
+* ``$client->addRequestHeaders($headers);`` - Add request headers
+* ``$client->hasResponseHeader($name);`` - Check is the client has a response header
+* ``$client->getResponseHeader($name);`` - Get a response header
+* ``$client->getResponseHeaders();`` - Get response headers
+* ``$client->getResponseCode();`` - Get response code
+* ``$client->getResponseBody();`` - Get raw response body
+* ``$client->getParsedResponse();`` - Get the parsed response based on content-type, if available
+* ``$client->open();`` - Open and prepare the client request
+* ``$client->send();`` - Send the client request
+
 cURL
 ~~~~
 
@@ -290,6 +307,13 @@ The cURL class gives you control to set up an HTTP request using the underlying 
     // Display the body of the returned response
     echo $client->getResponseBody();
 
+Additional methods available with the cURL client API include:
+
+* ``$client->setOption($opt, $val);`` - Set a cURL-specific option
+* ``$client->setOptions($opts);`` - Set cURL-specific options
+* ``$client->setReturnHeader(true);`` - Set cURL option to return the header
+* ``$client->setReturnTransfer(true);`` - Set cURL option to return the transfer
+
 Streams
 ~~~~~~~
 
@@ -311,9 +335,15 @@ Streams
     // Display the body of the returned response
     echo $client->getResponseBody();
 
-The two examples are almost identical in use. Both client classes are very similar in their API with only
-minor differences in the configuration for the client type. Both clients support some shorthand methods to
-assist in creating more complex requests, like forms or JSON payloads.
+Additional methods available with the stream client API include:
+
+* ``$client->createContext();`` - Create a new stream context
+* ``$client->addContextOption($name, $option);`` - Add a context option
+* ``$client->addContextParam($name, $param);`` - Add a context parameter
+* ``$client->setContextOptions(array $options);`` - Set context options
+* ``$client->setContextParams(array $params);`` - Set context parameters
+
+Both clients support some shorthand methods to assist in creating more complex requests, like forms or JSON payloads.
 
 **Creating a JSON Payload**
 
