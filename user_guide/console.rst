@@ -303,8 +303,13 @@ you can wire up the help commands like this:
             $this->application = $application;
             $this->console     = $console;
 
-            $this->console->setHelpColors(Console::BOLD_CYAN, Console::BOLD_GREEN, Console::BOLD_MAGENTA);
-            $this->console->addCommandsFromRoutes($application->router()->getRouteMatch(), './app);
+            $this->console->setHelpColors(
+                Console::BOLD_CYAN, Console::BOLD_GREEN, Console::BOLD_MAGENTA
+            );
+
+            $this->console->addCommandsFromRoutes(
+                $application->router()->getRouteMatch(), './app'
+            );
         }
 
     }
