@@ -663,31 +663,31 @@ database. It has three fields: ``id``, ``username`` and ``password``.
     $form = new Form($fields->getFields());
     echo $form;
 
-This will render like:
+The main data fields are pulled from the database table and the submit field is added. This form object will render like:
 
 .. code-block:: html
 
-<form action="/fields2.php" method="post">
-    <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
-        <dl>
-            <dt>
-                <label for="username" class="required">Username:</label>
-            </dt>
-            <dd>
-                <input type="text" name="username" id="username" value="" required="required" />
-            </dd>
-            <dt>
-                <label for="password" class="required">Password:</label>
-            </dt>
-            <dd>
-                <input type="password" name="password" id="password" value="" required="required" />
-            </dd>
-            <dd>
-                <input type="submit" name="submit" id="submit" value="SUBMIT" />
-            </dd>
-        </dl>
-    </fieldset>
-</form>
+    <form action="/fields2.php" method="post">
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username" class="required">Username:</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" required="required" />
+                </dd>
+                <dt>
+                    <label for="password" class="required">Password:</label>
+                </dt>
+                <dd>
+                    <input type="password" name="password" id="password" value="" required="required" />
+                </dd>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="SUBMIT" />
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
 
 You can set element-specific attributes and values, as well as set fields to omit, like the 'id' parameter
 in the above examples. Any ``TEXT`` column type in the database is created as textarea objects and then
