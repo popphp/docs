@@ -1,7 +1,7 @@
 Kettle
 =======
 
-As of version 4.0.1, the Pop PHP Framework incorporates a CLI-based help script called
+As of version 4.0, the Pop PHP Framework incorporates a CLI-based help script called
 ``kettle``. It allows a user to quickly build the scaffolding for an application and
 manage database functions from the command line.
 
@@ -9,7 +9,10 @@ Application Scaffolding
 -----------------------
 
 While a particular application structure isn't strictly enfored, applications built with the
-``pop-kettle`` component follow a fairly straight-forward application structure:
+``pop-kettle`` component follow a fairly straight-forward application structure. All of these
+files and folders, outside of the ``kettle`` script, will be created for you if they do not already
+exist. Please note, the ``kettle`` script file is kept in the main root level, and should be set to be
+executable.
 
 * app/
 
@@ -29,12 +32,12 @@ While a particular application structure isn't strictly enfored, applications bu
 The ``app/`` folder contains the main set of folders and files that make the application work, like ``config/``,
 ``src/`` and ``view/``. The ``database/`` folder contains the database ``migrations`` and ``seeds`` folders.
 The ``public/`` folder is the web document root that contains the main ``index.php`` front controller script file
-that runs the main web application. And the ``script/`` folder contains the main script that would run the console
-version of the application. And the ``kettle`` script file is kept in the main root level, and should be set to be
-executable.
+that runs the main web application. The ``script/`` folder contains the main script that would run the console
+version of the application.
 
-The ``kettle`` allows you to run a simple command that will wire up some basic application files to get started.
-By running the following command, you can set up the basic files and folders required to run an application:
+The ``kettle`` script allows you to run a simple command that will wire up some basic application files and folders
+to get started. By running the following command, you can set up the basic files and folders required to run
+an application:
 
 .. code-block:: bash
 
@@ -82,7 +85,7 @@ If you use both ``--web`` and ``--cli`` options, it will create both sets of fil
 * public
 * script
 
-If you use all 3 options together, ``--web``, ``--api`` and ``--cli`, it will create both sets of files and folders,
+If you use all 3 options together, ``--web``, ``--api`` and ``--cli``, it will create both sets of files and folders,
 but it will break the ``Http`` namespace into 2 separate namespaces for the public-facing web application as well
 as the API web application:
 
