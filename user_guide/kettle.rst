@@ -8,7 +8,7 @@ manage database functions from the command line.
 Application Scaffolding
 -----------------------
 
-While a particular application structure isn't strictly enfored, applications built with the
+While a particular application structure isn't strictly enforced, applications built with the
 ``pop-kettle`` component follow a fairly straight-forward application structure. All of these
 files and folders, outside of the ``kettle`` script, will be created for you if they do not already
 exist. Please note, the ``kettle`` script file is kept in the main root level, and should be set to be
