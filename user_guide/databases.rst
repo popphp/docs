@@ -291,6 +291,8 @@ Predicates
 The SQL Builder also has an extensive API to assist you in constructing predicates with which to filter your
 SQL statements.
 
+**AND WHERE**
+
 .. code-block:: php
 
     $sql->select()
@@ -301,7 +303,52 @@ SQL statements.
 
 .. code-block:: sql
 
-    SELECT * FROM `users` WHERE ((`id` > :id) AND (`email` LIKE :email))
+    -- MySQL
+    SELECT * FROM `users` WHERE ((`id` > ?) AND (`email` LIKE ?))
+
+**OR WHERE**
+
+.. code-block:: php
+
+    $sql->select()
+        ->from('users')
+        ->where('id > :id')->orWhere('email LIKE :email');
+
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    SELECT * FROM `users` WHERE ((`id` > ?) OR (`email` LIKE ?))
+
+There is even a more detailed and granular API that comes with the predicate objects.
+
+$sql->select()
+    ->from('users')
+    ->where->greaterThan('id', ':id')->and()->equalTo('email', ':email');
+
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    SELECT * FROM `users` WHERE ((`id` > ?) AND (`email` = ?))
+
+**Nested Predicates**
+
+.. code-block:: php
+
+    $sql->select()
+        ->from('users')
+        ->where->greaterThan('id', ':id')
+            ->nest()->greaterThan('logins', ':logins')->or()->lessThanOrEqualTo('failed', ':failed');
+
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    SELECT * FROM `users` WHERE ((`id` > ?) AND ((`logins` > ?) OR (`failed` <= ?)))
 
 Execute SQL
 ~~~~~~~~~~~
