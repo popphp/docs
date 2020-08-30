@@ -120,7 +120,7 @@ from above also has and `id` column.
     $db->bindParams(['id' => 1000]);
     $db->execute();
 
-    $rows = $db->fetchResult();
+    $rows = $db->fetchAll();
 
     foreach ($rows as $row) {
         echo $row['username'];
@@ -259,15 +259,12 @@ an example using JOIN and ORDER BY:
 
     echo $sql;
 
-The above example would produce the following SQL statement for MySQL:
-
 .. code-block:: sql
 
     -- MySQL
     SELECT `id`, `username`, `email` FROM `users`
         LEFT JOIN `user_info` ON (`users`.`id` = `user_info`.`user_id`)
         WHERE (`id` < ?) ORDER BY `id` DESC
- example would produce the following SQL statement for MySQL:
 
 .. code-block:: sql
 
@@ -275,8 +272,6 @@ The above example would produce the following SQL statement for MySQL:
     SELECT "id", "username", "email" FROM "users"
         LEFT JOIN "user_info" ON ("users"."id" = "user_info"."user_id")
         WHERE ("id" < $1) ORDER BY "id" DESC
-
- example would produce the following SQL statement for MySQL:
 
 .. code-block:: sql
 
@@ -323,9 +318,11 @@ SQL statements.
 
 There is even a more detailed and granular API that comes with the predicate objects.
 
-$sql->select()
-    ->from('users')
-    ->where->greaterThan('id', ':id')->and()->equalTo('email', ':email');
+.. code-block:: php
+
+    $sql->select()
+        ->from('users')
+        ->where->greaterThan('id', ':id')->and()->equalTo('email', ':email');
 
     echo $sql;
 
@@ -341,7 +338,8 @@ $sql->select()
     $sql->select()
         ->from('users')
         ->where->greaterThan('id', ':id')
-            ->nest()->greaterThan('logins', ':logins')->or()->lessThanOrEqualTo('failed', ':failed');
+            ->nest()->greaterThan('logins', ':logins')
+                ->or()->lessThanOrEqualTo('failed', ':failed');
 
     echo $sql;
 
