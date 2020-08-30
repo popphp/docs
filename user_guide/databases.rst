@@ -456,11 +456,11 @@ with a foreign key:
 
 .. code-block:: php
 
-$schema->create('user_info')
-    ->int('user_id', 16)
-    ->varchar('email', 255)
-    ->varchar('phone', 255)
-    ->foreignKey('user_id')->references('users')->on('id')->onDelete('CASCADE');
+    $schema->create('user_info')
+        ->int('user_id', 16)
+        ->varchar('email', 255)
+        ->varchar('phone', 255)
+        ->foreignKey('user_id')->references('users')->on('id')->onDelete('CASCADE');
 
 The above code would produced the following SQL:
 
