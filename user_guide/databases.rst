@@ -629,7 +629,11 @@ class level:
     $userDb = Pop\Db\Db::connect('mysql', $options)
     Users::setDb($userDb);
 
-From there, the API to query the table in the database directly like in the following examples:
+Fetching Records
+~~~~~~~~~~~~~~~~
+
+Once a record class is correctly wired up, you can use the API to query the table in the database directly
+like in the following examples:
 
 **Fetch a single row by ID, update data**
 
@@ -688,7 +692,8 @@ From there, the API to query the table in the database directly like in the foll
         echo $user->id . ': ' . $user->username . ' has never logged in.';
     }
 
-**Create a new record**
+Create a Record
+~~~~~~~~~~~~~~~
 
 .. code-block:: php
 
@@ -698,6 +703,9 @@ From there, the API to query the table in the database directly like in the foll
     ]);
 
     $user->save();
+
+Execute Custom SQL
+~~~~~~~~~~~~~~~~~~
 
 You can execute custom SQL to run custom queries on the table. One way to do this is by using the SQL Builder:
 
@@ -715,10 +723,11 @@ You can execute custom SQL to run custom queries on the table. One way to do thi
         echo $user->username;
     }
 
-**Tracking changed values**
+Tracking Changed Values
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``Pop\Db\Record`` class the ability to track changed values within the record object. This is often times
-referred to a "dirty attributes."
+referred to "dirty attributes."
 
 .. code-block:: php
 
@@ -744,7 +753,8 @@ The ``$dirty`` variable will contain two arrays: `old` and `new`:
 
 And as you can see, only the field or fields that have been changed are stored.
 
-**Common API Calls**
+Active Record API
+~~~~~~~~~~~~~~~~~
 
 The basic overview of the record class static API is as follows, using the child class ``Users`` as an example:
 
