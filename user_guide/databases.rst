@@ -704,6 +704,17 @@ Create a Record
 
     $user->save();
 
+Delete a Record
+~~~~~~~~~~~~~~~
+
+.. code-block:: php
+
+    $user = Users::findById(1001);
+
+    if (isset($user->id)) {
+        $user->delete();
+    }
+
 Execute Custom SQL
 ~~~~~~~~~~~~~~~~~~
 
