@@ -283,18 +283,18 @@ columns across the two tables. Here's a SQL builder example using a LEFT JOIN:
 
 Here's the available API for joins:
 
-* ``$db->join($foreignTable, array $columns, $join = 'JOIN');`` - Basic join
-* ``$db->leftJoin($foreignTable, array $columns);`` - Left join
-* ``$db->rightJoin($foreignTable, array $columns);`` - Right join
-* ``$db->fullJoin($foreignTable, array $columns);`` -  Full join
-* ``$db->outerJoin($foreignTable, array $columns);`` -  Outer join
-* ``$db->leftOuterJoin($foreignTable, array $columns);`` -  Left outer join
-* ``$db->rightOuterJoin($foreignTable, array $columns);`` -  Right outer join
-* ``$db->fullOuterJoin($foreignTable, array $columns);`` -  Full outer join
-* ``$db->innerJoin($foreignTable, array $columns);`` -  Outer join
-* ``$db->leftInnerJoin($foreignTable, array $columns);`` -  Left inner join
-* ``$db->rightInnerJoin($foreignTable, array $columns);`` -  Right inner join
-* ``$db->fullInnerJoin($foreignTable, array $columns);`` -  Full inner join
+* ``$sql->join($foreignTable, array $columns, $join = 'JOIN');`` - Basic join
+* ``$sql->leftJoin($foreignTable, array $columns);`` - Left join
+* ``$sql->rightJoin($foreignTable, array $columns);`` - Right join
+* ``$sql->fullJoin($foreignTable, array $columns);`` -  Full join
+* ``$sql->outerJoin($foreignTable, array $columns);`` -  Outer join
+* ``$sql->leftOuterJoin($foreignTable, array $columns);`` -  Left outer join
+* ``$sql->rightOuterJoin($foreignTable, array $columns);`` -  Right outer join
+* ``$sql->fullOuterJoin($foreignTable, array $columns);`` -  Full outer join
+* ``$sql->innerJoin($foreignTable, array $columns);`` -  Outer join
+* ``$sql->leftInnerJoin($foreignTable, array $columns);`` -  Left inner join
+* ``$sql->rightInnerJoin($foreignTable, array $columns);`` -  Right inner join
+* ``$sql->fullInnerJoin($foreignTable, array $columns);`` -  Full inner join
 
 Predicates
 ~~~~~~~~~~
@@ -302,12 +302,12 @@ Predicates
 The SQL Builder also has an extensive API to assist you in constructing predicates with which to filter your
 SQL statements. Here's a list of some of the available methods to help you construct your predicate clauses:
 
-* ``$db->where($where);`` - Add a WHERE predicate
-* ``$db->andWhere($where);`` - Add another WHERE predicate using the AND conjunction
-* ``$db->orWhere($where);`` - Add another WHERE predicate using the OR conjunction
-* ``$db->having($having);`` - Add a HAVING predicate
-* ``$db->andHaving($having);`` - Add another HAVING predicate using the AND conjunction
-* ``$db->orHaving($having);`` - Add another HAVING predicate using the OR conjunction
+* ``$sql->where($where);`` - Add a WHERE predicate
+* ``$sql->andWhere($where);`` - Add another WHERE predicate using the AND conjunction
+* ``$sql->orWhere($where);`` - Add another WHERE predicate using the OR conjunction
+* ``$sql->having($having);`` - Add a HAVING predicate
+* ``$sql->andHaving($having);`` - Add another HAVING predicate using the AND conjunction
+* ``$sql->orHaving($having);`` - Add another HAVING predicate using the OR conjunction
 
 **AND WHERE**
 
@@ -359,9 +359,9 @@ Nested Predicates
 
 If you need to nest a predicate, there are API methods to allow you to do that as well:
 
-* ``$db->nest($conjunction = 'AND');`` - Create a nested predicate set
-* ``$db->andNest();`` - Create a nested predicate set using the AND conjunction
-* ``$db->orNest();`` - Create a nested predicate set using the OR conjunction
+* ``$sql->nest($conjunction = 'AND');`` - Create a nested predicate set
+* ``$sql->andNest();`` - Create a nested predicate set using the AND conjunction
+* ``$sql->orNest();`` - Create a nested predicate set using the OR conjunction
 
 .. code-block:: php
 
@@ -385,10 +385,10 @@ Sorting, Order & Limits
 
 The SQL Builder also has methods to allow to further control your SQL statement's result set:
 
-* ``$db->groupBy($by);`` - Add a GROUP BY
-* ``$db->orderBy($by, $order = 'ASC');`` - Add an ORDER BY
-* ``$db->limit($limit);`` - Add a LIMIT
-* ``$db->offset($offset);`` - Add an OFFSET
+* ``$sql->groupBy($by);`` - Add a GROUP BY
+* ``$sql->orderBy($by, $order = 'ASC');`` - Add an ORDER BY
+* ``$sql->limit($limit);`` - Add a LIMIT
+* ``$sql->offset($offset);`` - Add an OFFSET
 
 Execute SQL
 ~~~~~~~~~~~
