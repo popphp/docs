@@ -25,7 +25,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-mail": "^3.1.0",
+            "popphp/pop-mail": "^3.5.0",
         }
     }
 
@@ -109,9 +109,27 @@ Attaching a File
     $message->setTo('you@domain.com');
     $message->setFrom('me@domain.com');
 
-    $fileData = file_get_contents($fileData);
+    $message->attachFile('my-file.txt');
+    $message->setBody('Hello World! This is a test!');
 
-    $message->attachFile($fileData, 'image/jpeg', 'myimage.jpg');
+    $mailer->send($message);
+
+Attaching a File from Data
+----------------
+
+.. code-block:: php
+
+    use Pop\Mail;
+
+    $mailer = new Mail\Mailer(new Mail\Transport\Sendmail());
+
+    $message = new Mail\Message('Hello World');
+    $message->setTo('you@domain.com');
+    $message->setFrom('me@domain.com');
+
+    $fileData = file_get_contents('my-file.txt');
+
+    $message->attachFileFromStream($fileData, 'my-file.txt');
     $message->setBody('Hello World! This is a test!');
 
     $mailer->send($message);

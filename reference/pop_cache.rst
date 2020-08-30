@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-cache": "^3.2.3",
+            "popphp/pop-cache": "^3.3.0",
         }
     }
 
@@ -47,16 +47,6 @@ File
 
     // Create a file cache adapter object, with a 5 minute lifetime
     $cacheAdapter = new Adapter\File('/path/to/my/cache/dir', 300);
-
-Memcache
-~~~~~~~~
-
-.. code-block:: php
-
-    use Pop\Cache\Adapter;
-
-    // Create a Memcache cache adapter object, with a 5 minute lifetime
-    $cacheAdapter = new Adapter\Memcache(300);
 
 Memcached
 ~~~~~~~~~
@@ -88,15 +78,16 @@ Session
     // Create a session cache adapter object, with a 5 minute lifetime
     $cacheAdapter = new Adapter\Session(300);
 
-SQLite
-~~~~~~
+Database
+~~~~~~~~
 
 .. code-block:: php
 
     use Pop\Cache\Adapter;
+    use Pop\Db\Db;
 
     // Create a database cache adapter object, with a 5 minute lifetime
-    $cacheAdapter = new Adapter\Sqlite('/path/to/my/.htcachedb.sqlite', 300);
+    $cacheAdapter = new Adapter\Db(Db::sqliteConnect(['database' => __DIR__ . '/tmp/cache.sqlite']), 300)
 
 You can then pass any of the above cache adapter objects into the main cache object
 to begin storing and recalling data.

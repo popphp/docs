@@ -21,9 +21,20 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popcorn": "^3.2.0",
+            "popphp/popcorn": "^3.3.0",
         }
     }
+
+Basic Use
+---------
+
+The Popcorn PHP Micro-Framework is a lightweight REST-based micro-framework that's built
+on top of the Pop PHP Framework core components. With it, you can rapidly wire together
+the routes and configuration needed for your REST-based web application, while leveraging
+the pre-existing features and functionality of the Pop PHP Framework. It provides a simple
+layer on top of the main ``Pop\Application`` object that allows you to wire up routes and
+enforce their access based on the request method. By default, it ships with ``popphp/popphp``,
+``popphp/pop-http``, ``popphp/pop-session`` and ``popphp/pop-view`` components.
 
 Basic Use
 ---------
@@ -79,6 +90,42 @@ via POST with the correct application token, and it will be successful:
 
     curl -X POST --header "Authorization: my-token" http://localhost:8000/auth
     Auth successful
+
+**Route Configuration**
+
+You can also utilize the standard ``Pop\Application`` route configuration array for ``Popcorn`` by nesting
+the routes inside of another array level, with the array keys being the routes' allowed methods:
+
+.. code-block:: php
+
+    <?php
+    // Routes configuration
+    return [
+        'get' => [
+            '/users' => [
+                'controller' => 'MyApp\Http\Controller\UsersController',
+                'action'     => 'index'
+            ]
+        ],
+        'post' => [
+            '/users' => [
+                'controller' => 'MyApp\Http\Controller\UsersController',
+                'action'     => 'create'
+            ]
+        ],
+        'patch' => [
+            '/users/:id' => [
+                'controller' => 'MyApp\Http\Controller\UsersController',
+                'action'     => 'update'
+            ]
+        ],
+        'delete' => [
+            '/users/:id' => [
+                'controller' => 'MyApp\Http\Controller\UsersController',
+                'action'     => 'delete'
+            ]
+        ]
+    ];
 
 Advanced Usage
 --------------
@@ -202,6 +249,10 @@ Here is an overview of the available API within the module ``Popcorn\Pop`` class
 * ``patch($route, $controller)`` - Set a PATCH route
 * ``setRoute($method, $route, $controller)`` - Set a specific route
 * ``setRoutes($methods, $route, $controller)`` - Set a specific route and apply to multiple methods at once
+* ``addToAll($route, $controller)`` - Set a specific route to all methods at once
+* ``any($route, $controller)`` - Set a specific route to all methods at once (alias to 'addToAll')
+* ``addCustomMethod($customMethod)`` - Add a custom method
+* ``hasCustomMethod($customMethod)`` - Check if the object has a custom method
 
 The ``setRoutes()`` method allows you to set a specific route and apply it to multiple methods all at once,
 like this:
@@ -221,3 +272,34 @@ like this:
 
 In the above example, the route ``/login`` would display the login form on GET, and then submit the form
 on POST, processing and validating it.
+
+**Custom Methods**
+
+If your web server allows for you to configure custom HTTP methods, you can add custom methods to the main
+Popcorn object to register them with the application.
+
+.. code-block:: php
+
+    use Popcorn\Pop;
+
+    $app = new Pop();
+    $app->addCustomMethod('PURGE')
+        ->addCustomMethod('COPY');
+
+    $app->purge('/image/:id', function(){
+        // Do something with the PURGE method on the image URL
+    });
+
+    $app->copy('/image/:id', function(){
+        // Do something with the COPY method on the image URL
+    });
+
+    $app->run();
+
+Then you can submit requests with your custom HTTP methods like this:
+
+.. code-block:: bash
+
+    $ curl -X PURGE http://localhost:8000/image/1
+
+    $ curl -X COPY http://localhost:8000/image/1

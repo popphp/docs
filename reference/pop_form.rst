@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-form": "^3.3.0",
+            "popphp/pop-form": "^3.5.0",
         }
     }
 
@@ -27,8 +27,11 @@ Basic Use
 ---------
 
 HTML Forms are common to web applications and present a unique set of challenges in building, rendering and
-validating a form and it's elements. The `popphp/pop-form` component helps to manage those aspects of web forms
+validating a form and its elements. The `popphp/pop-form` component helps to manage those aspects of web forms
 and streamline the process of utilizing forms in your web application.
+
+Form Elements
+-------------
 
 Most of the standard HTML5 form elements are supported within the `popphp/pop-form` component. If you require a
 different element of any kind, you can extend the `Pop\\Form\\Element\\AbstractElement` class to build your own.
@@ -662,6 +665,59 @@ the fieldset configurations and their legends. And, it will generate the same HT
 
     echo $form;
 
+Dynamic Database Fields
+-----------------------
+
+The ``pop-form`` component comes with the functionality to very quickly wire up form fields that are mapped
+to the columns in a database table. It does require the installation of the ``pop-db`` component to work.
+Consider that there is a database table class called ``Users`` that is mapped to the ``users`` table in the
+database. It has three fields: ``id``, ``username`` and ``password``.
+
+.. code-block:: php
+
+    use Pop\Form\Form;
+    use Pop\Form\Fields;
+    use MyApp\Table\Users;
+
+    $fields = new Fields(Users::getTableInfo(), null, null, 'id');
+    $fields->submit = [
+        'type'  => 'submit',
+        'value' => 'SUBMIT'
+    ];
+
+    $form = new Form($fields->getFields());
+    echo $form;
+
+The main data fields are pulled from the database table and the submit field is added. This form object will render like:
+
+.. code-block:: html
+
+    <form action="/" method="post">
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username" class="required">Username:</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" required="required" />
+                </dd>
+                <dt>
+                    <label for="password" class="required">Password:</label>
+                </dt>
+                <dd>
+                    <input type="password" name="password" id="password" value="" required="required" />
+                </dd>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="SUBMIT" />
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
+
+You can set element-specific attributes and values, as well as set fields to omit, like the 'id' parameter
+in the above examples. Any ``TEXT`` column type in the database is created as textarea objects and then
+the rest are created as input text objects.
+
 Using Views
 -----------
 
@@ -925,3 +981,182 @@ image with a reload link to the CAPTCHA field's label:
     </form>
 
 The image elements will have CSS classes to facilitate styling them as needed.
+
+ACL Forms
+---------
+
+ACL forms are an extension of the regular form class that take an ACL object with its roles and resources and
+enforce which form fields can be seen and edited. Consider the following code below:
+
+.. code-block:: php
+
+    use Pop\Form;
+    use Pop\Acl;
+
+    $acl      = new Acl\Acl();
+    $admin    = new Acl\AclRole('admin');
+    $editor   = new Acl\AclRole('editor');
+    $username = new Acl\AclResource('username');
+    $password = new Acl\AclResource('password');
+
+    $acl->addRoles([$admin, $editor]);
+    $acl->addResources([$username, $password]);
+
+    $acl->deny($editor, 'username', 'edit');
+    $acl->deny($editor, 'password', 'view');
+
+    $fields = [
+        'username' => [
+            'type'  => 'text',
+            'label' => 'Username'
+        ],
+        'password' => [
+            'type'  => 'password',
+            'label' => 'Password'
+        ],
+        'first_name' => [
+            'type'  => 'text',
+            'label' => 'First Name'
+        ],
+        'last_name' => [
+            'type'  => 'text',
+            'label' => 'Last Name'
+        ],
+        'submit' => [
+            'type'  => 'submit',
+            'value' => 'Submit'
+        ]
+    ];
+
+    $form = Form\AclForm::createFromConfig($fields);
+    $form->setAcl($acl);
+
+The ``$admin`` has no restrictions. However, the ``$editor`` role does have restrictions and cannot edit
+the username field and cannot view the password field. Setting the $editor as the form role and rendering
+the form will look like this:
+
+.. code-block:: php
+
+    $form->addRole($editor);
+    echo $form;
+
+
+.. code-block:: html
+
+    <form action="#" method="post" id="pop-form" class="pop-form">
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username">Username</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" readonly="readonly" />
+                </dd>
+                <dt>
+                    <label for="first_name">First Name</label>
+                </dt>
+                <dd>
+                    <input type="text" name="first_name" id="first_name" value="" />
+                </dd>
+                <dt>
+                    <label for="last_name">Last Name</label>
+                </dt>
+                <dd>
+                    <input type="text" name="last_name" id="last_name" value="" />
+                </dd>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="Submit" />
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
+
+There is no password field and the username field has been made readonly. Switch the role to ``$admin``
+and the entire form will render with no restrictions:
+
+.. code-block:: php
+
+    $form->addRole($admin);
+    echo $form;
+
+.. code-block:: html
+
+    <form action="#" method="post" id="pop-form" class="pop-form">
+        <fieldset id="pop-form-fieldset-1" class="pop-form-fieldset">
+            <dl>
+                <dt>
+                    <label for="username">Username</label>
+                </dt>
+                <dd>
+                    <input type="text" name="username" id="username" value="" />
+                </dd>
+                <dt>
+                    <label for="password">Password</label>
+                </dt>
+                <dd>
+                    <input type="password" name="password" id="password" value="" />
+                </dd>
+                <dt>
+                    <label for="first_name">First Name</label>
+                </dt>
+                <dd>
+                    <input type="text" name="first_name" id="first_name" value="" />
+                </dd>
+                <dt>
+                    <label for="last_name">Last Name</label>
+                </dt>
+                <dd>
+                    <input type="text" name="last_name" id="last_name" value="" />
+                </dd>
+                <dd>
+                    <input type="submit" name="submit" id="submit" value="Submit" />
+                </dd>
+            </dl>
+        </fieldset>
+    </form>
+
+Form Validators
+---------------
+
+There is a ``FormValidator`` class that is available for only validating a set of field values. The benefit of this
+feature is to not be burdened with the concern of rendering an entire form object, and to only return the appropriate
+validation messaging. This is useful for things like API calls, where the form rendering might be handled by another
+piece of the application (and not the PHP server side).
+
+.. code-block:: php
+
+    use Pop\Form\FormValidator;
+    use Pop\Validator;
+
+    $validators = [
+        'username' => new Validator\AlphaNumeric(),
+        'password' => new Validator\LengthGte(6)
+    ];
+
+    $form = new FormValidator($validators);
+    $form->setValues([
+        'username' => 'admin$%^',
+        'password' => '12345'
+    ]);
+
+    if (!$form->validate()) {
+        print_r($form->getErrors());
+    }
+
+If the field values are bad, the ``$form->getErrors()`` method will return an array of errors like this:
+
+.. code-block:: text
+
+    Array
+    (
+        [username] => Array
+            (
+                [0] => The value must only contain alphanumeric characters.
+            )
+
+        [password] => Array
+            (
+                [0] => The value length must be greater than or equal to 6.
+            )
+
+    )

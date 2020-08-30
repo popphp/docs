@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-view": "^3.1.0",
+            "popphp/pop-view": "^3.2.0",
         }
     }
 
@@ -576,4 +576,4 @@ And if need be, you can clear the filters out of the view object as well:
 
     $view->clearFilters();
 
-.. _MVC section: ./mvc.html#views
+.. _MVC section: ../user_guide/mvc.html#views

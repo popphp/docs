@@ -26,57 +26,80 @@ Or, include it in your composer.json file:
 Basic Use
 ---------
 
-The main controller class that is provided is actually an abstract class on which you can build
-the controller classes for your application. In it, is the main ``dispatch()`` method, as well
-as methods to set and get the default action. The default action is set to ``error`` and that would
-be the method the controller class expect to find and default to if no other method satisfies the
-incoming route. You can change that to whatever method name you prefer with the ``setDefaultAction()``
-method.
+The Pop PHP Framework comes with a base abstract controller class that can be extended to create
+the controller classes needed for your application. If you choose not to use the provided abstract
+controller class, you can write your own, but it needs to implement the main controller interface
+that is provided with Pop.
 
-Take a look at an example controller class:
+When building your controller classes by extending the abstract controller class, you can define
+the methods that represent the actions that will be executed on the matched route. Here's an example
+of what a basic controller might look like for a web application:
 
 .. code-block:: php
 
     namespace MyApp\Controller;
 
     use Pop\Controller\AbstractController;
+    use Pop\Http\Request;
+    use Pop\Http\Response;
 
     class IndexController extends AbstractController
     {
+        protected $request;
+        protected $response;
+
+        public function __construct(Request $request, Response $response)
+        {
+            $this->request  = $request;
+            $this->response = $response;
+        }
 
         public function index()
         {
-            // Do something for the index page
+            // Show the index page
         }
 
-        public function users()
+        public function products()
         {
-            // Do something for the users page
-        }
-
-        public function edit($id)
-        {
-            // Edit user with $id
-        }
-
-        public function error()
-        {
-            // Handle a non-match route request
+            // Show the products page
         }
 
     }
 
-As each incoming route's action is matched to a method, it will execute the corresponding method
-in the controller object. If no route match is found, then it will default to the default action,
-which in this case, is the ``error`` method. So depending on your type of application and how it
-is configured, an example of a successful route could be:
+The above example uses the ``popphp/pop-http`` component and injects a request and a response object
+into the controller's constructor. For more on how to inject controller parameters into the controller's
+constructor, refer the the section on `controller parameters`_ under `Routing`_.
 
-.. code-block:: text
-
-    http://localhost/users/edit/1001
-
-which would route to and execute:
+For a console application, your controller class might look like this, utilizing the ``popphp/pop-console``
+component:
 
 .. code-block:: php
 
-    MyApp\Controller\UsersController->edit($id)
+    namespace MyApp\Controller;
+
+    use Pop\Controller\AbstractController;
+    use Pop\Console\Console;
+
+    class IndexController extends AbstractController
+    {
+        protected $console;
+
+        public function __construct(Console $console)
+        {
+            $this->console = $console;
+        }
+
+        public function home()
+        {
+            // Show the home screen
+        }
+
+        public function users()
+        {
+            // Show the users screen
+        }
+
+    }
+
+.. _controller parameters: ../getting_started/routing.html#controller-parameters
+.. _Routing: ../getting_started/routing.html

@@ -23,12 +23,29 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-db": "^4.5.0",
+            "popphp/pop-db": "^5.0.5",
         }
     }
 
 Basic Use
 ---------
+
+Databases are commonly a core piece of an application's functionality. The `popphp/pop-db`
+component provides a layer of abstraction and control over databases within your application.
+Natively, there are adapters that support for the following database drivers:
+
++ MySQL
++ PostgreSQL
++ SQLServer
++ SQLite
++ PDO
+
+One can use the above adapters, or extend the base ``Pop\\Db\\Adapter\\AbstractAdapter`` class and
+write your own. Additionally, access to individual database tables can be leveraged via the
+``Pop\Db\Record`` class.
+
+Connecting to a Database
+------------------------
 
 You can use the database factory to create the appropriate adapter instance and connect to a database:
 
@@ -104,6 +121,20 @@ in the table.
         echo $row['username'];
     }
 
+**Database Adapter API**
+
+Here's a list of some of the available methods that are available under the database adapter classes:
+
+* ``$db->query($sql);`` - Query the database with the SQL statement
+* ``$db->prepare($sql);`` - Prepare the SQL statement
+* ``$db->bindParams($params);`` - Bind parameters to the SQL statement
+* ``$db->execute();`` - Execute prepared SQL statement
+* ``$db->fetch();`` - Fetch the next row of the result set
+* ``$db->fetchAll();`` - Fetch all of the rows of the result set
+* ``$db->getNumberOfRows();`` - Get number of rows in the result set
+* ``$db->getLastId();`` - Get last incremented ID from the previous statement
+* ``$db->getTables();`` - Get list of tables in the database
+
 Using Prepared Statements
 -------------------------
 
@@ -118,7 +149,7 @@ from above also has and `id` column.
     $db->bindParams(['id' => 1000]);
     $db->execute();
 
-    $rows = $db->fetchResult();
+    $rows = $db->fetchAll();
 
     foreach ($rows as $row) {
         echo $row['username'];
@@ -130,7 +161,12 @@ The Query Builder
 The query builder is a part of the component that provides an interface that will produce syntactically correct
 SQL for whichever type of database you have elected to use. One of the main goals of this is portability across
 different systems and environments. In order for it to function correctly, you need to pass it the database
-adapter your application is currently using so that it can properly build the SQL.
+adapter your application is currently using so that it can properly build the SQL. The easiest way to do this
+is to just call the ``createSql()`` method from the database adapter. It will inject itself into the SQL builder
+object being created.
+
+Select
+~~~~~~
 
 .. code-block:: php
 
@@ -161,32 +197,245 @@ And SQLite would look like:
 
     SELECT "id", "username" FROM "users" WHERE "id" > :id
 
-The SQL Builder component has an extensive API to assist you in constructing complex SQL statements. Here's
-an example using JOIN and ORDER BY:
+Insert
+~~~~~~
 
 .. code-block:: php
 
-    $db = Pop\Db\Db::connect('mysql', $options);
-
-    $sql = $db->createSql();
-    $sql->select([
-        'user_id'    => 'id',
-        'user_email' => 'email'
-    ])->from('users')
-      ->leftJoin('user_data', ['users.id' => 'user_data.user_id'])
-      ->orderBy('id', 'ASC');
-      ->where('id > :id');
-
+    $sql->insert('users')->values([
+        'username' => ':username',
+        'password' => ':password'
+    ]);
     echo $sql;
-
-The above example would produce the following SQL statement for MySQL:
 
 .. code-block:: sql
 
-    SELECT `id` AS `user_id`, `email` AS `user_email` FROM `users`
-        LEFT JOIN `user_data` ON `users`.`id` = `user_data`.`user_id`
-        WHERE `id` > ?
-        ORDER BY `id` ASC;
+    -- MySQL
+    INSERT INTO `users` (`username`, `password`) VALUES (?, ?)
+
+.. code-block:: sql
+
+    -- PostgreSQL
+    INSERT INTO "users" ("username", "password") VALUES ($1, $2)
+
+.. code-block:: sql
+
+    -- SQLite
+    INSERT INTO "users" ("username", "password") VALUES (:username, :password)
+
+Update
+~~~~~~
+
+.. code-block:: php
+
+    $sql->update('users')->values([
+        'username' => ':username',
+        'password' => ':password'
+    ])->where('id = :id');
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    UPDATE `users` SET `username` = ?, `password` = ? WHERE (`id` = ?)
+
+.. code-block:: sql
+
+    -- PostgreSQL
+    UPDATE "users" SET "username" = $1, "password" = $2 WHERE ("id" = $3)
+
+.. code-block:: sql
+
+    -- SQLite
+    UPDATE "users" SET "username" = :username, "password" = :password WHERE ("id" = :id)
+
+Delete
+~~~~~~
+
+.. code-block:: php
+
+    $sql->delete('users')
+        ->where('id = :id');
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    DELETE FROM `users` WHERE (`id` = ?)
+
+.. code-block:: sql
+
+    -- PostgreSQL
+    DELETE FROM "users" WHERE ("id" = $1)
+
+.. code-block:: sql
+
+    -- SQLite
+    DELETE FROM "users" WHERE ("id" = :id)
+
+Joins
+~~~~~
+
+The SQL Builder has an API to assist you in constructing complex SQL statements that use joins. Typically,
+the join methods take two parameters: the foreign table and an array with a 'key => value' of the two related
+columns across the two tables. Here's a SQL builder example using a LEFT JOIN:
+
+.. code-block:: php
+
+    $sql->select(['id', 'username', 'email'])->from('users')
+        ->leftJoin('user_info', ['users.id' => 'user_info.user_id'])
+        ->where('id < :id')
+        ->orderBy('id', 'DESC');
+
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    SELECT `id`, `username`, `email` FROM `users`
+        LEFT JOIN `user_info` ON (`users`.`id` = `user_info`.`user_id`)
+        WHERE (`id` < ?) ORDER BY `id` DESC
+
+.. code-block:: sql
+
+    -- PostgreSQL
+    SELECT "id", "username", "email" FROM "users"
+        LEFT JOIN "user_info" ON ("users"."id" = "user_info"."user_id")
+        WHERE ("id" < $1) ORDER BY "id" DESC
+
+.. code-block:: sql
+
+    -- SQLite
+    SELECT "id", "username", "email" FROM "users"
+        LEFT JOIN "user_info" ON ("users"."id" = "user_info"."user_id")
+        WHERE ("id" < :id) ORDER BY "id" DESC
+
+Here's the available API for joins:
+
+* ``$sql->join($foreignTable, array $columns, $join = 'JOIN');`` - Basic join
+* ``$sql->leftJoin($foreignTable, array $columns);`` - Left join
+* ``$sql->rightJoin($foreignTable, array $columns);`` - Right join
+* ``$sql->fullJoin($foreignTable, array $columns);`` -  Full join
+* ``$sql->outerJoin($foreignTable, array $columns);`` -  Outer join
+* ``$sql->leftOuterJoin($foreignTable, array $columns);`` -  Left outer join
+* ``$sql->rightOuterJoin($foreignTable, array $columns);`` -  Right outer join
+* ``$sql->fullOuterJoin($foreignTable, array $columns);`` -  Full outer join
+* ``$sql->innerJoin($foreignTable, array $columns);`` -  Outer join
+* ``$sql->leftInnerJoin($foreignTable, array $columns);`` -  Left inner join
+* ``$sql->rightInnerJoin($foreignTable, array $columns);`` -  Right inner join
+* ``$sql->fullInnerJoin($foreignTable, array $columns);`` -  Full inner join
+
+Predicates
+~~~~~~~~~~
+
+The SQL Builder also has an extensive API to assist you in constructing predicates with which to filter your
+SQL statements. Here's a list of some of the available methods to help you construct your predicate clauses:
+
+* ``$sql->where($where);`` - Add a WHERE predicate
+* ``$sql->andWhere($where);`` - Add another WHERE predicate using the AND conjunction
+* ``$sql->orWhere($where);`` - Add another WHERE predicate using the OR conjunction
+* ``$sql->having($having);`` - Add a HAVING predicate
+* ``$sql->andHaving($having);`` - Add another HAVING predicate using the AND conjunction
+* ``$sql->orHaving($having);`` - Add another HAVING predicate using the OR conjunction
+
+**AND WHERE**
+
+.. code-block:: php
+
+    $sql->select()
+        ->from('users')
+        ->where('id > :id')->andWhere('email LIKE :email');
+
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    SELECT * FROM `users` WHERE ((`id` > ?) AND (`email` LIKE ?))
+
+**OR WHERE**
+
+.. code-block:: php
+
+    $sql->select()
+        ->from('users')
+        ->where('id > :id')->orWhere('email LIKE :email');
+
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    SELECT * FROM `users` WHERE ((`id` > ?) OR (`email` LIKE ?))
+
+There is even a more detailed and granular API that comes with the predicate objects.
+
+.. code-block:: php
+
+    $sql->select()
+        ->from('users')
+        ->where->greaterThan('id', ':id')->and()->equalTo('email', ':email');
+
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    SELECT * FROM `users` WHERE ((`id` > ?) AND (`email` = ?))
+
+Nested Predicates
+~~~~~~~~~~~~~~~~~
+
+If you need to nest a predicate, there are API methods to allow you to do that as well:
+
+* ``$sql->nest($conjunction = 'AND');`` - Create a nested predicate set
+* ``$sql->andNest();`` - Create a nested predicate set using the AND conjunction
+* ``$sql->orNest();`` - Create a nested predicate set using the OR conjunction
+
+.. code-block:: php
+
+    $sql->select()
+        ->from('users')
+        ->where->greaterThan('id', ':id')
+            ->nest()->greaterThan('logins', ':logins')
+                ->or()->lessThanOrEqualTo('failed', ':failed');
+
+    echo $sql;
+
+The output below shows the predicates for ``logins`` and ``failed`` are nested together:
+
+.. code-block:: sql
+
+    -- MySQL
+    SELECT * FROM `users` WHERE ((`id` > ?) AND ((`logins` > ?) OR (`failed` <= ?)))
+
+Sorting, Order & Limits
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The SQL Builder also has methods to allow to further control your SQL statement's result set:
+
+* ``$sql->groupBy($by);`` - Add a GROUP BY
+* ``$sql->orderBy($by, $order = 'ASC');`` - Add an ORDER BY
+* ``$sql->limit($limit);`` - Add a LIMIT
+* ``$sql->offset($offset);`` - Add an OFFSET
+
+Execute SQL
+~~~~~~~~~~~
+
+You can just pass the ``$sql`` object down into either the ``query()`` or ``prepare()`` methods of the ``$db``
+adapter:
+
+.. code-block:: php
+
+    // No parameters
+    $db->query($sql);
+
+.. code-block:: php
+
+    // Prepared statement with bound parameters
+    $db->prepare($sql)
+        ->bindParams($params)
+        ->execute();
 
 The Schema Builder
 ------------------
@@ -194,10 +443,21 @@ The Schema Builder
 In addition to the query builder, there is also a schema builder to assist with database table
 structures and their management. In a similar fashion to the query builder, the schema builder
 has an API that mirrors the SQL that would be used to create, alter and drop tables in a database.
+It is also built to be portable and work across different environments that may have different chosen
+database adapters with which to work. And like the query builder, in order for it to function correctly,
+you need to pass it the database adapter your application is currently using so that it can properly
+build the SQL. The easiest way to do this is to just call the ``createSchema()`` method from the
+database adapter. It will inject itself into the Schema builder object being created.
+
+The examples below show separate schema statements, but a single schema builder object can have multiple
+schema statements within one schema builder object's life cycle.
+
+Create Table
+~~~~~~~~~~~~
 
 .. code-block:: php
 
-    $db = Pop\Db\Db::connect('mysql', $options);
+    $db = Pop\Db\Db::mysqlConnect($options);
 
     $schema = $db->createSchema();
     $schema->create('users')
@@ -211,11 +471,137 @@ The above code would produced the following SQL:
 
 .. code-block:: sql
 
+    -- MySQL
     CREATE TABLE `users` (
       `id` INT(16),
       `username` VARCHAR(255),
       `password` VARCHAR(255)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+**Foreign Key Example**
+
+Here is an example of creating an additional ``user_info`` table that references the above ``users`` table
+with a foreign key:
+
+.. code-block:: php
+
+    $schema->create('user_info')
+        ->int('user_id', 16)
+        ->varchar('email', 255)
+        ->varchar('phone', 255)
+        ->foreignKey('user_id')->references('users')->on('id')->onDelete('CASCADE');
+
+The above code would produced the following SQL:
+
+.. code-block:: sql
+
+    -- MySQL
+    ALTER TABLE `user_info` ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`)
+      REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+Alter Table
+~~~~~~~~~~~
+
+.. code-block:: php
+
+    $schema->alter('users')
+        ->addColumn('email', 'VARCHAR', 255);
+
+    echo $schema;
+
+The above code would produced the following SQL:
+
+.. code-block:: sql
+
+    -- MySQL
+    ALTER TABLE `users` ADD `email` VARCHAR(255);
+
+Drop Table
+~~~~~~~~~~
+
+.. code-block:: php
+
+    $schema->drop('users');
+
+    echo $schema;
+
+The above code would produced the following SQL:
+
+.. code-block:: sql
+
+    -- MySQL
+    DROP TABLE `users`;
+
+Execute Schema
+~~~~~~~~~~~~~~
+
+You can execute the schema by using the ``execute()`` method within the schema builder object:
+
+.. code-block:: php
+
+    $schema->execute();
+
+Schema Builder API
+~~~~~~~~~~~~~~~~~~
+
+In the above code samples, if you want to access the table object directly, you can like this:
+
+.. code-block:: php
+
+    $createTable   = $schema->create('users');
+    $alterTable    = $schema->alter('users');
+    $truncateTable = $schema->truncate('users');
+    $renameTable   = $schema->rename('users');
+    $dropTable     = $schema->drop('users');
+
+Here's a list of common methods available with which to build your schema:
+
+* ``$createTable->ifNotExists();`` - Add a IF NOT EXISTS flag
+* ``$createTable->addColumn($name, $type, $size = null, $precision = null, array $attributes = []);`` - Add a column
+* ``$createTable->increment($start = 1);`` - Set an increment value
+* ``$createTable->defaultIs($value);`` - Set the default value for the current column
+* ``$createTable->nullable();`` - Make the current column nullable
+* ``$createTable->notNullable();`` - Make the current column not nullable
+* ``$createTable->index($column, $name = null, $type = 'index');`` - Create an index on the column
+* ``$createTable->unique($column, $name = null);`` - Create a unique index on the column
+* ``$createTable->primary($column, $name = null);`` - Create a primary index on the column
+
+The following methods are shorthand methods for adding columns of various common types. Please note, if the
+selected column type isn't supported by the current database adapter, the column type is normalized to
+the closest type.
+
+* ``$createTable->integer($name, $size = null, array $attributes = []);``
+* ``$createTable->int($name, $size = null, array $attributes = []);``
+* ``$createTable->bigInt($name, $size = null, array $attributes = []);``
+* ``$createTable->mediumInt($name, $size = null, array $attributes = []);``
+* ``$createTable->smallInt($name, $size = null, array $attributes = []);``
+* ``$createTable->tinyInt($name, $size = null, array $attributes = []);``
+* ``$createTable->float($name, $size = null, $precision = null, array $attributes = []);``
+* ``$createTable->real($name, $size = null, $precision = null, array $attributes = [])``
+* ``$createTable->double($name, $size = null, $precision = null, array $attributes = []);``
+* ``$createTable->decimal($name, $size = null, $precision = null, array $attributes = []);``
+* ``$createTable->numeric($name, $size = null, $precision = null, array $attributes = []);``
+* ``$createTable->date($name, array $attributes = []);``
+* ``$createTable->time($name, array $attributes = []);``
+* ``$createTable->datetime($name, array $attributes = []);``
+* ``$createTable->timestamp($name, array $attributes = []);``
+* ``$createTable->year($name, $size = null, array $attributes = []);``
+* ``$createTable->text($name, array $attributes = []);``
+* ``$createTable->tinyText($name, array $attributes = []);``
+* ``$createTable->mediumText($name, array $attributes = []));``
+* ``$createTable->longText($name, array $attributes = []);``
+* ``$createTable->blob($name, array $attributes = []);``
+* ``$createTable->mediumBlob($name, array $attributes = []);``
+* ``$createTable->longBlob($name, array $attributes = []);``
+* ``$createTable->char($name, $size = null, array $attributes = []);``
+* ``$createTable->varchar($name, $size = null, array $attributes = []);``
+
+The following methods are all related to the creation of foreign key constraints and their relationships:
+
+* ``$createTable->int($name, $size = null, array $attributes = [])`` - Create a foreign key on the column
+* ``$createTable->references($foreignTable);`` - Create a reference to a table for the current foreign key constraint
+* ``$createTable->on($foreignColumn);`` - Used in conjunction with ``references()`` to designate the foreign column
+* ``$createTable->onDelete($action = null)`` - Set the ON DELETE parameter for a foreign key constraint
 
 Active Record
 -------------
@@ -272,7 +658,11 @@ class level:
     $userDb = Pop\Db\Db::connect('mysql', $options)
     Users::setDb($userDb);
 
-From there, the API to query the table in the database directly like in the following examples:
+Fetching Records
+~~~~~~~~~~~~~~~~
+
+Once a record class is correctly wired up, you can use the API to query the table in the database directly
+like in the following examples:
 
 **Fetch a single row by ID, update data**
 
@@ -331,7 +721,8 @@ From there, the API to query the table in the database directly like in the foll
         echo $user->id . ': ' . $user->username . ' has never logged in.';
     }
 
-**Create a new record**
+Create a Record
+~~~~~~~~~~~~~~~
 
 .. code-block:: php
 
@@ -341,6 +732,20 @@ From there, the API to query the table in the database directly like in the foll
     ]);
 
     $user->save();
+
+Delete a Record
+~~~~~~~~~~~~~~~
+
+.. code-block:: php
+
+    $user = Users::findById(1001);
+
+    if (isset($user->id)) {
+        $user->delete();
+    }
+
+Execute Custom SQL
+~~~~~~~~~~~~~~~~~~
 
 You can execute custom SQL to run custom queries on the table. One way to do this is by using the SQL Builder:
 
@@ -358,10 +763,11 @@ You can execute custom SQL to run custom queries on the table. One way to do thi
         echo $user->username;
     }
 
-**Tracking changed values**
+Tracking Changed Values
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``Pop\Db\Record`` class the ability to track changed values within the record object. This is often times
-referred to a "dirty attributes."
+referred to "dirty attributes."
 
 .. code-block:: php
 
@@ -387,7 +793,8 @@ The ``$dirty`` variable will contain two arrays: `old` and `new`:
 
 And as you can see, only the field or fields that have been changed are stored.
 
-**Common API Calls**
+Active Record API
+~~~~~~~~~~~~~~~~~
 
 The basic overview of the record class static API is as follows, using the child class ``Users`` as an example:
 
@@ -397,10 +804,14 @@ The basic overview of the record class static API is as follows, using the child
 * ``Users::sql()`` - Get the SQL object
 * ``Users::findById($id)`` - Find a single record by ID
 * ``Users::findOne(array $columns = null, array $options = null)`` - Find a single record
-* ``Users::findBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
-* ``Users::findAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
-* ``Users::execute($sql, $params, $resultAs = Record::AS_RECORD)`` - Execute a custom prepared SQL statement
-* ``Users::query($sql, $resultAs = Record::AS_RECORD)`` - Execute a simple SQL query
+* ``Users::findOneOrCreate(array $columns = null, array $options = null)`` - Find a single record or create it if it doesn't exist
+* ``Users::findLatest($by = null, array $columns = null, array $options = null)`` - Find the latest record
+* ``Users::findBy(array $columns = null, array $options = null, $asArray = false)`` - Find a record or records by certain column values
+* ``Users::findByOrCreate(array $columns = null, array $options = null, $asArray = false)`` - Find a record or records by certain column values or create it if doesn't exist
+* ``Users::findAll(array $options = null, $asArray = false)`` - Find all records in the table
+* ``Users::execute($sql, $params, $asArray = false)`` - Execute a custom prepared SQL statement
+* ``Users::query($sql, $asArray = false)`` - Execute a simple SQL query
+* ``Users::getTotal(array $columns = null, array $options = null)`` - Get total of rows in the table
 
 In the ``findOne``, ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
 contain values such as:
@@ -411,22 +822,18 @@ contain values such as:
         'select' => ['id', 'username'],
         'order'  => 'username ASC',
         'limit'  => 25,
-        'offset' => 5
+        'offset' => 5,
+        'join'   => [
+            [
+                'table'   => 'user_info',
+                'columns' => ['users.id' => 'user_info.user_id']
+            ]
+        ]
     ];
 
 The `select` key value can be an array of only the columns you would like to select. Otherwise it will select all columns `*`.
 The `order`, `limit` and `offset` key values all relate to those values to control the order, limit and offset of the
-SQL query.
-
-The ``$resultAs`` parameter allows you to set what the row set is returned as:
-
-* ``AS_ARRAY`` - As arrays
-* ``AS_OBJECT`` - As array objects
-* ``AS_RECORD`` - As instances of the ``Pop\Db\Record``
-
-The benefit of ``AS_RECORD`` is that you can operate on that row in real time, but if there are many
-rows returned in the result set, performance could be hindered. Therefore, you can use something like
-``AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
+SQL query. The `join` key allows you to pass the parameters in to create a JOIN statement.
 
 **Accessing records non-statically**
 
@@ -443,8 +850,8 @@ The basic overview of the result class API is as follows:
 
 * ``$user->getById($id)`` - Find a single record by ID
 * ``$user->getOneBy(array $columns = null, array $options = null)`` - Find a single record by ID
-* ``$user->getBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
-* ``$user->getAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
+* ``$user->getBy(array $columns = null, array $options = null, $asArray = false)`` - Find a record or records by certain column values
+* ``$user->getAll(array $options = null, $asArray = false)`` - Find all records in the table
 
 Encoded Record
 ~~~~~~~~~~~~~~

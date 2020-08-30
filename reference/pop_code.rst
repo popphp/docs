@@ -20,12 +20,25 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-code": "^3.1.1",
+            "popphp/pop-code": "^4.0.0",
         }
     }
 
 Basic Use
 ---------
+There are a number of individual code generators available to manage the creation and output of various types of
+code blocks. Code generators are available for the following type of code:
+
+* Classes
+* Interfaces
+* Traits
+* Methods
+* Functions
+* Constants
+* Properties
+* Namespaces
+* Docblocks
+* Bodies (general blocks of code)
 
 Here's an example to create a class with a property and a method:
 

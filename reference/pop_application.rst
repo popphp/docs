@@ -21,7 +21,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "^3.3.0",
+            "popphp/popphp": "^3.4.0",
         }
     }
 
@@ -88,7 +88,7 @@ with the application object through the appropriate API calls.
 * ``$app->registerModules($modules)`` - Register a new module manager
 * ``$app->registerAutoloader($autoloader)`` - Register an autoloader with the application
 * ``$app->mergeConfig($config, $replace = false)`` - Merge config values into the application
-* ``$app->run()`` - Run the application
+* ``$app->run($exit, $forceRoute);`` - Run the application
 
 You can access the main elements of the application object through the following methods:
 
@@ -130,3 +130,13 @@ by simply executing the ``run`` method:
 .. code-block:: php
 
     $app->run();
+
+The boolean parameter ``$exit`` is a flag that will be passed down to the router and allow
+the router to determine how to exit the application if a route is not found. By default, it's
+set to `true`, so the application exits out whenever a route is not found. However, if you
+wanted the application to not exit for any reason after a failed route match, you can set that
+flag to `false`.
+
+The optional parameter ``$forceRoute`` allows for an override and forces the application to
+run the provided route. This is useful when the application object is passed to other services,
+for example, a queue service, that need to trigger specific routes to run at scheduled times.

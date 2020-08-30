@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-csv": "^3.1.0",
+            "popphp/pop-csv": "^3.1.5",
         }
     }
 
@@ -46,7 +46,7 @@ To serialize the data into one of the data types, you can create a data object a
         ]
     ];
 
-    $data = new Pop\Data\Data($phpData);
+    $data = new Pop\Csv\Csv($phpData);
 
     $csvString   = $data->serialize();
 
@@ -66,9 +66,9 @@ string of serialized data. It will detect which one it is and parse it according
 
 .. code-block:: php
 
-    $csv = new Pop\Data\Data($csvString);
+    $csv = new Pop\Csv\Csv($csvString);
     // OR
-    $csv = new Pop\Data\Data('/path/to/file.csv');
+    $csv = new Pop\Csv\Csv('/path/to/file.csv');
 
     $phpData = $csv->unserialize();
 
@@ -77,7 +77,7 @@ Write to File
 
 .. code-block:: php
 
-    $data = new Pop\Data\Data($phpData);
+    $data = new Pop\Csv\Csv($phpData);
     $data->serialize();
     $data->writeToFile('/path/to/file.csv');
 
@@ -86,7 +86,7 @@ Output to HTTP
 
 .. code-block:: php
 
-    $data = new Pop\Data\Data($phpData);
+    $data = new Pop\Csv\Csv($phpData);
     $data->serialize();
     $data->outputToHttp();
 

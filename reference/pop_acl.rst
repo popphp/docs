@@ -25,7 +25,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-acl": "^3.2.0",
+            "popphp/pop-acl": "^3.3.0",
         }
     }
 
@@ -198,3 +198,66 @@ Then, within the application, you can use the assertions like this:
     // because the assertion fails, as this editor's ID
     // does not match the page's user ID
     if ($acl->isAllowed('editor', 'page', 'edit')) { }
+
+Policies
+--------
+
+An alternate way to achieve even more specific fine-grain control is to use policies. Similar to assertions,
+you have to write the policy class and it needs to use the ``Pop\Acl\Policy\PolicyTrait``. Unlike assertions that
+are centered around the single ``assert()`` method, policies allow you to write separate methods that will be called
+and evaluated via the ``can()`` method in the ``PolicyTrait``. Consider the following simple policy class:
+
+.. code-block:: php
+
+    use Pop\Acl\AclResource;
+
+    class User
+    {
+
+        use Pop\Acl\Policy\PolicyTrait;
+
+        public $id      = null;
+        public $isAdmin = null;
+
+        public function __construct($id, $isAdmin)
+        {
+            $this->id      = (int)$id;
+            $this->isAdmin = (bool)$isAdmin;
+        }
+
+        public function create(User $user, AclResource $page)
+        {
+            return (($user->isAdmin) && ($page->getName() == 'page'));
+        }
+
+        public function update(User $user, AclResource $page)
+        {
+            return ($user->id === $page->user_id);
+        }
+
+        public function delete(User $user, AclResource $page)
+        {
+            return (($user->isAdmin) || ($user->id === $page->user_id));
+        }
+
+    }
+
+The above policy class can enforce whether or not a user can create, update or delete a page resource.
+
+.. code-block:: php
+
+    $page   = new AclResource('page', ['id' => 2001, 'user_id' => 1002]);
+    $admin  = new User(1001, true);
+    $editor = new User(1002, false);
+
+    // Returns true, because the user is an admin
+    var_dump($admin->can('create', $page));
+
+    // Returns false, because the user is an editor (not an admin)
+    var_dump($editor->can('create', $page));
+
+    // Returns false, because the admin doesn't "own" the page
+    var_dump($admin->can('update', $page));
+
+    // Returns true, because the editor does "own" the page
+    var_dump($editor->can('update', $page));

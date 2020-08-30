@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popphp": "^3.3.0",
+            "popphp/popphp": "^3.4.0",
         }
     }
 
@@ -40,11 +40,12 @@ could be potentially less efficient.
 
     $events->trigger('foo');
 
-The valid callable strings for events are as follows:
+Similar to `services`_, the valid callable strings for events are as follows:
 
-1. 'SomeClass'
-2. 'SomeClass->foo'
-3. 'SomeClass::bar'
+1. 'someFunction'
+2. 'SomeClass'
+3. 'SomeClass->foo'
+4. 'SomeClass::bar'
 
 With events, you can also inject parameters into them as they are called, so that they may have access to
 any required elements or values of your application. For example, perhaps you need the events to have access
@@ -61,7 +62,7 @@ To detach an event listener, you call the ``off`` method:
 
 .. code-block:: php
 
-    $events->off('foo', 'MyApp\Event->bootstrap');
+    $events->off('foo', 'MyApp\Event::someEvent');
 
 Event Priority
 --------------
@@ -76,3 +77,42 @@ in which they fire. The higher the priority value, the earlier the event listene
 
 In the example above, the ``bootstrap`` event listener has the higher priority, so therefore it will fire
 before the ``log`` event listener.
+
+Events in a Pop Application
+---------------------------
+
+Within the context of a Pop application object, an event manager object is created by default or one can
+be injected. The default hook points within a Pop application object are:
+
+* app.init
+* app.route.pre
+* app.dispatch.pre
+* app.dispatch.post
+* app.error
+
+This conveniently wires together various common points in the application's life cycle where one may need
+to fire off an event of some kind. You can build upon these event hook points, creating your own that are
+specific to your application. For example, perhaps you require an event hook point right before a controller
+in your application sends a response. You could create an event hook point in your application like this:
+
+.. code-block:: php
+
+    $application->on('app.send.pre', 'MyApp\Event::logResponse');
+
+And then in your controller method, right before you send then response, you would trigger that event:
+
+.. code-block:: php
+
+    class MyApp\Controller\IndexController extends \Pop\Controller\AbstractController
+    {
+        public function index()
+        {
+            $this->application->trigger->('app.send.pre', ['controller' => $this]);
+            echo 'Home Page';
+        }
+    }
+
+The above example injects the controller object into the event listener in case the event called
+requires interaction with the controller or any of its properties.
+
+.. _services: ../getting_started/services.html#syntax-parameters

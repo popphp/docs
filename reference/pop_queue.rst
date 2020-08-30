@@ -26,7 +26,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-queue": "^1.1.1",
+            "popphp/pop-queue": "^1.1.2",
         }
     }
 

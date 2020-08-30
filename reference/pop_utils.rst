@@ -213,4 +213,3 @@ And can be utilized via a variety of dynamic static method calls:
     echo Str::snakeCaseToNamespace('snake_case_string'); // Snake\Case\String
     echo Str::kebabCaseToPath('kebab-string');           // kebab/string (kebab\string on Windows)
     echo Str::camelCaseToUrl('camelCase');               // camel/case
-
