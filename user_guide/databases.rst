@@ -372,10 +372,21 @@ The Schema Builder
 In addition to the query builder, there is also a schema builder to assist with database table
 structures and their management. In a similar fashion to the query builder, the schema builder
 has an API that mirrors the SQL that would be used to create, alter and drop tables in a database.
+It is also built to be portable and work across different environments that may have different chosen
+database adapters with which to work. And like the query builder, in order for it to function correctly,
+you need to pass it the database adapter your application is currently using so that it can properly
+build the SQL. The easiest way to do this is to just call the ``createSchema()`` method from the
+database adapter. It will inject itself into the Schema builder object being created.
+
+The examples below show separate schema statements, but a single schema builder object can have multiple
+schema statements within one schema builder object's life cycle.
+
+Create Table
+~~~~~~~~~~~~
 
 .. code-block:: php
 
-    $db = Pop\Db\Db::connect('mysql', $options);
+    $db = Pop\Db\Db::mysqlConnect($options);
 
     $schema = $db->createSchema();
     $schema->create('users')
@@ -389,11 +400,54 @@ The above code would produced the following SQL:
 
 .. code-block:: sql
 
+    -- MySQL
     CREATE TABLE `users` (
       `id` INT(16),
       `username` VARCHAR(255),
       `password` VARCHAR(255)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+Alter Table
+~~~~~~~~~~~
+
+.. code-block:: php
+
+    $schema->alter('users')
+        ->addColumn('email', 'VARCHAR', 255);
+
+    echo $schema;
+
+The above code would produced the following SQL:
+
+.. code-block:: sql
+
+    -- MySQL
+    ALTER TABLE `users` ADD `email` VARCHAR(255);
+
+Drop Table
+~~~~~~~~~~
+
+.. code-block:: php
+
+    $schema->drop('users');
+
+    echo $schema;
+
+The above code would produced the following SQL:
+
+.. code-block:: sql
+
+    -- MySQL
+    DROP TABLE `users`;
+
+Execute Schema
+~~~~~~~~~~~~~~
+
+You can execute the schema by using the ``execute()`` method within the schema builder object:
+
+.. code-block:: php
+
+    $schema->execute();
 
 Active Record
 -------------
