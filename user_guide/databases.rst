@@ -449,6 +449,27 @@ The above code would produced the following SQL:
       `password` VARCHAR(255)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+**Foreign Key Example**
+
+Here is an example of creating an additional ``user_info`` table that references the above ``users`` table
+with a foreign key:
+
+.. code-block:: php
+
+$schema->create('user_info')
+    ->int('user_id', 16)
+    ->varchar('email', 255)
+    ->varchar('phone', 255)
+    ->foreignKey('user_id')->references('users')->on('id')->onDelete('CASCADE');
+
+The above code would produced the following SQL:
+
+.. code-block:: sql
+
+    -- MySQL
+    ALTER TABLE `user_info` ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`)
+      REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 Alter Table
 ~~~~~~~~~~~
 
@@ -490,6 +511,68 @@ You can execute the schema by using the ``execute()`` method within the schema b
 .. code-block:: php
 
     $schema->execute();
+
+Schema Builder API
+~~~~~~~~~~~~~~~~~~
+
+In the above code samples, if you want to access the table object directly, you can like this:
+
+.. code-block:: php
+
+    $createTable   = $schema->create('users');
+    $alterTable    = $schema->alter('users');
+    $truncateTable = $schema->truncate('users');
+    $renameTable   = $schema->rename('users');
+    $dropTable     = $schema->drop('users');
+
+Here's a list of common methods available with which to build your schema:
+
+* ``$createTable->ifNotExists();`` - Add a IF NOT EXISTS flag
+* ``$createTable->addColumn($name, $type, $size = null, $precision = null, array $attributes = []);`` - Add a column
+* ``$createTable->increment($start = 1);`` - Set an increment value
+* ``$createTable->defaultIs($value);`` - Set the default value for the current column
+* ``$createTable->nullable();`` - Make the current column nullable
+* ``$createTable->notNullable();`` - Make the current column not nullable
+* ``$createTable->index($column, $name = null, $type = 'index');`` - Create an index on the column
+* ``$createTable->unique($column, $name = null);`` - Create a unique index on the column
+* ``$createTable->primary($column, $name = null);`` - Create a primary index on the column
+
+The following methods are shorthand methods for adding columns of various common types. Please note, if the
+selected column type isn't supported by the current database adapter, the column type is normalized to
+the closest type.
+
+* ``$createTable->integer($name, $size = null, array $attributes = []);``
+* ``$createTable->int($name, $size = null, array $attributes = []);``
+* ``$createTable->bigInt($name, $size = null, array $attributes = []);``
+* ``$createTable->mediumInt($name, $size = null, array $attributes = []);``
+* ``$createTable->smallInt($name, $size = null, array $attributes = []);``
+* ``$createTable->tinyInt($name, $size = null, array $attributes = []);``
+* ``$createTable->float($name, $size = null, $precision = null, array $attributes = []);``
+* ``$createTable->real($name, $size = null, $precision = null, array $attributes = [])``
+* ``$createTable->double($name, $size = null, $precision = null, array $attributes = []);``
+* ``$createTable->decimal($name, $size = null, $precision = null, array $attributes = []);``
+* ``$createTable->numeric($name, $size = null, $precision = null, array $attributes = []);``
+* ``$createTable->date($name, array $attributes = []);``
+* ``$createTable->time($name, array $attributes = []);``
+* ``$createTable->datetime($name, array $attributes = []);``
+* ``$createTable->timestamp($name, array $attributes = []);``
+* ``$createTable->year($name, $size = null, array $attributes = []);``
+* ``$createTable->text($name, array $attributes = []);``
+* ``$createTable->tinyText($name, array $attributes = []);``
+* ``$createTable->mediumText($name, array $attributes = []));``
+* ``$createTable->longText($name, array $attributes = []);``
+* ``$createTable->blob($name, array $attributes = []);``
+* ``$createTable->mediumBlob($name, array $attributes = []);``
+* ``$createTable->longBlob($name, array $attributes = []);``
+* ``$createTable->char($name, $size = null, array $attributes = []);``
+* ``$createTable->varchar($name, $size = null, array $attributes = []);``
+
+The following methods are all related to the creation of foreign key constraints and their relationships:
+
+* ``$createTable->int($name, $size = null, array $attributes = [])`` - Create a foreign key on the column
+* ``$createTable->references($foreignTable);`` - Create a reference to a table for the current foreign key constraint
+* ``$createTable->on($foreignColumn);`` - Used in conjunction with ``references()`` to designate the foreign column
+* ``$createTable->onDelete($action = null)`` - Set the ON DELETE parameter for a foreign key constraint
 
 Active Record
 -------------
