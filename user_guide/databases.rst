@@ -629,10 +629,14 @@ The basic overview of the record class static API is as follows, using the child
 * ``Users::sql()`` - Get the SQL object
 * ``Users::findById($id)`` - Find a single record by ID
 * ``Users::findOne(array $columns = null, array $options = null)`` - Find a single record
-* ``Users::findBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
-* ``Users::findAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
-* ``Users::execute($sql, $params, $resultAs = Record::AS_RECORD)`` - Execute a custom prepared SQL statement
-* ``Users::query($sql, $resultAs = Record::AS_RECORD)`` - Execute a simple SQL query
+* ``Users::findOneOrCreate(array $columns = null, array $options = null)`` - Find a single record or create it if it doesn't exist
+* ``Users::findLatest($by = null, array $columns = null, array $options = null)`` - Find the latest record
+* ``Users::findBy(array $columns = null, array $options = null, $asArray = false)`` - Find a record or records by certain column values
+* ``Users::findByOrCreate(array $columns = null, array $options = null, $asArray = false)`` - Find a record or records by certain column values or create it if doesn't exist
+* ``Users::findAll(array $options = null, $asArray = false)`` - Find all records in the table
+* ``Users::execute($sql, $params, $asArray = false)`` - Execute a custom prepared SQL statement
+* ``Users::query($sql, $asArray = false)`` - Execute a simple SQL query
+* ``Users::getTotal(array $columns = null, array $options = null)`` - Get total of rows in the table
 
 In the ``findOne``, ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
 contain values such as:
@@ -643,22 +647,18 @@ contain values such as:
         'select' => ['id', 'username'],
         'order'  => 'username ASC',
         'limit'  => 25,
-        'offset' => 5
+        'offset' => 5,
+        'join'   => [
+            [
+                'table'   => 'user_info',
+                'columns' => ['users.id' => 'user_info.user_id']
+            ]
+        ]
     ];
 
 The `select` key value can be an array of only the columns you would like to select. Otherwise it will select all columns `*`.
 The `order`, `limit` and `offset` key values all relate to those values to control the order, limit and offset of the
-SQL query.
-
-The ``$resultAs`` parameter allows you to set what the row set is returned as:
-
-* ``AS_ARRAY`` - As arrays
-* ``AS_OBJECT`` - As array objects
-* ``AS_RECORD`` - As instances of the ``Pop\Db\Record``
-
-The benefit of ``AS_RECORD`` is that you can operate on that row in real time, but if there are many
-rows returned in the result set, performance could be hindered. Therefore, you can use something like
-``AS_ARRAY`` as an alternative to keep the row data footprint smaller and lightweight.
+SQL query. The `join` key allows you to pass the parameters in to create a JOIN statement.
 
 **Accessing records non-statically**
 
@@ -675,8 +675,8 @@ The basic overview of the result class API is as follows:
 
 * ``$user->getById($id)`` - Find a single record by ID
 * ``$user->getOneBy(array $columns = null, array $options = null)`` - Find a single record by ID
-* ``$user->getBy(array $columns = null, array $options = null, $resultAs = Record::AS_RECORD)`` - Find a record or records by certain column values
-* ``$user->getAll(array $options = null, $resultAs = Record::AS_RECORD)`` - Find all records in the table
+* ``$user->getBy(array $columns = null, array $options = null, $asArray = false)`` - Find a record or records by certain column values
+* ``$user->getAll(array $options = null, $asArray = false)`` - Find all records in the table
 
 Encoded Record
 ~~~~~~~~~~~~~~
