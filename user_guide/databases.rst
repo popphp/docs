@@ -247,8 +247,9 @@ Delete
 Joins
 ~~~~~
 
-The SQL Builder has an extensive API to assist you in constructing complex SQL statements. Here's
-an example using JOIN and ORDER BY:
+The SQL Builder has an API to assist you in constructing complex SQL statements that use joins. Typically,
+the join methods take two parameters: the foreign table and an array with a 'key => value' of the two related
+columns across the two tables. Here's a SQL builder example using a LEFT JOIN:
 
 .. code-block:: php
 
@@ -280,11 +281,33 @@ an example using JOIN and ORDER BY:
         LEFT JOIN "user_info" ON ("users"."id" = "user_info"."user_id")
         WHERE ("id" < :id) ORDER BY "id" DESC
 
+Here's the available API for joins:
+
+* ``$db->join($foreignTable, array $columns, $join = 'JOIN');`` - Basic join
+* ``$db->leftJoin($foreignTable, array $columns);`` - Left join
+* ``$db->rightJoin($foreignTable, array $columns);`` - Right join
+* ``$db->fullJoin($foreignTable, array $columns);`` -  Full join
+* ``$db->outerJoin($foreignTable, array $columns);`` -  Outer join
+* ``$db->leftOuterJoin($foreignTable, array $columns);`` -  Left outer join
+* ``$db->rightOuterJoin($foreignTable, array $columns);`` -  Right outer join
+* ``$db->fullOuterJoin($foreignTable, array $columns);`` -  Full outer join
+* ``$db->innerJoin($foreignTable, array $columns);`` -  Outer join
+* ``$db->leftInnerJoin($foreignTable, array $columns);`` -  Left inner join
+* ``$db->rightInnerJoin($foreignTable, array $columns);`` -  Right inner join
+* ``$db->fullInnerJoin($foreignTable, array $columns);`` -  Full inner join
+
 Predicates
 ~~~~~~~~~~
 
 The SQL Builder also has an extensive API to assist you in constructing predicates with which to filter your
-SQL statements.
+SQL statements. Here's a list of some of the available methods to help you construct your predicate clauses:
+
+* ``$db->where($where);`` - Add a WHERE predicate
+* ``$db->andWhere($where);`` - Add another WHERE predicate using the AND conjunction
+* ``$db->orWhere($where);`` - Add another WHERE predicate using the OR conjunction
+* ``$db->having($having);`` - Add a HAVING predicate
+* ``$db->andHaving($having);`` - Add another HAVING predicate using the AND conjunction
+* ``$db->orHaving($having);`` - Add another HAVING predicate using the OR conjunction
 
 **AND WHERE**
 
@@ -331,7 +354,14 @@ There is even a more detailed and granular API that comes with the predicate obj
     -- MySQL
     SELECT * FROM `users` WHERE ((`id` > ?) AND (`email` = ?))
 
-**Nested Predicates**
+Nested Predicates
+~~~~~~~~~~~~~~~~~
+
+If you need to nest a predicate, there are API methods to allow you to do that as well:
+
+* ``$db->nest($conjunction = 'AND');`` - Create a nested predicate set
+* ``$db->andNest();`` - Create a nested predicate set using the AND conjunction
+* ``$db->orNest();`` - Create a nested predicate set using the OR conjunction
 
 .. code-block:: php
 
@@ -343,10 +373,22 @@ There is even a more detailed and granular API that comes with the predicate obj
 
     echo $sql;
 
+The output below shows the predicates for ``logins`` and ``failed`` are nested together:
+
 .. code-block:: sql
 
     -- MySQL
     SELECT * FROM `users` WHERE ((`id` > ?) AND ((`logins` > ?) OR (`failed` <= ?)))
+
+Sorting, Order & Limits
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The SQL Builder also has methods to allow to further control your SQL statement's result set:
+
+* ``$db->groupBy($by);`` - Add a GROUP BY
+* ``$db->orderBy($by, $order = 'ASC');`` - Add an ORDER BY
+* ``$db->limit($limit);`` - Add a LIMIT
+* ``$db->offset($offset);`` - Add an OFFSET
 
 Execute SQL
 ~~~~~~~~~~~
