@@ -92,6 +92,20 @@ in the table.
         echo $row['username'];
     }
 
+**Database Adapter API**
+
+Here's a list of some of the available methods that are available under the database adapter classes:
+
+* ``$db->query($sql);`` - Query the database with the SQL statement
+* ``$db->prepare($sql);`` - Prepare the SQL statement
+* ``$db->bindParams($params);`` - Bind parameters to the SQL statement
+* ``$db->execute();`` - Execute prepared SQL statement
+* ``$db->fetch();`` - Fetch the next row of the result set
+* ``$db->fetchAll();`` - Fetch all of the rows of the result set
+* ``$db->getNumberOfRows();`` - Get number of rows in the result set
+* ``$db->getLastId();`` - Get last incremented ID from the previous statement
+* ``$db->getTables();`` - Get list of tables in the database
+
 Using Prepared Statements
 -------------------------
 
@@ -118,7 +132,12 @@ The Query Builder
 The query builder is a part of the component that provides an interface that will produce syntactically correct
 SQL for whichever type of database you have elected to use. One of the main goals of this is portability across
 different systems and environments. In order for it to function correctly, you need to pass it the database
-adapter your application is currently using so that it can properly build the SQL.
+adapter your application is currently using so that it can properly build the SQL. The easiest way to do this
+is to just call the ``createSql()`` method from the database adapter. It will inject itself into the SQL builder
+object being created.
+
+Select
+~~~~~~
 
 .. code-block:: php
 
@@ -149,21 +168,94 @@ And SQLite would look like:
 
     SELECT "id", "username" FROM "users" WHERE "id" > :id
 
-The SQL Builder component has an extensive API to assist you in constructing complex SQL statements. Here's
+Insert
+~~~~~~
+
+.. code-block:: php
+
+    $sql->insert('users')->values([
+        'username' => ':username',
+        'password' => ':password'
+    ]);
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    INSERT INTO `users` (`username`, `password`) VALUES (?, ?)
+
+.. code-block:: sql
+
+    -- PostgreSQL
+    INSERT INTO "users" ("username", "password") VALUES ($1, $2)
+
+.. code-block:: sql
+
+    -- SQLite
+    INSERT INTO "users" ("username", "password") VALUES (:username, :password)
+
+Update
+~~~~~~
+
+.. code-block:: php
+
+    $sql->update('users')->values([
+        'username' => ':username',
+        'password' => ':password'
+    ])->where('id = :id');
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    UPDATE `users` SET `username` = ?, `password` = ? WHERE (`id` = ?)
+
+.. code-block:: sql
+
+    -- PostgreSQL
+    UPDATE "users" SET "username" = $1, "password" = $2 WHERE ("id" = $3)
+
+.. code-block:: sql
+
+    -- SQLite
+    UPDATE "users" SET "username" = :username, "password" = :password WHERE ("id" = :id)
+
+Delete
+~~~~~~
+
+.. code-block:: php
+
+    $sql->delete('users')
+        ->where('id = :id');
+    echo $sql;
+
+.. code-block:: sql
+
+    -- MySQL
+    DELETE FROM `users` WHERE (`id` = ?)
+
+.. code-block:: sql
+
+    -- PostgreSQL
+    DELETE FROM "users" WHERE ("id" = $1)
+
+.. code-block:: sql
+
+    -- SQLite
+    DELETE FROM "users" WHERE ("id" = :id)
+
+Joins
+~~~~~
+
+The SQL Builder has an extensive API to assist you in constructing complex SQL statements. Here's
 an example using JOIN and ORDER BY:
 
 .. code-block:: php
 
-    $db = Pop\Db\Db::connect('mysql', $options);
-
-    $sql = $db->createSql();
-    $sql->select([
-        'user_id'    => 'id',
-        'user_email' => 'email'
-    ])->from('users')
-      ->leftJoin('user_data', ['users.id' => 'user_data.user_id'])
-      ->orderBy('id', 'ASC');
-      ->where('id > :id');
+    $sql->select(['id', 'username', 'email'])->from('users')
+        ->leftJoin('user_info', ['users.id' => 'user_info.user_id'])
+        ->where('id < :id')
+        ->orderBy('id', 'DESC');
 
     echo $sql;
 
@@ -171,10 +263,63 @@ The above example would produce the following SQL statement for MySQL:
 
 .. code-block:: sql
 
-    SELECT `id` AS `user_id`, `email` AS `user_email` FROM `users`
-        LEFT JOIN `user_data` ON `users`.`id` = `user_data`.`user_id`
-        WHERE `id` > ?
-        ORDER BY `id` ASC;
+    -- MySQL
+    SELECT `id`, `username`, `email` FROM `users`
+        LEFT JOIN `user_info` ON (`users`.`id` = `user_info`.`user_id`)
+        WHERE (`id` < ?) ORDER BY `id` DESC
+ example would produce the following SQL statement for MySQL:
+
+.. code-block:: sql
+
+    -- PostgreSQL
+    SELECT "id", "username", "email" FROM "users"
+        LEFT JOIN "user_info" ON ("users"."id" = "user_info"."user_id")
+        WHERE ("id" < $1) ORDER BY "id" DESC
+
+ example would produce the following SQL statement for MySQL:
+
+.. code-block:: sql
+
+    -- SQLite
+    SELECT "id", "username", "email" FROM "users"
+        LEFT JOIN "user_info" ON ("users"."id" = "user_info"."user_id")
+        WHERE ("id" < :id) ORDER BY "id" DESC
+
+Predicates
+~~~~~~~~~~
+
+The SQL Builder also has an extensive API to assist you in constructing predicates with which to filter your
+SQL statements.
+
+.. code-block:: php
+
+    $sql->select()
+        ->from('users')
+        ->where('id > :id')->andWhere('email LIKE :email');
+
+    echo $sql;
+
+.. code-block:: sql
+
+    SELECT * FROM `users` WHERE ((`id` > :id) AND (`email` LIKE :email))
+
+Execute SQL
+~~~~~~~~~~~
+
+You can just pass the ``$sql`` object down into either the ``query()`` or ``prepare()`` methods of the ``$db``
+adapter:
+
+.. code-block:: php
+
+    // No parameters
+    $db->query($sql);
+
+.. code-block:: php
+
+    // Prepared statement with bound parameters
+    $db->prepare($sql)
+        ->bindParams($params)
+        ->execute();
 
 The Schema Builder
 ------------------
