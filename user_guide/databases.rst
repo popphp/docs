@@ -715,6 +715,15 @@ Delete a Record
         $user->delete();
     }
 
+**Deleting Multiple Records**
+
+You can delete multiple rows by passed a ``$columns`` parameter into the delete method.
+
+.. code-block:: php
+
+    $user = new Users();
+    $user->delete(['logins' => 0]);
+
 Execute Custom SQL
 ~~~~~~~~~~~~~~~~~~
 
@@ -784,8 +793,22 @@ The basic overview of the record class static API is as follows, using the child
 * ``Users::query($sql, $asArray = false)`` - Execute a simple SQL query
 * ``Users::getTotal(array $columns = null, array $options = null)`` - Get total of rows in the table
 
-In the ``findOne``, ``findBy`` and ``findAll`` methods, the ``$options`` parameter is an associative array that can
-contain values such as:
+The basic overview of the record class instance API is as follows:
+
+* ``$user->getById($id)`` - Find a single record by ID
+* ``$user->getOneBy(array $columns = null, array $options = null)`` - Find a single record by ID
+* ``$user->getBy(array $columns = null, array $options = null, $asArray = false)`` - Find a record or records by certain column values
+* ``$user->getAll(array $options = null, $asArray = false)`` - Find all records in the table
+* ``$user->save();`` - Save the record
+* ``$user->delete(array $columns = null);`` - Delete the record or records
+* ``$user->increment($column, $amount = 1);`` - Increment a numeric column
+* ``$user->decrement($column, $amount = 1);`` - Decrement a numeric column
+* ``$user->replicate(array $replace = []);`` - Replicate a record
+* ``$user->isDirty();`` - Check if the record has been changed
+* ``$user->getDirty();`` - Get any changes from the record
+* ``$user->resetDirty();`` - Reset the record if there were any changes
+
+In the some of the methods above, the ``$options`` parameter is an associative array that can contain values such as:
 
 .. code-block:: php
 
@@ -805,24 +828,6 @@ contain values such as:
 The `select` key value can be an array of only the columns you would like to select. Otherwise it will select all columns `*`.
 The `order`, `limit` and `offset` key values all relate to those values to control the order, limit and offset of the
 SQL query. The `join` key allows you to pass the parameters in to create a JOIN statement.
-
-**Accessing records non-statically**
-
-If you're interested in an alternative to the active record pattern, there is a non-static API within the
-``Pop\Db\Record`` class:
-
-.. code-block:: php
-
-    $user = new Users();
-    $user->getById(5);
-    echo $user->username;
-
-The basic overview of the result class API is as follows:
-
-* ``$user->getById($id)`` - Find a single record by ID
-* ``$user->getOneBy(array $columns = null, array $options = null)`` - Find a single record by ID
-* ``$user->getBy(array $columns = null, array $options = null, $asArray = false)`` - Find a record or records by certain column values
-* ``$user->getAll(array $options = null, $asArray = false)`` - Find all records in the table
 
 Encoded Record
 ~~~~~~~~~~~~~~
