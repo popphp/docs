@@ -343,6 +343,15 @@ to the CLI application is the help route:
 
     $ ./myapp help
 
+
+Hooking into Kettle
+-------------------
+
+If you need to hook into the Kettle helper application, you can do that with the provided ``kettle.inc.php`` file.
+The file is included right after the creation of the ``$app`` object, so you will have access to the application
+object. In this file you can add any additional runtime requirements, configurations or routes directly to the
+Kettle helper application.
+
 **Using on Windows**
 
 Most UNIX-based environments should recognize the main ``kettle`` application script as a PHP script and run it
