@@ -233,6 +233,73 @@ and routes such as these would be valid:
 * ``./app users``
 * ``./app users edit 1001``
 
+Named Routes
+------------
+
+Named routes are supported either through the API or through the routes configuration. The benefit of
+named routes is that it gives a simple name to call up and reference the route when needed.
+
+**Via the API**
+
+.. code-block:: php
+
+    $router = new Pop\Router\Router();
+
+    $router->addRoute('/home', function() {
+        echo 'Home!' . PHP_EOL;
+    })->name('home');
+
+    $router->addRoute('/hello/:name', function($name) {
+        echo 'Hello, ' . $name . '!' . PHP_EOL;
+    })->name('hello');
+
+
+**Via Route Configuration**
+
+.. code-block:: php
+
+    $app = new Application([
+        'routes' => [
+            '/home' => [
+                'controller' => function () {
+                    echo 'Home!' . PHP_EOL;
+                },
+                'name' => 'home'
+            ],
+            '/hello/:name' => [
+                'controller' => function ($name) {
+                    echo 'Hello, ' . $name . '!' . PHP_EOL;
+                },
+                'name' => 'hello'
+            ]
+        ]
+    ]);
+
+URL Generation
+--------------
+
+Using the named routed feature described above, you can generate URLs as needed by calling on the router
+and passing an array or object down with any of the dispatch parameters. The simple way to do this is with
+the static ``Pop\Route\Route`` class, which can store the application's current router.
+
+Consider the following named route:
+
+.. code-block:: php
+
+    $router->addRoute('/hello/:name', function($name) {
+        echo 'Hello, ' . $name . '!' . PHP_EOL;
+    })->name('hello');
+
+Below is an example of how to generate the appropriate URLs for a data set that would utilize that route:
+
+.. code-block:: php
+
+    foreach ($names as $name):
+        echo '<a href="' . Route::url('hello', $name) . '">'  . $name->name . '</a><br />' . PHP_EOL;
+    endforeach;
+
+.. code-block:: php
+
 Routing Syntax
 --------------
 
