@@ -93,9 +93,11 @@ Changelog
 * pop-image updated to v3.4.0
     + Added support for animated GIFs under the Imagick adapter
     + Deprecated the Gmagick adapter
-* popphp updated to v3.4.0
+* popphp updated to v3.6.0
     + Added better support for dynamic array params in the HTTP and CLI route objects
     + Refactored to use the new pop-utils component, including the array and callable features
+    + Added support for multi-byte routes
+    + Added support for named routes and URL generation
 * popcorn updated to v3.3.0
     + Added support for custom HTTP methods
     + Add ``any()`` method
