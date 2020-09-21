@@ -298,7 +298,11 @@ Below is an example of how to generate the appropriate URLs for a data set that 
         echo '<a href="' . Route::url('hello', $name) . '">'  . $name->name . '</a><br />' . PHP_EOL;
     endforeach;
 
-.. code-block:: php
+.. code-block:: html
+
+    <a href="/hello/nick">nick</a><br />
+    <a href="/hello/jim">jim</a><br />
+    <a href="/hello/world">world</a><br />
 
 Routing Syntax
 --------------
