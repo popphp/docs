@@ -1032,6 +1032,12 @@ set up, you'll actually access it using the static ``with()`` method, like this:
         echo $order->id;
     }
 
+The static ``with()`` method also supports multiple relationships as well:
+
+.. code-block:: php
+
+    $user = Users::with(['orders', 'posts'])->getById(1001);
+
 A note about the access in the example given above. Even though a method was defined to access the different
 relationships, you can use a magic property to access them as well, and it will route to that method. Also,
 object and array notation is supported throughout any record object. The following example all produce the

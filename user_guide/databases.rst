@@ -1025,12 +1025,18 @@ set up, you'll actually access it using the static ``with()`` method, like this:
 
 .. code-block:: php
 
-    $user = Users::with('orders')->getById(10592005);
+    $user = Users::with('orders')->getById(1001);
 
     // Loop through all of the user's orders
     foreach ($user->orders as $order) {
         echo $order->id;
     }
+
+The static ``with()`` method also supports multiple relationships as well:
+
+.. code-block:: php
+
+    $user = Users::with(['orders', 'posts'])->getById(1001);
 
 A note about the access in the example given above. Even though a method was defined to access the different
 relationships, you can use a magic property to access them as well, and it will route to that method. Also,
