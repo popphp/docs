@@ -1043,17 +1043,15 @@ exist in the following classes:
 
 * ``Users->posts()`` - returns `$this->hasMany()`
 * ``Posts->comments()`` - returns `$this->hasMany()`
-* ``Comments->responses()`` - returns `$this->hasMany()`
 
 this following example will retrieve ``parent -> child -> grandchild``:
 
 .. code-block:: php
 
-    $user = Users::with('posts.comments.responses')->getById(1001);
+    $user = Users::with('posts.comments')->getById(1001);
 
 And, it works in reverse as well. Assuming the following relationship methods exist in the following classes:
 
-* ``Responses->comment()`` - returns `$this->belongsTo()`
 * ``Comments->post()`` - returns `$this->belongsTo()`
 * ``Posts->user()`` - returns `$this->belongsTo()`
 
@@ -1061,7 +1059,7 @@ this following example will retrieve grandchild -> child -> parent:
 
 .. code-block:: php
 
-    $response = Responses::with('comment.post.user')->getById(1001);
+    $comment = Comments::with('post.user')->getById(1001);
 
 A note about the access in the example given above. Even though a method was defined to access the different
 relationships, you can use a magic property to access them as well, and it will route to that method. Also,
