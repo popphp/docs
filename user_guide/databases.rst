@@ -1036,7 +1036,7 @@ The static ``with()`` method also supports nested child relationships:
 
 .. code-block:: php
 
-    $user = Users::with('users.posts.comments'])->getById(1001);
+    $user = Users::with('users.posts.comments')->getById(1001);
 
 The static ``with()`` method also supports multiple relationships as well:
 
