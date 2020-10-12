@@ -390,7 +390,7 @@ If you want the request payload to go across as a URL-encoded form, you can call
     $client->createUrlEncodedForm();
 
 This will prep the request for formatting the request field data as a URL-encoded form and append the
-proper ``Content-Type: aapplication/x-www-form-urlencoded`` header to the request object.
+proper ``Content-Type: application/x-www-form-urlencoded`` header to the request object.
 
 **Creating a Multipart Form**
 
