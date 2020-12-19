@@ -31,11 +31,12 @@ create a new instance of a cookie object, you can pass it some optional paramete
 .. code-block:: php
 
     $cookie = Pop\Cookie\Cookie::getInstance([
-        'expire'   => 300,
+        'expires'  => 300,
         'path'     => '/system',
         'domain'   => 'www.domain.com',
         'secure'   => true,
-        'httponly' => true
+        'httponly' => true,
+        'samesite' => 'Strict'
     ]);
 
 These are all options that give you further control over when a cookie value expires and where and how it
