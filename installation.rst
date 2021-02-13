@@ -21,7 +21,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "^4.5.0"
+        "popphp/popphp-framework": "^4.6.0"
     }
 
 **Add it to an existing project**
@@ -36,7 +36,7 @@ instead of the full ``popphp/popphp-framework`` repository.
 Requirements
 ------------
 
-The only main requirement for the Pop PHP Framework is that you have at least **PHP 7.1.0**
+The only main requirement for the Pop PHP Framework is that you have at least **PHP 7.3.0**
 installed in your environment.
 
 Recommendations
@@ -68,8 +68,7 @@ recommended:
 
 + pop-image
     - gd
-    - imagick*
-    - gmagick*
+    - imagick
 
 + pop-cache
     - apc
@@ -84,4 +83,3 @@ recommended:
     - ftp
     - ldap
 
-\* - The **imagick** and **gmagick** extensions cannot be used simultaneously.
