@@ -30,14 +30,13 @@ A more expanded version of an Pop application structure may look like this:
   - config/
 
     - forms/       `(Form and form field configurations)`
-    - resources/   `(ACL resources and permissions)`
     - routes/      `(Route configurations)`
 
-      - web.php
-      - cli.php
+      - http.php
+      - console.php
 
-    - app.web.php
-    - app.cli.php
+    - app.http.php
+    - app.console.php
 
   - src/           `(Main application source files)`
 
@@ -58,7 +57,7 @@ A more expanded version of an Pop application structure may look like this:
 
   - migrations/
   - seeds/
-  - app.sql
+    - app.sql
 
 * logs/            `(Web server log files)`
 * public/          `(Web server document root)`
