@@ -1,8 +1,7 @@
 Installation
 ============
 
-There are a couple of different options to install the Pop PHP Framework. You can use Composer
-or you can download the stand-alone version from the website http://www.popphp.org/.
+You can use Composer to install the Pop PHP Framework or any of its supporting components.
 
 Using Composer
 --------------
