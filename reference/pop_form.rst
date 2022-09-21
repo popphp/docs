@@ -466,7 +466,7 @@ Here is an example using fields with multiple values:
 
     $fields = [
         'colors' => [
-            'type'   => 'checkbox',
+            'type'   => 'checkbox-set',
             'label'  => 'Colors',
             'values' => [
                 'Red'   => 'Red',
