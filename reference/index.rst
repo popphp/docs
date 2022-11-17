@@ -40,6 +40,7 @@ Reference
     pop_router
     pop_service
     pop_session
+    pop_storage
     pop_utils
     pop_validator
     pop_view

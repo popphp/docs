@@ -21,7 +21,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-mime": "^1.0.0",
+            "popphp/pop-mime": "^1.1.2"
         }
     }
 

@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-kettle": "^1.3.0",
+            "popphp/pop-kettle": "^1.6.2"
         }
     }
 

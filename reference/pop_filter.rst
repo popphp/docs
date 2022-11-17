@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-filter": "^3.1.2",
+            "popphp/pop-filter": "^3.2.1"
         }
     }
 

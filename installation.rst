@@ -20,7 +20,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "^4.6.0"
+        "popphp/popphp-framework": "^4.7.0"
     }
 
 **Add it to an existing project**
@@ -35,8 +35,8 @@ instead of the full ``popphp/popphp-framework`` repository.
 Requirements
 ------------
 
-The only main requirement for the Pop PHP Framework is that you have at least **PHP 7.3.0**
-installed in your environment.
+The Pop PHP Framework has been built for and tested with **PHP 8.1** and is backwards compatible to **7.4**.
+So the only true requirement is that to have at least **PHP 7.4** installed in the environment.
 
 Recommendations
 ---------------

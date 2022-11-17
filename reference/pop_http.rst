@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-http": "^4.0.0",
+            "popphp/pop-http": "^4.1.6"
         }
     }
 

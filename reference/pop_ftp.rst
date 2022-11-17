@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-ftp": "^3.0.3",
+            "popphp/pop-ftp": "^3.0.5"
         }
     }
 

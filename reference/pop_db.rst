@@ -15,6 +15,26 @@ One can use the above adapters, or extend the base ``Pop\\Db\\Adapter\\AbstractA
 write your own. Additionally, access to individual database tables can be leveraged via the
 ``Pop\Db\Record`` class.
 
+Installation
+------------
+
+Install it directly into your project:
+
+.. code-block:: bash
+
+    composer require popphp/pop-db
+
+Or, include it in your composer.json file:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "popphp/pop-db": "^5.3.4"
+        }
+    }
+
+
 Connecting to a Database
 ------------------------
 

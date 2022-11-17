@@ -32,7 +32,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-loader": "^3.0.4",
+            "popphp/pop-loader": "^3.1.1"
         }
     }
 

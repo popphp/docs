@@ -1,7 +1,7 @@
 Kettle
 =======
 
-As of version 4.0, the Pop PHP Framework incorporates a CLI-based help script called
+As of version 4.0, the Pop PHP Framework incorporates a CLI-based helper script called
 ``kettle``. It allows a user to quickly build the scaffolding for an application and
 manage database functions from the command line.
 
