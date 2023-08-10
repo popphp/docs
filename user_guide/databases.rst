@@ -1219,14 +1219,14 @@ that table when rolled back:
                 ->varchar('password', 255)
                 ->primary('id');
 
-            $this->db->query($schema);
+            $schema->execute();
         }
 
         public function down()
         {
             $schema = $this->db->createSchema();
             $schema->drop('users');
-            $this->db->query($schema);
+            $schema->execute();
         }
 
     }
