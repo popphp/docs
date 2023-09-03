@@ -4,7 +4,10 @@ from pygments.lexers.web import PhpLexer
 
 sys.path.append(os.path.abspath('_exts'))
 
-extensions = []
+extensions = [
+  'sphinx_rtd_theme',
+]
+html_theme = 'sphinx_rtd_theme'
 master_doc = 'index'
 highlight_language = 'php'
 
