@@ -20,7 +20,7 @@ the ``popphp/popphp-framework`` repository in the following ways:
 .. code-block:: json
 
     "require": {
-        "popphp/popphp-framework": "^4.7.0"
+        "popphp/popphp-framework": "^4.8.0"
     }
 
 **Add it to an existing project**

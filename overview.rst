@@ -35,7 +35,7 @@ significant refactor, taking advantage of PHP 5.4, eliminating dependencies amon
 components, separating the components into self-contained repositories, and
 incorporating `Composer`_.
 
-On November 16, 2021, version 4.7.0 was released and it continues the development and growth
+On September 2, 2023, version 4.8.0 was released and it continues the development and growth
 that the previous versions set forth.
 
 Community & Support
@@ -53,4 +53,4 @@ is located on the website.
 .. _GitHub Actions: https://github.com/features/actions
 .. _Gitter chat room: https://gitter.im/pop-php-framework/Lobby
 .. _Twitter: https://twitter.com/popphpframework
-.. _API documentation: http://api.popphp.org/4.7/
+.. _API documentation: http://api.popphp.org/4.8/
