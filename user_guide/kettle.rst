@@ -127,6 +127,7 @@ it will default to the ``default`` database.
     ./kettle migrate:create <class> [<database>]        Create new database migration class
     ./kettle migrate:run [<steps>] [<database>]         Perform forward database migration
     ./kettle migrate:rollback [<steps>] [<database>]    Perform backward database migration
+    ./kettle migrate:point [<id>] [<database>]          Point current to a specific migration, without running
     ./kettle migrate:reset [<database>]                 Perform complete rollback of the database
 
 Installing the Database
@@ -314,18 +315,26 @@ Accessing the Application
 -------------------------
 
 If you have wired up the beginnings of an application, you can then access the default routes in the following ways.
-Assuming you've started the web server as described above using ``./kettle serve``, you can access the web application
-by going to the address ``http://localhost:8000/`` in any web browser and seeing the default index HTML page.
+Starting the web server as described above using ``./kettle serve``, you can access the web application or API application.
 
-If you want to access the API application, the default route for that is http://localhost:8000/api and you can
-access it like this to see the default JSON response:
+For the web application you can go to the address ``http://localhost:8000/`` in any web browser and see the default
+index HTML page.
+
+If you've installed the API application instead, you can access it like this to see the default JSON response:
+
+.. code-block:: bash
+
+    $ curl -i -X GET http://localhost:8000/
+
+However, if you have installed both the web and API applications, the API application's default route will move to
+``http://localhost:8000/api`` and can be accessed like this:
 
 .. code-block:: bash
 
     $ curl -i -X GET http://localhost:8000/api
 
-And, if you cd ``script``, you'll see the default CLI application that was created. The default route available
-to the CLI application is the help route:
+Lastly, if you ``cd ./script``, you'll see the default CLI application script file that was created. The default route
+available to the CLI application is the help route:
 
 .. code-block:: bash
 
