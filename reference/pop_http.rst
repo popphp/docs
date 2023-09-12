@@ -122,6 +122,28 @@ If you need to access the raw request data or the parsed request data, you can d
 * ``$request->getHeader($key);`` - return a single request header value
 * ``$request->getHeaders();`` - return all header values in an array
 
+The ``Pop\Http\Auth`` class can assist with parsing an authorization header from an inbound request:
+
+.. code-block:: php
+
+    $request = new Pop\Http\Server\Request();
+    $auth    = Pop\Http\Auth::parse($request->getHeader('Authorization'));
+
+    print_r($auth);
+
+.. code-block:: text
+
+    Pop\Http\Auth Object
+    (
+        [header:protected] => Authorization
+        [scheme:protected] => Bearer
+        [token:protected] => AUTH_TOKEN
+        [username:protected] => 
+        [password:protected] => 
+        [authHeader:protected] => 
+    )
+
+
 Responses
 ~~~~~~~~~
 
@@ -402,3 +424,43 @@ If you want the request payload to go across as a multipart form, you can call t
 
 This will prep the request for formatting the request field data as a multipart form and append the
 proper ``Content-Type: multipart/form-data`` header to the request object.
+
+The ``Pop\Http\Auth`` class can assist with creating an authorization header for outbound HTTP client requests:
+
+**Client Example, Using Basic Auth**
+
+.. code-block:: php
+
+    // Automatically creates the base64 encoded basic auth header
+    $client = new Pop\Http\Client\Stream('http://www.mydomain.com/auth', 'POST');
+    $client->setAuth(Pop\Http\Auth::createBasic('username', 'password'));
+    $client->send();
+
+    // 200, if the credentials are valid
+    echo $client->getResponseCode();
+
+
+**Client Example, Using Bearer Token**
+
+.. code-block:: php
+
+    // Automatically creates the auth header with the correct bearer token
+    $client = new Pop\Http\Client\Curl('http://www.mydomain.com/auth', 'POST');
+    $client->setAuth(Pop\Http\Auth::createBearer('AUTH_TOKEN'));
+    $client->send();
+
+    // 200, if the credentials are valid
+    echo $client->getResponseCode();
+
+
+**Client Example, Using API Key with Custom Header**
+
+.. code-block:: php
+
+    // Automatically creates the auth header with the custom header name and API key value
+    $client = new Pop\Http\Client\Stream('http://www.mydomain.com/auth', 'POST');
+    $client->setAuth(Pop\Http\Auth::createKey('API_KEY', 'X-Api-Key'));
+    $client->send();
+
+    // 200, if the credentials are valid
+    echo $client->getResponseCode();
