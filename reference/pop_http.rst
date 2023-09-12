@@ -122,8 +122,7 @@ If you need to access the raw request data or the parsed request data, you can d
 * ``$request->getHeader($key);`` - return a single request header value
 * ``$request->getHeaders();`` - return all header values in an array
 
-Auth Headers
-~~~~~~~~~~~~
+**Request Auth Headers**
 
 The ``Pop\Http\Auth`` class can assist with parsing an authorization header from an inbound request:
 
@@ -428,8 +427,7 @@ If you want the request payload to go across as a multipart form, you can call t
 This will prep the request for formatting the request field data as a multipart form and append the
 proper ``Content-Type: multipart/form-data`` header to the request object.
 
-Auth Headers
-~~~~~~~~~~~~
+**Auth Headers**
 
 The ``Pop\Http\Auth`` class can assist with creating an authorization header for outbound HTTP client requests:
 
