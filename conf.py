@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, sphinx_rtd_theme
 from sphinx.highlighting import lexers
 from pygments.lexers.web import PhpLexer
 
