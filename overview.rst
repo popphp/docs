@@ -44,13 +44,13 @@ Community & Support
 Being an open source project, Pop PHP welcomes input and collaboration from the
 community and maintains an open dialogue with the community. Issues can be submitted
 to the appropriate repository on `Github`_. Additional support and communication is
-maintained in the `Gitter chat room`_ and `Twitter`_. The `API documentation`_
+maintained on the `Discord Server`_ and `Twitter`_. The `API documentation`_
 is located on the website.
 
 .. _Github: https://github.com/popphp
 .. _Composer: https://packagist.org/packages/popphp/
 .. _PHPUnit: https://phpunit.de/
 .. _GitHub Actions: https://github.com/features/actions
-.. _Gitter chat room: https://gitter.im/pop-php-framework/Lobby
+.. _Discord Server: https://discord.gg/8DUdCr9x
 .. _Twitter: https://twitter.com/popphpframework
 .. _API documentation: http://api.popphp.org/4.8/
