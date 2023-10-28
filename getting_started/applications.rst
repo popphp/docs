@@ -51,10 +51,8 @@ objects for you:
 
 **The Autoloader**
 
-You can also pass in the autoloader and access it through the application object if it is
-needed to register other components of the application. However, it is required that the
-autoloader object's API mirrors that of Composer's ``Composer\Autoload\ClassLoader`` class
-or Pop PHP's ``Pop\Loader\ClassLoader`` class.
+You can also pass the ``composer`` autoloader object into the application object and access
+it through the application object if it is needed to register other components of the application.
 
 .. code-block:: php
 

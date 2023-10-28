@@ -36,7 +36,7 @@ for more control over what happens for each route. This works for both HTTP and 
 
 .. code-block:: php
 
-    class MyApp\Http\Controller\IndexController extends \Pop\Controller\AbstractController
+    class MyApp\Controller\IndexController extends \Pop\Controller\AbstractController
     {
         public function index()
         {
@@ -45,7 +45,7 @@ for more control over what happens for each route. This works for both HTTP and 
     }
 
     $router->addRoute('/', [
-        'controller' => 'MyApp\Http\Controller\IndexController',
+        'controller' => 'MyApp\Controller\IndexController',
         'action'     => 'index'
     ]);
 
@@ -55,7 +55,7 @@ In the above example, the request ``/`` is routed to the ``index()`` method in t
 
 .. code-block:: php
 
-    class MyApp\Console\Controller\IndexController extends \Pop\Controller\AbstractController
+    class MyApp\Controller\ConsoleController extends \Pop\Controller\AbstractController
     {
         public function hello()
         {
@@ -64,7 +64,7 @@ In the above example, the request ``/`` is routed to the ``index()`` method in t
     }
 
     $router->addRoute('hello', [
-        'controller' => 'MyApp\Console\Controller\IndexController',
+        'controller' => 'MyApp\Controller\ConsoleController',
         'action'     => 'hello'
     ]);
 
@@ -177,7 +177,7 @@ Then add the following routes for HTTP and CLI:
 .. code-block:: php
 
     $router->addRoute('hello [<name>]', [
-        'controller' => 'MyApp\Controller\IndexController',
+        'controller' => 'MyApp\Controller\ConsoleController',
         'action'     => 'hello'
     ]);
 
@@ -327,20 +327,18 @@ HTTP
 CLI
 ~~~
 
-+-------------------------------------+----------------------------------------------------------------------+
-| CLI Route                           | What's Expected                                                      |
-+=====================================+======================================================================+
-| foo bar                             | Two commands are required                                            |
-+-------------------------------------+----------------------------------------------------------------------+
-| foo bar\|baz                        | Two commands are required, the 2nd can accept 2 values               |
-+-------------------------------------+----------------------------------------------------------------------+
-| foo [bar\|baz]                      | The second command is optional and can accept 2 values               |
-+-------------------------------------+----------------------------------------------------------------------+
-| foo -o1 [-o2]                       | First option required, 2nd option is optional                        |
-+-------------------------------------+----------------------------------------------------------------------+
-| foo --option1\|-o1 [--option2\|-o2] | 1st option required, 2nd optional; long & short supported for both   |
-+-------------------------------------+----------------------------------------------------------------------+
-| foo \<name\> [\<email\>]            | First param required, 2nd param optional                             |
-+-------------------------------------+----------------------------------------------------------------------+
-| foo --name= [--email=]              | First value param required, 2nd value param optional                 |
-+-------------------------------------+----------------------------------------------------------------------+
++------------------------------+-----------------------------------------------------------+------------------------------------+
+| CLI Route                    | What's Expected                                           | Example                            |
++==============================+===========================================================+====================================+
+| foo bar                      | Two commands are required                                 | ``foo bar``                        |
++------------------------------+-----------------------------------------------------------+------------------------------------+
+| foo bar\|baz                 | Two commands are required, the 2nd can accept 2 values    | ``foo baz``                        |
++------------------------------+-----------------------------------------------------------+------------------------------------+
+| foo [bar\|baz]               | The second command is optional and can accept 2 values    | ``foo baz``                        |
++------------------------------+-----------------------------------------------------------+------------------------------------+
+| foo \<name\> [\<email\>]     | First parameter required, 2nd parameter optional          | ``foo Joe joe@test.com``           |
++------------------------------+-----------------------------------------------------------+------------------------------------+
+| foo --name=|-n [-e|--email=] | First option value required, 2nd option value is optional | ``foo --name=Joe -e joe@test.com`` |
++------------------------------+-----------------------------------------------------------+------------------------------------+
+| foo [--option|-o]            | Option with both long and short formats                   | ``foo --option``                   |
++------------------------------+-----------------------------------------------------------+------------------------------------+
