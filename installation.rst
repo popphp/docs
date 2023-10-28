@@ -23,13 +23,13 @@ the ``popphp/popphp-framework`` repository in the following ways:
     cd popphp
     composer install
 
-**Option 3: Use ``composer require``**
+**Option 3: Use `composer require`**
 
 .. code-block:: bash
 
     composer require popphp/popphp-framework
 
-**Option 4: Use ``composer.json``**
+**Option 4: Use `composer.json`**
 
 .. code-block:: json
 
