@@ -333,16 +333,16 @@ CLI
 | foo bar                      | Two commands are required               | ``foo bar``                        |
 +------------------------------+-----------------------------------------+------------------------------------+
 | foo bar\|baz                 | Two commands are required,              | ``foo bar``                        |
-|                              | the 2nd can accept 2 values             | ``foo baz``                        |
+|                              | | the 2nd can accept 2 values           | ``foo baz``                        |
 +------------------------------+-----------------------------------------+------------------------------------+
 | foo [bar\|baz]               | The second command is optional          | ``foo``                            |
-|                              | and can accept 2 values                 | ``foo baz``                        |
+|                              | | and can accept 2 values               | ``foo baz``                        |
 +------------------------------+-----------------------------------------+------------------------------------+
 | foo \<name\> [\<email\>]     | First parameter required,               | ``foo Joe``                        |
-|                              | 2nd parameter optional                  | ``foo Joe joe@test.com``           |
+|                              | | 2nd parameter optional                | ``foo Joe joe@test.com``           |
 +------------------------------+-----------------------------------------+------------------------------------+
 | foo --name=|-n [-e|--email=] | First option value required,            | ``foo --name=Joe``                 |
-|                              | 2nd option value is optional            | ``foo --name=Joe -e joe@test.com`` |
+|                              | | 2nd option value is optional          | ``foo --name=Joe -e joe@test.com`` |
 +------------------------------+-----------------------------------------+------------------------------------+
 | foo [--option|-o]            | Option with both long and short formats | ``foo --option``                   |
 +------------------------------+-----------------------------------------+------------------------------------+
