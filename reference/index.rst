@@ -10,6 +10,7 @@ Reference
     pop_auth
     pop_cache
     pop_code
+    pop_color
     pop_config
     pop_console
     pop_controller
@@ -28,7 +29,6 @@ Reference
     pop_i18n
     pop_image
     pop_kettle
-    pop_loader
     pop_log
     pop_mail
     pop_mime
