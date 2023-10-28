@@ -6,12 +6,12 @@ Changelog
 
 (10/30/2023)
 
-* Upgraded to PHP >=8.1
-* ``pop-http``
++ Upgraded to PHP >=8.1
++ ``pop-http``
     + Better separation of Client and Server functionality
-        - Added standalone Client class
-        - Added client handlers to support curl, streams and curl multi
-        - Added standalone Server class
+        + Added standalone Client class
+        + Added client handlers to support curl, streams and curl multi
+        + Added standalone Server class
     + Improved response content negotiation and handling
     + Added Promises
     + Added Curl CLI conversion functionality
@@ -19,48 +19,48 @@ Changelog
     + Added factories to the client Stream and Curl classes
     + Added factories to the request, response and upload classes
     + Improved Auth header object, added support for digest auth
-* ``pop-mail``
++ ``pop-mail``
     + Expanded the available mail transports to include:
-        - Mailgun
-        - Sendgrid
-        - Office 365
-        - AWS SES
-        - Google
+        + Mailgun
+        + Sendgrid
+        + Office 365
+        + AWS SES
+        + Google
     + Expanded the available mail clients to include:
-        - Office 365
-        - Google
-* ``pop-storage``
+        + Office 365
+        + Google
++ ``pop-storage``
     + Added Azure adapter
     + Refactored the S3 and Local adapters
     + Added top-level normalized Storage class
-* ``popphp``
++ ``popphp``
     + Improved CLI route syntax and handling
-* ``pop-auth``
++ ``pop-auth``
     + Refactored for ``pop-http`` v5.0.0
-* ``pop-db``
++ ``pop-db``
     + Added the functionality to store DB migrations in a DB table.
-* ``pop-code``
++ ``pop-code``
     + Added support for return types and better support for type hints
-* ``pop-color``
++ ``pop-color``
     + New component for color value management, parsing and conversion
-* ``pop-console``
++ ``pop-console``
     + Added support for 4th console color to visually separate parameters and options
-* ``pop-image``
++ ``pop-image``
     + Deprecated and removed the following methods:
-        - ``setAdjust()``, ``setDraw()``, ``setEffect()``, ``setFilter()``, ``setLayer()``, ``setType()``
+        + ``setAdjust()``, ``setDraw()``, ``setEffect()``, ``setFilter()``, ``setLayer()``, ``setType()``
     + The following existing methods now serve as the constructor factories for their respective objects:
-        - ``adjust()``, ``draw()``, ``effect()``, ``filter()``, ``layer()``, ``type()``
-* ``pop-kettle``
+        + ``adjust()``, ``draw()``, ``effect()``, ``filter()``, ``layer()``, ``type()``
++ ``pop-kettle``
     + Added the ability to store and manage migrations from a database table
     + Added the ability to export and import raw SQL files (MySQL only.)
-* ``pop-utils``
++ ``pop-utils``
     + Added File helper class
     + Deprecated and removed abstract error class and error interface
 
 ### Deprecated Features
-- PHP 7.4 no longer supported
-- The ``pop-loader`` component is no longer available
-- Removed abstract error class and error interface in ``pop-utils``
++ PHP 7.4 no longer supported
++ The ``pop-loader`` component is no longer available
++ Removed abstract error class and error interface in ``pop-utils``
 
 4.8.0
 -----
