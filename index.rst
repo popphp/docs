@@ -12,6 +12,12 @@ the links below to get started.
     installation
     getting_started/index
     user_guide/index
+    database/index
+    http/index
+    console/index
+    forms/index
+    images/index
+    pdf/index
     tutorial_application/index
     reference/index
     changelog
