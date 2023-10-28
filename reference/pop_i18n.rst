@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-i18n": "^3.2.1"
+            "popphp/pop-i18n": "^4.0.0"
     }
 
 Basic Use

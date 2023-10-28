@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-debug": "^1.3.1"
+            "popphp/pop-debug": "^2.0.0"
         }
     }
 

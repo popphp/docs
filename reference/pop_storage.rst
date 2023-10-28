@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-storage": "^1.0.0"
+            "popphp/pop-storage": "^2.0.0"
         }
     }
 

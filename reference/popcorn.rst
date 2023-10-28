@@ -21,7 +21,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/popcorn": "^3.4.1"
+            "popphp/popcorn": "^4.0.0"
         }
     }
 

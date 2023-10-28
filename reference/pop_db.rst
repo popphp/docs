@@ -30,7 +30,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-db": "^5.3.4"
+            "popphp/pop-db": "^6.0.0"
         }
     }
 

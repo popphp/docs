@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-dom": "^3.3.1"
+            "popphp/pop-dom": "^4.0.0"
         }
     }
 

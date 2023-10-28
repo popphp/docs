@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-cookie": "^3.3.1"
+            "popphp/pop-cookie": "^4.0.0"
         }
     }
 

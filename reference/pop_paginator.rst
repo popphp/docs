@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-paginator": "^3.1.1"
+            "popphp/pop-paginator": "^4.0.0"
         }
     }
 

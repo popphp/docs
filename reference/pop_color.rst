@@ -1,8 +1,8 @@
 pop-color
 ==========
 
-The `popphp/pop-color` is a helpful component to manage different types of color values and conversions.
-Supported color formats include:
+The `popphp/pop-color` component is a helpful component to manage different types of color values
+and conversions. Supported color formats include:
 
 * RGB
 * HEX

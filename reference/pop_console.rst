@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-console": "^3.2.1"
+            "popphp/pop-console": "^4.0.0"
         }
     }
 

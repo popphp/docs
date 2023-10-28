@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-nav": "^3.3.1"
+            "popphp/pop-nav": "^4.0.0"
         }
     }
 

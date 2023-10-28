@@ -25,7 +25,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-mail": "^3.6.1"
+            "popphp/pop-mail": "^4.0.0"
         }
     }
 

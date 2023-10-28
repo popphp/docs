@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-audit": "^1.4.0"
+            "popphp/pop-audit": "^2.0.0"
         }
     }
 

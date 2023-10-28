@@ -19,7 +19,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-view": "^3.3.1"
+            "popphp/pop-view": "^4.0.0"
         }
     }
 

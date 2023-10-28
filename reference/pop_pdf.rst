@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-pdf": "^4.2.1"
+            "popphp/pop-pdf": "^5.0.0"
         }
     }
 

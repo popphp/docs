@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-css": "^1.1.1"
+            "popphp/pop-css": "^2.0.0"
         }
     }
 

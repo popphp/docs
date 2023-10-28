@@ -20,7 +20,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-image": "^3.5.1"
+            "popphp/pop-image": "^4.0.0"
         }
     }
 

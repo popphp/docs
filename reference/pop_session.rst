@@ -18,7 +18,7 @@ Or, include it in your composer.json file:
 
     {
         "require": {
-            "popphp/pop-session": "^3.4.1"
+            "popphp/pop-session": "^4.0.0"
         }
     }
 
