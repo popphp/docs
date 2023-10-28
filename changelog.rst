@@ -4,7 +4,7 @@ Changelog
 5.0.0
 -----
 **(10/30/2023)**
-* Upgraded to PHP 8.1+
+* Upgraded to PHP >=8.1
 * ``pop-http``
     + Better separation of Client and Server functionality
         - Added standalone Client class
