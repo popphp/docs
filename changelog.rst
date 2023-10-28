@@ -3,7 +3,7 @@ Changelog
 
 5.0.0
 -----
-**(10/30/2023)**
+(10/30/2023)
 * Upgraded to PHP >=8.1
 * ``pop-http``
     + Better separation of Client and Server functionality
@@ -62,7 +62,7 @@ Changelog
 
 4.8.0
 -----
-**(9/3/2023)**
+(9/3/2023)
 * Added API-based adapters for ``MailGun`` and ``SendGrid`` in the ``pop-mail`` component
 * Added new ``Auth`` header class to the ``pop-http`` component
     + Provides easier access to auth header information for outbound client requests and inbound server requests
@@ -70,14 +70,14 @@ Changelog
 
 4.7.0
 -----
-**(11/16/2022)**
+(11/16/2022)
 * Added support for PHP 8.0+. Backwards compatible to PHP 7.4.
 * Added new ``pop-storage`` component
     + Provides interchangeable adapters to easily switch between storage resources, e.g., local disk, AWS S3, etc.
 
 4.6.0
 -----
-**(2/12/2021)**
+(2/12/2021)
 * Migrated unit tests from Travis CI to GitHub Actions
 * Changed the minimum version support for PHP to 7.3
 * Changed the minimum version support for PHPUnit to 9.0
@@ -88,7 +88,7 @@ Changelog
 
 4.5.0
 -----
-**(5/28/2020)**
+(5/28/2020)
 * pop-db updated to v5.0.5
     + Refactored the predicate set parser/generator classes
     + Refactored "helper" parser classes (expressions, tables, etc.)
@@ -193,7 +193,7 @@ Changelog
 
 4.1.0
 -----
-**(10/17/2019)**
+(10/17/2019)
 * Updated to pop-csv v3.1.4, better appending, newline, escape and limit support
 * Updated tp pop-db v4.5.5, with support for export and creating large SQL
   queries from data sets
@@ -210,22 +210,22 @@ Changelog
 
 4.0.3
 -----
-**(4/9/2019)**
+(4/9/2019)
 * Updated to pop-csv v3.1.0, which includes static helper methods
 
 4.0.2
 -----
-**(3/12/2019)**
+(3/12/2019)
 * Updated to pop-db v4.5.0, which includes support for the encoded record class
 
 4.0.1
 -----
-**(2/9/2019)**
+(2/9/2019)
 * Added pop-kettle component for CLI-based helper functionality
 
 4.0.0
 -----
-**(2/5/2019)**
+(2/5/2019)
 * Support for PHP 7.1+ only
 * PHPUnit tests refactored for PHPUnit 7.0+
 * Refactored pop-auth
