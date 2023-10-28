@@ -4,7 +4,7 @@ Controllers
 The Pop PHP Framework comes with a base abstract controller class that can be extended to create
 the controller classes needed for your application. If you choose not to use the provided abstract
 controller class, you can write your own, but it needs to implement the main controller interface
-that is provided with Pop.
+that is provided with Pop (``Pop\Controller\ControllerInterface``.)
 
 When building your controller classes by extending the abstract controller class, you can define
 the methods that represent the actions that will be executed on the matched route. Here's an example
@@ -15,8 +15,8 @@ of what a basic controller might look like for a web application:
     namespace MyApp\Controller;
 
     use Pop\Controller\AbstractController;
-    use Pop\Http\Request;
-    use Pop\Http\Response;
+    use Pop\Http\Server\Request;
+    use Pop\Http\Server\Response;
 
     class IndexController extends AbstractController
     {
@@ -41,7 +41,7 @@ of what a basic controller might look like for a web application:
 
     }
 
-The above example uses the ``popphp/pop-http`` component and injects a request and a response object
+The above example uses the ``popphp/pop-http`` component and injects a server request and a response object
 into the controller's constructor. For more on how to inject controller parameters into the controller's
 constructor, refer the the section on `controller parameters`_ under `Routing`_.
 
