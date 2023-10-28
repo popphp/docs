@@ -54,10 +54,13 @@ Recommendations
 
 When writing web applications, a web server that supports URL rewrites is recommended, such as:
 
-+ Apache
-+ Nginx
-+ Lighttpd
-+ IIS
+* Apache
+
+* Nginx
+
+* Lighttpd
+
+* IIS
 
 **Extensions**
 
@@ -65,29 +68,45 @@ Various components of the Pop PHP Framework require different PHP extensions to 
 If you wish to take advantage of the many components of Pop PHP, the following extensions are
 recommended:
 
-+ pop-db
-    - mysqli
-    - pdo_mysql
-    - pdo_pgsql
-    - pdo_sqlite
-    - pgsql
-    - sqlite3
-    - sqlsrv
+* pop-db
 
-+ pop-image
-    - gd
-    - imagick
+  * mysqli
 
-+ pop-cache
-    - apc
-    - memcached
-    - redis
+  * pdo_mysql
 
-+ pop-debug
-    - redis
+  * pdo_pgsql
 
-+ other
-    - curl
-    - ftp
-    - ldap
+  * pdo_sqlite
+
+  * pgsql
+
+  * sqlite3
+
+  * sqlsrv
+
+* pop-image
+
+  * gd
+
+  * imagick
+
+* pop-cache
+
+  * apc
+
+  * memcached
+
+  * redis
+
+* pop-debug
+
+  * redis
+
+* other
+
+  * curl
+
+  * ftp
+
+  * ldap
 
