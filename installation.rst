@@ -9,25 +9,34 @@ Using Composer
 If you want to use the full framework and all of its components, you can install
 the ``popphp/popphp-framework`` repository in the following ways:
 
-**Create a new project**
+**Option 1: Create a New Project**
 
 .. code-block:: bash
 
     composer create-project popphp/popphp-framework project-folder
 
-**Add it to the composer.json file**
+**Option 2: Clone the Repo**
 
-.. code-block:: json
+.. code-block:: bash
 
-    "require": {
-        "popphp/popphp-framework": "^4.8.0"
-    }
+    git clone https://github.com/popphp/popphp-framework.git popphp
+    cd popphp
+    composer install
 
-**Add it to an existing project**
+**Option 3: Use ``composer require``**
 
 .. code-block:: bash
 
     composer require popphp/popphp-framework
+
+**Option 4: Use ``composer.json``**
+
+.. code-block:: json
+
+    "require": {
+        "popphp/popphp-framework": "^5.0.0"
+    }
+
 
 If you only want to use the core components, you can use the ``popphp/popphp`` repository
 instead of the full ``popphp/popphp-framework`` repository.
@@ -35,8 +44,8 @@ instead of the full ``popphp/popphp-framework`` repository.
 Requirements
 ------------
 
-The Pop PHP Framework has been built for and tested with **PHP 8.1** and is backwards compatible to **7.4**.
-So the only true requirement is that to have at least **PHP 7.4** installed in the environment.
+The Pop PHP Framework has been built for and tested with **PHP 8.2** but at a minimum, it requires **8.1**.
+So the only true requirement is that to have at least **PHP 8.1** installed in the environment.
 
 Recommendations
 ---------------

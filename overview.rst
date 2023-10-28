@@ -21,7 +21,7 @@ About the Framework
 -------------------
 
 Pop PHP is an open source, object-oriented PHP framework. It has been built and tested to
-run on PHP 8.0+, but at a minimum, it requires PHP 7.4. It is available on `Github`_ and
+run on PHP 8.2+, but at a minimum, it requires PHP 8.1. It is available on `Github`_ and
 through `Composer`_. The framework is tested using `PHPUnit`_ and continuous integration
 is maintained using `GitHub Actions`_.
 
@@ -35,7 +35,7 @@ significant refactor, taking advantage of PHP 5.4, eliminating dependencies amon
 components, separating the components into self-contained repositories, and
 incorporating `Composer`_.
 
-On September 2, 2023, version 4.8.0 was released and it continues the development and growth
+On October, 30 2023, version 5.0.0 was released and it continues the development and growth
 that the previous versions set forth.
 
 Community & Support
@@ -44,7 +44,7 @@ Community & Support
 Being an open source project, Pop PHP welcomes input and collaboration from the
 community and maintains an open dialogue with the community. Issues can be submitted
 to the appropriate repository on `Github`_. Additional support and communication is
-maintained on the `Discord Server`_ and `Twitter`_. The `API documentation`_
+maintained on the `Discord Server`_ and `X`_. The `API documentation`_
 is located on the website.
 
 .. _Github: https://github.com/popphp
@@ -52,5 +52,5 @@ is located on the website.
 .. _PHPUnit: https://phpunit.de/
 .. _GitHub Actions: https://github.com/features/actions
 .. _Discord Server: https://discord.gg/8DUdCr9x
-.. _Twitter: https://twitter.com/popphpframework
-.. _API documentation: http://api.popphp.org/4.8/
+.. _X: https://x.com/popphpframework
+.. _API documentation: http://api.popphp.org/5.0/
