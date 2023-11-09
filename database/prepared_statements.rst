@@ -1,2 +1,0 @@
-Prepared Statements
-===================
