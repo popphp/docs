@@ -1,0 +1,27 @@
+{
+    "name": "popphp/docs",
+    "description": "The Pop PHP Framework Documentation Website.",
+    "license": "BSD 3 Clause",
+    "authors": [
+        {
+            "name": "Nick Sagona",
+            "email": "dev@nolainteractive.com",
+            "homepage": "https://www.nolainteractive.com/"
+        }
+    ],
+    "require": {
+        "php": ">=8.1.0",
+        "popphp/popcorn": "^4.0.0",
+        "popphp/pop-kettle": "^2.0.0"
+    },
+    "autoload" : {
+        "psr-4": {
+            "Pop\\Docs\\": "app/src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.0.x-dev"
+        }
+    }
+}
