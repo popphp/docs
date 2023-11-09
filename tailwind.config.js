@@ -2,6 +2,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  content: ["./app/view/**/*.phtml"],
   theme: {
     screens: {
       sm: '480px',
