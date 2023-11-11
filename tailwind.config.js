@@ -5,10 +5,12 @@ module.exports = {
   content: ["./app/view/**/*.phtml"],
   theme: {
     screens: {
-      sm: '480px',
-      md: '768px',
-      lg: '976px',
-      xl: '1440px',
+      "xs": '360px',
+      "sm": '480px',
+      "md": '768px',
+      "lg": '976px',
+      "xl": '1280px',
+      "2xl": '1536px',
     },
     extend: {
       fontFamily: {

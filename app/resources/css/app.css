@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h2 {
+    @apply pt-4 pb-4 text-4xl font-bold
+}
+
+h4 {
+    @apply pt-2 pb-2 text-3xl font-bold
+}
+
+p {
+    @apply pt-4 pb-4
+}
+
+.col-right {
+    width: calc(100% - 240px);
+}
+.col-left {
+    width: 240px;
+}
+
+@media (max-width: 768px) {
+    .col-right {
+        width: 100%;
+    }
+    .col-left {
+        display: none;
+    }
+}
