@@ -23,6 +23,18 @@ p {
     width: 240px;
 }
 
+.side-nav > li {
+    @apply mt-3 mb-3 font-bold text-sm
+}
+
+.side-nav > li > ul {
+    @apply mt-2 mb-2 ml-4 list-none
+}
+
+.side-nav > li > ul > li {
+    @apply mt-3 mb-3 font-normal
+}
+
 pre {
     @apply relative
 }
