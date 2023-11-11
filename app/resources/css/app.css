@@ -15,17 +15,38 @@ p {
 }
 
 .col-right {
+    z-index: 1;
     width: calc(100% - 240px);
 }
 .col-left {
+    z-index: 2;
     width: 240px;
 }
 
+pre {
+    @apply relative
+}
+
+pre > code {
+    @apply relative p-2 rounded-lg text-sm
+}
+
+.copy-link {
+    @apply absolute top-2 right-2 pl-1 pt-1 w-8 h-8 rounded-md float-right text-gray-200 bg-gray-600 hover:bg-gray-900 active:bg-blue-800
+}
+
 @media (max-width: 768px) {
+    .nav-icon {
+        display: inline;
+    }
     .col-right {
         width: 100%;
     }
     .col-left {
-        display: none;
+        position: fixed;
+        top: 64px;
+        left: -240px;
+        bottom: 0;
+        display: block;
     }
 }
