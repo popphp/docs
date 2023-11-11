@@ -14,6 +14,10 @@ p {
     @apply pt-4 pb-4
 }
 
+a {
+    @apply text-blue-600 hover:text-orange-700
+}
+
 .col-right {
     z-index: 1;
     width: calc(100% - 240px);
@@ -27,12 +31,20 @@ p {
     @apply mt-3 mb-3 font-bold text-sm
 }
 
+.side-nav > li > a {
+    @apply text-black hover:text-gray-500
+}
+
 .side-nav > li > ul {
     @apply mt-2 mb-2 ml-4 list-none
 }
 
 .side-nav > li > ul > li {
     @apply mt-3 mb-3 font-normal
+}
+
+.side-nav > li > ul > li > a {
+    @apply text-gray-700 hover:text-gray-400
 }
 
 pre {
@@ -44,7 +56,7 @@ pre > code {
 }
 
 .copy-link {
-    @apply absolute top-2 right-2 pl-1 pt-1 w-8 h-8 rounded-md float-right text-gray-200 bg-gray-600 hover:bg-gray-900 active:bg-blue-800
+    @apply absolute top-2 right-2 pl-1 pt-1 w-8 h-8 rounded-md float-right text-gray-200 bg-gray-600 hover:text-gray-200 hover:bg-gray-900 active:bg-blue-500
 }
 
 @media (max-width: 768px) {
