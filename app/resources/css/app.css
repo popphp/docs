@@ -60,6 +60,10 @@ a {
     width: 280px;
 }
 
+.main-content {
+    min-height: 500px;
+}
+
 .side-nav > li {
     @apply mt-8 mb-8 block
 }
