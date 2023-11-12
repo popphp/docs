@@ -3,3 +3,5 @@ composer.lock
 vendor
 node_modules
 package-lock.json
+public/assets/css/app.min.css
+public/assets/js/app.min.js

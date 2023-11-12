@@ -1,31 +1,41 @@
-let toggleDarkMode = function() {
-    let html = document.querySelector('html');
-    if (html.getAttribute('class') == 'dark') {
-        html.setAttribute('class', 'light');
-        document.querySelector('a.dark-icon > svg:first-child').style.display = 'block';
-        document.querySelector('a.dark-icon > svg:last-child').style.display = 'none';
-    } else {
-        html.setAttribute('class', 'dark');
-        document.querySelector('a.dark-icon > svg:first-child').style.display = 'none';
-        document.querySelector('a.dark-icon > svg:last-child').style.display = 'block';
-    }
-}
+import {toggleSidebar, copyCode}  from './modules/main';
+import Alpine from 'alpinejs';
+import persist from '@alpinejs/persist';
+import hljs from 'highlight.js/lib/core';
+import php from 'highlight.js/lib/languages/php';
 
-let toggleSidebar = function(id) {
-    let sidebar = document.querySelector(id);
-    sidebar.style.left = (sidebar.style.left != '0px') ? '0px' : '-280px';
-}
+// Then register the languages you need
 
-let copyCode = function(a) {
-    let code     = null;
-    let siblings = a.parentNode.childNodes;
-    for (var i = 0; i < siblings.length; i++) {
-        if (siblings[i].nodeName == 'CODE') {
-            code = siblings[i].innerText;
-            break;
+window.Alpine        = Alpine;
+window.toggleSidebar = toggleSidebar;
+window.copyCode      = copyCode;
+
+Alpine.plugin(persist);
+Alpine.store('darkMode', {
+    on: Alpine.$persist(false).as('darkMode'),
+
+    init() {
+        if (this.on) {
+            document.querySelector('a.dark-icon > svg:first-child').style.display = 'none';
+            document.querySelector('a.dark-icon > svg:last-child').style.display = 'block';
+            document.querySelector('header').style.backgroundImage = 'url(/assets/img/pop-php-logo-white2.png)';
+            Alpine.$persist({ value: true }).as('darkMode')
+        } else {
+            document.querySelector('a.dark-icon > svg:first-child').style.display = 'block';
+            document.querySelector('a.dark-icon > svg:last-child').style.display = 'none';
+            document.querySelector('header').style.backgroundImage = 'url(/assets/img/pop-php-logo2.png)';
+            Alpine.$persist({ value: false }).as('darkMode')
         }
-    }
-    navigator.clipboard.writeText(code);
-}
+        return false;
+    },
 
+    toggle() {
+        this.on = ! this.on;
+        return this.init();
+    }
+})
+Alpine.start();
+Alpine.store('darkMode').init();
+
+hljs.registerLanguage('php', php);
 hljs.highlightAll();

@@ -1,6 +1,31 @@
+@import url(../../../node_modules/highlight.js/styles/atom-one-dark.css);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.home {
+    position: relative;
+    top: -15px;
+    left: 15px;
+    margin: 0;
+    padding: 0;
+    width: 225px;
+    height: 60px;
+    float: left;
+    display: inline-block;
+}
+
+.home > h1 {
+    @apply hidden
+}
+
+.logo {
+    background-image: url(/assets/img/pop-php-logo2.png);
+    background-repeat: no-repeat;
+    background-position-x: 28px;
+    background-position-y: center;
+    background-size: 225px 60px;
+}
 
 h2 {
     @apply pt-4 pb-4 text-4xl font-bold

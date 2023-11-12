@@ -1,5 +1,15 @@
 {
   "devDependencies": {
     "tailwindcss": "^3.3.5"
+  },
+  "dependencies": {
+    "@alpinejs/persist": "^3.13.2",
+    "alpinejs": "^3.13.2",
+    "highlight.js": "^11.9.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
   }
 }
