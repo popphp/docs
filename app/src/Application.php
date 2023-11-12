@@ -49,7 +49,7 @@ class Application extends \Pop\Application
     {
         $response      = new Response();
         $view          = new View(__DIR__ . '/../view/exception.phtml');
-        $view->title   = 'Exception';
+        $view->title   = 'Error';
         $view->message = $exception->getMessage();
         $response->setBody($view->render());
         $response->send(500);
