@@ -3,15 +3,23 @@
 @tailwind components;
 @tailwind utilities;
 
+[x-cloak] {
+    display: none !important;
+}
+
 .home {
-    position: relative;
-    top: -15px;
-    left: 15px;
+    position: absolute;
+    top: 10px;
+    left: 26px;
     margin: 0;
     padding: 0;
     width: 225px;
     height: 60px;
-    float: left;
+    background-image: url(/assets/img/pop-php-logo2.png);
+    background-repeat: no-repeat;
+    background-position-x: 0;
+    background-position-y: 0;
+    background-size: 225px 60px;
     display: inline-block;
 }
 
@@ -19,20 +27,20 @@
     @apply hidden
 }
 
-.logo {
-    background-image: url(/assets/img/pop-php-logo2.png);
-    background-repeat: no-repeat;
-    background-position-x: 28px;
-    background-position-y: center;
-    background-size: 225px 60px;
-}
-
 h2 {
     @apply pt-4 pb-4 text-4xl font-bold
 }
 
-h4 {
+h3 {
     @apply pt-2 pb-2 text-3xl font-bold
+}
+
+h4 {
+    @apply pt-2 pb-2 text-2xl font-bold
+}
+
+h5 {
+    @apply pt-1 pb-1 text-lg font-bold
 }
 
 p {
@@ -84,13 +92,35 @@ pre > code {
     @apply absolute top-2 right-2 pl-1 pt-1 w-8 h-8 rounded-md float-right text-gray-200 bg-gray-600 hover:text-gray-200 hover:bg-gray-900 active:bg-blue-500
 }
 
+.bash-prompt:before {
+    content: '$ '
+}
+
+.search, .search:focus {
+    width: 190px;
+    border: none;
+    outline: none;
+}
+
+.search:before {
+    content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /%3E%3C/svg%3E');
+    width: 24px;
+    height: 24px;
+}
+
 @media (max-width: 768px) {
+    .home {
+        width: 60px;
+    }
+
     .nav-icon {
         display: inline;
     }
+
     .col-right {
         width: 100%;
     }
+
     .col-left {
         position: fixed;
         top: 64px;
@@ -98,4 +128,17 @@ pre > code {
         bottom: 0;
         display: block;
     }
+
+    h2 {
+        @apply pt-4 pb-4 text-3xl font-bold
+    }
+
+    h3 {
+        @apply pt-2 pb-2 text-2xl font-bold
+    }
+
+    h4 {
+        @apply pt-2 pb-2 text-xl font-bold
+    }
+
 }
