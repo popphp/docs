@@ -1,24 +1,24 @@
             <aside id="sidebar" class="col-left bg-gray-200 pl-8 pr-8 pt-2 pb-2 overflow-y-auto dark:bg-gray-950">
                 <ul class="side-nav">
-                    <li>
-                        <a href="#">Overview</a>
-                        <ul>
+                    <li x-data="{open: true}">
+                        <a href="#" x-on:click="open = !open; $event.preventDefault();">Overview</a>
+                        <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="#">Introduction</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="#">Community</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">Installation</a>
-                        <ul class="hidden">
+                    <li x-data="{open: false}">
+                        <a href="#" x-on:click="open = !open; $event.preventDefault();">Installation</a>
+                        <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="#">Composer</a></li>
                             <li><a href="#">Requirements</a></li>
                             <li><a href="#">Recommendations</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">Getting Started</a>
-                        <ul class="hidden">
+                    <li x-data="{open: false}">
+                        <a href="#" x-on:click="open = !open; $event.preventDefault();">Getting Started</a>
+                        <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="#">Applications</a></li>
                             <li><a href="#">Routing</a></li>
                             <li><a href="#">Controllers</a></li>
@@ -30,9 +30,9 @@
                             <li><a href="#">Kettle</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">User Guide</a>
-                        <ul class="hidden">
+                    <li x-data="{open: false}">
+                        <a href="#" x-on:click="open = !open; $event.preventDefault();">User Guide</a>
+                        <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="#">MVC</a></li>
                             <li><a href="#">Views</a></li>
                             <li><a href="#">HTTP</a></li>
@@ -44,9 +44,9 @@
                             <li><a href="#">PDFs</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">Reference</a>
-                        <ul class="hidden">
+                    <li x-data="{open: false}">
+                        <a href="#" x-on:click="open = !open; $event.preventDefault();">Reference</a>
+                        <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="#">pop-acl</a></li>
                             <li><a href="#">pop-application</a></li>
                             <li><a href="#">pop-audit</a></li>
