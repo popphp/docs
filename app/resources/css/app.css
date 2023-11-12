@@ -55,6 +55,10 @@ a {
     @apply text-blue-500 hover:text-orange-700 dark:text-blue-400 dark:hover:text-orange-600
 }
 
+.list-orange {
+    @apply text-orange-700
+}
+
 .col-right {
     z-index: 1;
     width: calc(100% - 280px);

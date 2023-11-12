@@ -19,7 +19,7 @@ function setActiveNav() {
     let href = window.location.pathname;
     let activeNav = document.querySelector('ul.side-nav > li > ul > li > a[href="' + href + '"]');
     if (activeNav != null) {
-        activeNav.parentNode.setAttribute('class', 'list-disc text-orange-700');
+        activeNav.parentNode.setAttribute('class', 'list-disc list-orange');
     }
 }
 
