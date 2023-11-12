@@ -3,7 +3,7 @@
                     <li x-data="{open: true}">
                         <a href="#" x-on:click="open = !open; $event.preventDefault();">Overview</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="/overview/introduction">Introduction</a></li>
+                            <li class="list-disc text-orange-700"><a href="/overview/introduction">Introduction</a></li>
                             <li><a href="/overview/about">About</a></li>
                             <li><a href="/overview/community">Community</a></li>
                         </ul>
