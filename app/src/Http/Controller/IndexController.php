@@ -6,15 +6,21 @@ class IndexController extends AbstractController
 {
 
     /**
-     * Index action
+     * Route action
      *
      * @return void
      */
-    public function index(): void
+    public function route(): void
     {
-        $this->prepareView('index.phtml');
-        $this->view->title = 'Home';
-        $this->send();
+        $uri      = $this->request->getUriAsString();
+        $template = (($uri == '') || ($uri == '/')) ? '/index' : $uri;
+
+        if (file_exists($this->viewPath . $template . '.phtml')) {
+            $this->prepareView($template);
+            $this->send();
+        } else {
+            $this->error();
+        }
     }
 
     /**
@@ -24,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function error(): void
     {
-        $this->prepareView('error.phtml');
+        $this->prepareView('error');
         $this->view->title = '404 : Page Not Found';
         $this->send(404);
     }

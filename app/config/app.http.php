@@ -2,13 +2,10 @@
 
 return [
     'routes' => [
-        '[/]' => [
+        '*' => [
             'controller' => 'Pop\Docs\Http\Controller\IndexController',
-            'action'     => 'index'
-        ],
-        '*'    => [
-            'controller' => 'Pop\Docs\Http\Controller\IndexController',
-            'action'     => 'error'
+            'action'     => 'route',
+            'default'    => true
         ]
     ],
     'database' => include __DIR__ . '/database.php'

@@ -1,11 +1,11 @@
             <aside id="sidebar" class="col-left bg-gray-200 pl-8 pr-8 pt-2 pb-2 overflow-y-auto dark:bg-gray-950">
-                <ul class="side-nav">
+                <ul class="side-nav" x-init="setActiveNav();">
                     <li x-data="{open: true}">
                         <a href="#" x-on:click="open = !open; $event.preventDefault();">Overview</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="#">Introduction</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Community</a></li>
+                            <li><a href="/overview/introduction">Introduction</a></li>
+                            <li><a href="/overview/about">About</a></li>
+                            <li><a href="/overview/community">Community</a></li>
                         </ul>
                     </li>
                     <li x-data="{open: false}">

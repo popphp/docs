@@ -4,6 +4,7 @@ namespace Pop\Docs;
 
 use Pop\Http\Server\Request;
 use Pop\Http\Server\Response;
+use Pop\Http\Uri;
 use Pop\View\View;
 
 class Application extends \Pop\Application
@@ -24,6 +25,7 @@ class Application extends \Pop\Application
     /**
      * Load application
      *
+     * @throws \Pop\Http\Exception|\Pop\Http\Server\Exception
      * @return Application
      */
     public function load(): Application
@@ -31,8 +33,8 @@ class Application extends \Pop\Application
         $this->router()?->addControllerParams(
             '*', [
                 'application' => $this,
-                'request' => new Request(),
-                'response' => new Response()
+                'request'     => new Request(new Uri()),
+                'response'    => new Response()
             ]
         );
 

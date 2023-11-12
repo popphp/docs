@@ -1,0 +1,27 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p>
+                        Being an open source project, Pop PHP welcomes input and collaboration from the community and maintains an open dialogue with the community.
+                        Issues can be submitted to the appropriate repository on <a href="https://github.com/popphp" target="_blank">GitHub</a>. Other channels of communication include:
+                    </p>
+                    <h6>Community &amp; General Support</h6>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2"><a href="https://popphp.slack.com/">Slack</a></li>
+                        <li class="mb-2"><a href="https://discord.gg/TZjgT74U7E" target="_blank">Discord</a></li>
+                    </ul>
+                    <h6>General News</h6>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2"><a href="https://x.com/popphpframework" target="_blank">X.com</a></li>
+                    </ul>
+                    <h6>API Documentation</h6>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2"><a href="http://api.popphp.org/5.0/" target="_blank">API documentation</a></li>
+                    </ul>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>

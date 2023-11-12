@@ -28,19 +28,23 @@
 }
 
 h2 {
-    @apply pt-4 pb-4 text-4xl font-bold
+    @apply pt-4 pb-4 text-4xl text-gray-600 font-normal dark:text-gray-200
 }
 
 h3 {
-    @apply pt-2 pb-2 text-3xl font-bold
+    @apply pt-2 pb-2 text-3xl text-gray-600 font-normal dark:text-gray-200
 }
 
 h4 {
-    @apply pt-2 pb-2 text-2xl font-bold
+    @apply pt-2 pb-2 text-2xl text-gray-600 font-bold dark:text-gray-200
 }
 
 h5 {
-    @apply pt-1 pb-1 text-lg font-bold
+    @apply pt-1 pb-1 text-lg text-gray-600 font-bold dark:text-gray-200
+}
+
+h6 {
+    @apply pt-1 pb-1 text-sm text-gray-600 font-bold dark:text-gray-200
 }
 
 p {
@@ -48,7 +52,7 @@ p {
 }
 
 a {
-    @apply text-blue-600 hover:text-orange-700
+    @apply text-blue-500 hover:text-orange-700 dark:text-blue-400 dark:hover:text-orange-600
 }
 
 .col-right {
@@ -134,15 +138,15 @@ pre > code {
     }
 
     h2 {
-        @apply pt-4 pb-4 text-3xl font-bold
+        @apply pt-4 pb-4 text-3xl text-gray-600 font-normal dark:text-gray-200
     }
 
     h3 {
-        @apply pt-2 pb-2 text-2xl font-bold
+        @apply pt-2 pb-2 text-2xl text-gray-600 font-normal dark:text-gray-200
     }
 
     h4 {
-        @apply pt-2 pb-2 text-xl font-bold
+        @apply pt-2 pb-2 text-xl text-gray-600 font-bold dark:text-gray-200
     }
 
 }

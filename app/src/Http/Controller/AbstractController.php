@@ -41,6 +41,12 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
     protected ?View $view = null;
 
     /**
+     * Default action
+     * @var string
+     */
+    protected string $defaultAction = 'route';
+
+    /**
      * Constructor for the controller
      *
      * @param  Application $application
@@ -150,7 +156,17 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
      */
     protected function prepareView(string $template): void
     {
-        $this->view = new View($this->viewPath . '/' . $template);
+        $segments = array_values(array_filter(explode('/', $template)));
+        $title    = ucwords(end($segments));
+
+        $this->view = new View($this->viewPath . '/' . $template . '.phtml');
+        if ($title == 'Index') {
+            $this->view->title    = 'Home';
+            $this->view->segments = [];
+        } else {
+            $this->view->title    = $title;
+            $this->view->segments = $segments;
+        }
     }
 
 }

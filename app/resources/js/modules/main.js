@@ -15,4 +15,12 @@ function copyCode(a) {
     navigator.clipboard.writeText(code);
 }
 
-export {toggleSidebar, copyCode};
+function setActiveNav() {
+    let href = window.location.pathname;
+    let activeNav = document.querySelector('ul.side-nav > li > ul > li > a[href="' + href + '"]');
+    if (activeNav != null) {
+        activeNav.parentNode.setAttribute('class', 'list-disc text-orange-700');
+    }
+}
+
+export {toggleSidebar, copyCode, setActiveNav};
