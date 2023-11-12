@@ -11,7 +11,7 @@ h4 {
 }
 
 p {
-    @apply pt-4 pb-4
+    @apply pt-4 pb-4 text-sm leading-6
 }
 
 a {
@@ -20,35 +20,35 @@ a {
 
 .col-right {
     z-index: 1;
-    width: calc(100% - 240px);
+    width: calc(100% - 280px);
 }
 .col-left {
     z-index: 2;
-    width: 240px;
+    width: 280px;
 }
 
 .side-nav > li {
-    @apply mt-3 mb-3 font-bold text-sm
+    @apply mt-8 mb-8 block
 }
 
 .side-nav > li > a {
-    @apply text-black hover:text-gray-500
+    @apply block text-black font-bold text-sm transition ease-in-out hover:text-gray-600 hover:translate-x-2 duration-300 dark:text-gray-300 dark:hover:text-gray-500
 }
 
 .side-nav > li > ul {
-    @apply mt-2 mb-2 ml-4 list-none
+    @apply mt-3 mb-3 ml-4 list-none
 }
 
 .side-nav > li > ul > li {
-    @apply mt-3 mb-3 font-normal
+    @apply mt-3 mb-3 font-normal transition ease-in-out hover:translate-x-2 duration-300
 }
 
 .side-nav > li > ul > li > a {
-    @apply text-gray-700 hover:text-gray-400
+    @apply text-sm text-gray-700 hover:text-gray-400 dark:text-gray-500 dark:hover:text-gray-100
 }
 
 pre {
-    @apply relative
+    @apply relative mt-4
 }
 
 pre > code {
@@ -69,7 +69,7 @@ pre > code {
     .col-left {
         position: fixed;
         top: 64px;
-        left: -240px;
+        left: -280px;
         bottom: 0;
         display: block;
     }
