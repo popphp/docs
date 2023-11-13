@@ -16,13 +16,34 @@ function copyCode(a) {
 }
 
 function setActiveNav() {
-    let href = window.location.pathname;
+    let href      = window.location.pathname;
+    let hash      = window.location.hash;
     let activeNav = document.querySelector('ul.side-nav > li > ul > li > a[href="' + href + '"]');
+
     if (activeNav != null) {
         activeNav.parentNode.setAttribute('class', 'list-disc list-orange');
         let sibling = activeNav.nextElementSibling;
-        if ((sibling != null) && (sibling.nodeName == 'UL')) {
+        if ((sibling != null) && (sibling.nodeName === 'UL')) {
             sibling.setAttribute('class', 'block');
+        }
+        if (hash !== '') {
+            let activeSubNav = document.querySelector('ul.side-nav > li > ul > li > ul > li > a[href="' + href + hash + '"]');
+            if (activeSubNav != null) {
+                activeSubNav.setAttribute('class', 'font-bold');
+            }
+        }
+    }
+
+    let subNavs = document.querySelectorAll('ul.side-nav > li > ul > li > ul > li > a');
+    if (subNavs !== undefined) {
+        for (var i = 0; i < subNavs.length; i++) {
+            subNavs[i].addEventListener('click', function(e){
+                let allSubNavs = document.querySelectorAll('ul.side-nav > li > ul > li > ul > li > a');
+                for (var j = 0; j < allSubNavs.length; j++) {
+                    allSubNavs[j].removeAttribute('class');
+                }
+                e.target.setAttribute('class', 'font-bold');
+            });
         }
     }
 }
