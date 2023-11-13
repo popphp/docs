@@ -156,13 +156,19 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
      */
     protected function prepareView(string $template): void
     {
-        $segments = array_values(array_filter(explode('/', $template)));
-        $title    = ucwords(end($segments));
-
+        $segments   = array_values(array_filter(explode('/', $template)));
+        $title      = ucwords(end($segments));
         $this->view = new View($this->viewPath . '/' . $template . '.phtml');
+
+        $this->view->nav1Active = (($title == 'Index') || (str_contains($template, '/overview'))) ? 'true' : 'false';
+        $this->view->nav2Active = (str_contains($template, '/installation')) ? 'true' : 'false';
+        $this->view->nav3Active = (str_contains($template, '/getting-started')) ? 'true' : 'false';
+        $this->view->nav4Active = (str_contains($template, '/user-guide')) ? 'true' : 'false';
+        $this->view->nav5Active = (str_contains($template, '/reference')) ? 'true' : 'false';
+
         if ($title == 'Index') {
-            $this->view->title    = 'Home';
-            $this->view->segments = [];
+            $this->view->title      = 'Home';
+            $this->view->segments   = [];
         } else {
             $this->view->title    = $title;
             $this->view->segments = $segments;

@@ -1,0 +1,45 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p>At a minimum, the Pop PHP Framework requires <strong>PHP 8.1</strong>, but it has been built for and tested with <strong>PHP 8.2</strong>.
+                        So the only true requirement is that to have at least <strong>PHP 8.1</strong> installed in the environment.</p>
+                    <p><em>As of Pop PHP Framework version 5.0.0, PHP 7.4 is no longer supported.</em></p>
+                    <h4>Recommendations</h4>
+                    <p>Various components of the Pop PHP Framework require different PHP extensions and components to function correctly. If you wish to take advantage of the many components of Pop PHP, the following is recommended:</p>
+                    <h5>Databases:</h5>
+                    <ul class="list-disc ml-8 mb-8">
+                        <li class="mb-1">mysqli</li>
+                        <li class="mb-1">pdo_mysql</li>
+                        <li class="mb-1">pdo_pgsql</li>
+                        <li class="mb-1">pdo_sqlite</li>
+                        <li class="mb-1">pdo_sqlsrv</li>
+                        <li class="mb-1">pgsql</li>
+                        <li class="mb-1">sqlite3</li>
+                        <li class="mb-1">sqlsrv</li>
+                    </ul>
+                    <h5>Images:</h5>
+                    <ul class="list-disc ml-8 mb-8">
+                        <li class="mb-1">gd</li>
+                        <li class="mb-1">imagick</li>
+                    </ul>
+                    <h5>Caching, Queueing &amp; Debugging:</h5>
+                    <ul class="list-disc ml-8 mb-8">
+                        <li class="mb-1">apcu</li>
+                        <li class="mb-1">memcached</li>
+                        <li class="mb-1">redis</li>
+                    </ul>
+                    <h5>HTTP, Auth &amp; Others:</h5>
+                    <ul class="list-disc ml-8 mb-8">
+                        <li class="mb-1">curl</li>
+                        <li class="mb-1">ftp</li>
+                        <li class="mb-1">ldap</li>
+                        <li class="mb-1">json</li>
+                        <li class="mb-1">simplexml</li>
+                    </ul>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>

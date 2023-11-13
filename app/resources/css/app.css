@@ -59,6 +59,10 @@ a {
     @apply text-orange-700
 }
 
+.inline-code {
+    @apply text-xs font-normal bg-gray-200 pt-1 pb-1 pr-2 pl-2 rounded-md dark:bg-gray-700
+}
+
 .col-right {
     z-index: 1;
     width: calc(100% - 280px);
@@ -93,7 +97,7 @@ a {
 }
 
 pre {
-    @apply relative mt-4
+    @apply relative mt-1
 }
 
 pre > code {
@@ -101,11 +105,7 @@ pre > code {
 }
 
 .copy-link {
-    @apply absolute top-2 right-2 pl-1 pt-1 w-8 h-8 rounded-md float-right text-gray-200 bg-gray-600 hover:text-gray-200 hover:bg-gray-900 active:bg-blue-500
-}
-
-.bash-prompt:before {
-    content: '$ '
+    @apply absolute top-2 right-2 pl-1 pt-1 w-8 h-8 rounded-md float-right text-gray-200 bg-gray-600 hover:text-gray-200 hover:bg-gray-900 active:bg-blue-500 dark:text-gray-200 dark:hover:text-gray-200
 }
 
 .search, .search:focus {
