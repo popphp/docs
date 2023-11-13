@@ -38,6 +38,7 @@ function setActiveNav() {
     if (subNavs !== undefined) {
         for (var i = 0; i < subNavs.length; i++) {
             subNavs[i].addEventListener('click', function(e){
+                console.log(e)
                 let allSubNavs = document.querySelectorAll('ul.side-nav > li > ul > li > ul > li > a');
                 for (var j = 0; j < allSubNavs.length; j++) {
                     allSubNavs[j].removeAttribute('class');
