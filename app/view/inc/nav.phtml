@@ -92,15 +92,23 @@
                     <li x-data="{open: <?=$nav4Active; ?>}">
                         <a href="#" x-on:click="open = !open; $event.preventDefault();">User Guide</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="#">MVC</a></li>
-                            <li><a href="#">Views</a></li>
-                            <li><a href="#">HTTP</a></li>
-                            <li><a href="#">Console</a></li>
-                            <li><a href="#">Databases</a></li>
-                            <li><a href="#">Sessions</a></li>
-                            <li><a href="#">Forms</a></li>
-                            <li><a href="#">Images</a></li>
-                            <li><a href="#">PDFs</a></li>
+                            <li><a href="/user-guide/mvc">MVC</a></li>
+                            <li>
+                                <a href="/user-guide/views">Views</a>
+                                <ul class="hidden">
+                                    <li><a href="/user-guide/views#files">Files</a></li>
+                                    <li><a href="/user-guide/views#streams">Streams</a></li>
+                                    <li><a href="/user-guide/views#syntax">Stream Syntax</a></li>
+                                    <li><a href="/user-guide/views#filtering">Filtering</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/user-guide/http">HTTP</a></li>
+                            <li><a href="/user-guide/console">Console</a></li>
+                            <li><a href="/user-guide/databases">Databases</a></li>
+                            <li><a href="/user-guide/sessions">Sessions</a></li>
+                            <li><a href="/user-guide/forms">Forms</a></li>
+                            <li><a href="/user-guide/images">Images</a></li>
+                            <li><a href="/user-guide/pdfs">PDFs</a></li>
                         </ul>
                     </li>
                     <li x-data="{open: <?=$nav5Active; ?>}">

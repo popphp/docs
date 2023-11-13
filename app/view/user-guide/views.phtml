@@ -1,0 +1,419 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p>The <code class="inline-code">popphp/pop-view</code> component provides the functionality for creating and rendering views within
+                        your application. Data can be passed into a view, filtered and pushed out to the UI of the application
+                        to be rendering within the view template. As mentioned in the <a href="/user-guide/mvc">MVC section</a> of the user guide, the
+                        <code class="inline-code">popphp/pop-view</code> component supports both file-based and stream-based templates.</p>
+                    <h4 id="files">Files</h4>
+                    <p>With file-based view templates, the view object utilizes traditional PHP script files with the extension
+                        <code class="inline-code">.php</code> or <code class="inline-code">.phtml</code>. The benefit of this type of template is that you can fully leverage PHP in manipulating
+                        and displaying your data in your view.</p>
+
+                    <p>Let's revisit and expand upon the basic example given in the previous <a href="/user-guide/mvc">MVC section</a>. First let's take a
+                        look at the view template, <code class="inline-code">index.phtml</code>:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><?=\$title; ?></title>
+</head>
+<body>
+    <h1><?=\$title; ?></h1>
+    <?=\$content; ?>
+    <ul>
+<?php foreach (\$links as \$url => \$link): ?>
+        <li><a href="<?=\$url; ?>"><?=\$link; ?></a></li>
+<?php endforeach; ?>
+    </ul>
+</body>
+
+</html>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Then, we can set up the view and its data like below. Notice in the script above, we've set it up to loop
+                        through an array of links with the <code class="inline-code">$links</code> variable.</p>
+                    <pre><code class="language-php">$data = [
+    'title'   => 'View Example',
+    'content' => '&lt;p&gt;Some page content.&lt;/p&gt;',
+    'links'   => [
+        'http://www.popphp.org/'          => 'Pop PHP Framework',
+        'https://www.popphp.org/#popcorn' => 'Popcorn Micro Framework'
+    ]
+];
+
+$view = new Pop\View\View('index.phtml', $data);
+
+echo $view;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The result of the above example is:</p>
+                    <pre><code class="language-xml"><?=htmlentities(<<<PHTML
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>View Example</title>
+</head>
+<body>
+    <h1>View Example</h1>
+    <p>Some page content.</p>
+    <ul>
+        <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+        <li><a href="https://www.popphp.org/#popcorn">Popcorn Micro Framework</a></li>
+    </ul>
+</body>
+
+</html>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>As mentioned before, the benefit of using file-based templates is you can fully leverage PHP within the
+                        script file. One common thing that can be utilized when using file-based templates is file includes.
+                        This helps tidy up your template code and makes script files easier to manage by re-using template
+                        code. Here's an example that would work for the above script:</p>
+                    <h6>header.phtml</h6>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><?=\$title; ?></title>
+</head>
+<body>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>footer.phtml</h6>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+</body>
+
+</html>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>index.phtml</h6>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+<?php include __DIR__ . '/header.phtml'; ?>
+    <h1><?=\$title; ?></h1>
+<?=\$content; ?>
+    <ul>
+<?php foreach (\$links as \$url => \$link): ?>
+        <li><a href="<?=\$url; ?>"><?=\$link; ?></a></li>
+<?php endforeach; ?>
+    </ul>
+<?php include __DIR__ . '/footer.phtml'; ?>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="streams" class="mt-4">Streams</h4>
+                    <p>With stream-based view templates, the view object uses a string template to render the data within the view.
+                        While using this method doesn't allow the use of PHP directly in the template like the file-based templates
+                        do, it does support basic logic and iteration to manipulate your data for display. The benefit of this
+                        is that it provides some security in locking down a template and not allowing PHP to be directly processed
+                        within it. Additionally, the template strings can be easily stored and managed within the application and
+                        remove the need to have to edit and transfer template files to and from the server. This is a common tactic
+                        used by content management systems that have template functionality built into them.</p>
+
+                    <p>Let's look at the same example from above, but with a stream template:</p>
+                    <pre><code class="language-php"><?=htmlentities(<<<PHTML
+\$tmpl = <<<TMPL
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>[{title}]</title>
+</head>
+<body>
+    <h1>[{title}]</h1>
+[{content}]
+    <ul>
+[{links}]
+        <li><a href="[{key}]">[{value}]</a></li>
+[{/links}]
+    </ul>
+</body>
+
+</html>
+TMPL;
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above code snippet is a template stored as string. The stream-based templates use a system of <strong>placeholders</strong>
+                        to mark where you want the value to go within the template string. This is common with most string-based templating
+                        engines. In the case of <code class="inline-code">popphp/pop-view</code>, the placeholder uses the square bracket/curly bracket combination
+                        to wrap the variable name, such as <code class="inline-code">[{title}]</code>. In the special case of arrays, where iteration is allowed,
+                        the placeholders are marked the same way, but have an end mark like you see in the above template: <code class="inline-code">[{links}]</code>
+                        to <code class="inline-code">[{/links}]</code>. The iteration you need can happen in between those placeholder marks.</p>
+
+                    <p>Let's use the exact same examples from above, except passing the string template, <code class="inline-code">$tmpl</code>, into the view
+                        constructor:</p>
+                    <pre><code class="language-php">$data = [
+    'title'   => 'View Example',
+    'content' => '&lt;p&gt;Some page content.&lt;/p&gt;',
+    'links'   => [
+        'http://www.popphp.org/'          => 'Pop PHP Framework',
+        'https://www.popphp.org/#popcorn' => 'Popcorn Micro Framework'
+    ]
+];
+
+$view = new Pop\View\View('index.phtml', $data);
+
+echo $view;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>We can achieve exact same results as above:</p>
+                    <pre><code class="language-xml"><?=htmlentities(<<<PHTML
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>View Example</title>
+</head>
+<body>
+    <h1>View Example</h1>
+    <p>Some page content.</p>
+    <ul>
+        <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+        <li><a href="https://www.popphp.org/#popcorn">Popcorn Micro Framework</a></li>
+    </ul>
+</body>
+
+</html>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>As mentioned before, the benefit of using stream-based templates is you can limit the use of PHP within
+                        the template for security, as well as store the template strings within the application for
+                        easier access and management for the application users. And, streams can be stored in a number of ways.
+                        The most common is as a string in the application's database that gets passed in to the view's constructor.
+                        But, you can store them in a text-based file, such as <code class="inline-code">index.html</code> or
+                        <code class="inline-code">template.txt</code>, and the view constructor will detect that and grab the
+                        string contents from that template file. This will be applicable when we cover <strong>includes</strong> and <strong>inheritance</strong>,
+                        as you will need to be able to reference other string-based templates outside of the main one currently being used by the view object.</p>
+                    <h4 id="syntax">Stream Syntax</h4>
+                    <p>The examples below showed short examples of the stream syntax in action. In this section,
+                    different syntax use cases are covered to demonstrate what can be done with streams.</p>
+                    <h5 id="scalars">Scalars</h5>
+                    <p>Examples of using scalar values were shown above. You wrap the name of the variable in the placeholder
+                        bracket notation, <code class="inline-code">[{title}]</code>, in which the variable <code class="inline-code">$title</code> will render.</p>
+                    <h5 id="arrays-loops">Arrays/Loops</h5>
+                    <p>As mentioned in the example above, iterating over arrays use a similar bracket notation, but with a start
+                        key <code class="inline-code">[{links}]</code> and an end key with a slash <code class="inline-code">[{/links}]</code>. In between those markers, you can write a line
+                        of code in the template to define what to display for each iteration:</p>
+                    <pre><code class="language-php">$data = [
+    'links'   => [
+        'http://www.popphp.org/'          => 'Pop PHP Framework',
+        'https://www.popphp.org/#popcorn' => 'Popcorn Micro Framework'
+    ]
+];</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Additionally, when you are iterating over an array in a stream template, you have access to a counter in the
+                        form of the placeholder, <code class="inline-code">[{i}]</code>. That way, if you need to, you can mark each iteration uniquely:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+[{links}]
+    <li id="li-item-[{i}]"><a href="[{key}]">[{value}]</a></li>
+[{/links}]
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above template would render like this:</p>
+                    <pre><code class="language-xml"><?=htmlentities(<<<PHTML
+    <li id="li-item-1"><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+    <li id="li-item-2"><a href="https://www.popphp.org/#popcorn">Popcorn Micro Framework</a></li>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can also access nested associated arrays and their values by key name, to give you an additional
+                        level of control over your data, like so:</p>
+                    <pre><code class="language-php">$data = [
+    'links' => [
+        [
+            'title' => 'Pop PHP Framework',
+            'url'   => 'http://www.popphp.org/'
+        ],
+        [
+            'title' => 'Popcorn Micro Framework',
+            'url'   => 'https://www.popphp.org/#popcorn'
+        ]
+    ]
+];</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+[{links}]
+    <li><a href="[{url}]">[{title}]</a></li>
+[{/links}]
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above template and data would render like this:</p>
+                    <pre><code class="language-xml"><?=htmlentities(<<<PHTML
+    <li><a href="http://www.popphp.org/">Pop PHP Framework</a></li>
+    <li><a href="https://www.popphp.org/#popcorn">Popcorn Micro Framework</a></li>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="conditionals" class="mt-4">Conditionals</h5>
+                    <p>Stream-based templates support basic conditional logic as well to test if a variable is set.
+                        Here's an "if" statement:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+[{if(foo)}]
+    <p>The variable 'foo' is set to [{foo}].</p>
+[{/if}]
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And here's an "if/else" statement:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+[{if(foo)}]
+    <p>The variable 'foo' is set to [{foo}].</p>
+[{else}]
+    <p>The variable 'foo' is not set.</p>
+[{/if}]
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can also use conditionals to check if a value is set in an array:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+[{if(foo[bar])}]
+    <p>The value of '\$foo[\$bar]' is set to [{foo[bar]}].</p>
+[{/if}]
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Furthermore, you can test if a value is set within a loop of an array, like this:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+[{links}]
+[{if(url)}]
+        <li><a href="[{url}]">[{title}]</a></li>
+[{/if}]
+[{/links}]
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>An "if/else" statement also works within an array loop as well:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+[{links}]
+[{if(url)}]
+        <li><a href="[{url}]">[{title}]</a></li>
+[{else}]
+        <li>No URL was set</li>
+[{/if}]
+[{/links}]
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="includes" class="mt-4">Includes</h5>
+                    <p>As referenced earlier, you can store stream-based templates as files on disk. This is useful if you want
+                        to utilize includes with them. Consider the following templates:</p>
+                    <h6>header.phtml</h6>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>[{title}]</title>
+</head>
+<body>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>footer.phtml</h6>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+</body>
+
+</html>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>index.phtml</h6>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+{{@include header.html}}
+    <h1>[{title}]</h1>
+[{content}]
+{{@include footer.html}}
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Note the include token uses a double curly bracket and @ symbol.</p>
+                    <h5 id="inheritance">Inheritance</h5>
+                    <p>Inheritance, or blocks, are also supported with stream-based templates. Consider the following templates:</p>
+                    <h6>parent.phtml</h6>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+<!DOCTYPE html>
+<html>
+
+<head>
+{{header}}
+    <title>[{title}]</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{{/header}}
+</head>
+
+<body>
+    <h1>[{title}]</h1>
+    [{content}]
+</body>
+
+</html>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>child.phtml</h6>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+{{@extends parent.html}}
+
+{{header}}
+{{parent}}
+    <style>
+        body { margin: 0; padding: 0; color: #bbb;}
+    </style>
+{{/header}}
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Render using the parent:</p>
+                    <pre><code class="language-php">$view = new Pop\View\View('parent.html');
+$view->title   = 'Hello World!';
+$view->content = 'This is a test!';
+
+echo $view;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>will produce the following HTML:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Hello World!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+</head>
+
+<body>
+    <h1>Hello World!</h1>
+    This is a test!
+</body>
+
+</html>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Render using the child:</p>
+                    <pre><code class="language-php">$view = new Pop\View\View('child.html');
+$view->title   = 'Hello World!';
+$view->content = 'This is a test!';
+
+echo $view;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>will produce the following HTML:</p>
+                    <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Hello World!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <style>
+        body { margin: 0; padding: 0; color: #bbb;}
+    </style>
+
+</head>
+
+<body>
+    <h1>Hello World!</h1>
+    This is a test!
+</body>
+
+</html>
+PHTML, ENT_QUOTES, 'UTF-8'); ?></code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>As you can see, using the child template that extends the parent, the <code class="inline-code">{{header}}</code> section
+                        was extended, incorporating the additional <strong>style</strong> tags in the header of the HTML. Note that the
+                        placeholder tokens for the extending a template use double curly brackets.</p>
+                    <h4 id="filtering">Filtering</h4>
+                    <p>You can apply filters to the data in the view as well for security and tidying up content. You pass
+                        the <code class="inline-code">addFilter()</code> method a callable and any optional parameters and then call the <code class="inline-code">filter()</code>
+                        method to iterate through the data and apply the filters.</p>
+                    <pre><code class="language-php">$view = new Pop\View\View('index.phtml', $data);
+$view->addFilter('strip_tags');
+$view->addFilter('htmlentities', [ENT_QUOTES, 'UTF-8'])
+$view->filter();
+
+echo $view;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can also use the ``addFilters()`` to apply muliple filters at once:</p>
+                    <pre><code class="language-php">$view = new Pop\View\View('index.phtml', $data);
+$view->addFilters([
+    [
+        'call'   => 'strip_tags'
+    ],
+    [
+        'call'   => 'htmlentities',
+        'params' => [ENT_QUOTES, 'UTF-8']
+    ]
+]);
+
+$view->filter();
+
+echo $view;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And if need be, you can clear the filters out of the view object as well:</p>
+                    <pre><code class="language-php">$view->clearFilters();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>

@@ -47,6 +47,10 @@ h6 {
     @apply pt-1 pb-1 text-sm text-gray-600 font-bold dark:text-gray-200
 }
 
+.text-md {
+    font-size: 0.925rem;
+}
+
 p {
     @apply pt-4 pb-4 text-sm leading-6
 }
