@@ -29,7 +29,7 @@ function setActiveNav() {
         if (hash !== '') {
             let activeSubNav = document.querySelector('ul.side-nav > li > ul > li > ul > li > a[href="' + href + hash + '"]');
             if (activeSubNav != null) {
-                activeSubNav.setAttribute('class', 'font-bold');
+                activeSubNav.setAttribute('class', 'bold');
             }
         }
     }
