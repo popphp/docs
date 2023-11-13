@@ -6,6 +6,84 @@
     include __DIR__ . '/../inc/breadcrumb.phtml';
 endif; ?>
                     <h2><?=$title; ?></h2>
+                    <p>If you need access to various services throughout the life-cycle of the application, you can
+                        register them with the service locator and call upon them later. You can pass an array of services
+                        into the constructor, or you can set them individually as needed.</p>
+                    <pre><code class="language-php">$services = new Pop\Service\Locator([
+    'foo' => 'MyApp\SomeService'
+]);
 
+$services->set('bar', 'MyApp\SomeService->bar');
+$services['baz'] = 'MyApp\SomeService->baz';</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Then, you can retrieve a service in a number of ways:</p>
+                    <pre><code class="language-php">$foo = $services['foo'];
+$bar = $services->get('bar');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can use the <code class="inline-code">isAvailable()</code> method if you'd like to determine if a service is available, but not loaded yet:</p>
+                    <pre><code class="language-php">if ($services->isAvailable('foo')) {
+    $foo = $services['foo'];
+} else {
+    $services->set('foo', 'MyApp\SomeService');
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The service locator uses "lazy-loading" to store the service names and their attributes, and doesn't load or
+                        create the services until they are actually needed and called from the service locator. The <code class="inline-code">isLoaded()</code> method determines if the service has been set and previously called:</p>
+                    <pre><code class="language-php">if ($services->isLoaded('foo')) {
+    $foo = $services['foo'];
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can also remove a service from the service locator if needed:</p>
+                    <pre><code class="language-php">$services->remove('foo');
+unset($services['bar']);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="syntax" class="mt-4">Syntax</h4>
+                    <p>You have a couple of different options when setting services. You can pass callable strings or already
+                        instantiated instances of objects, although the latter could be potentially less efficient.
+                        Valid callable strings are as follows:</p>
+                    <ul class="list-disc ml-8">
+                        <li><code class="inline-code">'someFunction'</code></li>
+                        <li><code class="inline-code">'SomeClass'</code></li>
+                        <li><code class="inline-code">'SomeClass->foo'</code></li>
+                        <li><code class="inline-code">'SomeClass::bar'</code></li>
+                    </ul>
+                    <p>The first example is the name of a callable function. The second callable string example creates a new instance
+                        of <code class="inline-code">SomeClass</code> and returns it. The third callable string example creates a new instance of <code class="inline-code">SomeClass</code>,
+                        calls the method <code class="inline-code">foo()</code> and returns the value from it. The forth callable string example calls the static
+                        method <code class="inline-code">bar()</code> in the class <code class="inline-code">SomeClass</code> and returns the value from it.</p>
+                    <h4 id="parameters">Parameters</h4>
+                    <p>Additionally, if you need to inject parameters into your service upon calling your service, you can
+                        set a service using an array with a <code class="inline-code">call</code> key and a
+                        <code class="inline-code">params</code> key like this:</p>
+                    <pre><code class="language-php">$services = new Pop\Service\Locator([
+    'foo' => [
+        'call'   => 'MyApp\SomeService->foo',
+        'params' => [
+            'bar' => 123,
+            'baz' => 456
+        ]
+    ]
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the example above, the service <code class="inline-code">foo</code> is defined by the callable string <code class="inline-code">MyApp\SomeService->foo</code>.
+                        When the service <code class="inline-code">foo</code> is retrieved, the locator will create a new instance of <code class="inline-code">MyApp\SomeService</code>,
+                        call the method <code class="inline-code">foo</code> while passing the params <code class="inline-code">bar</code> and <code class="inline-code">baz</code> into the method.</p>
+                    <h4 id="container">Service Container</h4>
+                    <p>A static service container class is available if you prefer to track and access your services through it.
+                        The first call to create a new service locator object will automatically register it as the <code class="inline-code">'default'</code>
+                        service locator.</p>
+                    <h6>Default Service Locator</h6>
+                    <pre><code class="language-php">// Automatically registers it with the default container
+$services = new Pop\Service\Locator([
+    'foo' => 'MyApp\SomeService'
+]);
+
+// Get the service
+$foo = Pop\Service\Container::get('default')->get('foo');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Custom Service Locator</h6>
+                    <pre><code class="language-php">// Second boolean parameter prevents it from registering with the default container
+$customServices = new Pop\Service\Locator(null, false);
+
+// Register it with the custom container
+Pop\Service\Container::set('custom', $customServices);
+
+// Use the custom container to set and get the service
+Pop\Service\Container::get('custom')->set('foo', 'MyApp\SomeService');
+
+$foo = Pop\Service\Container::get('custom')->get('foo');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                 </div>
 <?php include __DIR__ . '/../inc/footer.phtml'; ?>

@@ -6,6 +6,231 @@
     include __DIR__ . '/../inc/breadcrumb.phtml';
 endif; ?>
                     <h2><?=$title; ?></h2>
+                    <p>The Pop PHP Framework includes <code class="inline-code">kettle</code>, a CLI-based helper script.
+                        It allows a user to quickly build the scaffolding for an application and manage database functions
+                        from the command line.</p>
+                    <h4 id="init">Initializing an Application</h4>
+                    <p>By running the following command, you can set up the basic files and folders required to run an application:</p>
+                    <pre><code class="language-bash">./kettle app:init [--web] [--api] [--cli] &lt;namespace&gt;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">&lt;namespace&gt;</code> parameter is the namespace of your application,
+                        for example <code class="inline-code">MyApp</code>. The optional parameters of <code class="inline-code">--web</code>, <code class="inline-code">--api</code>,
+                        and <code class="inline-code">--cli</code> will create the related files
+                        and folders to run the application as a normal web application, an API-driven web
+                        application, a CLI-driven console application or any combination thereof. The default
+                        route for the web application or the API application is <code class="inline-code">/</code>. However, if both are
+                        initialized, then the default route for the API application becomes to <code class="inline-code">/api</code>. The web
+                        application will deliver a placeholder HTML page and the API application will deliver
+                        a placeholder JSON response.</p>
+                    <p>After running the command, the basic application file and folder structure will look like:</p>
+                    <ul class="list-disc ml-8">
+                        <li>app/
+                            <ul class="list-disc ml-8">
+                                <li>config/</li>
+                                <li>src/</li>
+                                <li>view/</li>
+                            </ul>
+                        </li>
+                        <li>
+                            database/
+                            <ul class="list-disc ml-8">
+                                <li>migrations/</li>
+                                <li>seeds/</li>
+                            </ul>
+                        </li>
+                        <li>public/</li>
+                        <li>script/</li>
+                        <li>kettle</li>
+                        <li>kettle.inc.php</li>
+                    </ul>
+                    <p>The web/API application's front controller will be located in <code class="inline-code">public/index.php</code> and
+                        the main script for the CLI application will be located in <code class="inline-code">script/myapp</code> (named
+                        according to the provided <code class="inline-code">&lt;namespace&gt;</code> value.)</p>
 
+                    <p>After the application files and folders are copied over, you will be asked if you
+                        would like to configure a database. Follow those steps to configure a database and
+                        create the database configuration file.</p>
+                    <h4 id="include">Kettle Include</h4>
+                    <p>You should see a file <code class="inline-code">kettle.inc.php</code> next to the main <code class="inline-code">kettle</code> script. This serves
+                    as a configuration file for anything additional that needs to be wired up for your
+                    application to work with kettle. The file is included right after the creation of the
+                    <code class="inline-code">$autoloader</code> and <code class="inline-code">$app</code> objects, so you will have direct access to them. In this file
+                    you can add any additional runtime requirements, configurations or routes.</p>
+
+                    <p>For example, there may be an instance were <code class="inline-code">kettle</code> needs to be aware of your application
+                    and its namespace. You can access the autoloader here and register your application with
+                    <code class="inline-code">kettle</code> in the <code class="inline-code">kettle.inc.php</code> file:</p>
+                    <pre><code class="language-php">$autoloader->addPsr4('MyApp\\', __DIR__ . '/app/src');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>Note:</strong> If the <code class="inline-code">kettle.inc.php</code> file isn't available, you can copy it from the
+                    <code class="inline-code">vendor/popphp/pop-kettle/kettle</code> location to the main project folder (adjacent to
+                        the <code class="inline-code">vendor</code> folder.)</p>
+                    <h4 id="databases">Managing Databases</h4>
+                    <p>Once the application is initialized, you can manage the database, or multiple databases,
+                        by using the <code class="inline-code">db</code> and <code class="inline-code">migrate</code> commands. If you don't pass anything in the optional
+                        <code class="inline-code">[&lt;database&gt;]</code> parameter, it will default to the <code class="inline-code">default</code> database.</p>
+                    <pre><code class="language-bash">./kettle db:install [&lt;database&gt;]
+./kettle db:config [&lt;database&gt;]
+./kettle db:test [&lt;database&gt;]
+./kettle db:create-seed &lt;seed&gt; [&lt;database&gt;]
+./kettle db:seed [&lt;database&gt;]
+./kettle db:export [&lt;database&gt;]
+./kettle db:import &lt;file&gt; [&lt;database&gt;]
+./kettle db:reset [&lt;database&gt;]
+./kettle db:clear [&lt;database&gt;]
+
+./kettle migrate:create &lt;class&gt; [&lt;database&gt;]
+./kettle migrate:run [&lt;steps&gt;] [&lt;database&gt;]
+./kettle migrate:rollback [&lt;steps&gt;] [&lt;database&gt;]
+./kettle migrate:point [&lt;id&gt;] [&lt;database&gt;]
+./kettle migrate:reset [&lt;database&gt;]</code></pre>
+                    <h5 class="mt-4">Installing the Database</h5>
+                    <p>The command <code class="inline-code">db:install</code> a convenient combination the <code class="inline-code">db:config</code>,
+                            <code class="inline-code">db:test</code> and <code class="inline-code">db:seed</code> commands.
+                        Running the command will prompt you to enter the
+                            database configuration parameters. Once those are entered, it will test the database, and on
+                            a successful test, it will run the seed command and import any initial data it finds in the
+                        seed folder. The <code class="inline-code">db:install</code> command is what runs at the end of
+                        the <code class="inline-code">app:init</code> command if you answer <code class="inline-code">Y</code>
+                        to the question <code class="inline-code">Would you like to configure a database?</code></p>
+                    <h5>Seeding the Database</h5>
+                    <p>You can seed the database with data in one of two ways. You can either utilize a
+                        SQL file with the extension <code class="inline-code">.sql</code> in the
+                        <code class="inline-code">/database/seeds/&lt;database&gt;</code> folder or you
+                            can write a seeder class using PHP. To create a seeder class, you can run:</p>
+                    <pre><code class="language-bash">./kettle db:create-seed &lt;seed&gt; [&lt;database&gt;]</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Where the <code class="inline-code">&lt;seed&gt;</code> is the base class name of the seeder class that will be created.
+                                The template seeder class will be copied to the <code class="inline-code">/database/seeds/&lt;database&gt;</code> folder:</p>
+                    <pre><code class="language-php">use Pop\Db\Adapter\AbstractAdapter;
+use Pop\Db\Sql\Seeder\AbstractSeeder;
+
+class MyFirstSeeder extends AbstractSeeder
+{
+
+    public function run(AbstractAdapter $db)
+    {
+
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>From there, you can fill in the <code class="inline-code">run()</code> method in the seeder class with the SQL you need to seed your data:</p>
+                    <pre><code class="language-php">use Pop\Db\Adapter\AbstractAdapter;
+use Pop\Db\Sql\Seeder\AbstractSeeder;
+
+class DatabaseSeeder extends AbstractSeeder
+{
+
+    public function run(AbstractAdapter $db)
+    {
+        $sql = $db->createSql();
+
+        $sql->insert('users')->values([
+            'username' => 'testuser',
+            'password' => '12test34',
+            'email'    => 'test@test.com'
+        ]);
+
+        $db->query($sql);
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Then running the following command will execute any SQL in the seeder classes or any raw SQL in SQL files:</p>
+                    <pre><code class="language-bash">./kettle db:seed</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 class="mt-4">Database Migrations</h5>
+                    <p>You can create the initial database migration that would modify your database schema as
+                        your application grows by running the command:</p>
+                    <pre><code class="language-bash">./kettle migrate:create &lt;class&gt; [&lt;database&gt;]</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Where the <code class="inline-code">&lt;class&gt;</code> is the base class name of the migration class that will be created.
+                        You will see your new migration class template in the <code class="inline-code">/database/migrations/&lt;database&gt;</code> folder:</p>
+                    <pre><code class="language-php">use Pop\Db\Sql\Migration\AbstractMigration;
+
+class MyFirstMigration5dd822cdede29 extends AbstractMigration
+{
+
+    public function up()
+    {
+
+    }
+
+    public function down()
+    {
+
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>From there, you can populate the <code class="inline-code">up()</code> and <code class="inline-code">down()</code> with the schema to modify your database:</p>
+                    <pre><code class="language-php">use Pop\Db\Sql\Migration\AbstractMigration;
+
+class MyFirstMigration5dd822cdede29 extends AbstractMigration
+{
+
+    public function up()
+    {
+        $schema = $this->db->createSchema();
+        $schema->create('users')
+            ->int('id', 16)->increment()
+            ->varchar('username', 255)
+            ->varchar('password', 255)
+            ->varchar('email', 255)
+            ->primary('id');
+
+        $schema->execute();
+    }
+
+    public function down()
+    {
+        $schema = $this->db->createSchema();
+        $schema->drop('users');
+        $schema->execute();
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can run the migration and create the <code class="inline-code">users</code> table by running the command:</p>
+                    <pre><code class="language-bash">./kettle migrate:run</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And you can rollback the migration and drop the <code class="inline-code">users</code> table by running the command:</p>
+                    <pre><code class="language-bash">./kettle migrate:rollback</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 class="mt-4">Migration State Storage</h5>
+                    <p>The migration state storage can be stored in one of two places. By default, it will store in a file called
+                        <code class="inline-code">.current</code> in the database migration folder, for example:</p>
+                    <pre><code class="language-plaintext">/database/migrations/default/.current</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>However, it can also be stored in the database itself in a separate migrations table. This requires a file
+                        called <code class="inline-code">.table</code> to be placed in the database migration folder:</p>
+                    <pre><code class="language-plaintext">/database/migrations/default/.table</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The contents of the table will be the table class name for the migrations table in the database, for example:</p>
+                    <pre><code class="language-plaintext">MyApp\Table\Migrations</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Please note, while <code class="inline-code">kettle</code> is a CLI-helper tool that assists in wiring up your initial application, it is
+                    unaware of your application and its namespace. If you choose to manage database migrations with a database
+                    table, <code class="inline-code">kettle</code> will have to be made aware of the namespace and location of your application. You can do
+                        that by adding it to the autoloader in the <code class="inline-code">kettle.inc.php`</code> file:</p>
+                    <pre><code class="language-php">$autoloader->addPsr4('MyApp\\', __DIR__ . '/app/src');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="creating" class="mt-4">Creating App Files</h4>
+                    <p>You can create skeleton application files with the <code class="inline-code">create</code> commands to assist you in wiring up various
+                        MVC-based components, such as models, views and controllers:</p>
+                    <pre><code class="language-bash">./kettle create:ctrl [--web] [--api] [--cli] &lt;ctrl&gt;
+./kettle create:model &lt;model&gt;
+./kettle create:view &lt;view&gt;</code></pre>
+                    <p>Once the respective class files or view scripts are created in the appropriate folders, you can then
+                        open them up and begin writing your application code.</p>
+                    <h4 id="web-server">Web Server</h4>
+                    <p><code class="inline-code">pop-kettle</code> also provides a simple way to run PHP's built-in web-server, by running the command:</p>
+                    <pre><code class="language-bash">./kettle serve [--host=] [--port=] [--folder=]</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>This is for development environments only and it is strongly advised against using the built-in
+                        web server in a production environment in any way.</p>
+                    <h4 id="accessing">Accessing the App</h4>
+                    <p>If you have wired up the beginnings of an application, you can then access the default routes
+                        in the following ways. Assuming you've started the web server as described above using
+                        <code class="inline-code">./kettle serve</code>, you can access the web application by going to the address <code class="inline-code">http://localhost:8000/</code>
+                        in any web browser and seeing the default index HTML page.</p>
+                    <p>If you want to access the API application, the default route for that is <code class="inline-code">http://localhost:8000/api</code>
+                        and you can access it like this to see the default JSON response:</p>
+                    <pre><code class="language-bash">curl -i -X GET http://localhost:8000/api</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And, if you <code class="inline-code">cd script</code>, you'll see the default CLI application that was created. The default
+                        route available to the CLI application is the <code class="inline-code">help</code> route:</p>
+                    <pre><code class="language-bash">./myapp help</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="windows" class="mt-4">Windows</h4>
+                    <p>Most UNIX-based environments should recognize the main <code class="inline-code">kettle</code> application script as a PHP
+                        script and run it accordingly, without having to explicitly call the <code class="inline-code">php</code> command and pass
+                        the script and its parameters into it. However, if you're on an environment like Windows,
+                        depending on your exact environment set up, you will most likely have to prepend all of the
+                        command calls with the <code class="inline-code">php</code> command, for example:</p>
+                    <pre><code class="language-bash">C:\popphp\pop-kettle>php kettle help</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                 </div>
 <?php include __DIR__ . '/../inc/footer.phtml'; ?>

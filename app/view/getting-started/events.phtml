@@ -6,6 +6,61 @@
     include __DIR__ . '/../inc/breadcrumb.phtml';
 endif; ?>
                     <h2><?=$title; ?></h2>
+                    <p>The event manager provides a way to hook specific event listeners and functionality into certain points
+                        in an application's life-cycle. You can create an event manager object and attach, detach or trigger event
+                        listeners. You can pass callable strings or already instantiated instances of objects, although the latter
+                        could be potentially less efficient.</p>
+                    <pre><code class="language-php">$events = new Pop\Event\Manager();
 
+$events->on('foo', 'MyApp\Event->bootstrap');
+$events->on('bar', 'MyApp\Event::log');
+
+$events->trigger('foo');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Similar to the <a href="/getting-started/services#syntax">services syntax</a>, the valid callable strings for events are as follows:</p>
+                    <ul class="list-disc ml-8">
+                        <li><code class="inline-code">'someFunction'</code></li>
+                        <li><code class="inline-code">'SomeClass'</code></li>
+                        <li><code class="inline-code">'SomeClass->foo'</code></li>
+                        <li><code class="inline-code">'SomeClass::bar'</code></li>
+                    </ul>
+                    <p>With events, you can also inject parameters into them as they are called, so that they may have access to
+                        any required elements or values. For example, perhaps you need an event to have access
+                        to elements and values from your main application object:</p>
+                    <pre><code class="language-php">$events->trigger('foo', ['application' => $application]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the above example, any event listeners triggered by <code class="inline-code">foo</code> will get the application object injected
+                        into them so that the event called can utilize that object and retrieve data from it.</p>
+                    <p>To detach an event listener, you call the <code class="inline-code">off</code> method:</p>
+                    <pre><code class="language-php">$events->off('foo', 'MyApp\Event::someEvent');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="priority" class="mt-4">Priority</h4>
+                    <p>Event listeners attached to the same event handler can be assigned a priority value to determine the order
+                        in which they fire. The higher the priority value, the earlier the event listener will fire.</p>
+                    <pre><code class="language-php">$events->on('foo', 'MyApp\Event->bootstrap', 100);
+$events->on('foo', 'MyApp\Event::log', 10);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="application" class="mt-4">Application Events</h4>
+                    <p>Within the context of a Pop application object, an event manager object is created by default or one can
+                        be injected. The default hook points within a Pop application object are:</p>
+                    <ul class="list-disc ml-8">
+                        <li><code class="inline-code">app.init</code></li>
+                        <li><code class="inline-code">app.route.pre</code></li>
+                        <li><code class="inline-code">app.dispatch.pre</code></li>
+                        <li><code class="inline-code">app.dispatch.post</code></li>
+                        <li><code class="inline-code">app.error</code></li>
+                    </ul>
+                    <p>This conveniently wires together various common points in the application's life-cycle where one may need
+                        to fire off an event of some kind. You can build upon these event hook points, creating your own that are
+                        specific to your application. For example, perhaps you require an event hook point right before a controller
+                        in your application sends a response. You could create an event hook point in your application like this:</p>
+                    <pre><code class="language-php">$application->on('app.send.pre', 'MyApp\Event::logResponse');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And then in your controller method, right before you send then response, you would trigger that event:</p>
+                    <pre><code class="language-php">class MyApp\Controller\IndexController extends \Pop\Controller\AbstractController
+{
+    public function index()
+    {
+        $this->application->trigger->('app.send.pre', ['controller' => $this]);
+        echo 'Home Page';
+    }
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above example injects the controller object into the event listener in case the event called
+                        requires interaction with the controller or any of its properties.</p>
                 </div>
 <?php include __DIR__ . '/../inc/footer.phtml'; ?>

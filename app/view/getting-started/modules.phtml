@@ -6,6 +6,79 @@
     include __DIR__ . '/../inc/breadcrumb.phtml';
 endif; ?>
                     <h2><?=$title; ?></h2>
+                    <p>Modules can be thought of as "mini-application objects" that allow you to extend the functionality
+                        of your application. Module objects accept similar configuration parameters as an application object,
+                        such as <code class="inline-code">routes</code>, <code class="inline-code">services</code> and
+                        <code class="inline-code">events</code>. Additionally, it accepts a <code class="inline-code">prefix</code> configuration
+                        value as well to allow the module to register itself with the application autoloader. Here's an example
+                        of what a module might look like and how you'd register it with an application:</p>
+                    <h5>Configuration Array</h5>
+                    <p>In the example below, the module configuration is passed into the application object. From there,
+                        an instance of the base module object is created and the configuration is passed into it. The newly
+                        created module object is then registered with the module manager within the application object.</p>
+                    <pre><code class="language-php">$application = new Pop\Application();
 
+$moduleConfig = [
+    'routes' => [
+        '/' => [
+            'controller' => 'MyModule\Controller\IndexController',
+            'action'     => 'index'
+        ]
+    ],
+    'prefix' => 'MyModule\\'
+];
+
+$application->register('my-module', $moduleConfig);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 class="mt-8">Module Instance</h5>
+                    <p>In the example below, a module object is created and passed directly into the application object. The
+                        module object is then registered with the module manager within the application object.</p>
+                    <pre><code class="language-php">$application = new Pop\Application();
+
+$myModule = new Pop\Module\Module([
+    'name'   => 'my-module',
+    'routes' => [
+        '/' => [
+            'controller' => 'MyModule\Controller\IndexController',
+            'action'     => 'index'
+        ]
+    ],
+    'prefix' => 'MyModule\\'
+];
+
+$application->register($myModule);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="custom" class="mt-4">Custom Modules</h4>
+                    <p>You can pass your own custom module objects into the application as well, as long as they implement
+                        the interface <code class="inline-code">Pop\Module\ModuleInterface</code> provided. As the example below shows, you can create a new instance of your
+                        custom module and pass that into the application. The benefit of
+                        doing this is to allow you to extend the base module class and methods and provide any additional
+                        functionality that may be needed. In doing it this way, however, you will have to register your module's
+                        namespace prefix with the application's autoloader prior to registering the module with the application
+                        so that the application can properly detect and load the module's source files.</p>
+                    <pre><code class="language-php">$application->autoloader->addPsr4('MyModule\\', __DIR__ . '/modules/mymodule/src');
+
+$myModule = new MyModule\Module([
+    'routes' => [
+        '/' => [
+            'controller' => 'MyModule\Controller\IndexController',
+            'action'     => 'index'
+        ]
+    ]
+]);
+
+$application->register('myModule', $myModule);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="manager" class="mt-4">Module Manager</h4>
+                    <p>The module manager serves as the collection of module objects within the application. This facilitates
+                        accessing the modules you've added to the application during its life-cycle. In the examples above, the
+                        modules are not only being configured and created themselves, but they are also being registered with the
+                        application object. This means that at anytime, you can retrieve a module object or its properties in
+                        a number of ways:</p>
+                    <pre><code class="language-php">$fooModule = $application->module('fooModule');
+
+$barModule = $application->modules['barModule'];</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can also check to see if a module has been registered with the application object:</p>
+                    <pre><code class="language-php">if ($application->isRegistered('fooModule')) {
+    // Do something with the 'fooModule'
+}
+</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                 </div>
 <?php include __DIR__ . '/../inc/footer.phtml'; ?>
