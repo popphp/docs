@@ -20,6 +20,10 @@ function setActiveNav() {
     let activeNav = document.querySelector('ul.side-nav > li > ul > li > a[href="' + href + '"]');
     if (activeNav != null) {
         activeNav.parentNode.setAttribute('class', 'list-disc list-orange');
+        let sibling = activeNav.nextElementSibling;
+        if ((sibling != null) && (sibling.nodeName == 'UL')) {
+            sibling.setAttribute('class', 'block');
+        }
     }
 }
 

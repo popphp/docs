@@ -89,10 +89,23 @@ a {
 }
 
 .side-nav > li > ul > li {
-    @apply mt-3 mb-3 font-normal transition ease-in-out hover:translate-x-2 duration-300
+    @apply mt-3 mb-3 font-normal  /* transition ease-in-out hover:translate-x-2 duration-300*/
 }
 
 .side-nav > li > ul > li > a {
+    @apply text-sm text-gray-700 hover:text-gray-400 dark:text-gray-500 dark:hover:text-gray-100
+}
+
+.side-nav > li > ul > li > ul > li {
+    @apply mt-2 mb-2 font-normal text-xs
+}
+
+.side-nav > li > ul > li > ul > li:before {
+    color: #808080;
+    content: '> ';
+}
+
+.side-nav > li > ul > li > ul > li > a {
     @apply text-sm text-gray-700 hover:text-gray-400 dark:text-gray-500 dark:hover:text-gray-100
 }
 
@@ -119,6 +132,27 @@ pre > code {
     width: 24px;
     height: 24px;
 }
+
+.syntax-table {
+    @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400
+}
+
+.syntax-table thead {
+    @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400
+}
+
+.syntax-table thead th {
+    @apply px-6 py-3
+}
+
+.syntax-table tbody tr {
+    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700
+}
+
+.syntax-table tbody td {
+    @apply px-6 py-4
+}
+
 
 @media (max-width: 768px) {
     .home {

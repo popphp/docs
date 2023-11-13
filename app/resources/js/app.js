@@ -13,8 +13,6 @@ import css from 'highlight.js/lib/languages/css';
 import yaml from 'highlight.js/lib/languages/yaml';
 import plaintext from 'highlight.js/lib/languages/plaintext';
 
-// Then register the languages you need
-
 window.Alpine        = Alpine;
 window.toggleSidebar = toggleSidebar;
 window.copyCode      = copyCode;

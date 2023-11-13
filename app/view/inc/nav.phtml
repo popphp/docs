@@ -18,15 +18,36 @@
                     <li x-data="{open: <?=$nav3Active; ?>}">
                         <a href="#" x-on:click="open = !open; $event.preventDefault();">Getting Started</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="#">Applications</a></li>
-                            <li><a href="#">Routing</a></li>
-                            <li><a href="#">Controllers</a></li>
-                            <li><a href="#">Models</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Events</a></li>
-                            <li><a href="#">Modules</a></li>
-                            <li><a href="#">Popcorn</a></li>
-                            <li><a href="#">Kettle</a></li>
+                            <li>
+                                <a href="/getting-started/applications">Applications</a>
+                                <ul class="hidden">
+                                    <li><a href="/getting-started/applications#setup">Setup</a></li>
+                                    <li><a href="/getting-started/applications#autoloader">Autoloader</a></li>
+                                    <li><a href="/getting-started/applications#basic-api">Basic API</a></li>
+                                    <li><a href="/getting-started/applications#advanced-api">Advanced API</a></li>
+                                    <li><a href="/getting-started/applications#running-an-application">Run</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/getting-started/routing">Routing</a>
+                                <ul class="hidden">
+                                    <li><a href="/getting-started/routing#basic-routing">Basic Routing</a></li>
+                                    <li><a href="/getting-started/routing#dispatch-params">Dispatch Parameters</a></li>
+                                    <li><a href="/getting-started/routing#routing-syntax">Routing Syntax</a></li>
+                                    <li><a href="/getting-started/routing#controller-classes">Controller Classes</a></li>
+                                    <li><a href="/getting-started/routing#controller-params">Controller Parameters</a></li>
+                                    <li><a href="/getting-started/routing#dynamic-routing">Dynamic Routing</a></li>
+                                    <li><a href="/getting-started/routing#named-routes">Named Routes</a></li>
+                                    <li><a href="/getting-started/routing#url-generation">URL Generation</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/getting-started/controllers">Controllers</a></li>
+                            <li><a href="/getting-started/models">Models</a></li>
+                            <li><a href="/getting-started/services">Services</a></li>
+                            <li><a href="/getting-started/events">Events</a></li>
+                            <li><a href="/getting-started/modules">Modules</a></li>
+                            <li><a href="/getting-started/popcorn">Popcorn</a></li>
+                            <li><a href="/getting-started/kettle">Kettle</a></li>
                         </ul>
                     </li>
                     <li x-data="{open: <?=$nav4Active; ?>}">

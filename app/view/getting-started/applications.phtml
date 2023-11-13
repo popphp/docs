@@ -1,0 +1,134 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p>The application object of the Pop PHP Framework is the main object that helps control and provide
+                        access to the application's elements, configuration and current state. Within the application object
+                        are ways to create, store and manipulate common elements that you may need during an application's
+                        life-cycle, such as the router, service locator, event manager and module manager. Additionally,
+                        you can also have access to the config object and the autoloader, if needed.</p>
+                    <h4 id="setup">Application Setup</h4>
+                    <p>The application constructor is flexible in what it can accept when setting up your
+                        application. You can pass it a configuration array or object, or individual instances of the objects your application will need:</p>
+                    <h5>Configuration Array</h5>
+                    <p>In the example below, a configuration array is passed into the application object, which then wires up everything needed.</p>
+                    <pre><code class="language-php">$config = [
+    'routes' => [
+        '/' => [
+            'controller' => 'MyApp\Controller\IndexController',
+            'action'     => 'index'
+        ]
+    ],
+    'events' => [
+        [
+            'name'     => 'app.init',
+            'action'   => 'MyApp\Event::doSomething',
+            'priority' => 1000
+        ]
+    ],
+    'services' => [
+        'session' => 'Pop\Session\Session::getInstance'
+    ]
+];
+
+$app = new Pop\Application($config);
+$app->run();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 class="mt-8">Injecting Objects</h5>
+                    <p>The example below is the equivalent to the above example, except instead of using a configuration array,
+                        the required objects are created and passed into the application object directly.</p>
+                    <pre><code class="language-php">$router = new Pop\Router\Router();
+$router->addRoute('/', [
+    'controller' => 'MyApp\Controller\IndexController',
+    'action'     => 'index'
+]);
+
+$service = new Pop\Service\Locator(['session' => 'Pop\Session\Session::getInstance']);
+$events  = new Pop\Event\Manager('app.init', 'MyApp\Event::doSomething', 1000);
+$app     = new Pop\Application($router, $service, $events);
+$app->run();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="autoloader" class="mt-8">Autoloader</h4>
+                    <p>You can pass the <code class="inline-code">composer</code> autoloader object into the application object and access
+                        it through the application object if it is needed to register other components of the application.</p>
+                    <pre><code class="language-php">$autoloader = include __DIR__ . '/vendor/autoload.php';
+
+$app = new Pop\Application($autoloader);
+
+$app->autoloader->add('Test', __DIR__ . '/src/Test');   // PSR-0
+$app->autoloader->addPsr4('MyApp\\', __DIR__ . '/src'); // PSR-4</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If needed, you can autoload your application's source through the application constructor
+                        by setting a <code class="inline-code">prefix</code> and <code class="inline-code">src</code> keys in the configuration array:</p>
+                    <pre><code class="language-php">$autoloader = include __DIR__ . '/vendor/autoload.php';
+
+$app = new Pop\Application($autoloader, [
+    'prefix' => 'MyApp\\',
+    'src'    => __DIR__ . '/src'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="basic-api" class="mt-8">Basic API</h4>
+                    <p>Once the application object and its dependencies are wired up, you'll be able to interact
+                        with the application object through the appropriate API calls.</p>
+                    <ul class="list-disc ml-8">
+                        <li class="mb-1"><code class="inline-code">$app->bootstrap($autoloader = null)</code><span class="text-sm"> - Bootstrap the application</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->init()</code><span class="text-sm"> - Initialize the application</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->registerConfig($config)</code><span class="text-sm"> - Register a new configuration object</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->registerRouter($router)</code><span class="text-sm"> - Register a new router object</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->registerServices($services)</code><span class="text-sm"> - Register a new service locator</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->registerEvents($events)</code><span class="text-sm"> - Register a new event manager</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->registerModules($modules)</code><span class="text-sm"> - Register a new module manager</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->registerAutoloader($autoloader)</code><span class="text-sm"> - Register an autoloader with the application</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->mergeConfig($config, $preserve = false)</code><span class="text-sm"> - Merge config values into the application</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->register($module, $name)</code><span class="text-sm"> - Register a module with the module manager</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->run($exit, $forceRoute)</code><span class="text-sm"> - Run the application</span></li>
+                    </ul>
+                    <p>You can access the main elements of the application object through the following methods:</p>
+                    <ul class="list-disc ml-8">
+                        <li class="mb-1"><code class="inline-code">$app->autoloader()</code><span class="text-sm"> - Access the autoloader</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->config()</code><span class="text-sm"> - Access the configuration object</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->router()</code><span class="text-sm"> - Access the router</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->services()</code><span class="text-sm"> - Access the service locator</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->events()</code><span class="text-sm"> - Access the event manager</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->modules()</code><span class="text-sm"> - Access the module manager</span></li>
+                    </ul>
+                    <p>Also, magic methods expose them as direct properties as well:</p>
+                    <ul class="list-disc ml-8">
+                        <li class="mb-1"><code class="inline-code">$app->autoloader</code><span class="text-sm"> - Access the autoloader</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->config</code><span class="text-sm"> - Access the configuration object</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->router</code><span class="text-sm"> - Access the router</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->services</code><span class="text-sm"> - Access the service locator</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->events</code><span class="text-sm"> - Access the event manager</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->modules</code><span class="text-sm"> - Access the module manager</span></li>
+                    </ul>
+                    <h4 id="advanced-api" class="mt-8">Advanced API</h4>
+                    <p>The application object has some additional methods to help access objects and elements
+                        within the application object:</p>
+                    <ul class="list-disc ml-8">
+                        <li class="mb-1"><code class="inline-code">$app->register($module, $name);</code><span class="text-sm"> - Register a module</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->unregister($name);</code><span class="text-sm"> - Unregister a module</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->isRegistered($name);</code><span class="text-sm"> - Check if a module is registered</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->module($module)</code><span class="text-sm"> - Get a module object</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->addRoute($route, $controller);</code><span class="text-sm"> - Add a route</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->addRoutes($routes);</code><span class="text-sm"> - Add routes</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->setService($name, $service);</code><span class="text-sm"> - Set a service</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->getService($name);</code><span class="text-sm"> - Get a service</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->removeService($name);</code><span class="text-sm"> - Remove a service</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->on($name, $action, $priority = 0);</code><span class="text-sm"> - Attach an event</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->off($name, $action);</code><span class="text-sm"> - Detach an event</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->trigger($name, array $args = []);</code><span class="text-sm"> - Trigger an event</span></li>
+                    </ul>
+                    <h4 id="running-an-application" class="mt-8">Running an Application</h4>
+                    <p>Once you've configured your application object, you can run the application by simply executing the <code class="inline-code">run</code> method.
+                        Any inbound request to a script that is set up as outlined here will be processed through the application object and its supporting objects.</p>
+                    <pre><code class="language-php">$app->run(); // $app->run($exit, $forceRoute);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The first parameter <code class="inline-code">$exit</code> is a boolean flag that will be passed down to the router and allow
+                        the router to determine how to exit the application if a route is not found. By default, it's
+                        set to `true`, so the application exits out whenever a route is not found. However, if you
+                        wanted the application to not exit for any reason after a failed route match, you can set that
+                        flag to `false`.</p>
+                    <p>The second optional parameter <code class="inline-code">$forceRoute</code> allows for an override and forces the application to
+                        run the provided route. This is useful when the application object is passed to other services,
+                        for example, a queue service, that need to trigger specific routes to run at scheduled times.</p>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>

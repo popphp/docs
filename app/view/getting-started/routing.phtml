@@ -1,0 +1,320 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p>
+                        The router object facilitates the configuration and matching of the routes to access your application.
+                        It supports both HTTP and CLI routing. With it, you can establish valid routes along with any parameters
+                        that may be required with them. When the router object is created, it auto-detects in which environment the
+                        application is running and creates the appropriate route match object (HTTP or CLI) within the router object.
+                        The routes are then added to that route match object to be used to evaluate incoming application requests.
+                    </p>
+                    <h4 id="basic-routing">Basic Routing</h4>
+                    <h5>HTTP</h5>
+                    <p>In the example below, a web request of <code class="inline-code">http://localhost/hello</code> will execute the closure as the controller and echo
+                        <code class="inline-code">Hello World</code> out to the browser.</p>
+                    <pre><code class="language-php">$router->addRoute('/hello', function() {
+    echo 'Hello World';
+});</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 class="mt-4">CLI</h5>
+                    <p>In the example below, a CLI command of <code class="inline-code">./app hello</code> will execute the closure as the controller and echo
+                        <code class="inline-code">Hello World</code> out to the console.</p>
+                    <pre><code class="language-php">$router->addRoute('hello', function($name) {
+    echo 'Hello World';
+});</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="dispatch-params" class="mt-4">Dispatch Parameters</h4>
+                    <p>Route dispatch parameters that are needed for a
+                        particular route be can define as required or optional parameters.</p>
+                    <h5>Required</h5>
+                    <p>If a parameter is required and not provided with the requested route, the route is invalid.</p>
+                    <pre><code class="language-php">// HTTP
+$router->addRoute('/hello/:name', function($name) {
+    echo 'Hello ' . ucfirst($name);
+});
+
+// CLI
+$router->addRoute('hello &lt;name&gt;', function($name) {
+    echo 'Hello ' . ucfirst($name);
+});</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the two examples above, an HTTP request of <code class="inline-code">http://localhost/hello/pop</code> and a CLI command of <code class="inline-code">./app hello pop</code>
+                        will each echo out <code class="inline-code">Hello Pop</code> to the browser and console, respectively.</p>
+                    <h5>Optional</h5>
+                    <p>If a parameter is optional and not provided with the requested route, the route is still valid.
+                        Consider the following controller class and method:</p>
+                    <pre><code class="language-php">use Pop\Controller\AbstractController;
+
+class MyApp\Controller\MainController extends AbstractController
+{
+    public function hello($name = null)
+    {
+        if (empty($name)) {
+            echo 'Hello World!';
+        } else {
+            echo 'Hello ' . ucfirst($name);
+        }
+    }
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Then add the following routes for HTTP and CLI:</p>
+                    <pre><code class="language-php">// HTTP
+
+$router->addRoute('/hello[/:name]', [
+    'controller' => 'MyApp\Controller\MainController',
+    'action'     => 'hello'
+]);
+
+// CLI
+$router->addRoute('hello [&lt;name&gt;]', [
+    'controller' => 'MyApp\Controller\MainController',
+    'action'     => 'hello'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the above example, the parameter <code class="inline-code">$name</code> is an optional dispatch parameter and the <code class="inline-code">hello()</code>
+                        method performs differently depending on whether the parameter is present.</p>
+                    <h4 id="routing-syntax" class="mt-4">Routing Syntax</h4>
+                    <p>The tables below outline the accepted routing syntax for the route matching:</p>
+                    <table class="syntax-table mb-8">
+                        <thead>
+                            <tr>
+                                <th scope="col">Web Route</th>
+                                <th scope="col">Expected</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="inline-code">/foo/:bar/:baz</code></td>
+                                <td>The 2 params are required</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline-code">/foo/:bar[/:baz]</code></td>
+                                <td>First param required, last one is optional</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline-code">/foo/:bar/:baz*</code></td>
+                                <td>One required param, one required param that is a collection (array)</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline-code">/foo/:bar[/:baz*]</code></td>
+                                <td>One required param, one optional param that is a collection (array)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="syntax-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">CLI Route</th>
+                                <th scope="col">Expected</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="inline-code">foo bar</code></td>
+                                <td>The 2 commands are required</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline-code">foo bar|baz</code></td>
+                                <td>Two commands are required, the 2nd can accept 2 values</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline-code">foo [bar|baz]</code></td>
+                                <td>The second command is optional and can accept 2 values</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline-code">foo &lt;name&gt; [&lt;email&gt;]</code></td>
+                                <td>First parameter required, 2nd parameter optional</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline-code">foo --name=|-n [-e|--email=]</code></td>
+                                <td>First option value required, 2nd option value is optional</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline-code">foo [--option|-o]</code></td>
+                                <td>Option with both long and short formats</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4 id="controller-classes" class="mt-4">Using a Controller Class</h4>
+                    <p>Some of the above examples used simple closures as the controllers. While this is acceptable, using a controller class provides
+                        more control to design and build out all the routes needed for the application. The example below creates two
+                        valid routes for <code class="inline-code">http://localhost/</code> and <code class="inline-code">http://localhost/hello</code></p>
+                    <pre><code class="language-php">use Pop\Controller\AbstractController;
+
+class MyApp\Controller\IndexController extends AbstractController
+{
+    public function index()
+    {
+        echo 'Home Page!';
+    }
+
+    public function hello()
+    {
+        echo 'Hello World!';
+    }
+}
+
+$router->addRoute('/', [
+    'controller' => 'MyApp\Controller\IndexController',
+    'action'     => 'index'
+]);
+
+$router->addRoute('/hello', [
+    'controller' => 'MyApp\Controller\IndexController',
+    'action'     => 'hello'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And it works for CLI routes as well. The example below creates two valid routes for
+                        <code class="inline-code">./app help</code> and <code class="inline-code">./app hello</code></p>
+                    <pre><code class="language-php">use Pop\Controller\AbstractController;
+
+class MyApp\Controller\ConsoleController extends AbstractController
+{
+    public function help()
+    {
+        echo 'Help Page!';
+    }
+
+    public function hello()
+    {
+        echo 'Hello World!';
+    }
+}
+
+$router->addRoute('help', [
+    'controller' => 'MyApp\Controller\ConsoleController',
+    'action'     => 'help'
+]);
+
+$router->addRoute('hello', [
+    'controller' => 'MyApp\Controller\ConsoleController',
+    'action'     => 'hello'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="controller-params" class="mt-4">Controller Parameters</h4>
+                    <p>Commonly, you may require access to various elements and values of your application while within an
+                        instance of your controller class. To provide this, the router object allows you to inject parameters
+                        into the controller upon instantiation. Let's assume the controller's constructor in the below example,
+                        and we will define the values to pass into it:</p>
+                    <pre><code class="language-php">use Pop\Controller\AbstractController;
+
+class MyApp\Controller\IndexController extends AbstractController
+{
+    protected $foo;
+    protected $bar;
+
+    public function __construct($foo, $bar)
+    {
+        $this->foo = $foo;
+        $this->bar = $bar;
+    }
+}
+
+$router->addControllerParams(
+    'MyApp\Controller\IndexController', [
+        'foo' => $foo,
+        'bar' => $bar
+    ]
+);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If you require parameters to be injected globally to all of your controller classes, then you can
+                        replace the controller name <code class="inline-code">MyApp\Controller\IndexController</code> with <code class="inline-code">*</code>
+                        and they will be injected into all controllers.</p>
+                    <pre><code class="language-php">$router->addControllerParams(
+    '*', [
+        'foo' => $foo,
+        'bar' => $bar
+    ]
+);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can also define controller parameters within the route configuration as well.</p>
+                    <pre><code class="language-php">$config = [
+    'routes' => [
+        '/products' => [
+            'controller'       => 'MyApp\Controller\ProductsController',
+            'action'           => 'index',
+            'controllerParams' => [
+                'baz' => 789
+            ]
+        ]
+    ]
+];
+
+$app = new Pop\Application($config);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="dynamic-routing" class="mt-4">Dynamic Routing</h4>
+                    <p>Dynamic routing is also supported. You can define routes as outlined in the examples below, and they will
+                        be dynamically mapped and routed to the correct controller and method. Let's assume your application has
+                        the following controller class:</p>
+                    <pre><code class="language-php">use Pop\Controller\AbstractController;
+
+class MyApp\Controller\UsersController extends AbstractController
+{
+    public function index()
+    {
+        // Show a list of users
+    }
+
+    public function edit($id = null)
+    {
+        // Edit the user with the ID# of $id
+    }
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You could define a dynamic route like this:</p>
+                    <pre><code class="language-php">// HTTP
+$router->addRoute('/:controller/:action[/:param]', [
+    'prefix' => 'MyApp\Controller\\'
+]);
+
+// CLI
+$router->addRoute('&lt;controller&gt; &lt;action&gt; [&lt;param&gt;]', [
+    'prefix' => 'MyApp\Controller\\'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>and HTTP and CLI routes such as these examples below would be valid:</p>
+                    <pre><code class="language-text">http://localhost/users
+http://localhost/users/edit/1001
+./app users
+./app users edit 1001</code></pre>
+                    <h4 id="named-routes" class="mt-4">Named Routes</h4>
+                    <p>Named routes are supported either through the API or through the routes configuration. The benefit of
+                        named routes is that it gives a simple name to call up and reference the route when needed.</p>
+                    <h5>Via the API</h5>
+                    <pre><code class="language-php">$router = new Pop\Router\Router();
+
+$router->addRoute('/home', function() {
+    echo 'Home!' . PHP_EOL;
+})->name('home');
+
+$router->addRoute('/hello/:name', function($name) {
+    echo 'Hello, ' . $name . '!' . PHP_EOL;
+})->name('hello');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5>Via the Config</h5>
+                    <pre><code class="language-php">$app = new Application([
+    'routes' => [
+        '/home' => [
+            'controller' => function () {
+                echo 'Home!' . PHP_EOL;
+            },
+            'name' => 'home'
+        ],
+        '/hello/:name' => [
+            'controller' => function ($name) {
+                echo 'Hello, ' . $name . '!' . PHP_EOL;
+            },
+            'name' => 'hello'
+        ]
+    ]
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="url-generation" class="mt-4">URL Generation</h4>
+                    <p>
+                        Using the named routed feature described above, you can generate URLs as needed by calling on the router
+                        and passing an array or object down with any of the dispatch parameters. The simple way to do this is with
+                        the static <code class="inline-code">Pop\Route\Route</code> class, which stores the application's current router.
+                        Consider the following named route:</p>
+                    <pre><code class="language-php">$router->addRoute('/hello/:name', function($name) {
+    echo 'Hello, ' . $name . '!' . PHP_EOL;
+})->name('hello');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Below is an example of how to generate the appropriate URLs for a data set that would utilize that route:</p>
+                    <pre><code class="language-php">foreach ($names as $name):
+    echo '&lt;a href="' . Route::url('hello', $name) . '"&gt;'  . $name->name . '&lt;/a&gt;&lt;br /&gt;' . PHP_EOL;
+endforeach;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-html">&lt;a href="/hello/nick"&gt;nick&lt;/a&gt;&lt;br /&gt;
+&lt;a href="/hello/jim"&gt;jim&lt;/a&gt;&lt;br /&gt;
+&lt;a href="/hello/world"&gt;world&lt;/a&gt;&lt;br /&gt;</code></pre>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>
