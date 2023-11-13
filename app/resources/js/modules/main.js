@@ -42,7 +42,7 @@ function setActiveNav() {
                 for (var j = 0; j < allSubNavs.length; j++) {
                     allSubNavs[j].removeAttribute('class');
                 }
-                e.target.setAttribute('class', 'font-bold');
+                e.target.setAttribute('class', 'bold');
             });
         }
     }
