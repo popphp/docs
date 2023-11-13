@@ -156,7 +156,10 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
      */
     protected function prepareView(string $template): void
     {
-        $segments   = array_values(array_filter(explode('/', $template)));
+        $segments = array_values(array_map(function ($value) {
+            return str_replace('-', ' ', $value);
+        }, array_filter(explode('/', $template))));
+
         $title      = ucwords(end($segments));
         $this->view = new View($this->viewPath . '/' . $template . '.phtml');
 

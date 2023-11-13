@@ -2,6 +2,8 @@
 
 namespace Pop\Docs\Http\Controller;
 
+use Pop\Docs\Model;
+
 class IndexController extends AbstractController
 {
 
@@ -21,6 +23,23 @@ class IndexController extends AbstractController
         } else {
             $this->error();
         }
+    }
+
+    /**
+     * Search action
+     *
+     * @return void
+     */
+    public function search(): void
+    {
+        $searchModel = new Model\Search();
+        $query       = htmlentities(strip_tags($this->request->getQuery('query')), ENT_QUOTES, 'UTF-8');
+
+        $this->prepareView('search');
+        $this->view->query   = $query;
+        $this->view->results = (!empty($query)) ? $searchModel->search($query) : [];
+
+        $this->send();
     }
 
     /**

@@ -1,0 +1,16 @@
+<?php include __DIR__ . '/inc/header.phtml'; ?>
+<?php include __DIR__ . '/inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+                    <h2>Search Results</h2>
+                    <h4 class="border-b border-b-gray-300 pb-4 mb-8">"<?=$query; ?>"</h4>
+<?php if (!empty($results)):
+    foreach ($results as $uri => $result): ?>
+                    <h6 class="mb-0 pb-0"><a href="<?=$uri; ?>"><?=$result['title']; ?></a></h6>
+                    <p class="mt-0 pt-0 mb-4">...<?=$result['preview']; ?>...</p>
+<?php endforeach; ?>
+<?php else: ?>
+                    <p>No results found for that search query. Please refine your search.</p>
+<?php endif; ?>
+                </div>
+<?php include __DIR__ . '/inc/footer.phtml'; ?>
