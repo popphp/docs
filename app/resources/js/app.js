@@ -1,4 +1,3 @@
-import {toggleSidebar, copyCode, setActiveNav}  from './modules/main';
 import Alpine from 'alpinejs';
 import persist from '@alpinejs/persist';
 import hljs from 'highlight.js/lib/core';
@@ -12,6 +11,8 @@ import xml from 'highlight.js/lib/languages/xml';
 import css from 'highlight.js/lib/languages/css';
 import yaml from 'highlight.js/lib/languages/yaml';
 import plaintext from 'highlight.js/lib/languages/plaintext';
+
+import { toggleSidebar, copyCode, setActiveNav }  from './modules/main'
 
 import '../css/app.css';
 

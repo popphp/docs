@@ -4,6 +4,12 @@
     "alpinejs": "^3.13.2",
     "autoprefixer": "^10.4.16",
     "css-loader": "^6.8.1",
+    "eslint": "^8.53.0",
+    "eslint-config-semistandard": "^17.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.3.1",
+    "eslint-plugin-promise": "^6.1.1",
     "highlight.js": "^11.9.0",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss": "^8.4.31",
@@ -14,6 +20,7 @@
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
+    "lint": "eslint app/resources/js/modules/**/*.js",
     "dev": "webpack --watch",
     "build": "webpack"
   }
