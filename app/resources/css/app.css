@@ -59,6 +59,10 @@ a {
     @apply text-orange-700
 }
 
+.bold {
+    @apply font-bold
+}
+
 .inline-code {
     @apply text-xs font-normal bg-gray-200 pt-1 pb-1 pr-2 pl-2 rounded-md dark:bg-gray-700
 }
