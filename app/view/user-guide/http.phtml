@@ -1,0 +1,733 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=strtoupper($title); ?></h2>
+                    <p><code class="inline-code">pop-http</code> is the main HTTP component for the Pop PHP Framework.
+                        It provides a robust set of features to manage the many aspects of HTTP connections, including
+                        client-side and server-side requests, responses, headers and data.</p>
+                    <h4 id="client">Client</h4>
+                    <p>At its core, the client object works with a request object, a handler object and a response object to successfully
+                    execute an HTTP request. The request object can have request data. Both the request and response objects can have
+                    headers and a body. The response object will have a response code and response message, along with other helper
+                        functions to determine if the request yielded a successful response or an error.</p>
+
+                    <p><strong>NOTE:</strong> The constructor of the <code class="inline-code">Pop\Http\Client</code>
+                        class is flexible and can take any of the following parameters in any order:</p>
+                    <ul class="list-disc ml-8 mb-4">
+                        <li class="mb-2 text-sm">A URI string</li>
+                        <li class="mb-2 text-sm">A <code class="inline-code">Pop\Http\Client\Request</code> object (which contains the URI)</li>
+                        <li class="mb-2 text-sm">A <code class="inline-code">Pop\Http\Client\Response</code> object (not common, as the response object is typically auto-populated)</li>
+                        <li class="mb-2 text-sm">A <code class="inline-code">Pop\Http\Auth</code> object (to assist with authorization)</li>
+                        <li class="mb-2 text-sm">A handler object that is an instance of <code class="inline-code">Pop\Http\Client\Handler\HandlerInterface</code></li>
+                        <li class="mb-2 text-sm">An <code class="inline-code">$options</code> array</li>
+                    </ul>
+                    <h5 id="quickstart">Quickstart</h5>
+                    <p>The most basic way to wire up a simple <code class="inline-code">GET</code> request would be:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$response = Client::get('http://localhost/');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>which is also the equivalent to:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client   = new Client('http://localhost/');
+$response = $client->get();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>or</strong></p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client   = new Client('http://localhost/', ['method' => 'GET']);
+$response = $client->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the examples above, the <code class="inline-code">$response</code> object returned is a full response object, complete with all of the headers,
+                        data, messaging and content that comes with an HTTP response. If you want to simply access the pertinent content of
+                        the response object, this method can be used:</p>
+                    <pre><code class="language-php">$content = $response->getParsedResponse();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>That method will attempt to auto-negotiate using the <code class="inline-code">Content-Type</code> header and give an appropriate data response
+                        or object. For example, if the content type of the response was <code class="inline-code">application/json</code>, then the data returned will
+                        be a PHP array representation of that JSON data.</p>
+                    <h6>POST Example</h6>
+                    <p>A <code class="inline-code">POST</code> request can be given some data in the <code class="inline-code">$options</code> array to send along with the request:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$response = Client::post('http://localhost/post', [
+    'data' => [
+        'foo' => 'bar',
+        'baz' => 123
+    ]
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>which is also the equivalent to:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client = new Client('http://localhost/post', [
+    'data' => [
+        'foo' => 'bar',
+        'baz' => 123
+    ]
+]);
+$response = $client->post();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>or</strong></p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client = new Client('http://localhost/post', [
+    'method' => 'POST',
+    'data'   => [
+        'foo' => 'bar',
+        'baz' => 123
+    ]
+]);
+$response = $client->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Other Methods</h6>
+                    <p>All of the standard HTTP request methods are accessible in the manner outlined above. For example:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$responsePut    = Client::put('http://localhost/put', ['data' => ['foo' => 'bar']]);
+$responsePatch  = Client::patch('http://localhost/patch', ['data' => ['foo' => 'bar']]);
+$responseDelete = Client::delete('http://localhost/delete', ['data' => ['foo' => 'bar']]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="auth" class="mt-4">Auth</h5>
+                    <p>There is an auth header class to assist in wiring up different types of standard authorization headers:</p>
+                    <ul class="list-disc ml-8 mb-4">
+                        <li class="mb-2 text-sm">Basic</li>
+                        <li class="mb-2 text-sm">Bearer Token</li>
+                        <li class="mb-2 text-sm">API Key</li>
+                        <li class="mb-2 text-sm">Digest</li>
+                    </ul>
+                    <h6>Basic</h6>
+                    <pre><code class="language-php">use Pop\Http\Auth;
+use Pop\Http\Client;
+
+$response = Client::post('http://localhost/auth', Auth::createBasic('username', 'password'));</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Bearer Token</h6>
+                    <pre><code class="language-php">use Pop\Http\Auth;
+use Pop\Http\Client;
+
+$response = Client::post('http://localhost/auth', Auth::createBearer('MY_AUTH_TOKEN'));</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">API Key</h6>
+                    <pre><code class="language-php">use Pop\Http\Auth;
+use Pop\Http\Client;
+
+$response = Client::post('http://localhost/auth', Auth::createKey('MY_API_KEY')));</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Digest</h6>
+                    <p>Digest authorization can be complex and require a number of different parameters. This is a basic example:</p>
+                    <pre><code class="language-php">use Pop\Http\Auth;
+use Pop\Http\Client;
+
+$response = Client::post(
+    'http://localhost/auth',
+    Auth::createDigest(
+        new Auth\Digest('realm', 'username', 'password', '/uri', 'SERVER_NONCE')
+    )
+);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="options" class="mt-4">Options</h5>
+                    <p>The client object supports an <code class="inline-code">$options</code> array to pass in general configuration details and data for the request.
+                        Supported keys in the options array are:</p>
+                    <ul class="list-disc ml-8">
+                        <li class="mb-1"><code class="inline-code">base_uri</code><span class="text-sm"> - the base URI for re-submitting many requests with the same client to different endpoints on the same domain</span></li>
+                        <li class="mb-1"><code class="inline-code">method</code><span class="text-sm"> - the request method (GET, POST, PUT, PATCH, DELETE, etc.)</span></li>
+                        <li class="mb-1"><code class="inline-code">headers</code><span class="text-sm"> - an array of request headers</span></li>
+                        <li class="mb-1"><code class="inline-code">user_agent</code><span class="text-sm"> - the user agent string</span></li>
+                        <li class="mb-1"><code class="inline-code">query</code><span class="text-sm"> - an array of request query data - reserved for only a URL-encoded query string</span></li>
+                        <li class="mb-1"><code class="inline-code">data</code><span class="text-sm"> - an array of request data - can be any request data</span></li>
+                        <li class="mb-1"><code class="inline-code">files</code><span class="text-sm"> - an array of files on disk to be sent with the request</span></li>
+                        <li class="mb-1"><code class="inline-code">type</code><span class="text-sm"> - set the request type (URL-form, JSON, XML or multipart/form)</span></li>
+                        <li class="mb-1"><code class="inline-code">Request::URLFORM</code><span class="text-sm"> - <code class="inline-code">application/x-www-form-urlencoded</code></span></li>
+                        <li class="mb-1"><code class="inline-code">Request::JSON</code><span class="text-sm"> - <code class="inline-code">application/json</code></span></li>
+                        <li class="mb-1"><code class="inline-code">Request::XML</code><span class="text-sm"> - <code class="inline-code">application/xml</code></span></li>
+                        <li class="mb-1"><code class="inline-code">Request::MULTIPART</code><span class="text-sm"> - <code class="inline-code">multipart/form-data</code></span></li>
+                        <li class="mb-1"><code class="inline-code">auto</code><span class="text-sm"> - trigger automatic content negotiation and return the parsed content, if possible (boolean)</span></li>
+                        <li class="mb-1"><code class="inline-code">async</code><span class="text-sm"> - trigger an asynchronous request (boolean)</span></li>
+                        <li class="mb-1"><code class="inline-code">verify_peer</code><span class="text-sm"> - enforce or disallow verifying the host for SSL connections (boolean)</span></li>
+                        <li class="mb-1"><code class="inline-code">allow_self_signed</code><span class="text-sm"> - allow or disallow the use of self-signed certificates for SSL connections (boolean)</span></li>
+                        <li class="mb-1"><code class="inline-code">force_custom_method</code><span class="text-sm"> - for Curl only. Forces the use of <code class="inline-code">CURLOPT_CUSTOMREQUEST</code> (boolean)</span></li>
+                    </ul>
+                    <p>Here is an example using a <code class="inline-code">base_uri</code>:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Request;
+
+$client    = new Client(['base_uri' => 'http://localhost']);
+$response1 = $client->get('/page1'); // Will request http://localhost/page1
+$response2 = $client->get('/page2'); // Will request http://localhost/page2
+$response2 = $client->get('/page3'); // Will request http://localhost/page3</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Here is an example to send some JSON data:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Request;
+
+$client = new Client('http://localhost/post', [
+    'data'   => [
+        'foo' => 'bar',
+        'baz' => 123
+    ],
+    'type' => Request::JSON // "application/json"
+]);
+
+$response = $client->post();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Here is an example to send some files:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Request;
+
+$client = new Client('http://localhost/post', [
+    'method' => 'POST',
+    'files' => [
+        '/path/to/file/image1.jpg',
+        '/path/to/file/image2.jpg',
+    ],
+    'type' => Request::MULTIPART // "multipart/form-data"
+]);
+
+$response = $client->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="content-negotiation" class="mt-4">Content Negotiation</h5>
+                    <p>In the above examples, the <code class="inline-code">$response</code> returned is a full response object.
+                        If you want to get the actual response content, as mentioned above, you would call:</p>
+                    <pre><code class="language-php">$content = $response->getParsedResponse();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above call will attempt to negotiate the content by the <code class="inline-code">Content-Type</code> header and return the correctly parsed content.</p>
+                    <h6>Automatic Content Negotiation</h6>
+                    <p>There are two ways to attempt content negotiation automatically and return the parsed content:</p>
+                    <ol class="list-decimal ml-4 mb-4">
+                        <li class="text-sm">If you would like to attempt to parse the response content as JSON, regardless of any <code class="inline-code">Content-Type</code> header value
+                                or absence thereof, you can call the <code class="inline-code">json()</code> method to obtain a PHP array representation of the data:</li>
+                    </ol>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+// Returns an array
+$data = Client::get('http://localhost/')->json();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <ol class="list-decimal ml-4 mt-4 mb-4" start="2">
+                        <li class="text-sm">Similarly, if you would prefer to have a <code class="inline-code">Collection</code> object populated with the data content returned,
+                            you can call the <code class="inline-code">collect()</code> method. Internally, this will attempt the <code class="inline-code">json()</code> method as well:</li>
+                    </ol>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+// Returns an instance of Pop\Utils\Collection
+$data = Client::get('http://localhost/')->collect();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <ol class="list-decimal ml-4 mt-4 mb-4" start="3">
+                        <li class="text-sm">You can set the <code class="inline-code">auto</code> option to true, which is contingent on the server response having the correct
+                                <code class="inline-code">Content-Type</code> header. This will return a PHP array representation of the data:</li>
+                    </ol>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client = new Client('http://localhost/', ['auto' => true]);
+$data   = $client->get(); // Returns an array</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If you still need to access the full response object, you can access it by calling:</p>
+                    <pre><code class="language-php">$clientResponse = $client->getResponse();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="requests" class="mt-4">Requests</h5>
+                    <p>You can have granular control over the configuration of the request object by interacting with it directly.</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Request;
+
+$request = new Request('http://localhost/', 'POST');
+$request->createAsJson();
+$request->addHeaders([
+    'X-Custom-Header: Custom-Value',
+]);
+$request->setData([
+    'foo' => 'bar',
+    'baz' => 123
+]);
+
+$client = new Client($request);
+$response = $client->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>There are four ways to configure the request for four different common data types:</p>
+                    <ul class="list-disc ml-8 mb-4">
+                        <li class="mb-2 text-sm">JSON</li>
+                        <li class="mb-2 text-sm">XML</li>
+                        <li class="mb-2 text-sm">URL-encoded form</li>
+                        <li class="mb-2 text-sm">Multipart form</li>
+                    </ul>
+                    <pre><code class="language-php">use Pop\Http\Client\Request;
+
+$requestJson  = Request::createJson('http://localhost/', 'POST', $data);
+$requestXml   = Request::createXml('http://localhost/', 'POST', $data);
+$requestUrl   = Request::createUrlForm('http://localhost/', 'POST', $data);
+$requestMulti = Request::createMultipart('http://localhost/', 'POST', $data);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>or</strong></p>
+                    <pre><code class="language-php">$request->createAsJson();
+$request->createAsXml();
+$request->createAsUrlEncoded();
+$request->createAsMultipart();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Each way effectively sets the appropriate <code class="inline-code">Content-Type</code> header and properly formats the data for that data type.</p>
+                    <h5 id="rendering-requests">Rendering Requests</h5>
+                    <p>Client requests can be rendered out to a raw string:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client = new Client('http://localhost:8000/files.php', [
+    'method' => 'POST',
+    'data'  => [
+        'foo' => 'bar'
+    ],
+    'headers' => [
+        'Authorization' => 'Bearer 123456789',
+    ],
+    'type' => Request::URLFORM
+]);
+echo $client->render();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Which would produce a string like this:</p>
+                    <pre><code class="language-plaintext">POST /files.php HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer 123456789
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 7
+
+foo=bar</code></pre>
+                    <h5 id="responses" class="mt-4">Responses</h5>
+                    <p>Upon sending a request, the response object is automatically created and populated with the content from the raw response.</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$response = Client::post('http://localhost/post', [
+    'data' => [
+        'foo' => 'bar',
+        'baz' => 123
+    ]
+]);
+
+echo $response->getCode();                      // 200
+echo $response->getMessage();                   // OK
+var_dump($response->getHeaders());              // An array of HTTP header objects
+var_dump($response->hasHeader('Content-Type')); // Boolean result
+var_dump($response->getBody());                 // A body object than contains the response content</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The header and body entities of both requests and responses are actually objects that store all their pertinent data.
+                        To access the actual data content, you would have to use methods such as these:</p>
+                    <pre><code class="language-php">// i.e., 'application/json'
+var_dump($response->getHeaderValueAsString('Content-Type'));
+// Get actual content of the body object
+var_dump($response->getBodyContent());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>As mentioned above, using the following method will get the parsed content based on <code class="inline-code">Content-Type</code>:</p>
+                    <pre><code class="language-php">var_dump($response->getParsedResponse());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>There are a number of helper methods to determine the response's status:</p>
+                    <pre><code class="language-php">$response->isSuccess();              // Bool on 100/200/300-level responses
+$response->isError();                // Bool on 400/500-level responses
+$response->isContinue();             // Bool on 100-level response
+$response->isOk();                   // Bool on 200 response
+$response->isCreated();              // Bool on 201 response
+$response->isAccepted();             // Bool on 202 response
+$response->isNoContent();            // Bool on 204 response
+$response->isRedirect();             // Bool on 300-level response
+$response->isMovedPermanently();     // Bool on 301 response
+$response->isFound();                // Bool on 302 response
+$response->isClientError();          // Bool on 400-level response
+$response->isBadRequest();           // Bool on 400 response
+$response->isUnauthorized();         // Bool on 401 response
+$response->isForbidden();            // Bool on 403 response
+$response->isNotFound();             // Bool on 404 response
+$response->isMethodNotAllowed();     // Bool on 405 response
+$response->isNotAcceptable();        // Bool on 406 response
+$response->isRequestTimeout();       // Bool on 408 response
+$response->isConflict();             // Bool on 409 response
+$response->isLengthRequired();       // Bool on 411 response
+$response->isUnsupportedMediaType(); // Bool on 415 response
+$response->isUnprocessableEntity();  // Bool on 422 response
+$response->isTooManyRequests();      // Bool on 429 response
+$response->isServerError();          // Bool on 500-level response
+$response->isInternalServerError();  // Bool on 500 response
+$response->isBadGateway();           // Bool on 502 response
+$response->isServiceUnavailable();   // Bool on 503 response</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="handlers" class="mt-4">Handlers</h5>
+                    <p>You can choose to use a different handler with the client object. The available handlers are:</p>
+                    <ul class="list-disc ml-8 mb-4">
+                        <li class="mb-2 text-sm"><code class="inline-code">Pop\Http\Client\Handler\Curl</code><span class="text-sm"> - uses the PHP curl extension (default)</span></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">Pop\Http\Client\Handler\Stream</code><span class="text-sm"> - uses PHP stream functionality</span></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">Pop\Http\Client\Handler\CurlMulti</code><span class="text-sm"> - reserved for multiple parallel/concurrent requests at the same time</span></li>
+                    </ul>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Handler\Stream;
+
+$client = new Client('http://localhost/', new Stream());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>or through the <code class="inline-code">setHandler()</code> method:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Handler\Stream;
+
+$client = new Client('http://localhost/');
+$client->setHandler(new Stream());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And then you can interact with the handler using the <code class="inline-code">getHandler()</code> method:</p>
+                    <pre><code class="language-php">// Example wih a CURL handler
+$client->getHandler()->setOption(CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Curl</h6>
+                    <p>The handlers allow you to further customize the request by interfacing with each respective handler's settings.
+                        For <code class="inline-code">Curl</code>, that mainly includes setting additional Curl options needed for the request. (<strong>Please Note:</strong> Many
+                        of the required Curl options, such as <code class="inline-code">CURLOPT_URL</code> and <code class="inline-code">CURLOPT_HTTPHEADER</code> are automatically set based on
+                        the initial configuration of the client and request objects.)</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Handler\Curl;
+
+$curl = new Curl();
+$curl->setOptions([
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_0
+]);
+
+$client = new Client('http://localhost/');
+$client->setHandler($curl);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Stream</h6>
+                    <p>For <code class="inline-code">Stream</code>, that includes setting context options and parameters needed for the request. (<strong>Please Note:</strong>
+                        Many of the required Stream context options, such as <code class="inline-code">['http']</code>, <code class="inline-code">['http']['method']</code> and <code class="inline-code">['http']['header']</code>
+                        are automatically set based on the initial configuration of the client and request objects.)</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Handler\Stream;
+
+$stream = new Stream();
+$stream->setContextOptions([
+    'http' => [
+        'protocol_version' => '1.0'
+    ]
+]);
+
+$client = new Client('http://localhost/');
+$client->setHandler($stream);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Curl Multi-Handler</h6>
+                    <p>The Curl Multi-Handler is a special use-case handler that allows for multiple parallel/concurrent requests
+                        to be made at the same time. Each request will get its own <code class="inline-code">Client</code> object, which will be registered with
+                        the multi-handler object. The simplest way to configure a multi-handler object would be:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+// Three GET requests
+$multiHandler = Client::createMulti([
+    'http://localhost/test1.php',
+    'http://localhost/test2.php',
+    'http://localhost/test3.php'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>or</strong></p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Request;
+
+// Three POST requests
+$multiHandler = Client::createMulti([
+    new Request('http://localhost/test1.php', 'POST'),
+    new Request('http://localhost/test2.php', 'POST'),
+    new Request('http://localhost/test3.php', 'POST')
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>From there, the multi-handler object can send the requests:</p>
+                    <pre><code class="language-php">$running = null;
+
+do {
+    $multiHandler->send($running);
+} while ($running);
+
+$responses = $multiHandler->getAllResponses();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">$multiHandler->getAllResponses()</code> method will return an array of all the response objects returned
+                        from each of the requests.</p>
+                    <p>Here is a more verbose way to configure a multi-handler object:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Handler\CurlMulti;
+
+$multiHandler = new CurlMulti();
+$client1      = new Client('http://localhost/test1.php', $multiHandler);
+$client2      = new Client('http://localhost/test2.php', $multiHandler);
+$client3      = new Client('http://localhost/test3.php', $multiHandler);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="promises" class="mt-4">Promises</h4>
+                    <p>Promises allow you to stage asynchronous requests within the application. When you initialize a client object
+                        and call it asynchronously, it will return a promise object. There are few different ways to achieve this:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$promise = Client::postAsync('http://localhost/');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>which is equivalent to:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client  = new Client('http://localhost/');
+$promise = $client->postAsync();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>or</strong></p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client  = new Client('http://localhost/', ['method' => 'POST']);
+$promise = $client->sendAsync();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>or</strong></p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client  = new Client('http://localhost/', ['method' => 'POST', 'async' => true]);
+$promise = $client->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The multi-handler supports asynchronous requests as well and will return a promise object:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$multiHandler = Client::createMulti([
+    'http://localhost/test1.php',
+    'http://localhost/test2.php',
+    'http://localhost/test3.php'
+]);
+
+$promise = $multiHandler->sendAsync();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="wait" class="mt-4">Wait</h5>
+                    <p>Once you have a promise object, the most basic way to interact with it is to call <code class="inline-code">wait()</code>, which simply
+                        triggers the request and waits until the request is finished before allowing the application to continue.
+                        Upon completion, the promise will return a response object. Otherwise, it will throw an exception, so it
+                            is best to wrap the call in a <code class="inline-code">try/catch</code> block:</p>
+                    <pre><code class="language-php">try {
+    $response = $promise->wait();
+    print_r($response->getParsedResponse());
+} catch (\Exception $e) {
+    echo $e->getMessage() . PHP_EOL;
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If you need something that degrades a little more gracefully and need to suppress the thrown exception,
+                        you can pass <code class="inline-code">false</code> as the <code class="inline-code">$unwrap</code> parameter into the <code class="inline-code">wait()</code> method to prevent the exception from
+                        being thrown:</p>
+                    <pre><code class="language-php">$response = $promise->wait(false);
+if ($response instanceof Response) {
+    print_r($response->getParsedResponse());
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="then" class="mt-4">Then</h5>
+                    <p>You can use the <code class="inline-code">then()</code> method, along with <code class="inline-code">catch()</code> and <code class="inline-code">finally()</code> to assign callbacks to handle
+                        each specific scenario:</p>
+                    <ul class="list-disc ml-8 mb-4">
+                        <li class="mb-2 text-sm"><code class="inline-code">then()</code><span class="text-sm"> - on success callback</span></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">catch()</code><span class="text-sm"> - on failure callback</span></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">finally()</code><span class="text-sm"> - callback to run at the end no matter what the result is</span></li>
+                    </ul>
+                    <p>Additionally, a cancel callback can be set with the <code class="inline-code">setCancel()</code> method and will be triggered at any
+                    time the promise is cancelled. Once the promise is configured, the <code class="inline-code">resolve()</code> method needs to be called
+                    to finish the request.</p>
+                    <pre><code class="language-php">use Pop\Http\Promise;
+use Pop\Http\Client\Response;
+
+$promise->setCancel(function(Promise $promise) {
+    // Do something upon cancellation
+});
+
+$promise->then(function(Response $response) {
+    // Do something on success
+})->catch(function(Response $response)) {
+    // Do something on failure
+})->finally(function(Promise $promise) {
+    // Do something at the end
+});
+
+$promise->resolve();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>As a convenience for a simple <code class="inline-code">then()</code> call, you can pass a <code class="inline-code">$resolve</code> flag as <code class="inline-code">true</code> to force the promise
+                        to resolve without having to call the <code class="inline-code">resolve()</code> method:</p>
+                    <pre><code class="language-php">use Pop\Http\Client\Response;
+
+// Force resolve
+$promise->then(function(Response $response) {
+    // Do something on success
+}, true);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">catch()</code> and <code class="inline-code">finally()</code> methods also have the same <code class="inline-code">$resolve</code> force flag.</p>
+                    <h5 id="forwarding">Forwarding</h5>
+                    <p>You can chain multiple <code class="inline-code">then()</code> method calls together, which is sometimes called "forwarding" a promise.
+                        The return of the first <code class="inline-code">then()</code> call needs to be another promise object.</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Response;
+
+$promise1 = Client::getAsync('http://localhost/test1.php');
+$promise2 = Client::getAsync('http://localhost/test2.php');
+
+$promise1->then(function(Response $response) use ($promise2) {
+    // Do something with the first promise response
+    return $promise2;
+})->then(function(Response $response) {
+    // Do something with the second promise response
+});
+
+$promise1->resolve();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="nesting" class="mt-4">Nesting</h5>
+                    <p>Promises can be "nested" together as well, whereas one resolved promise creates and triggers another promise:</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+use Pop\Http\Client\Response;
+
+$promise = Client::getAsync('http://localhost/test1.php');
+
+$promise->then(function(Response $response) {
+    $data1   = $response->getParsedResponse();
+    $promise = Client::getAsync('http://localhost/test2.php')
+        ->then(function(Response $response) use ($data1) {
+            $data2 = $response->getParsedResponse();
+            // Do something with both the data results from promise 1 and 2.
+        }, true);
+}, true);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Automatic Content Negotiation</h6>
+                    <p>Promises generated by client objects set for automatic content negotiation will return the parsed response content
+                        instead of a full response object.</p>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$promise  = Client::postAsync('http://localhost/', ['auto' => true]);
+$response = $promise->wait(false); // The response will be the parsed content response</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="server">Server</h4>
+                    <p>The server object and its components provide convenient and robust functionality to manage inbound server requests
+                    and outbound responses. At its core, and like the client object, the server object is compromised of a request object
+                    and a response object. However, opposite to the client object, the server object's request is typically auto-populated
+                    from the incoming request headers and data, while the response object is available to be configured as required to
+                        produce and send a response to the calling client.</p>
+                    <p>Within an application, creating a server object will automatically take in the global request data that would come
+                        in from an inbound client request. This includes:</p>
+                    <ul class="list-disc ml-8 mb-4">
+                        <li class="mb-2 text-sm">Request data (<code class="inline-code">$_GET</code>, <code class="inline-code">$_POST</code>, etc)</li>
+                        <li class="mb-2 text-sm">Request headers</li>
+                        <li class="mb-2 text-sm">Request body</li>
+                    </ul>
+                    <h5 id="request-headers-data">Request Headers/Data</h5>
+                    <h6>Headers</h6>
+                    <pre><code class="language-php">$headers = $reqeuest->getHeaders();
+if ($request->hasHeader('Content-Type')) {
+    $contentType = $request->getHeader('Content-Type');         // Header object
+    var_dump($request->getHeaderValueAsString('Content-Type')); // Header value as string
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>Body</h6>
+                    <pre><code class="language-php">$body = $request->getBody();           // Body object
+var_dump($response->getBodyContent()); // Get actual content of the body object</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>Method</h6>
+                    <pre><code class="language-php">$request->isGet();
+$request->isPost();
+$request->isPut();
+$request->isPatch();
+$request->isDelete();
+$request->hasFiles();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>Data</h6>
+                    <pre><code class="language-php">$queryData  = $request->getQuery(); // GET Request
+$postData   = $request->getPost();
+$putData    = $request->getPut();
+$patchData  = $request->getPatch();
+$deleteData = $request->getDelete();
+$filesData  = $request->getFiles();
+$serverData = $request->getServer();
+$envData    = $request->getEnv();
+
+$foo = $request->getQuery('foo'); // GET Request
+$foo = $request->getPost('foo');
+$foo = $request->getPut('foo');
+$foo = $request->getPatch('foo');
+$foo = $request->getDelete('foo');
+$foo = $request->getFiles('foo');
+$foo = $request->getServer('foo');
+$foo = $request->getEnv('foo');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If there is general data that has been parsed or raw data, that can be accessed via:</p>
+                    <pre><code class="language-php">$parsedData = $request->getParsedData();
+$rawData    = $request->getRawData();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>As an example, this <code class="inline-code">curl</code> command pointing at the following URL with a PHP script can be executed:</p>
+                    <pre><code class="language-bash">curl -i -X POST --header "Authorization: Bearer 1234567890" \
+  --data "foo=bar&baz=123" "http://localhost/post.php"</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>with the contents of <code class="inline-code">post.php</code> being:</p>
+                    <pre><code class="language-php">use Pop\Http\Server;
+
+$server = new Server();
+
+echo $server->request->getHeader('Authorization')->getValue();
+if ($server->request->isPost()) {
+    print_r($server->request->getPost());
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Automatically, the server object's request object will be populated with the incoming request data. The example
+                        script above will produce:</p>
+                    <pre><code class="language-plaintext">Bearer 1234567890
+Array
+(
+    [foo] => bar
+    [baz] => 123
+)</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>From an incoming request, you can populate an appropriate response:</p>
+                    <pre><code class="language-php">$server->response->setCode(200)
+    ->setMessage('OK')
+    ->setVersion('1.1')
+    ->addHeader('Content-Type', 'text/plain')
+    ->setBody('This is the response');
+
+$server->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>which will produce:</p>
+                    <pre><code class="language-plaintext">HTTP/1.1 200 OK
+Content-Type: text/plain
+
+This is the response</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>By default, the server object constructor will instantiate new request and response objects, but you can inject
+                        your own:</p>
+                    <pre><code class="language-php">use Pop\Http\Server;
+use Pop\Http\Server\Request;
+use Pop\Http\Server\Response;
+
+$myRequest  = new Request();
+$myResponse = new Response();
+$server     = new Server($myRequest, $myResponse);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="filtering" class="mt-4">Filtering</h5>
+                    <p>As an extra layer of protection, you can add filters to the request object to filter incoming data:</p>
+                    <pre><code class="language-php">use Pop\Http\Server;
+use Pop\Http\Server\Reqeust;
+
+$filters = ['strip_tags', 'addslashes'];
+$server  = new Server(new Request(null, $filters));</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And with the following curl command with data that contains tags and a single quote:</p>
+                    <pre><code class="language-bash">curl -i -X POST --data "foo=&lt;script&gt;bad's script&lt;/script&gt;" "http://localhost:8000/post.php"</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-php">if ($server->request->isPost()) {
+    print_r($server->request->getPost());
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>the data will be filtered:</p>
+                    <pre><code class="language-plaintext">Bearer 123456
+Array
+(
+    [foo] => bad\'s script
+
+)</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="redirect-forwards" class="mt-4">Redirects/Forwards</h5>
+                    <p>You can redirect to another URL by calling the following method:</p>
+                    <pre><code class="language-php">use Pop\Http\Server\Response;
+
+Response::redirect('http://www.newlocation.com/');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can forward a client object's response as the server's response:</p>
+                    <pre><code class="language-php">use Pop\Http\Server\Response;
+
+Response::forward($clientResponse);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="rendering-responses" class="mt-4">Rendering Responses</h5>
+                    <p>Server responses can be rendered out to a raw string:</p>
+                    <pre><code class="language-php">use Pop\Http\Server;
+
+$server = new Server();
+$server->response->setCode(200)
+    ->setMessage('OK')
+    ->setVersion('1.1')
+    ->addHeader('Content-Type', 'text/plain')
+    ->setBody('This is the response');
+
+echo $server;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Which would produce a string like this:</p>
+                    <pre><code class="language-plaintext">HTTP/1.1 200 OK
+Content-Type: text/plain
+
+This is the response</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="uploads" class="mt-4">Uploads</h5>
+                    <h6>Basic file upload</h6>
+                    <pre><code class="language-php">use Pop\Http\Server\Upload;
+
+$upload = new Upload('/path/to/uploads');
+$upload->setDefaults();
+
+$upload->upload($_FILES['file_upload']);
+
+// Do something with the newly uploaded file
+if ($upload->isSuccess()) {
+    $file = $upload->getUploadedFile();
+} else {
+    echo $upload->getErrorMessage();
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above code creates the upload object, sets the upload path and sets the basic defaults,
+                        which includes a max file size of 10MBs, and an array of allowed common file types as well
+                        as an array of common disallowed file types.</p>
+                    <h6>File upload names and overwrites</h6>
+                    <p>By default, the file upload object will not overwrite a file of the same name. In the above
+                        example, if <code class="inline-code">$_FILES['file_upload']['name']</code> is set to 'my_document.docx' and that file
+                        already exists in the upload path, it will be renamed to <code class="inline-code">my_document_1.docx</code>.</p>
+                    <p>If you want to enable file overwrites, you can simply do this:</p>
+                    <pre><code class="language-php">$upload->overwrite(true);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Also, you can give the file a direct name on upload like this:</p>
+                    <pre><code class="language-php">$upload->upload($_FILES['file_upload'], 'my-custom-filename.docx');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And if you need to check for a duplicate filename first, you can use the <code class="inline-code">checkFilename</code>
+                        method. If the filename exists, it will append a <code class="inline-code">_1</code> to the end of the filename, or loop
+                        through until it finds a number that doesn't exist yet (<code class="inline-code">_#</code>). If the filename doesn't
+                        exist yet, it returns the original name.</p>
+                    <pre><code class="language-php">$filename = $upload->checkFilename('my-custom-filename.docx');
+
+// $filename is set to 'my-custom-filename_1.docx'
+$upload->upload($_FILES['file_upload'], $filename);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="cli-conversion" class="mt-4">CLI Conversion</h4>
+                    <p>The CLI conversion feature allows you to convert client request objects into valid <code class="inline-code">curl</code> commands to be used on
+                        the CLI. It also supports converting valid <code class="inline-code">curl</code> commands into client request objects to be used in a PHP application.</p>
+                    <h6>Curl Command to Client Object</h6>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client = Client::fromCurlCommand('curl -i -X POST -d"foo=bar&baz=123" http://localhost/post.php');
+$client->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Client Object to Curl Command</h6>
+                    <pre><code class="language-php">use Pop\Http\Client;
+
+$client = new Client('http://localhost/post.php', [
+    'method' => 'POST',
+    'data'   => [
+        'foo' => 'bar',
+        'baz' => 123
+    ]
+]);
+
+echo $client->toCurlCommand();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-bash">curl -i -X POST --data "foo=bar&baz=123" "http://localhost/post.php"</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>

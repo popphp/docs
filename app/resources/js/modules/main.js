@@ -27,9 +27,12 @@ function setActiveNav() {
             sibling.setAttribute('class', 'block');
         }
         if (hash !== '') {
-            let activeSubNav = document.querySelector('ul.side-nav > li > ul > li > ul > li > a[href="' + href + hash + '"]');
+            let activeSubNav    = document.querySelector('ul.side-nav > li > ul > li > ul > li > a[href="' + href + hash + '"]');
+            let activeSubSubNav = document.querySelector('ul.side-nav > li > ul > li > ul > li > ul > li > a[href="' + href + hash + '"]');
             if (activeSubNav != null) {
                 activeSubNav.setAttribute('class', 'bold');
+            } else if (activeSubSubNav != null) {
+                activeSubSubNav.setAttribute('class', 'bold');
             }
         }
     }
