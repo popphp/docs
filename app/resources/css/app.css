@@ -100,7 +100,7 @@ a {
     @apply mt-3 mb-3 font-normal  /* transition ease-in-out hover:translate-x-2 duration-300*/
 }
 
-.side-nav > li > ul > li > a {
+.side-nav > li > ul > li > a, .side-nav > li > ul > li > ul > li > a  {
     @apply text-sm text-gray-700 hover:text-gray-400 dark:text-gray-500 dark:hover:text-gray-100
 }
 
@@ -113,8 +113,8 @@ a {
     content: '> ';
 }
 
-.side-nav > li > ul > li > ul > li > a {
-    @apply text-sm text-gray-700 hover:text-gray-400 dark:text-gray-500 dark:hover:text-gray-100
+.side-nav > li > ul > li > ul > li > ul > li > a {
+    @apply text-xs text-gray-700 hover:text-gray-400 dark:text-gray-500 dark:hover:text-gray-100
 }
 
 pre {

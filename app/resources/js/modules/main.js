@@ -34,13 +34,30 @@ function setActiveNav() {
         }
     }
 
-    let subNavs = document.querySelectorAll('ul.side-nav > li > ul > li > ul > li > a');
+    let subNavs    = document.querySelectorAll('ul.side-nav > li > ul > li > ul > li > a');
+    let subSubNavs = document.querySelectorAll('ul.side-nav > li > ul > li > ul > li > ul > li > a');
     if (subNavs !== undefined) {
         for (var i = 0; i < subNavs.length; i++) {
             subNavs[i].addEventListener('click', function(e){
-                let allSubNavs = document.querySelectorAll('ul.side-nav > li > ul > li > ul > li > a');
-                for (var j = 0; j < allSubNavs.length; j++) {
-                    allSubNavs[j].removeAttribute('class');
+                for (var j = 0; j < subNavs.length; j++) {
+                    subNavs[j].removeAttribute('class');
+                }
+                for (var k = 0; k < subSubNavs.length; k++) {
+                    subSubNavs[k].removeAttribute('class');
+                }
+                e.target.setAttribute('class', 'bold');
+            });
+        }
+    }
+
+    if (subSubNavs !== undefined) {
+        for (var l = 0; l < subSubNavs.length; l++) {
+            subSubNavs[l].addEventListener('click', function(e){
+                for (var m = 0; m < subNavs.length; m++) {
+                    subNavs[m].removeAttribute('class');
+                }
+                for (var n = 0; n < subSubNavs.length; n++) {
+                    subSubNavs[n].removeAttribute('class');
                 }
                 e.target.setAttribute('class', 'bold');
             });
