@@ -1,0 +1,14 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p><code class="inline-code">pop-console</code> provides a layer to run an application from the console terminal and produce formatted
+                        output to the terminal window. It has support for commands and their parameters, as well ANSI-based
+                        console colors. It can be easily be used with an application built with Pop to route requests
+                        from the CLI to the application.</p>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>
