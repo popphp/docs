@@ -10,5 +10,186 @@ endif; ?>
                         output to the terminal window. It has support for commands and their parameters, as well ANSI-based
                         console colors. It can be easily be used with an application built with Pop to route requests
                         from the CLI to the application.</p>
+                    <h4 id="output">Output</h4>
+                    <p>You can use a console object to manage and deploy output to the console, including
+                        a prepended header and appended footer.</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console();
+$console->setHeader('My Application');
+$console->setFooter('The End');
+
+$console->append('Here is some console information.');
+$console->append('Hope you enjoyed it!');
+$console->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">    My Application
+
+    Here is some console information.
+    Hope you enjoyed it!
+
+    The End</code></pre>
+                    <p>The allowed text width can be enforced by passing the <code class="inline-code">$width</code> parameter to the constructor:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console(40);
+$console->append(
+    'Here is some console information. This is a really long string. It will have to wrap.'
+);
+$console->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">    Here is some console information. This
+    is a really long string. It will have to
+    wrap.</code></pre>
+                    <p>By default, an indent of four spaces is set to provide a margin from the edge of the terminal. This can be adjusted
+                        or turned off by passing it to the constructor:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console(40, '  ');
+$console->append(
+    'Here is some console information using a 2 space indent. It will have to wrap.'
+);
+$console->send();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">  Here is some console information using a
+  2 space indent. It will have to wrap.</code></pre>
+                    <h4 id="response-buffer" class="mt-4">Response Buffer</h4>
+                    <h5>Append vs Write</h5>
+                    <p>In the above examples, the method <code class="inline-code">append()</code> was used in conjunction with <code class="inline-code">send()</code>. The method <code class="inline-code">append()</code>
+                    appends the content to the response buffer, which will only get produced to the terminal screen when the
+                    method <code class="inline-code">send()</code> is called. This is useful if you have to take a number of steps to create the response buffer
+                    before sending it.</p>
+
+                    <p>Using the method <code class="inline-code">write()</code> allows you to produce content to the terminal screen in real time, without
+                    having to call the <code class="inline-code">send()</code> method. This is useful if you need to push content out to the terminal screen
+                        of the application as you go.</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console(40);
+$console->write(
+    'Here is some console information. This is a really long string. It will have to wrap.'
+);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 class="mt-4">Newlines and Indents</h5>
+                    <p>By default, calling the <code class="inline-code">append()</code> or <code class="inline-code">write()</code> methods will produce the indent value at the beginning
+                        of the content and a newline at the end of the content. If this is not the desired behavior, boolean flags
+                        can be passed to control this:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console(40);
+$console->write('Here ', false);          // No new line, but use indent
+$console->write('is ', false, false);     // No new line, no indent
+$console->write('some ', false, false);   // No new line, no indent
+$console->write('content.', true, false); // Use new line, but no indent</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="colors" class="mt-4">Colors</h4>
+                    <p>On a console terminal that supports it, you can colorize text outputted to the console
+                        with the <code class="inline-code">colorize()</code> method:</p>
+                    <pre><code class="language-php">$console->append(
+    'Here is some ' .
+    $console->colorize('IMPORTANT', Console::BOLD_RED) .
+    ' console information.'
+);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Available color constants include:</p>
+                    <ul class="list-disc ml-8 mb-4 text-sm">
+                        <li>NORMAL</li>
+                        <li>BLACK</li>
+                        <li>RED</li>
+                        <li>GREEN</li>
+                        <li>YELLOW</li>
+                        <li>BLUE</li>
+                        <li>MAGENTA</li>
+                        <li>CYAN</li>
+                        <li>WHITE</li>
+                        <li>GRAY</li>
+                        <li>BOLD_RED</li>
+                        <li>BOLD_GREEN</li>
+                        <li>BOLD_YELLOW</li>
+                        <li>BOLD_BLUE</li>
+                        <li>BOLD_MAGENTA</li>
+                        <li>BOLD_CYAN</li>
+                        <li>BOLD_WHITE</li>
+                    </ul>
+                    <h4 id="prompt">Prompt</h4>
+                    <p>You can trigger a prompt to get information from the user:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console();
+$name    = $console->prompt('Please provide your name: ');
+$console->write('Hello ' . $name . '!');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-bash">$ ./app
+    Please provide your name:  Nick
+    Hello Nick!</code></pre>
+                    <p>You can also enforce a certain set of options as well as case-sensitivity.
+                        The prompt will not accept a value outside of the provided range of option
+                        values. If the case-sensitive flag is set to <code class="inline-code">true</code>, the prompt will not
+                        accept values that are not an exact case-match.</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console();
+$letter  = $console->prompt(
+    'Which is your favorite letter: A, B, C, or D? ',
+    ['A', 'B', 'C', 'D'],
+    true
+);
+$console->write('Your favorite letter is ' . $letter . '.');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-bash">$ ./app
+    Which is your favorite letter: A, B, C, or D? B
+    Your favorite letter is B.</code></pre>
+                    <h4 id="commands" class="mt-4">Commands</h4>
+                    <p>A command object allows you to define the name, parameters and help string values of a command
+                        and add the command to the console object:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+use Pop\Console\Command;
+
+$command1 = new Command('users');
+$command1->setParams('--list [<id>]');
+$command1->setHelp('This is the users help screen');
+
+$command2 = new Command('roles');
+$command2->setParams('--list [<id>]');
+$command2->setHelp('This is the roles help screen');
+
+$console = new Console();
+$console->addCommand($command1);
+$console->addCommand($command2);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="help-screen" class="mt-4">Help Screen</h4>
+                    <p>Registering the commands with the console object like in the above example allows you
+                        to call the <code class="inline-code">help()</code> method to view the auto-generated help screen:</p>
+                    <pre><code class="language-php">$console->help();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-bash">    users --list [<id>]    This is the users help screen
+    roles --list [<id>]    This is the roles help screen</code></pre>
+                    <p>However, the console object has the method <code class="inline-code">addCommandsFromRoutes()</code> which works in conjunction
+                            with a <code class="inline-code">Pop\Router\Cli\Match</code> object to automatically generate the command, along with their
+                        parameters and help strings.</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$this->console->addCommandsFromRoutes($cliRouteMatch, './myapp');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>This console will use the CLI route match object and parse out all of the commands
+                        and make them available for the console object to leverage for the help screen.</p>
+                    <h5>Help Colors</h5>
+                    <p>An extra layer of presentation control is available by way of setting the help screen colors.
+                        You can choose up to 4 colors that will be used in breaking apart the command strings by name
+                        and parameters and colorizing them to make the different segments standout in an organized fashion.</p>
+                    <p>Let's take a look at the abstract constructor of the <code class="inline-code">pop-kettle</code> component.</p>
+                    <pre><code class="language-php">    public function __construct(Application $application, Console $console)
+    {
+        $this->application = $application;
+        $this->console     = $console;
+
+        $this->console->setHelpColors(
+            Console::BOLD_CYAN, Console::BOLD_GREEN, Console::BOLD_MAGENTA
+            );
+        $this->console->addCommandsFromRoutes(
+            $application->router()->getRouteMatch(), './kettle'
+        );
+    }
+
+    public function help()
+    {
+        $this->console->help();
+    }</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the above constructor method, the help colors are set and then the application object pushes
+                        the CLI route match object into the console method <code class="inline-code">addCommandsFromRoutes()</code>. The second parameter
+                        <code class="inline-code">./kettle</code> is a script prefix to prepend to each line of help. Those two lines are all that is needed
+                        to produce the colorful and well organized help screen for <code class="inline-code">pop-kettle</code>, which is called within the
+                        controller's <code class="inline-code">help()</code> method.</p>
+                        <p>The output looks like this:</p>
+                    <img src="https://raw.githubusercontent.com/popphp/pop-console/master/tests/tmp/console-help.jpg" />
                 </div>
 <?php include __DIR__ . '/../inc/footer.phtml'; ?>
