@@ -8,14 +8,14 @@ endif; ?>
                     <h2><?=$title; ?></h2>
                     <p>The <code class="inline-code">popphp/pop-view</code> component provides the functionality for creating and rendering views within
                         your application. Data can be passed into a view, filtered and pushed out to the UI of the application
-                        to be rendering within the view template. As mentioned in the <a href="/user-guide/mvc">MVC section</a> of the user guide, the
+                        to be rendering within the view template. As mentioned in the <a href="<?=$version; ?>/user-guide/mvc">MVC section</a> of the user guide, the
                         <code class="inline-code">popphp/pop-view</code> component supports both file-based and stream-based templates.</p>
                     <h4 id="files">Files</h4>
                     <p>With file-based view templates, the view object utilizes traditional PHP script files with the extension
                         <code class="inline-code">.php</code> or <code class="inline-code">.phtml</code>. The benefit of this type of template is that you can fully leverage PHP in manipulating
                         and displaying your data in your view.</p>
 
-                    <p>Let's revisit and expand upon the basic example given in the previous <a href="/user-guide/mvc">MVC section</a>. First let's take a
+                    <p>Let's revisit and expand upon the basic example given in the previous <a href="<?=$version; ?>/user-guide/mvc">MVC section</a>. First let's take a
                         look at the view template, <code class="inline-code">index.phtml</code>:</p>
                     <pre><code class="language-php-template"><?=htmlentities(<<<PHTML
 <!DOCTYPE html>

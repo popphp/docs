@@ -3,96 +3,96 @@
                     <li x-data="{open: <?=$nav1Active; ?>}">
                         <a href="#" x-on:click="open = !open; $event.preventDefault();">Overview</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="/overview/introduction">Introduction</a></li>
-                            <li><a href="/overview/about">About</a></li>
-                            <li><a href="/overview/community">Community</a></li>
+                            <li><a href="<?=$version; ?>/overview/introduction">Introduction</a></li>
+                            <li><a href="<?=$version; ?>/overview/about">About</a></li>
+                            <li><a href="<?=$version; ?>/overview/community">Community</a></li>
                         </ul>
                     </li>
                     <li x-data="{open: <?=$nav2Active; ?>}">
                         <a href="#" x-on:click="open = !open; $event.preventDefault();">Installation</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="/installation/composer">Composer</a></li>
-                            <li><a href="/installation/requirements">Requirements</a></li>
+                            <li><a href="<?=$version; ?>/installation/composer">Composer</a></li>
+                            <li><a href="<?=$version; ?>/installation/requirements">Requirements</a></li>
                         </ul>
                     </li>
                     <li x-data="{open: <?=$nav3Active; ?>}">
                         <a href="#" x-on:click="open = !open; $event.preventDefault();">Getting Started</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li>
-                                <a href="/getting-started/applications">Applications</a>
+                                <a href="<?=$version; ?>/getting-started/applications">Applications</a>
                                 <ul class="hidden">
-                                    <li><a href="/getting-started/applications#setup">Setup</a></li>
-                                    <li><a href="/getting-started/applications#autoloader">Autoloader</a></li>
-                                    <li><a href="/getting-started/applications#basic-api">Basic API</a></li>
-                                    <li><a href="/getting-started/applications#advanced-api">Advanced API</a></li>
-                                    <li><a href="/getting-started/applications#running-an-application">Run</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/applications#setup">Setup</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/applications#autoloader">Autoloader</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/applications#basic-api">Basic API</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/applications#advanced-api">Advanced API</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/applications#running-an-application">Run</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/getting-started/routing">Routing</a>
+                                <a href="<?=$version; ?>/getting-started/routing">Routing</a>
                                 <ul class="hidden">
-                                    <li><a href="/getting-started/routing#basic-routing">Basic Routing</a></li>
-                                    <li><a href="/getting-started/routing#dispatch-params">Dispatch Parameters</a></li>
-                                    <li><a href="/getting-started/routing#routing-syntax">Routing Syntax</a></li>
-                                    <li><a href="/getting-started/routing#controller-classes">Controller Classes</a></li>
-                                    <li><a href="/getting-started/routing#controller-params">Controller Parameters</a></li>
-                                    <li><a href="/getting-started/routing#dynamic-routing">Dynamic Routing</a></li>
-                                    <li><a href="/getting-started/routing#named-routes">Named Routes</a></li>
-                                    <li><a href="/getting-started/routing#url-generation">URL Generation</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/routing#basic-routing">Basic Routing</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/routing#dispatch-params">Dispatch Parameters</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/routing#routing-syntax">Routing Syntax</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/routing#controller-classes">Controller Classes</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/routing#controller-params">Controller Parameters</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/routing#dynamic-routing">Dynamic Routing</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/routing#named-routes">Named Routes</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/routing#url-generation">URL Generation</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/getting-started/controllers">Controllers</a></li>
-                            <li><a href="/getting-started/models">Models</a></li>
+                            <li><a href="<?=$version; ?>/getting-started/controllers">Controllers</a></li>
+                            <li><a href="<?=$version; ?>/getting-started/models">Models</a></li>
                             <li>
-                                <a href="/getting-started/services">Services</a>
+                                <a href="<?=$version; ?>/getting-started/services">Services</a>
                                 <ul class="hidden">
-                                    <li><a href="/getting-started/services#syntax">Syntax</a></li>
-                                    <li><a href="/getting-started/services#parameters">Parameters</a></li>
-                                    <li><a href="/getting-started/services#container">Service Container</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/getting-started/events">Events</a>
-                                <ul class="hidden">
-                                    <li><a href="/getting-started/events#priority">Priority</a></li>
-                                    <li><a href="/getting-started/events#application">Application Events</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/services#syntax">Syntax</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/services#parameters">Parameters</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/services#container">Service Container</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/getting-started/modules">Modules</a>
+                                <a href="<?=$version; ?>/getting-started/events">Events</a>
                                 <ul class="hidden">
-                                    <li><a href="/getting-started/modules#custom">Custom Modules</a></li>
-                                    <li><a href="/getting-started/modules#manager">Module Manager</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/events#priority">Priority</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/events#application">Application Events</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/getting-started/popcorn">Popcorn</a>
+                                <a href="<?=$version; ?>/getting-started/modules">Modules</a>
                                 <ul class="hidden">
-                                    <li><a href="/getting-started/popcorn#basic">Basic Use</a></li>
-                                    <li><a href="/getting-started/popcorn#advanced">Advanced Use</a></li>
-                                    <li><a href="/getting-started/popcorn#routes">Routes</a></li>
-                                    <li><a href="/getting-started/popcorn#custom">Custom Methods</a></li>
-                                    <li><a href="/getting-started/popcorn#api">API</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/modules#custom">Custom Modules</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/modules#manager">Module Manager</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/getting-started/kettle">Kettle</a>
+                                <a href="<?=$version; ?>/getting-started/popcorn">Popcorn</a>
                                 <ul class="hidden">
-                                    <li><a href="/getting-started/kettle#init">Initializing an Application</a></li>
-                                    <li><a href="/getting-started/kettle#include">Kettle Include</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/popcorn#basic">Basic Use</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/popcorn#advanced">Advanced Use</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/popcorn#routes">Routes</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/popcorn#custom">Custom Methods</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/popcorn#api">API</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="<?=$version; ?>/getting-started/kettle">Kettle</a>
+                                <ul class="hidden">
+                                    <li><a href="<?=$version; ?>/getting-started/kettle#init">Initializing an Application</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/kettle#include">Kettle Include</a></li>
                                     <li>
-                                        <a href="/getting-started/kettle#databases">Managing Databases</a>
+                                        <a href="<?=$version; ?>/getting-started/kettle#databases">Managing Databases</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/getting-started/kettle#installing">Installing the Database</a></li>
-                                            <li class="mb-2"><a href="/getting-started/kettle#seeding">Seeding the Database</a></li>
-                                            <li class="mb-2"><a href="/getting-started/kettle#migrations">Database Migrations</a></li>
-                                            <li class="mb-2"><a href="/getting-started/kettle#migration-state">Migration State Storage</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/getting-started/kettle#installing">Installing the Database</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/getting-started/kettle#seeding">Seeding the Database</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/getting-started/kettle#migrations">Database Migrations</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/getting-started/kettle#migration-state">Migration State Storage</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/getting-started/kettle#creating">Creating App Files</a></li>
-                                    <li><a href="/getting-started/kettle#web-server">Web Server</a></li>
-                                    <li><a href="/getting-started/kettle#accessing">Accessing the App</a></li>
-                                    <li><a href="/getting-started/kettle#windows">Windows</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/kettle#creating">Creating App Files</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/kettle#web-server">Web Server</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/kettle#accessing">Accessing the App</a></li>
+                                    <li><a href="<?=$version; ?>/getting-started/kettle#windows">Windows</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -100,250 +100,250 @@
                     <li x-data="{open: <?=$nav4Active; ?>}">
                         <a href="#" x-on:click="open = !open; $event.preventDefault();">User Guide</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="/user-guide/mvc">MVC</a></li>
+                            <li><a href="<?=$version; ?>/user-guide/mvc">MVC</a></li>
                             <li>
-                                <a href="/user-guide/views">Views</a>
+                                <a href="<?=$version; ?>/user-guide/views">Views</a>
                                 <ul class="hidden">
-                                    <li><a href="/user-guide/views#files">Files</a></li>
-                                    <li><a href="/user-guide/views#streams">Streams</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/views#files">Files</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/views#streams">Streams</a></li>
                                     <li>
-                                        <a href="/user-guide/views#syntax">Stream Syntax</a>
+                                        <a href="<?=$version; ?>/user-guide/views#syntax">Stream Syntax</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/views#scalars">Scalars</a></li>
-                                            <li class="mb-2"><a href="/user-guide/views#arrays-loops">Arrays/Loops</a></li>
-                                            <li class="mb-2"><a href="/user-guide/views#conditionals">Conditionals</a></li>
-                                            <li class="mb-2"><a href="/user-guide/views#includes">Includes</a></li>
-                                            <li class="mb-2"><a href="/user-guide/views#inheritance">Inheritance</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/views#scalars">Scalars</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/views#arrays-loops">Arrays/Loops</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/views#conditionals">Conditionals</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/views#includes">Includes</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/views#inheritance">Inheritance</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/user-guide/views#filtering">Filtering</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/views#filtering">Filtering</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/user-guide/http">HTTP</a>
+                                <a href="<?=$version; ?>/user-guide/http">HTTP</a>
                                 <ul class="hidden">
                                     <li>
-                                        <a href="/user-guide/http#client">Client</a>
+                                        <a href="<?=$version; ?>/user-guide/http#client">Client</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/http#quickstart">Quickstart</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#auth">Auth</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#options">Options</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#content-negotiation">Content Negotiation</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#requests">Requests</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#rendering-requests">Rendering Requests</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#responses">Responses</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#handlers">Handlers</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#quickstart">Quickstart</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#auth">Auth</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#options">Options</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#content-negotiation">Content Negotiation</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#requests">Requests</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#rendering-requests">Rendering Requests</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#responses">Responses</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#handlers">Handlers</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/http#promises">Promises</a>
+                                        <a href="<?=$version; ?>/user-guide/http#promises">Promises</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/http#wait">Wait</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#then">Then</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#forwarding">Forwarding</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#nesting">Nesting</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#wait">Wait</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#then">Then</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#forwarding">Forwarding</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#nesting">Nesting</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/http#server">Server</a>
+                                        <a href="<?=$version; ?>/user-guide/http#server">Server</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/http#request-headers-data">Request Headers/Data</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#filtering">Filtering</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#redirect-forwards">Redirects/Forwards</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#rendering-responses">Rendering Responses</a></li>
-                                            <li class="mb-2"><a href="/user-guide/http#uploads">Uploads</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#request-headers-data">Request Headers/Data</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#filtering">Filtering</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#redirect-forwards">Redirects/Forwards</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#rendering-responses">Rendering Responses</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/http#uploads">Uploads</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/user-guide/http#cli-conversion">CLI Conversion</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/http#cli-conversion">CLI Conversion</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/user-guide/console">Console</a>
+                                <a href="<?=$version; ?>/user-guide/console">Console</a>
                                 <ul class="hidden">
-                                    <li><a href="/user-guide/console#output">Output</a></li>
-                                    <li><a href="/user-guide/console#response-buffer">Response Buffer</a></li>
-                                    <li><a href="/user-guide/console#colors">Colors</a></li>
-                                    <li><a href="/user-guide/console#prompt">Prompt</a></li>
-                                    <li><a href="/user-guide/console#commands">Commands</a></li>
-                                    <li><a href="/user-guide/console#help-screen">Help Screen</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#output">Output</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#response-buffer">Response Buffer</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#colors">Colors</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#prompt">Prompt</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#commands">Commands</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#help-screen">Help Screen</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/user-guide/databases">Databases</a>
+                                <a href="<?=$version; ?>/user-guide/databases">Databases</a>
                                 <ul class="hidden">
                                     <li>
-                                        <a href="/user-guide/databases#quickstart">Quickstart</a>
+                                        <a href="<?=$version; ?>/user-guide/databases#quickstart">Quickstart</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/databases#connect-to-a-database">Connect to a Database</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#query-a-database">Query a Database</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#table-class">Table Class</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#connect-to-a-database">Connect to a Database</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#query-a-database">Query a Database</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#table-class">Table Class</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/databases#adapters">Adapters</a>
+                                        <a href="<?=$version; ?>/user-guide/databases#adapters">Adapters</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/databases#mysql">MySQL</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#postgresql">PostgreSQL</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#sqlite">SQLite</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#sql-server">SQL Server</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#pdo">PDO</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#mysql">MySQL</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#postgresql">PostgreSQL</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#sqlite">SQLite</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#sql-server">SQL Server</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#pdo">PDO</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/databases#orm">ORM</a>
+                                        <a href="<?=$version; ?>/user-guide/databases#orm">ORM</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/databases#active-record">Active Record</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#encoded-record">Encoded Record</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#table-gateway">Table Gateway</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#options">Options</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#shorthand-syntax">Shorthand Syntax</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#execute-queries">Execute Queries</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#active-record">Active Record</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#encoded-record">Encoded Record</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#table-gateway">Table Gateway</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#options">Options</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#shorthand-syntax">Shorthand Syntax</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#execute-queries">Execute Queries</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/databases#relationships">Relationships</a>
+                                        <a href="<?=$version; ?>/user-guide/databases#relationships">Relationships</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/databases#eager-loading">Eager-Loading</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#eager-loading">Eager-Loading</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/databases#querying">Querying</a>
+                                        <a href="<?=$version; ?>/user-guide/databases#querying">Querying</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/databases#prepared-statements">Prepared Statements</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#prepared-statements">Prepared Statements</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/databases#query-builder">Query Builder</a>
+                                        <a href="<?=$version; ?>/user-guide/databases#query-builder">Query Builder</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/databases#select">Select</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#insert">Insert</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#update">Update</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#delete">Delete</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#joins">Joins</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#predicates">Predicates</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#nested-predicates">Nested Predicates</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#sorting-order-limits">Sorting, Order, Limits</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#select">Select</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#insert">Insert</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#update">Update</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#delete">Delete</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#joins">Joins</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#predicates">Predicates</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#nested-predicates">Nested Predicates</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#sorting-order-limits">Sorting, Order, Limits</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/databases#schema-builder">Schema Builder</a>
+                                        <a href="<?=$version; ?>/user-guide/databases#schema-builder">Schema Builder</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/databases#create-table">Create Table</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#alter-table">Alter Table</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#drop-table">Drop Table</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#execute-schema">Execute Schema</a></li>
-                                            <li class="mb-2"><a href="/user-guide/databases#schema-builder-api">Schema Builder API</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#create-table">Create Table</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#alter-table">Alter Table</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#drop-table">Drop Table</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#execute-schema">Execute Schema</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/databases#schema-builder-api">Schema Builder API</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/user-guide/databases#migrator">Migrator</a></li>
-                                    <li><a href="/user-guide/databases#seeder">Seeder</a></li>
-                                    <li><a href="/user-guide/databases#sql-data">SQL Data</a></li>
-                                    <li><a href="/user-guide/databases#profiler">Profiler</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/databases#migrator">Migrator</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/databases#seeder">Seeder</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/databases#sql-data">SQL Data</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/databases#profiler">Profiler</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/user-guide/sessions">Sessions</a>
+                                <a href="<?=$version; ?>/user-guide/sessions">Sessions</a>
                                 <ul class="hidden">
-                                    <li><a href="/user-guide/sessions#time-based">Time-Based</a></li>
-                                    <li><a href="/user-guide/sessions#request-based">Request-Based</a></li>
-                                    <li><a href="/user-guide/sessions#namespaces">Namespaces</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/sessions#time-based">Time-Based</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/sessions#request-based">Request-Based</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/sessions#namespaces">Namespaces</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/user-guide/forms">Forms</a>
+                                <a href="<?=$version; ?>/user-guide/forms">Forms</a>
                                 <ul class="hidden">
-                                    <li><a href="/user-guide/forms#quickstart">Quickstart</a></li>
-                                    <li><a href="/user-guide/forms#field-elements">Field Elements</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/forms#quickstart">Quickstart</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/forms#field-elements">Field Elements</a></li>
                                     <li>
-                                        <a href="/user-guide/forms#field-configurations">Field Configurations</a>
+                                        <a href="<?=$version; ?>/user-guide/forms#field-configurations">Field Configurations</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/forms#fieldsets">Fieldsets</a></li>
-                                            <li class="mb-2"><a href="/user-guide/forms#legends">Legends</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/forms#fieldsets">Fieldsets</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/forms#legends">Legends</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/user-guide/forms#field-containers">Field Containers</a></li>
-                                    <li><a href="/user-guide/forms#filtering">Filtering</a></li>
-                                    <li><a href="/user-guide/forms#validation">Validation</a></li>
-                                    <li><a href="/user-guide/forms#dynamic-fields">Dynamic Fields</a></li>
-                                    <li><a href="/user-guide/forms#acl-forms">ACL Forms</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/forms#field-containers">Field Containers</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/forms#filtering">Filtering</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/forms#validation">Validation</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/forms#dynamic-fields">Dynamic Fields</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/forms#acl-forms">ACL Forms</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/user-guide/images">Images</a>
+                                <a href="<?=$version; ?>/user-guide/images">Images</a>
                                 <ul class="hidden">
                                     <li>
-                                        <a href="/user-guide/images#quickstart">Quickstart</a>
+                                        <a href="<?=$version; ?>/user-guide/images#quickstart">Quickstart</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/images#load-an-image">Load an Image</a></li>
-                                            <li class="mb-2"><a href="/user-guide/images#create-an-image">Create an Image</a></li>
-                                            <li class="mb-2"><a href="/user-guide/images#convert-an-image">Convert an Image</a></li>
-                                            <li class="mb-2"><a href="/user-guide/images#output-an-image">Output an Image</a></li>
-                                            <li class="mb-2"><a href="/user-guide/images#destroy-an-image">Destroy an Image</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/images#load-an-image">Load an Image</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/images#create-an-image">Create an Image</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/images#convert-an-image">Convert an Image</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/images#output-an-image">Output an Image</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/images#destroy-an-image">Destroy an Image</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/images#image-adapters">Image Adapters</a>
+                                        <a href="<?=$version; ?>/user-guide/images#image-adapters">Image Adapters</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/images#gd">GD</a></li>
-                                            <li class="mb-2"><a href="/user-guide/images#imagick">Imagick</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/images#gd">GD</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/images#imagick">Imagick</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/user-guide/images#advanced-editing">Advanced Editing</a></li>
-                                    <li><a href="/user-guide/images#captcha">CAPTCHA</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/images#advanced-editing">Advanced Editing</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/images#captcha">CAPTCHA</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/user-guide/pdfs">PDFs</a>
+                                <a href="<?=$version; ?>/user-guide/pdfs">PDFs</a>
                                 <ul class="hidden">
-                                    <li><a href="/user-guide/pdfs#quickstart">Quickstart</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/pdfs#quickstart">Quickstart</a></li>
                                     <li>
-                                        <a href="/user-guide/pdfs#pdf">PDF</a>
+                                        <a href="<?=$version; ?>/user-guide/pdfs#pdf">PDF</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/pdfs#write-to-file">Write to File</a></li>
-                                            <li class="mb-2"><a href="/user-guide/pdfs#output-to-http">Output to HTTP</a></li>
-                                            <li class="mb-2"><a href="/user-guide/pdfs#import-from-file">Import from File</a></li>
-                                            <li class="mb-2"><a href="/user-guide/pdfs#import-from-raw-data">Import from Raw Data</a></li>
-                                            <li class="mb-2"><a href="/user-guide/pdfs#import-from-images">Import from Images</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#write-to-file">Write to File</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#output-to-http">Output to HTTP</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#import-from-file">Import from File</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#import-from-raw-data">Import from Raw Data</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#import-from-images">Import from Images</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/pdfs#documents">Documents</a>
+                                        <a href="<?=$version; ?>/user-guide/pdfs#documents">Documents</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/pdfs#compression">Compression</a></li>
-                                            <li class="mb-2"><a href="/user-guide/pdfs#page-origin">Page Origin</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#compression">Compression</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#page-origin">Page Origin</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/user-guide/pdfs#pages">Pages</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/pdfs#pages">Pages</a></li>
                                     <li>
-                                        <a href="/user-guide/pdfs#fonts">Fonts</a>
+                                        <a href="<?=$version; ?>/user-guide/pdfs#fonts">Fonts</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/pdfs#standard">Standard</a></li>
-                                            <li class="mb-2"><a href="/user-guide/pdfs#embedded">Embedded</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="/user-guide/pdfs#text">Text</a>
-                                        <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/pdfs#alignment">Alignment</a></li>
-                                            <li class="mb-2"><a href="/user-guide/pdfs#string-width">String Width</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#standard">Standard</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#embedded">Embedded</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="/user-guide/pdfs#images">Images</a>
+                                        <a href="<?=$version; ?>/user-guide/pdfs#text">Text</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/pdfs#image-size">Image Size</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#alignment">Alignment</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#string-width">String Width</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/user-guide/pdfs#paths">Paths</a></li>
                                     <li>
-                                        <a href="/user-guide/pdfs#annotations">Annotations</a>
+                                        <a href="<?=$version; ?>/user-guide/pdfs#images">Images</a>
                                         <ul class="ml-4 pt-2 pb-1">
-                                            <li class="mb-2"><a href="/user-guide/pdfs#urls">URLs</a></li>
-                                            <li class="mb-2"><a href="/user-guide/pdfs#internal">Internal</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#image-size">Image Size</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/user-guide/pdfs#forms">Forms</a></li>
-                                    <li><a href="/user-guide/pdfs#html">HTML</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/pdfs#paths">Paths</a></li>
+                                    <li>
+                                        <a href="<?=$version; ?>/user-guide/pdfs#annotations">Annotations</a>
+                                        <ul class="ml-4 pt-2 pb-1">
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#urls">URLs</a></li>
+                                            <li class="mb-2"><a href="<?=$version; ?>/user-guide/pdfs#internal">Internal</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="<?=$version; ?>/user-guide/pdfs#forms">Forms</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/pdfs#html">HTML</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -398,9 +398,15 @@
                     </li>
                     <li><a href="http://api.popphp.org/5.0/" target="_blank">API Docs</a></li>
                     <li x-data="{open: <?=$nav6Active; ?>}">
-                        <a href="/changelog">Changelog</a>
+                        <a href="<?=$version; ?>/changelog">Changelog</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="/changelog#5.0.0">5.0.0</a></li>
+                            <li><a href="<?=$version; ?>/changelog#5.0.0">5.0.0</a></li>
+                            <li><a href="<?=$version; ?>/changelog#4.8.0">4.8.0</a></li>
+                            <li><a href="<?=$version; ?>/changelog#4.7.0">4.7.0</a></li>
+                            <li><a href="<?=$version; ?>/changelog#4.6.0">4.6.0</a></li>
+                            <li><a href="<?=$version; ?>/changelog#4.5.0">4.5.0</a></li>
+                            <li><a href="<?=$version; ?>/changelog#4.1.0">4.1.0</a></li>
+                            <li><a href="<?=$version; ?>/changelog#4.0.0">4.0.0</a></li>
                         </ul>
                     </li>
                 </ul>
