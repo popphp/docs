@@ -241,8 +241,33 @@
                                     <li><a href="/user-guide/databases#profiler">Profiler</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/user-guide/sessions">Sessions</a></li>
-                            <li><a href="/user-guide/forms">Forms</a></li>
+                            <li>
+                                <a href="/user-guide/sessions">Sessions</a>
+                                <ul class="hidden">
+                                    <li><a href="/user-guide/sessions#time-based">Time-Based</a></li>
+                                    <li><a href="/user-guide/sessions#request-based">Request-Based</a></li>
+                                    <li><a href="/user-guide/sessions#namespaces">Namespaces</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/user-guide/forms">Forms</a>
+                                <ul class="hidden">
+                                    <li><a href="/user-guide/forms#quickstart">Quickstart</a></li>
+                                    <li><a href="/user-guide/forms#field-elements">Field Elements</a></li>
+                                    <li>
+                                        <a href="/user-guide/forms#field-configurations">Field Configurations</a>
+                                        <ul class="ml-4 pt-2 pb-1">
+                                            <li class="mb-2"><a href="/user-guide/forms#fieldsets">Fieldsets</a></li>
+                                            <li class="mb-2"><a href="/user-guide/forms#legends">Legends</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/user-guide/forms#field-containers">Field Containers</a></li>
+                                    <li><a href="/user-guide/forms#filtering">Filtering</a></li>
+                                    <li><a href="/user-guide/forms#validation">Validation</a></li>
+                                    <li><a href="/user-guide/forms#dynamic-fields">Dynamic Fields</a></li>
+                                    <li><a href="/user-guide/forms#acl-forms">ACL Forms</a></li>
+                                </ul>
+                            </li>
                             <li><a href="/user-guide/images">Images</a></li>
                             <li><a href="/user-guide/pdfs">PDFs</a></li>
                         </ul>
@@ -294,5 +319,15 @@
                         </ul>
                     </li>
                     <li><a href="http://api.popphp.org/5.0/" target="_blank">API Docs</a></li>
+                    <li x-data="{open: <?=$nav6Active; ?>}">
+                        <a href="/changelog">Changelog</a>
+                        <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
+                            <li><a href="/changelog#5.0.0">5.0.0</a></li>
+                            <li><a href="/changelog#4.8.0">4.8.0</a></li>
+                            <li><a href="/changelog#4.7.0">4.7.0</a></li>
+                            <li><a href="/changelog#4.6.0">4.6.0</a></li>
+                            <li><a href="/changelog#4.5.0">4.5.0</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </aside>

@@ -168,6 +168,7 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
         $this->view->nav3Active = (str_contains($template, '/getting-started')) ? 'true' : 'false';
         $this->view->nav4Active = (str_contains($template, '/user-guide')) ? 'true' : 'false';
         $this->view->nav5Active = (str_contains($template, '/reference')) ? 'true' : 'false';
+        $this->view->nav6Active = (str_contains($template, '/changelog')) ? 'true' : 'false';
 
         if ($title == 'Index') {
             $this->view->title      = 'Home';

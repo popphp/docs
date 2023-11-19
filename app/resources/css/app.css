@@ -117,6 +117,10 @@ a {
     @apply text-xs text-gray-700 hover:text-gray-400 dark:text-gray-500 dark:hover:text-gray-100
 }
 
+.list-alpha {
+    list-style-type: lower-alpha;
+}
+
 pre {
     @apply relative mt-1
 }
