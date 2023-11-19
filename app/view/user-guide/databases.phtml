@@ -6,6 +6,1453 @@
     include __DIR__ . '/../inc/breadcrumb.phtml';
 endif; ?>
                     <h2><?=$title; ?></h2>
+                    <p><code class="inline-code">pop-db</code> is a robust database ORM-style component that provides a wide range of features
+                    and functionality to easily interface with databases. Those features include:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2">
+                            Database Adapters
+                            <ul class="list-disc ml-8">
+                                <li class="mb-1">MySQL</li>
+                                <li class="mb-1">PostgreSQL</li>
+                                <li class="mb-1">Sqlite</li>
+                                <li class="mb-1">PDO</li>
+                                <li class="mb-1">SQL Server</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            ORM-style concepts
+                            <ul class="list-disc ml-8">
+                                <li class="mb-1">Active Record</li>
+                                <li class="mb-1">Table Gateway</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">Relationships</li>
+                        <li class="mb-2">SQL Query Builder</li>
+                        <li class="mb-2">SQL Schema Builder</li>
+                        <li class="mb-2">Migrator</li>
+                        <li class="mb-2">Profiler</li>
+                    </ul>
+                    <h4 id="quickstart">Quickstart</h4>
+                    <h5 id="connect-to-a-database">Connect to a Database</h5>
+                    <p>You can connect to a database using the <code class="inline-code">Pop\Db\Db::connect()</code> method:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
 
+$db = Db::connect('mysql', [
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS',
+    'host'     => 'localhost'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Or, alternatively, there are shorthand methods for each database connection type:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS',
+    'host'     => 'localhost'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <ul class="list-disc ml-4 mt-8 text-sm">
+                        <li><code class="inline-code">mysqlConnect()</code></li>
+                        <li><code class="inline-code">pgsqlConnect()</code></li>
+                        <li><code class="inline-code">sqliteConnect()</code></li>
+                        <li><code class="inline-code">pdoConnect()</code></li>
+                        <li><code class="inline-code">sqlsrvConnect()</code></li>
+                    </ul>
+                    <p>If no <code class="inline-code">host</code> value is given, it will default to <code class="inline-code">localhost</code>.</p>
+                    <h5 id="query-a-database">Query a Database</h5>
+                    <p>Once you have a database object that represents a database connection, you can
+                        use it to query the database:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$db->query('SELECT * FROM `users`');
+$users = $db->fetchAll();
+print_r($users);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If there are any user records in the `users` table, the result will be:</p>
+                    <pre><code class="language-plaintext">Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [username] => testuser
+            [password] => password
+            [email] => test@test.com
+        )
+
+)</code></pre>
+                    <h5 id="table-class" class="mt-4">Table Class</h5>
+                    <p>Part of the benefit of using an ORM-style database library like <code class="inline-code">pop-db</code> is to
+                        abstract away the layer of SQL required so that you only have to concern yourself
+                        with interacting with objects in PHP and not writing SQL. The ORM does it for you.
+                        An example of this is using a table class that represents the active record pattern
+                        (which will be explored more in-depth below.)</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+use Pop\Db\Record;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+class Users extends Record {}
+
+Record::setDb($db);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the above example, a database object is created and passed to the <code class="inline-code">Pop\Db\Record</code>
+                        class. This is so that any classes that extend <code class="inline-code">Pop\Db\Record</code> will be aware of and have
+                        access to the database object.</p>
+
+                    <p>Then, a table class that represents the <code class="inline-code">users</code> table in the database extends the
+                            <code class="inline-code">Pop\Db\Record</code> class and inherits all of its built-in functionality. From there,
+                        methods can be called to fetch data out of the <code class="inline-code">users</code> table or save new data to
+                        the <code class="inline-code">users</code> table.</p>
+                    <h6>Fetch users</h6>
+                    <pre><code class="language-php">$users = Users::findAll();
+print_r($users->toArray());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [username] => testuser
+            [password] => 12345678
+            [email] => test@test.com
+        )
+
+)</code></pre>
+                    <h6 class="mt-4">Fetch user ID 1</h6>
+                    <pre><code class="language-php">$user = Users::findById(1);
+print_r($user->toArray());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">Array
+(
+    [id] => 1
+    [username] => testuser
+    [password] => 12345678
+    [email] => test@test.com
+)</code></pre>
+                    <h6 class="mt-4">Edit user ID 1</h6>
+                    <pre><code class="language-php">$user = Users::findById(1);
+$user->username = 'testuser2';
+$user->email    = 'test2@test.com';
+$user->save();
+print_r($user->toArray());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">Array
+(
+    [id] => 1
+    [username] => testuser2
+    [password] => 12345678
+    [email] => test2@test.com
+)</code></pre>
+                    <h6 class="mt-4">Create new user</h6>
+                    <pre><code class="language-php">$user = new Users([
+    'username' => 'newuser',
+    'password' => 'somepassword',
+    'email'    => 'newuser@test.com'
+]);
+$user->save();
+print_r($user->toArray());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">Array
+(
+    [username] => newuser
+    [password] => somepassword
+    [email] => newuser@test.com
+    [id] => 2
+)</code></pre>
+                    <h6 class="mt-4">Delete user ID 1</h6>
+                    <pre><code class="language-php">$user = Users::findById(1);
+$user->delete();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="adapters" class="mt-4">Adapters</h4>
+                    <p>The basics of connecting to a database with an adapter was outlined in the <a href="#quickstart">quickstart</a>
+                        section. In this section, we'll go over the basics of each database adapter. Each of them
+                        have slightly different connection parameters, but once the different adapter objects are
+                        created, they all share a common interface to interact with the database.</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">connect(array $options = [])</code></li>
+                        <li class="mb-2"><code class="inline-code">beginTransaction()</code></li>
+                        <li class="mb-2"><code class="inline-code">commit()</code></li>
+                        <li class="mb-2"><code class="inline-code">rollback()</code></li>
+                        <li class="mb-2"><code class="inline-code">query(mixed $sql)</code></li>
+                        <li class="mb-2"><code class="inline-code">prepare(mixed $sql)</code></li>
+                        <li class="mb-2"><code class="inline-code">bindParams(array $params)</code></li>
+                        <li class="mb-2"><code class="inline-code">execute()</code></li>
+                        <li class="mb-2"><code class="inline-code">fetch()</code></li>
+                        <li class="mb-2"><code class="inline-code">fetchAll()</code></li>
+                        <li class="mb-2"><code class="inline-code">disconnect()</code></li>
+                        <li class="mb-2"><code class="inline-code">escape(?string $value = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">getLastId()</code></li>
+                        <li class="mb-2"><code class="inline-code">getNumberOfRows()</code></li>
+                        <li class="mb-2"><code class="inline-code">getVersion()</code></li>
+                        <li class="mb-2"><code class="inline-code">getTables()</code></li>
+                    </ul>
+                    <h5 id="mysql">MySQL</h5>
+                    <p>The supported options to create a MySQL database adapter and connect with a MySQL database are:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">database</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">username</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">password</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">host</code> (optional, defaults to <code class="inline-code">localhost</code>)</li>
+                        <li class="mb-2"><code class="inline-code">port</code></li>
+                        <li class="mb-2"><code class="inline-code">socket</code></li>
+                    </ul>
+                    <pre><code class="language-php">$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">Pop\Db\Adapter\Mysql</code> object that is returned utilizes the <code class="inline-code">mysqli</code> class available with the <code class="inline-code">mysqli</code>
+                        PHP extension.</p>
+                    <h5 id="postgresql">PostgreSQL</h5>
+                    <p>The supported options to create a PostgreSQL database adapter and connect with a PostgreSQL database are:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">database</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">username</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">password</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">host</code> (optional, defaults to <code class="inline-code">localhost</code>)</li>
+                        <li class="mb-2"><code class="inline-code">hostaddr</code></li>
+                        <li class="mb-2"><code class="inline-code">port</code></li>
+                        <li class="mb-2"><code class="inline-code">connect_timeout</code></li>
+                        <li class="mb-2"><code class="inline-code">options</code></li>
+                        <li class="mb-2"><code class="inline-code">sslmode</code></li>
+                        <li class="mb-2"><code class="inline-code">persist</code></li>
+                    </ul>
+                    <pre><code class="language-php">$db = Db::pgsqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">Pop\Db\Adapter\Pgsql</code> object that is returned utilizes the <code class="inline-code">pg_*</code> functions available with the <code class="inline-code">pgsql</code>
+                        PHP extension.</p>
+                    <h5 id="sqlite">SQLite</h5>
+                    <p>The supported options to create a SQLite database adapter and connect with a SQLite database are:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">database</code> (required - path to database file on disk)</li>
+                        <li class="mb-2"><code class="inline-code">flags</code></li>
+                        <li class="mb-2"><code class="inline-code">key</code></li>
+                    </ul>
+                    <pre><code class="language-php">$db = Db::mysqlConnect([
+    'database' => '/path/to/my_database.sqlite',
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">Pop\Db\Adapter\Sqlite</code> object that is returned utilizes the <code class="inline-code">Sqlite3</code> class available with the <code class="inline-code">sqlite3</code>
+                        PHP extension.</p>
+                    <p><strong>NOTE:</strong> It is important to make sure the database file has the appropriate permissions for the
+                        database adapter to be able to access and modify it.</p>
+                    <h5 id="sql-server">SQL Server</h5>
+                    <p>The supported options to create a SQL Server database adapter and connect with a SQL Server database are:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">database</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">username</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">password</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">host</code> (optional, defaults to <code class="inline-code">localhost</code>)</li>
+                        <li class="mb-2"><code class="inline-code">info</code></li>
+                        <li class="mb-2"><code class="inline-code">ReturnDatesAsStrings</code></li>
+                    </ul>
+                    <pre><code class="language-php">$db = Db::sqlsrvConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">Pop\Db\Adapter\Sqlsrv</code> object that is returned utilizes the <code class="inline-code">sqlsrv_*</code> functions available with the <code class="inline-code">sqlsrv</code>
+                        PHP extension.</p>
+                    <h5 id="pdo">PDO</h5>
+                    <p>The PDO adapter works with the popular PDO extension available with PHP. This encompasses multiple database
+                        drivers that PDO supports. They provide an alternate to the other native drivers.</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">type</code> (required - type of driver: <code class="inline-code">mysql</code>, <code class="inline-code">pgsql</code>, <code class="inline-code">sqlite</code>, <code class="inline-code">sqlsrv</code>, etc.)</li>
+                        <li class="mb-2"><code class="inline-code">database</code> (required)</li>
+                        <li class="mb-2"><code class="inline-code">username</code> (required for database drivers that require credentials)</li>
+                        <li class="mb-2"><code class="inline-code">password</code> (required for database drivers that require credentials)</li>
+                        <li class="mb-2"><code class="inline-code">host</code> (optional, defaults to <code class="inline-code">localhost</code>)</li>
+                    </ul>
+                    <pre><code class="language-php">$db = Db::pdoConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">Pop\Db\Adapter\Pdo</code> object that is returned utilizes the classes and functions made available by the
+                        PDO extension and its various available drivers.</p>
+                    <h4 id="orm">ORM</h4>
+                    <p>The main concept of the <code class="inline-code">pop-db</code> component is that of ORM - object relational mapping. This means
+                        that all of complex things that make databases work - connections, SQL queries, etc. - are abstracted
+                        away so the developer only has to worry about interacting with objects in PHP. The rest is handled
+                        for you, under the hood, in a secure and efficient manner.
+
+                        Of course, if you prefer to directly work with those concepts that have been abstracted away, you
+                        can still do that with the <code class="inline-code">pop-db</code> component. It provides the flexibility for both styles of database
+                        interaction.
+                    </p>
+                    <h5 id="active-record">Active Record</h5>
+                    <p>Central to the ORM-style of <code class="inline-code">pop-db</code> is its use of the active record pattern, which is built into
+                        the <code class="inline-code">Pop\Db\Record</code> class. As hinted at in the [quickstart](#quickstart) section, the main concept
+                        is to write "table" classes that represent tables in the database and that extend the <code class="inline-code">Pop\Db\Record</code>
+                        class.</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+use Pop\Db\Record;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+class Users extends Record {}
+
+Record::setDb($db);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Registering the database</h6>
+                    <p>In the above example, a <code class="inline-code">users</code> table class has been created that inherits all of the functionality of
+                            <code class="inline-code">Pop\Db\Record</code>. The database adapter has been registered with the <code class="inline-code">Pop\Db\Record</code> class, which means
+                        any table class that extends it will have access to that database adapter.</p>
+                    <p>If you need to add specific database adapters to specific table classes, you can do that as well:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+use Pop\Db\Record;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$dbUsers = Db::mysqlConnect([
+    'database' => 'DATABASE_FOR_USERS',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+class Users extends Record {};
+
+Users::setDb($dbUsers); // Only the users table class uses the $dbUsers connection
+Record::setDb($db);     // All other table classes will use the $db connection</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Table configuration</h6>
+                    <p>A few things are configured by default:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2">
+                            The table name is automatically parsed from the class name
+                            <ul class="list-disc ml-8 text-sm">
+                                <li class="mb-1"><code class="inline-code">Users</code> becomes <code class="inline-code">users</code></li>
+                                <li class="mb-1"><code class="inline-code">UserLogins</code> becomes <code class="inline-code">user_logins</code></li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">The primary ID is set to <code class="inline-code">id</code></li>
+                        <li class="mb-2">There is no table prefix</li>
+                    </ul>
+                    <p>However, you can override that through table properties:</p>
+                    <pre><code class="language-php">class Users extends Record
+{
+    protected ?string $table       = 'users_table';
+    protected ?string $prefix      = 'my_app_';
+    protected array   $primaryKeys = ['user_id'];
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Once a table class is configured, there is a basic set of static methods to get
+                        the database adapter or other objects or info:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2"><code class="inline-code">Users::getDb()</code> - Get the db adapter object</li>
+                        <li class="mb-2"><code class="inline-code">Users::db()</code> - Alias to getDb()</li>
+                        <li class="mb-2"><code class="inline-code">Users::getSql()</code> - Get the SQL builder object</li>
+                        <li class="mb-2"><code class="inline-code">Users::sql()</code> - Alias to getSql()</li>
+                        <li class="mb-2"><code class="inline-code">Users::table()</code> - Get the full table name, for example <code class="inline-code">my_app_users_table</code></li>
+                        <li class="mb-2"><code class="inline-code">Users::getTableInfo()</code> - Get information about the table, like columns, etc.</li>
+                    </ul>
+                    <h6>Fetch a record</h6>
+                    <p>The basic way to use the table class is to fetch individual record objects from the database.
+                        All of the following examples return an instance of <code class="inline-code">Users</code>.</p>
+                    <pre><code class="language-php">// Fetch a single user record by ID
+$user = Users::findById(1);
+
+// Search for a single user record
+$user = Users::findOne(['username' => 'testuser']);
+
+// Search for a single user record, or create one if it doesn't exist
+$user = Users::findOneOrCreate(['username' => 'testuser']);
+
+// Search for the latest single user record
+$user = Users::findLatest();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>By default, <code class="inline-code">findLatest()</code> will use the primary key, like <code class="inline-code">id</code>. However, you can pass it another field
+                        to sort by:</p>
+                    <pre><code class="language-php">// Search for the latest single user record by 'last_login'
+$user = Users::findLatest('last_login');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Modify a record</h6>
+                    <p>Once a record has been fetched, you can then modify it and save it:</p>
+                    <pre><code class="language-php">$user->username = 'newusername';
+$user->save();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>or even delete it:</p>
+                    <pre><code class="language-php">$user->delete();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Other methods are available to modify an existing record:</p>
+                    <pre><code class="language-php">$user->increment('attempts'); // Increment column by one and save
+$user->decrement('capacity', 5); // Decrement column by 5 and save
+
+// Make a new copy of the user record in the database
+// The $replace parameter can be an array of new, overriding column values
+$newUser = $user->copy($replace);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Dirty records</h6>
+                    <p>If a record has been modified, the changes are stored and you can get them like this:</p>
+                    <pre><code class="language-php">$user->username = 'newusername';
+$user->email    = 'newemail@test.com';
+
+if ($user->isDirty()) {
+    print_r($user->getDirty);
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">Array
+(
+    [old] => Array
+        (
+            [username] => testuser
+            [email] => test@test.com
+        )
+    [new] => Array
+        (
+            [username] => newusername
+            [email] => newemail@test.com
+        )
+)</code></pre>
+                    <p>This is useful for application components that track and log changes to data in the database.</p>
+                    <h5 id="encoded-record">Encoded Record</h5>
+                    <p>The <code class="inline-code">Pop\Db\Record\Encoded</code> class extends the <code class="inline-code">Pop\Db\Record</code>
+                        and provides the functionality to manage fields in the database record that require encoding, serialization, encryption or
+                        hashing of some kind. The supported types are:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2">JSON</li>
+                        <li class="mb-2">PHP Serialization</li>
+                        <li class="mb-2">Base64</li>
+                        <li class="mb-2">1-Way Hashing</li>
+                        <li class="mb-2">2-Way Encryption</li>
+                    </ul>
+                    <p>The benefit of this class is that it handles the encoding and decoding for you. To use it, you
+                        would configure your class like this below, defining the fields that need to be encoded/decoded:</p>
+                    <pre><code class="language-php">use Pop\Db\Record\Encoded
+
+class Users extends Encoded
+{
+    protected array $jsonFields   = ['metadata'];
+    protected array $phpFields    = ['user_info'];
+    protected array $base64Fields = ['user_image'];
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above example means that any time you save to those fields, the proper encoding of the field
+                        data will take place and the correct encoded data will be stored in the database. Then, when you
+                        fetch the record and retrieve those fields, the proper decoding will take place, giving you the
+                        original decoded data.</p>
+                    <h6>1-Way Hashing</h6>
+                    <p>Using a password hash field would be an advanced example that would require more configuration:</p>
+                    <pre><code class="language-php">use Pop\Db\Record\Encoded
+
+class Users extends Encoded
+{
+
+    protected array  $hashFields    = ['password'];
+    protected string $hashAlgorithm = PASSWORD_BCRYPT;
+    protected array  $hashOptions   = ['cost' => 10];
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>This configuration will use the defined algorithm and options to safely create and store the one-way
+                        hash value in the database. Then, when needed, you can use the <code class="inline-code">verify()</code> method and check an attempted
+                        password against that stored hash.</p>
+                    <pre><code class="language-php">$user = Users::findOne(['username' => 'testuser']);
+if ($user->verify('password', $attemptedPassword)) {
+    // The user submitted the correct password.
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">2-Way Encryption</h6>
+                    <p>An even more advanced example would be using an 2-way encrypted field, which uses the
+                        Open SSL library extension. It requires a few more table properties to be configured:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2"><code class="inline-code">$cipherMethod</code></li>
+                        <li class="mb-2"><code class="inline-code">$key</code></li>
+                        <li class="mb-2"><code class="inline-code">$iv</code></li>
+                    </ul>
+                    <p>You have to create an IV value and base64 encode it to set it as the <code class="inline-code">$iv</code> property.</p>
+                    <pre><code class="language-php">use Pop\Db\Record\Encoded
+
+class Users extends Encoded
+{
+    protected array   $encryptedFields = ['sensitive_data'];
+    protected ?string $cipherMethod    = 'aes-256-cbc';
+    protected ?string $key             = 'YOUR_KEY';
+    protected ?string $iv              = 'BASE64_ENCODED_IV_STRING';
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>This configuration will allow you to store the encrypted value in the database and
+                        securely extract it when you fetch the record.</p>
+                    <h5 id="table-gateway">Table Gateway</h5>
+                    <p>The <code class="inline-code">Pop\Db\Record</code> class actually has functionality that allows you to fetch multiple records,
+                    or rows, at a time, much like a table data gateway. The default value returned from most of these
+                    calls is a <code class="inline-code">Pop\Db\Record\Collection</code>, which provides functionality to perform array-like
+                    operations on the rows or data. By default, each object in the collection is an instance of the
+                    table class that extends <code class="inline-code">Pop\Db\Record</code>, which allows you to work directly with those objects and
+                        modify or delete them.</p>
+                    <h6>Find records</h6>
+                    <pre><code class="language-php">// Find all users who have never logged in.
+$users = Users::findBy(['logins' => 0]);
+
+// Find a group of users
+$users = Users::findIn('username', ['testuser', 'someotheruser', 'anotheruser']);
+
+// Find all users
+$users = Users::findAll();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can use the <code class="inline-code">toArray()</code> method to convert the collection object into a plain array:</p>
+                    <pre><code class="language-php">// Returns an array
+$users = Users::findBy(['logins' => 0])->toArray();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Or, in most methods, there is an <code class="inline-code">$asArray</code> parameter that will do the same:</p>
+                    <pre><code class="language-php">// 3rd parameter $asArray set to true; Returns an array
+$users = Users::findBy(['logins' => 0], null, true);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Get count of records</h6>
+                    <p>If you just need to get a count of records, you can do that like this:</p>
+                    <pre><code class="language-php">// Get count of all users
+$count = Users::getTotal();
+
+// Get count of all users who have never logged in.
+$count = Users::getTotal(['logins' => 0]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="options" class="mt-4">Options</h5>
+                    <p>In most of the methods described above, there is an available <code class="inline-code">$options</code> array
+                        that allows you to really tailor the query. These are the supported options:</p>
+                    <ul class="list-disc ml-8 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">select</code></li>
+                        <li class="mb-2"><code class="inline-code">offset</code></li>
+                        <li class="mb-2"><code class="inline-code">limit</code></li>
+                        <li class="mb-2"><code class="inline-code">order</code></li>
+                        <li class="mb-2"><code class="inline-code">group</code></li>
+                        <li class="mb-2"><code class="inline-code">join</code></li>
+                    </ul>
+                    <h6>Select Columns</h6>
+                    <p>Pass an array of the fields you want to select with the query with the <code class="inline-code">select</code> key.
+                        This can help cut the amount of unwanted data that's returned, or help define data to
+                        select across multiple joined tables. If this option is not used, it will default to
+                        <code class="inline-code">table_name.*</code></p>
+                    <h6>Offset</h6>
+                    <p>The start <code class="inline-code">offset</code> of the returned set of data. Used typically with pagination</p>
+                    <h6>Limit</h6>
+                    <p>The value by which to <code class="inline-code">limit</code> the results</p>
+                    <h6>Order</h6>
+                    <p>The field or fields by which to <code class="inline-code">order</code> the results</p>
+                    <h6>Group</h6>
+                    <p>The field or fields by which to <code class="inline-code">group</code> the results</p>
+                    <h6>Join</h6>
+                    <p>The <code class="inline-code">join</code> option allows you to define multiple tables to use in a JOIN query.</p>
+                    <h6>Basic Options Example</h6>
+                    <pre><code class="language-php">$users = Users::findBy(['logins' => 0], [
+    'select' => ['id', 'username'],
+    'order'  => ['id DESC'],
+    'offset' => 10
+    'limit'  => 25
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Options Example Using Join</h6>
+                    <pre><code class="language-php">$users = Users::findBy(['logins' => 0], [
+    'select' => [
+        Users::table() . '.*',
+        Roles::table() . '.role',
+    ],
+    'join' => [
+        'table'   => Roles::table(),
+        'columns' => [
+            Roles::table() . '.id' => Users::table() . '.role_id',
+        ],
+    ],
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">join</code> option defines the table to join with as well as which columns to join by.
+                        Notice that the <code class="inline-code">select</code> option was used to craft the required fields - in this case,
+                        all of user fields and just the <code class="inline-code">role</code> field from the roles table.</p>
+
+                    <p>The type of join defaults to a <code class="inline-code">LEFT JOIN</code>, but a <code class="inline-code">type</code> key can be added to define
+                        alternate join types. You can also define multiple joins at a time in a nested array.</p>
+                    <h5 id="shorthand-syntax">Shorthand Syntax</h5>
+                    <p>There is shorthand SQL syntax that is available and supported by the <code class="inline-code">Pop\Db\Record</code> class to help
+                        give even a more granular control over your queries without having write your own or use the query builder.
+                        Here's a list of what is supported and what it translates into:</p>
+                    <h6>Basic operators</h6>
+                    <pre><code class="language-php">$users = Users::findBy(['id' => 1]);   // WHERE id = 1
+$users = Users::findBy(['id!=' => 1]); // WHERE id != 1
+$users = Users::findBy(['id>' => 1]);  // WHERE id > 1
+$users = Users::findBy(['id>=' => 1]); // WHERE id >= 1
+$users = Users::findBy(['id<' => 1]);  // WHERE id < 1
+$users = Users::findBy(['id<=' => 1]); // WHERE id <= 1</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>LIKE and NOT LIKE*</h6>
+                    <pre><code class="language-php">$users = Users::findBy(['%username%'   => 'test']); // WHERE username LIKE '%test%'
+$users = Users::findBy(['username%'    => 'test']); // WHERE username LIKE 'test%'
+$users = Users::findBy(['%username'    => 'test']); // WHERE username LIKE '%test'
+$users = Users::findBy(['-%username'   => 'test']); // WHERE username NOT LIKE '%test'
+$users = Users::findBy(['username%-'   => 'test']); // WHERE username NOT LIKE 'test%'
+$users = Users::findBy(['-%username%-' => 'test']); // WHERE username NOT LIKE '%test%'</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>NULL and NOT NULL</h6>
+                    <pre><code class="language-php">$users = Users::findBy(['username' => null]);  // WHERE username IS NULL
+$users = Users::findBy(['username-' => null]); // WHERE username IS NOT NULL</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>IN and NOT IN</h6>
+                    <pre><code class="language-php">$users = Users::findBy(['id' => [2, 3]]);  // WHERE id IN (2, 3)
+$users = Users::findBy(['id-' => [2, 3]]); // WHERE id NOT IN (2, 3)</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>IN and NOT IN</h6>
+                    <pre><code class="language-php">$users = Users::findBy(['id' => [2, 3]]);  // WHERE id IN (2, 3)
+$users = Users::findBy(['id-' => [2, 3]]); // WHERE id NOT IN (2, 3)</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6>BETWEEN and NOT BETWEEN</h6>
+                    <pre><code class="language-php">$users = Users::findBy(['id' => '(1, 5)']);  // WHERE id BETWEEN (1, 5)
+$users = Users::findBy(['id-' => '(1, 5)']); // WHERE id NOT BETWEEN (1, 5)</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Additionally, if you need use multiple conditions for your query, you can and they will be
+                        stitched together with AND:</p>
+                    <pre><code class="language-php">$users = Users::findBy([
+    'id>'       => 1,
+    '%username' => 'user1'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>which will be translated into:</p>
+                    <pre><code class="language-sql">WHERE (id > 1) AND (username LIKE '%test')</code></pre>
+                    <p>If you need to use OR instead, you can specify it like this:</p>
+                    <pre><code class="language-php">$users = Users::findBy([
+    'id>'       => 1,
+    '%username' => 'user1 OR'
+]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Notice the <code class="inline-code"> OR</code> added as a suffix to the second condition's value. That will apply the OR
+                        to that part of the predicate like this:</p>
+                    <pre><code class="language-sql">WHERE (id > 1) OR (username LIKE '%test')</code></pre>
+                    <h5 id="execute-queries" class="mt-4">Execute Queries</h5>
+                    <p>If any of the available methods listed above don't provide what is needed,
+                        you can execute direct queries through the table class.</p>
+                    <h6>Query (no parameters)</h6>
+                    <p>This will return a <code class="inline-code">Pop\Db\Record\Collection</code> object:</p>
+                    <pre><code class="language-php">$users = Users::query('SELECT * FROM ' . Users::table());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Prepared statement (w/ parameters)</h6>
+                    <p>This will return a <code class="inline-code">Pop\Db\Record\Collection</code> object:</p>
+                    <pre><code class="language-php">$sql   = 'SELECT * FROM ' . Users::table() . ' WHERE last_login >= :last_login';
+$users = Users::execute($sql, ['last_login' => '2023-11-01 08:00:00']);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="relationships" class="mt-4">Relationships</h4>
+                    <p>Relationships allow for a simple way to select related data within the database. These relationships
+                    can be 1:1 or 1:many, and you can define them as methods in your table class. The primary methods
+                        being leveraged here from within the <code class="inline-code">Pop\Db\Record</code> class are:</p>
+                    <ul class="list-disc text-sm ml-8">
+                        <li class="mb-2">
+                            <code class="inline-code">hasOneOf()</code>
+                            <ul class="list-disc text-sm mt-2 ml-8">
+                                <li>1:1 relationship where a foreign key in the sibling object is a primary key in different sibling object</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">hasOne()</code>
+                            <ul class="list-disc text-sm mt-2 ml-8">
+                                <li>1:1 relationship where a foreign key in the child object is a primary key in the parent object</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">hasMany()</code>
+                            <ul class="list-disc text-sm mt-2 ml-8">
+                                <li>1:1 relationship where a foreign key in many child objects is a primary key in the parent object</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">belongsTo()</code>
+                            <ul class="list-disc text-sm mt-2 ml-8">
+                                <li>1:1 relationship where a foreign key in the child object is a primary key in the parent object (inverse "hasOne")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>Let's consider the following tables classes that represent tables in the database:</p>
+                    <pre><code class="language-php">class Users extends Pop\Db\Record
+{
+
+    /**
+     * Mock Schema
+     *    - id
+     *    - role_id (FK to roles.id)
+     *    - username
+     *    - password
+     *    - email
+     */
+
+    // Define the 1:1 relationship of the user's role
+    public function role()
+    {
+        return $this->hasOneOf('Roles', 'role_id');
+    }
+
+    // Define the 1:1 relationship of the info record this user owns
+    public function info()
+    {
+        return $this->hasOne('Info', 'user_id')
+    }
+
+    // Define the 1:many relationship to all the orders this user owns
+    public function orders()
+    {
+        return $this->hasMany('Orders', 'user_id');
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-php">class Roles extends Pop\Db\Record
+{
+    /**
+     * Mock Schema
+     *    - id (FK to users.role_id)
+     *    - role
+     */
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-php">class Info extends Pop\Db\Record
+{
+    /**
+     * Mock Schema
+     *    - user_id (FK to users.id)
+     *    - address
+     *    - phone
+     */
+    // Define the parent relationship up to the user that owns this info record
+    public function user()
+    {
+        return $this->belongsTo('Users', 'user_id');
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-php">class Orders extends Pop\Db\Record
+{
+    /**
+     * Mock Schema
+     *    - id
+     *    - user_id (FK to users.id)
+     *    - order_date
+     *    - order_total
+     *    - products
+     */
+
+    // Define the parent relationship up to the user that owns this order record
+    public function user()
+    {
+        return $this->belongsTo('Users', 'user_id');
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>With those relationships defined, you can now call the related data like this:</p>
+                    <pre><code class="language-php">// The two 1:1 relationships
+$user = Users::findById(1);
+print_r($user->role()->toArray());
+print_r($user->info()->toArray());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">Array
+(
+    [id] => 1
+    [role] => Admin
+)
+Array
+(
+    [user_id] => 1
+    [address] => 123 Main St
+    [phone] => 504-555-5555
+)</code></pre>
+                    <pre><code class="language-php">// The 1:many relationship
+$user   = Users::findById(1);
+$orders = $users->orders();
+
+foreach ($orders as $order) {
+    echo 'Order Total: $' . $order->order_total . PHP_EOL;
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-php">// The inverse 1:1 relationship
+$userInfo = UserInfo::findOne(['user_id' => 1]);
+print_r($userInfo->user()->toArray());</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">Array
+(
+    [id] => 1
+    [role_id] => 1
+    [username] => testuser
+    [password] => 12345678
+    [email] => test@test.com
+)</code></pre>
+                    <h5 id="eager-loading" class="mt-4">Eager-Loading</h5>
+                    <p>In the above examples, the related data is "lazy-loaded", meaning the related data isn't available until those
+                    relationship methods are called. However, you can call those relationship methods at the same time as you call
+                        the primary record using the static <code class="inline-code">with()</code> method:</p>
+                    <pre><code class="language-php">$users = Users::with('orders')->getById(1);
+foreach ($user->orders as $order) {
+    echo 'Order Total: $' . $order->order_total . PHP_EOL;
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Multiple relationships can be passed as well:</p>
+                    <pre><code class="language-php">$users = Users::with(['role', 'info', 'orders'])->getById(1);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And nested relationships are supported too. Assume there is a <code class="inline-code">Posts</code> class and a <code class="inline-code">Comments</code> class.
+                        Also, let's assume a user object owns posts and a posts object owns comments, and the proper relationships
+                        are set up in each table class. Then this call would be valid:</p>
+                    <pre><code class="language-php">$user = Users::with('posts.comments')->getById(1);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And would give you a user object with all of the user's <code class="inline-code">posts</code> and each of those post objects would have
+                        their <code class="inline-code">comments</code> attached as well.</p>
+                    <h4 id="querying">Querying</h4>
+                    <p>Instead of using the ORM-based components, you can directly query the database from the database adapter:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$db->query('SELECT * FROM `users`');
+$users = $db->fetchAll();
+print_r($users);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="prepared-statements">Prepared Statements</h5>
+                    <p>Taking it a step further, you can execute prepared statements as well:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$db->prepare('SELECT * FROM `users` WHERE `id` = ?');
+$db->bindParams(['id' => 1]);
+$db->execute();
+
+$users = $db->fetchAll();
+print_r($users);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [role_id] => 1
+            [username] => testuser
+            [password] => 12test34
+            [email] => test@test.com
+        )
+
+)</code></pre>
+                    <h4 id="query-builder" class="mt-4">Query Builder</h4>
+                    <p>The query builder is available to build valid SQL queries that will work across the different database
+                        adapters. This is useful if the application being built may deploy to different environments with
+                        different database servers. When a prepared query statement requires placeholders for binding parameters,
+                        use the named parameter format (e.g., <code class="inline-code">'id = :id'</code>). It will be translated to the correct placeholder
+                        value for the database adapter.</p>
+                    <h5 id="select">Select</h5>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$sql = $db->createSql();
+$sql->select(['id', 'username'])
+    ->from('users')
+    ->where('id = :id');
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The following SQL query is produced for the MySQL adapter:</p>
+                    <pre><code class="language-sql">SELECT `id`, `username` FROM `users` WHERE (`id` = ?)</code></pre>
+                    <p>Switching to the PostgeSQL adapter, the same code will produce:</p>
+                    <pre><code class="language-sql">SELECT "id", "username" FROM "users" WHERE ("id" = $1)</code></pre>
+                    <p>And switching to the SQLite adapter, and the same code will produce:</p>
+                    <pre><code class="language-sql">SELECT "id", "username" FROM "users" WHERE ("id" = :id)</code></pre>
+                    <p>And of course, the <code class="inline-code">$sql</code> builder object can be passed directly to the database adapter
+                        to directly execute the SQL query that has been created:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$sql = $db->createSql();
+$sql->select(['id', 'username'])
+    ->from('users')
+    ->where('id = :id');
+
+$db->prepare($sql);
+$db->bindParams(['id' => 1]);
+$db->execute();
+
+$users = $db->fetchAll();
+print_r($users);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="insert" class="mt-4">Insert</h5>
+                    <pre><code class="language-php">$sql->insert('users')->values([
+    'username' => ':username',
+    'password' => ':password'
+]);
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+INSERT INTO `users` (`username`, `password`) VALUES (?, ?)
+
+-- PostgreSQL
+INSERT INTO "users" ("username", "password") VALUES ($1, $2)
+
+-- SQLite
+INSERT INTO "users" ("username", "password") VALUES (:username, :password)</code></pre>
+                    <h5 id="update" class="mt-4">Update</h5>
+                    <pre><code class="language-php">$sql->update('users')->values([
+    'username' => ':username',
+    'password' => ':password'
+])->where('id = :id');
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+UPDATE `users` SET `username` = ?, `password` = ? WHERE (`id` = ?)
+
+-- PostgreSQL
+UPDATE "users" SET "username" = $1, "password" = $2 WHERE ("id" = $3)
+
+-- SQLite
+UPDATE "users" SET "username" = :username, "password" = :password WHERE ("id" = :id)</code></pre>
+                    <h5 id="delete" class="mt-4">Delete</h5>
+                    <pre><code class="language-php">$sql->delete('users')
+    ->where('id = :id');
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+DELETE FROM `users` WHERE (`id` = ?)
+
+-- PostgreSQL
+DELETE FROM "users" WHERE ("id" = $1)
+
+-- SQLite
+DELETE FROM "users" WHERE ("id" = :id)</code></pre>
+                    <h5 id="joins" class="mt-4">Joins</h5>
+                    <p>The SQL Builder has an API to assist you in constructing complex SQL statements that use joins. Typically,
+                        the join methods take two parameters: the foreign table and an array with a 'key => value' of the two related
+                        columns across the two tables. Here's a SQL builder example using a LEFT JOIN:</p>
+                    <pre><code class="language-php">$sql->select(['id', 'username', 'email'])->from('users')
+    ->leftJoin('user_info', ['users.id' => 'user_info.user_id'])
+    ->where('id < :id')
+    ->orderBy('id', 'DESC');
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+SELECT `id`, `username`, `email` FROM `users`
+    LEFT JOIN `user_info` ON (`users`.`id` = `user_info`.`user_id`)
+    WHERE (`id` < ?) ORDER BY `id` DESC
+
+-- PostgreSQL
+SELECT "id", "username", "email" FROM "users"
+    LEFT JOIN "user_info" ON ("users"."id" = "user_info"."user_id")
+    WHERE ("id" < $1) ORDER BY "id" DESC
+
+-- SQLite
+SELECT "id", "username", "email" FROM "users"
+    LEFT JOIN "user_info" ON ("users"."id" = "user_info"."user_id")
+    WHERE ("id" < :id) ORDER BY "id" DESC</code></pre>
+                    <p>Here's the available API for joins:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">$sql->join($foreignTable, array $columns, $join = 'JOIN');</code> - Basic join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->leftJoin($foreignTable, array $columns);</code> - Left join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->rightJoin($foreignTable, array $columns);</code> - Right join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->fullJoin($foreignTable, array $columns);</code> -  Full join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->outerJoin($foreignTable, array $columns);</code> -  Outer join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->leftOuterJoin($foreignTable, array $columns);</code> -  Left outer join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->rightOuterJoin($foreignTable, array $columns);</code> -  Right outer join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->fullOuterJoin($foreignTable, array $columns);</code> -  Full outer join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->innerJoin($foreignTable, array $columns);</code> -  Outer join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->leftInnerJoin($foreignTable, array $columns);</code> -  Left inner join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->rightInnerJoin($foreignTable, array $columns);</code> -  Right inner join</li>
+                        <li class="mb-2"><code class="inline-code">$sql->fullInnerJoin($foreignTable, array $columns);</code> -  Full inner join</li>
+                    </ul>
+                    <h5 id="predicates">Predicates</h5>
+                    <p>The SQL Builder also has an extensive API to assist you in constructing predicates with which to filter your
+                        SQL statements. Here's a list of some of the available methods to help you construct your predicate clauses:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">$sql->where($where);</code> - Add a WHERE predicate</li>
+                        <li class="mb-2"><code class="inline-code">$sql->andWhere($where);</code> - Add another WHERE predicate using the AND conjunction</li>
+                        <li class="mb-2"><code class="inline-code">$sql->orWhere($where);</code> - Add another WHERE predicate using the OR conjunction</li>
+                        <li class="mb-2"><code class="inline-code">$sql->having($having);</code> - Add a HAVING predicate</li>
+                        <li class="mb-2"><code class="inline-code">$sql->andHaving($having);</code> - Add another HAVING predicate using the AND conjunction</li>
+                        <li class="mb-2"><code class="inline-code">$sql->orHaving($having);</code> - Add another HAVING predicate using the OR conjunction</li>
+                    </ul>
+                    <h6>AND WHERE</h6>
+                    <pre><code class="language-php">$sql->select()
+    ->from('users')
+    ->where('id > :id')->andWhere('email LIKE :email');
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+SELECT * FROM `users` WHERE ((`id` > ?) AND (`email` LIKE ?))</code></pre>
+                    <h6>OR WHERE</h6>
+                    <pre><code class="language-php">$sql->select()
+    ->from('users')
+    ->where('id > :id')->orWhere('email LIKE :email');
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+SELECT * FROM `users` WHERE ((`id` > ?) OR (`email` LIKE ?))</code></pre>
+                    <p>There is even a more detailed and granular API that comes with the predicate objects.</p>
+                    <pre><code class="language-php">$sql->select()
+    ->from('users')
+    ->where->greaterThan('id', ':id')->and()->equalTo('email', ':email');
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+SELECT * FROM `users` WHERE ((`id` > ?) AND (`email` = ?))</code></pre>
+                    <h5 id="nested-predicates" class="mt-4">Nested Predicates</h5>
+                    <p>If you need to nest a predicate, there are API methods to allow you to do that as well:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">$sql->nest($conjunction = 'AND');</code> - Create a nested predicate set</li>
+                        <li class="mb-2"><code class="inline-code">$sql->andNest();</code> - Create a nested predicate set using the AND conjunction</li>
+                        <li class="mb-2"><code class="inline-code">$sql->orNest();</code> - Create a nested predicate set using the OR conjunction</li>
+                    </ul>
+                    <pre><code class="language-php">$sql->select()
+    ->from('users')
+    ->where->greaterThan('id', ':id')
+        ->nest()->greaterThan('logins', ':logins')
+            ->or()->lessThanOrEqualTo('failed', ':failed');
+
+echo $sql;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The output below shows the predicates for <code class="inline-code">logins</code> and <code class="inline-code">failed</code> are nested together:</p>
+                    <pre><code class="language-sql">-- MySQL
+SELECT * FROM `users` WHERE ((`id` > ?) AND ((`logins` > ?) OR (`failed` <= ?)))</code></pre>
+                    <h5 id="sorting-order-limits" class="mt-4">Sorting, Order, Limits</h5>
+                    <p>The SQL Builder also has methods to allow to further control your SQL statement's result set:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">$sql->groupBy($by);</code> - Add a GROUP BY</li>
+                        <li class="mb-2"><code class="inline-code">$sql->orderBy($by, $order = 'ASC');</code> - Add an ORDER BY</li>
+                        <li class="mb-2"><code class="inline-code">$sql->limit($limit);</code> - Add a LIMIT</li>
+                        <li class="mb-2"><code class="inline-code">$sql->offset($offset);</code> - Add an OFFSET</li>
+                    </ul>
+                    <h4 id="schema-builder">Schema Builder</h4>
+                    <p>In addition to the query builder, there is also a schema builder to assist with database table
+                    structures and their management. In a similar fashion to the query builder, the schema builder
+                    has an API that mirrors the SQL that would be used to create, alter and drop tables in a database.
+                    It is also built to be portable and work across different environments that may have different chosen
+                    database adapters with which to work. And like the query builder, in order for it to function correctly,
+                    you need to pass it the database adapter your application is currently using so that it can properly
+                        build the SQL. The easiest way to do this is to just call the <code class="inline-code">createSchema()</code> method from the
+                        database adapter. It will inject itself into the Schema builder object being created.</p>
+                    <p>The examples below show separate schema statements, but a single schema builder object can have multiple
+                        schema statements within one schema builder object's life cycle.</p>
+                    <h5 id="create-table">Create Table</h5>
+                    <pre><code class="language-php">$db = Pop\Db\Db::mysqlConnect($options);
+
+$schema = $db->createSchema();
+$schema->create('users')
+    ->int('id', 16)->increment()
+    ->varchar('username', 255)
+    ->varchar('password', 255)
+    ->primary('id');
+
+echo $schema;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above code would produce the following SQL:</p>
+                    <pre><code class="language-sql">-- MySQL
+CREATE TABLE `users` (
+  `id` INT(16) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(255),
+  `password` VARCHAR(255),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;</code></pre>
+                    <h6>Foreign Key Example</h6>
+                    <p>Here is an example of creating an additional <code class="inline-code">user_info</code> table that references the above `users` table
+                        with a foreign key:</p>
+                    <pre><code class="language-php">$schema->create('user_info')
+    ->int('user_id', 16)
+    ->varchar('email', 255)
+    ->varchar('phone', 255)
+    ->foreignKey('user_id')->references('users')->on('id')->onDelete('CASCADE');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+CREATE TABLE `user_info` (
+  `user_id` INT(16),
+  `email` VARCHAR(255),
+  `phone` VARCHAR(255)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `user_info` ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;</code></pre>
+                    <h5 id="alter-table" class="mt-4">Alter Table</h5>
+                    <pre><code class="language-php">$schema->alter('users')
+    ->addColumn('email', 'VARCHAR', 255)
+    ->after('password');
+
+echo $schema;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+ALTER TABLE `users` ADD `email` VARCHAR(255) AFTER `password`;</code></pre>
+                    <h5 id="drop-table" class="mt-4">Drop Table</h5>
+                    <pre><code class="language-php">$schema->drop('users');
+
+echo $schema;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-sql">-- MySQL
+DROP TABLE `users`;</code></pre>
+                    <h5 id="execute-schema" class="mt-4">Execute Schema</h5>
+                    <p>You can execute the schema by using the <code class="inline-code">execute()</code> method within the schema builder object:</p>
+                    <pre><code class="language-php">$schema->execute();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="schema-builder-api" class="mt-4">Schema Builder API</h5>
+                    <p>In the above code samples, if you want to access the table object directly, you can like this:</p>
+                    <pre><code class="language-php">$createTable   = $schema->create('users');
+$alterTable    = $schema->alter('users');
+$truncateTable = $schema->truncate('users');
+$renameTable   = $schema->rename('users');
+$dropTable     = $schema->drop('users');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Here's a list of common methods available with which to build your schema:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">$createTable->ifNotExists();</code> - Add a IF NOT EXISTS flag</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->addColumn($name, $type, $size = null, $precision = null, array $attributes = []);</code> - Add a column</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->increment($start = 1);</code> - Set an increment value</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->defaultIs($value);</code> - Set the default value for the current column</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->nullable();</code> - Make the current column nullable</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->notNullable();</code> - Make the current column not nullable</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->index($column, $name = null, $type = 'index');</code> - Create an index on the column</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->unique($column, $name = null);</code> - Create a unique index on the column</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->primary($column, $name = null);</code> - Create a primary index on the column</li>
+                    </ul>
+                    <p>The following methods are shorthand methods for adding columns of various common types. Please note, if the
+                    selected column type isn't supported by the current database adapter, the column type is normalized to
+                        the closest type.</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">$createTable->integer($name, $size = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->int($name, $size = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->bigInt($name, $size = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->mediumInt($name, $size = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->smallInt($name, $size = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->tinyInt($name, $size = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->float($name, $size = null, $precision = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->real($name, $size = null, $precision = null, array $attributes = [])</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->double($name, $size = null, $precision = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->decimal($name, $size = null, $precision = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->numeric($name, $size = null, $precision = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->date($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->time($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->datetime($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->timestamp($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->year($name, $size = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->text($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->tinyText($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->mediumText($name, array $attributes = []));</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->longText($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->blob($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->mediumBlob($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->longBlob($name, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->char($name, $size = null, array $attributes = []);</code></li>
+                        <li class="mb-2"><code class="inline-code">$createTable->varchar($name, $size = null, array $attributes = []);</code></li>
+                    </ul>
+                    <p>The following methods are all related to the creation of foreign key constraints and their relationships:</p>
+                    <ul class="list-disc ml-4 mb-4 text-sm">
+                        <li class="mb-2"><code class="inline-code">$createTable->foreignKey(string $column, ?string $name = null)</code> - Create a foreign key on the column</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->references($foreignTable);</code> - Create a reference to a table for the current foreign key constraint</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->on($foreignColumn);</code> - Used in conjunction with <code class="inline-code">references()</code> to designate the foreign column</li>
+                        <li class="mb-2"><code class="inline-code">$createTable->onDelete($action = null)</code> - Set the ON DELETE parameter for a foreign key constraint</li>
+                    </ul>
+                    <h4 id="migrator">Migrator</h4>
+                    <p>Database migrations are scripts that assist in implementing new changes to the database, as well
+                        rolling back any changes to a previous state. It works by storing a directory of migration class
+                        files and keeping track of the current state, or the last one that was processed. From that, you
+                        can write scripts to run the next migration state or rollback to the previous one. The state can
+                        be stored locally in the migration folder, or can be stored in its own table in the database.
+                        The <a href="https://github.com/popphp/pop-kettle" target="_blank">pop-kettle</a> component has
+                        this functionality built in to assist with managing database migrations for your application.</p>
+                    <p>You can create a blank template migration class like this:</p>
+                    <pre><code class="language-php">use Pop\Db\Sql\Migrator;
+
+Migrator::create('MyNewMigration', __DIR__ . 'migrations');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The code above will create a file that looks like <code class="inline-code">migrations/20170225100742_my_new_migration.php</code>
+                        and it will contain a blank class template:</p>
+                    <pre><code class="language-php">&lt;?php
+
+use Pop\Db\Sql\Migration\AbstractMigration;
+
+class MyNewMigration extends AbstractMigration
+{
+
+    public function up()
+    {
+
+    }
+
+    public function down()
+    {
+
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>From there, you can write your forward migration steps in the <code class="inline-code">up()</code> method, or your rollback steps
+                            in the <code class="inline-code">down()</code> method. Here's an example that creates a table when stepped forward, and drops
+                        that table when rolled back:</p>
+                    <pre><code class="language-php">&lt;?php
+
+use Pop\Db\Sql\Migration\AbstractMigration;
+
+class MyNewMigration extends AbstractMigration
+{
+
+    public function up()
+    {
+        $schema = $this->db->createSchema();
+        $schema->create('users')
+            ->int('id', 16)->increment()
+            ->varchar('username', 255)
+            ->varchar('password', 255)
+            ->primary('id');
+
+        $schema->execute();
+    }
+
+    public function down()
+    {
+        $schema = $this->db->createSchema();
+        $schema->drop('users');
+        $schema->execute();
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>To step forward, you would call the migrator like this:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+use Pop\Db\Sql\Migrator;
+
+$db = Pop\Db\Db::connect('mysql', [
+    'database' => 'my_database',
+    'username' => 'my_db_user',
+    'password' => 'my_db_password',
+    'host'     => 'mydb.server.com'
+]);
+
+$migrator = new Migrator($db, 'migrations');
+$migrator->run();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above code would have created the table <code class="inline-code">users</code> with the defined columns.
+                        To roll back the migration, you would call the migrator like this:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+use Pop\Db\Sql\Migrator;
+
+$db = Pop\Db\Db::connect('mysql', [
+    'database' => 'my_database',
+    'username' => 'my_db_user',
+    'password' => 'my_db_password',
+    'host'     => 'mydb.server.com'
+]);
+
+$migrator = new Migrator($db, 'migrations');
+$migrator->rollback();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>And the above code here would have dropped the table <code class="inline-code">users</code> from the database.</p>
+                    <h4 id="seeder">Seeder</h4>
+                    <p>Similar to migrations, you can create a database seed class to assist with populating some
+                        initial data into your database. This functionality is built into the <code class="inline-code">pop-kettle</code> component
+                        as well.</p>
+                    <pre><code class="language-php">use Pop\Db\Sql\Seeder;
+
+Seeder::create('MyFirstSeeder', __DIR__ . '/seeds');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The code above will create a file that looks like <code class="inline-code">seeds/20231105215257_my_first_seeder.php</code>
+                        and it will contain a blank class template:</p>
+                    <pre><code class="language-php">&lt;?php
+
+use Pop\Db\Adapter\AbstractAdapter;
+use Pop\Db\Sql\Seeder\AbstractSeeder;
+
+class MyFirstSeeder extends AbstractSeeder
+{
+
+    public function run(AbstractAdapter $db): void
+    {
+
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>From there, you can write your seed queries steps in the <code class="inline-code">run()</code> method. You can interact
+                        with both the schema builder and the query builder.</p>
+                    <pre><code class="language-php">&lt;?php
+
+use Pop\Db\Adapter\AbstractAdapter;
+use Pop\Db\Sql\Seeder\AbstractSeeder;
+
+class MyFirstSeeder extends AbstractSeeder
+{
+
+    public function run(AbstractAdapter $db): void
+    {
+        $schema = $db->createSchema();
+        $schema->create('users')
+            ->int('id', 16)->notNullable()->increment()
+            ->varchar('username', 255)->notNullable()
+            ->varchar('password', 255)->notNullable()
+            ->varchar('email', 255)->nullable()
+            ->primary('id');
+
+        $db->query($schema);
+
+        $sql = $db->createSql();
+        $sql->insert('users')->values([
+            'username' => 'testuser1',
+            'password' => '12345678',
+            'email'    => 'testuser1@test.com'
+        ]);
+        $db->query($sql);
+
+        $sql->insert('users')->values([
+            'username' => 'testuser2',
+            'password' => '87654321',
+            'email'    => 'testuser2@test.com'
+        ]);
+        $db->query($sql);
+
+        $sql->insert('users')->values([
+            'username' => 'testuser3',
+            'password' => '74185296',
+            'email'    => 'testuser3@test.com'
+        ]);
+        $db->query($sql);
+    }
+
+}</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Alternatively, you can use a plain SQL file as well and the seeder will parse it and execute
+                        the queries inside:</p>
+                    <pre><code class="language-sql">CREATE TABLE `users` (
+  `id` INT(16) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(1, 'testuser1', '12345678', 'test1@test.com'),
+(2, 'testuser2', '87654321', 'test2@test.com'),
+(3, 'testuser3', '74185296', 'test3@test.com');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Either way, when you call the <code class="inline-code">run()</code> method on the seeder class, it will scan the folder for
+                        either seeder classes or SQL files and execute them:</p>
+                    <pre><code class="language-php">$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+Seeder::run($db, __DIR__ . '/seeds');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="sql-data" class="mt-4">SQL Data</h4>
+                    <p>You can use the SQL data class to output large sets of data to a valid a SQL file.</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+use Pop\Db\Sql\Data;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS',
+]);
+
+$users = [
+    [
+        'id'       => 1,
+        'username' => 'testuser1',
+        'password' => 'mypassword1',
+        'email'    => 'testuser1@test.com'
+    ],
+    [
+        'id'       => 2,
+        'username' => 'testuser2',
+        'password' => 'mypassword2',
+        'email'    => 'testuser2@test.com'
+    ],
+    [
+        'id'       => 3,
+        'username' => 'testuser3',
+        'password' => 'mypassword3',
+        'email'    => 'testuser3@test.com'
+    ]
+];
+
+$data = new Data($db, 'users');
+$data->streamToFile($users, __DIR__ . '/seeds/users.sql');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above example code would produce a <code class="inline-code">users.sql</code> file that contains:</p>
+                    <pre><code class="language-sql">INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(1, 'testuser1', 'mypassword1', 'testuser1@test.com');
+INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(2, 'testuser2', 'mypassword2', 'testuser2@test.com');
+INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(3, 'testuser3', 'mypassword3', 'testuser3@test.com');</code></pre>
+                    <p>If you have a larger set that you'd like divide out over fewer <code class="inline-code">INSERT</code> queries, you can set
+                        the <code class="inline-code">divide</code> parameter:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+use Pop\Db\Sql\Data;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS',
+]);
+
+$users = [
+    [
+        'id'       => 1,
+        'username' => 'testuser1',
+        'password' => 'mypassword1',
+        'email'    => 'testuser1@test.com'
+    ],
+    // ... large array of data ...
+    [
+        'id'       => 18,
+        'username' => 'testuser3',
+        'password' => 'mypassword3',
+        'email'    => 'testuser3@test.com'
+    ]
+];
+
+$data = new Data($db, 'users', 10); // Set the divide to 10
+$data->streamToFile($users, __DIR__ . '/seeds/users.sql');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>which would produce:</p>
+                    <pre><code class="language-sql">INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(1, 'testuser1', 'mypassword1', 'testuser1@test.com'),
+(2, 'testuser2', 'mypassword2', 'testuser2@test.com'),
+(3, 'testuser3', 'mypassword3', 'testuser3@test.com'),
+(4, 'testuser4', 'mypassword4', 'testuser4@test.com'),
+(5, 'testuser5', 'mypassword5', 'testuser5@test.com'),
+(6, 'testuser6', 'mypassword6', 'testuser6@test.com'),
+(7, 'testuser7', 'mypassword7', 'testuser7@test.com'),
+(8, 'testuser8', 'mypassword8', 'testuser8@test.com'),
+(9, 'testuser9', 'mypassword9', 'testuser9@test.com'),
+(10, 'testuser10', 'mypassword10', 'testuser10@test.com');
+INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(11, 'testuser11', 'mypassword11', 'testuser11@test.com'),
+(12, 'testuser12', 'mypassword12', 'testuser12@test.com'),
+(13, 'testuser13', 'mypassword13', 'testuser13@test.com'),
+(14, 'testuser14', 'mypassword14', 'testuser14@test.com'),
+(15, 'testuser15', 'mypassword15', 'testuser15@test.com'),
+(16, 'testuser16', 'mypassword16', 'testuser16@test.com'),
+(17, 'testuser17', 'mypassword17', 'testuser17@test.com'),
+(18, 'testuser18', 'mypassword18', 'testuser18@test.com');</code></pre>
+                    <h4 id="profiler" class="mt-4">Profiler</h4>
+                    <p>The profiler object works in conjunction with the <code class="inline-code">pop-debug</code> component to set up a
+                        query listener to monitor performance and record any potential issues.</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+use Pop\Db\Record;
+use Pop\Debug\Debugger;
+use Pop\Debug\Storage\File;
+use Pop\Db\Adapter\Profiler\Profiler;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS',
+]);
+
+class Users extends Record {}
+
+Record::setDb($db);
+
+// Register the debugger and query handler with the DB adapter
+$debugger = new Debugger(new File(__DIR__ . '/log'));
+$db->listen('Pop\Debug\Handler\QueryHandler', null, new Profiler($debugger));
+
+// Save a user to the database
+$user = new Users([
+    'username' => 'admin',
+    'password' => 'password',
+    'email'    => 'admin@test.com'
+]);
+
+$user->save();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>With the debugger and query handler registered with the database profiler, any queries
+                        that are executed will get automatically logged with the debugger. The debugger log output
+                        from the above example might look like this:</p>
+                    <pre><code class="language-plaintext">Start:			1699246221.25475
+Finish:			0.00000
+Elapsed:		0.00997 seconds
+
+Queries:
+--------
+INSERT INTO `users` (`username`, `password`, `email`) VALUES (?, ?, ?) [0.00674]
+Start:			1699246221.25796
+Finish:			1699246221.26470
+Params:
+	username => admin
+	password => password
+	email => admin@test.com</code></pre>
+                    <p>If you'd like more control over when the debugger fires, you can manually save it as well:</p>
+                    <pre><code class="language-php">// Register the query handler with the DB adapter
+$queryHandler = $db->listen('Pop\Debug\Handler\QueryHandler');
+
+$debugger = new Debugger();
+$debugger->addHandler($queryHandler);
+$debugger->setStorage(new File(__DIR__ . '/log'));
+
+// Save a user to the database
+$user = new Users([
+    'username' => 'admin',
+    'password' => 'password',
+    'email'    => 'admin@test.com'
+]);
+
+$user->save();
+$debugger->save();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the above example, the query handler is returned from the <code class="inline-code">listen()</code> method call, which
+                        in turn can be registered with the stand-alone debugger. Once the final query runs on the user
+                            <code class="inline-code">save()</code> method, you can trigger the debugger <code class="inline-code">save()</code> method. </p>
                 </div>
 <?php include __DIR__ . '/../inc/footer.phtml'; ?>
