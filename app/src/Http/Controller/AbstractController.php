@@ -170,6 +170,14 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
         $this->view->nav5Active = (str_contains($template, '/reference')) ? 'true' : 'false';
         $this->view->nav6Active = (str_contains($template, '/changelog')) ? 'true' : 'false';
 
+//        $this->view->versions = [
+//            '/'    => '5.0',
+//            '/4.8' => '4.8',
+//            '/4.7' => '4.7',
+//            '/4.6' => '4.6',
+//            '/4.5' => '4.5'
+//        ];
+
         if ($title == 'Index') {
             $this->view->title      = 'Home';
             $this->view->segments   = [];

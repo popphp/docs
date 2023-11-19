@@ -1,4 +1,4 @@
-import {toggleSidebar, copyCode, setActiveNav}  from './modules/main';
+import {toggleSidebar, copyCode, changeVersion, setActiveNav}  from './modules/main';
 import Alpine from 'alpinejs';
 import persist from '@alpinejs/persist';
 import hljs from 'highlight.js/lib/core';
@@ -16,6 +16,7 @@ import plaintext from 'highlight.js/lib/languages/plaintext';
 window.Alpine        = Alpine;
 window.toggleSidebar = toggleSidebar;
 window.copyCode      = copyCode;
+window.changeVersion = changeVersion;
 window.setActiveNav  = setActiveNav;
 
 Alpine.plugin(persist);

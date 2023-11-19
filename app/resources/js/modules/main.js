@@ -15,6 +15,11 @@ function copyCode(a) {
     navigator.clipboard.writeText(code);
 }
 
+function changeVersion() {
+    let version = document.querySelector('#version-select').value;
+    window.location.href = version;
+}
+
 function setActiveNav() {
     let href      = window.location.pathname;
     let hash      = window.location.hash;
@@ -68,4 +73,4 @@ function setActiveNav() {
     }
 }
 
-export {toggleSidebar, copyCode, setActiveNav};
+export {toggleSidebar, copyCode, changeVersion, setActiveNav};

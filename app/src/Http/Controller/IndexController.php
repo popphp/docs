@@ -59,7 +59,8 @@ class IndexController extends AbstractController
     public function error(): void
     {
         $this->prepareView('error');
-        $this->view->title = '404 : Page Not Found';
+        $this->view->title   = '404 : Page Not Found';
+        $this->view->version = '';
         $this->send(404);
     }
 
