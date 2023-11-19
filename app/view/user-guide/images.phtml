@@ -1,0 +1,251 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p><code class="inline-code">pop-image</code> is a powerful and robust image processing component that's simple to use.
+                    It supports the GD and Imagick extensions. The API is similar to the more
+                    popular image editing application on the market, with calls to editing objects
+                        that can be extended with additional image processing functionality if needed.</p>
+                    <h4 id="quickstart">Quickstart</h4>
+                    <h6>Resizing an image</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+$img = Image::loadGd('image.jpg');
+
+// Resizes by using the largest dimension as the primary constraint
+$img->resize(100)
+    ->setQuality(50)
+    ->writeToFile('image-resized.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Resizing an image by width</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+$img = Image::loadGd('image.jpg');
+
+// Resizes by using width as the primary constraint
+$img->resizeToWidth(100)
+    ->setQuality(50)
+    ->writeToFile('image-resized-width.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Scaling an image</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+$img = Image::loadGd('image.jpg');
+
+// Scales the dimensions by the percentage
+$img->scale(0.5)
+    ->setQuality(50)
+    ->writeToFile('image-scaled.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Crop the image</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+$img = Image::loadGd('image.jpg');
+
+// Crops a section of the image by width and height values
+// The X and Y offsets position the crop
+$img->crop(120, 80, 100, 200) // $width, $height, $xOffset, $yOffset
+    ->setQuality(50)
+    ->writeToFile('image-cropped.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Crop the image to a square thumbnail</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+$img = Image::loadGd('image.jpg');
+
+// The offset is automatically centered,
+// unless otherwise passed as a second parameter
+$img->cropThumb(100)
+    ->setQuality(50)
+    ->writeToFile('image-cropped-thumb.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="load-an-image" class="mt-4">Load an Image</h5>
+                    <p>There are a couple of ways to load an image into an image adapter.</p>
+                    <h6>Load from a file on disk:</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+// Return an instance of the GD adapter
+$gdImage = Image::loadGd('path/to/image.jpg');
+
+// Returns an instance of the Imagick adapter
+$imagickImage = Image::loadImagick('path/to/image.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Load from a stream of content:</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+// Return an instance of the GD adapter
+$gdImage = Image::loadGdFromString($imageContents, 'image.jpg');
+
+// Returns an instance of the Imagick adapter
+$imagickImage = Image::loadImagickFromString($imageContents, 'image.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="create-an-image" class="mt-4">Create an Image</h5>
+                    <p>There are a couple of ways to create a new image and load it into an image adapter.</p>
+                    <h6>Create an RGB-based image</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+// Return an instance of the GD adapter
+$gdImage = Image::createGd(640, 480, 'image.jpg');
+
+// Returns an instance of the Imagick adapter
+$imagickImage = Image::createImagick(640, 480, 'image.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Create an index-based image</h6>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+// Return an instance of the GD adapter
+$gdImage = Image::createGdIndex(640, 480, 'image.gif');
+
+// Returns an instance of the Imagick adapter
+$imagickImage = Image::createImagickIndex(640, 480, 'image.gif');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="convert-an-image" class="mt-4">Convert an Image</h5>
+                    <p>You can simply convert an image to another format by calling the <code class="inline-code">convert()</code> method:</p>
+                    <pre><code class="language-php">$img = Image::loadGd('image.jpg');
+$img->convert('png')
+    ->writeToFile('image.png');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>NOTE:</strong> the GD adapter is limited to JPG, PNG and GIF formats. The Imagick adapter can work with
+                        a large number of formats, depending on your environment. The Imagick section in the <code class="inline-code">phpinfo()</code>
+                        result screen will display the list of formats available for Imagick in your environment.</p>
+                    <h5 id="output-an-image">Output an Image</h5>
+                    <p>Once you have an image adapter and have finished editing the image, you have two options
+                        to output the image.</p>
+                    <h6>Save to disk</h6>
+                    <pre><code class="language-php">$img->writeToFile('image-cropped-thumb.jpg', 50);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Output to HTTP</h6>
+                    <pre><code class="language-php">$img->outputToHttp();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>This method has several optional parameters to assist with the delivery over HTTP:</p>
+                    <pre><code class="language-php">outputToHttp(
+    ?int $quality = null,
+    ?string $to = null,
+    bool $download = false,
+    bool $sendHeaders = true,
+    array $headers = []
+): void</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2"><code class="inline-code">$quality</code> - set the quality of the image output</li>
+                        <li class="mb-2"><code class="inline-code">$to</code> - give it a filename for a potential download</li>
+                        <li class="mb-2"><code class="inline-code">$download</code> - boolean to set the <code class="inline-code">Content-Disposition</code> to inline (<code class="inline-code">false</code>) or attachment (<code class="inline-code">true</code>)</li>
+                        <li class="mb-2"><code class="inline-code">$sendHeaders</code> - boolean to send the headers or just the raw payload</li>
+                        <li class="mb-2"><code class="inline-code">$headers</code> - array of additional headers to send</li>
+                    </ul>
+                    <h5 id="destroy-an-image">Destroy an Image</h5>
+                    <p>Destroying an image will clear the image contents from memory to assist with memory management
+                        and prevent possibly exceeding any memory limits when working with a large number of files.</p>
+                    <pre><code class="language-php">$img->destroy();</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If you wish to clear the current image file from disk, you can pass a <code class="inline-code">true</code> boolean to the method:</p>
+                    <pre><code class="language-php">$img->destroy(true);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="image-adapters" class="mt-4">Image Adapters</h4>
+                    <p>The two image adapters available are GD and Imagick and they share a basic core API:</p>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2"><code class="inline-code">load(?string $name = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">loadFromString(string $data, ?string $name = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">create(?int $width = null, ?int $height = null, ?string $name = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">createIndex(?int $width = null, ?int $height = null, ?string $name = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">resizeToWidth(int $w)</code></li>
+                        <li class="mb-2"><code class="inline-code">resizeToHeight(int $h)</code></li>
+                        <li class="mb-2"><code class="inline-code">resize(int $px)</code></li>
+                        <li class="mb-2"><code class="inline-code">scale(float $scale)</code></li>
+                        <li class="mb-2"><code class="inline-code">crop(int $w, int $h, int $x = 0, int $y = 0)</code></li>
+                        <li class="mb-2"><code class="inline-code">cropThumb(int $px, ?int $offset = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">rotate(int $degrees, ?Color\ColorInterface $bgColor = null, int $alpha = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">flip()</code></li>
+                        <li class="mb-2"><code class="inline-code">flop()</code></li>
+                    </ul>
+                    <h5 id="gd">GD</h5>
+                    <p>To work with the GD adapter, you can load it from the main image class in a few different ways:</p>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+// Return an instance of the GD adapter
+$gdImage = Image::loadGd('path/to/image.jpg');
+
+// Return an instance of the GD adapter
+$gdImage = Image::loadGdFromString($imageContents, 'image.jpg');
+
+// Return an instance of the GD adapter
+$gdImage = Image::createGd(640, 480, 'image.jpg');
+
+// Return an instance of the GD adapter
+$gdImage = Image::createGdIndex(640, 480, 'image.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="imagick" class="mt-4">Imagick</h5>
+                    <p>To work with the Imagick adapter, you can load it from the main image class in a few different ways:</p>
+                    <pre><code class="language-php">use Pop\Image\Image;
+
+// Returns an instance of the Imagick adapter
+$imagickImage = Image::loadImagick('path/to/image.jpg');
+
+// Returns an instance of the Imagick adapter
+$imagickImage = Image::loadImagickFromString($imageContents, 'image.jpg');
+
+// Returns an instance of the Imagick adapter
+$imagickImage = Image::createImagick(640, 480, 'image.jpg');
+
+// Returns an instance of the Imagick adapter
+$imagickImage = Image::createImagickIndex(640, 480, 'image.jpg');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The Imagick adapter API extends the functionality with additional Imagick-specific methods:</p>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2"><code class="inline-code">addImage(mixed $image, ?int $delay = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">hasImages()</code></li>
+                        <li class="mb-2"><code class="inline-code">getImages()</code></li>
+                        <li class="mb-2"><code class="inline-code">rebuildImages(\Imagick $images)</code></li>
+                        <li class="mb-2"><code class="inline-code">setResolution(int $x, ?int $y = null)</code></li>
+                        <li class="mb-2"><code class="inline-code">setImageColorspace(int $colorspace)</code></li>
+                        <li class="mb-2"><code class="inline-code">setCompression(int $compression)</code></li>
+                        <li class="mb-2"><code class="inline-code">setImageFilter(int $filter)</code></li>
+                        <li class="mb-2"><code class="inline-code">setImageBlur(float $blur)</code></li>
+                        <li class="mb-2"><code class="inline-code">getNumberOfImages()</code></li>
+                        <li class="mb-2"><code class="inline-code">getCompression()</code></li>
+                        <li class="mb-2"><code class="inline-code">getImageFilter()</code></li>
+                        <li class="mb-2"><code class="inline-code">getImageBlur()</code></li>
+                    </ul>
+                    <h4 id="advanced-editing">Advanced Editing</h4>
+                    <h5>Using the editing objects</h5>
+                    <p>There are 6 available editing objects for advanced editing and adjusting of images:</p>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2"><strong>Adjust</strong> - Make image adjustments like brightness, contrast and desaturate.</li>
+                        <li class="mb-2"><strong>Draw</strong> - Draw basic shapes on the image and apply strokes and fills.</li>
+                        <li class="mb-2"><strong>Effect</strong> - Apply effects to the image, such as gradients.</li>
+                        <li class="mb-2"><strong>Filter</strong> - Apply filters to the image, such as blur, sharpen and negate.</li>
+                        <li class="mb-2"><strong>Layer</strong> - Create overlays and new layers over the image.</li>
+                        <li class="mb-2"><strong>Type</strong> - Add text over the image.</li>
+                    </ul>
+                    <h6>Examples</h6>
+                    <p>Here are some example use cases:</p>
+                    <pre><code class="language-php">use Pop\Image\Image;
+use Pop\Image\Color\Rgb;
+
+$img = Image::loadImagick('image.jpg');
+$img->adjust->brightness(50)
+    ->contrast(50);
+
+$img->draw->setFillColor(new Rgb(255, 0, 0))
+    ->rectangle(200, 200, 100, 50);
+
+$img->effect->verticalGradient(new Rgb(255, 0, 0), new Rgb(0, 0, 255));
+
+$img->filter->sharpen(10)
+    ->swirl(30);
+
+$img->layer->overlay('watermark.png', 200, 200);
+
+$img->type->font('myfont.ttf')
+    ->size(24)
+    ->xy(50, 100)
+    ->text('Hello World!');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="captcha" class="mt-4">CAPTCHA</h4>
+                    <p>The <code class="inline-code">pop-image</code> component comes with a CAPTCHA tool to create a CAPTCHA image and store
+                        the token value in session to validate the user's CAPTCHA input.</p>
+                    <pre><code class="language-php">$captcha = new Pop\Image\Captcha('/captcha.php');
+header('Content-Type: image/gif');
+echo $captcha;</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The script above will generate the following image:</p>
+                    <img src="https://raw.githubusercontent.com/popphp/pop-image/master/tests/tmp/captcha.gif" />
+                    <p>And with it, the <code class="inline-code">$_SESSION</code> variable will store a <code class="inline-code">pop_captcha</code> key with a serialized
+                        value in it. When you unserialized the <code class="inline-code">$_SESSION['pop_captcha']</code> value, it will give you
+                        this array:</p>
+                    <pre><code class="language-plaintext">Array
+(
+    [captcha] => <img id="pop-captcha-image" class="pop-captcha-image" src="/captcha.php" /><a class="pop-captcha-reload" href="#" onclick="document.getElementById('pop-captcha-image').src = '/captcha.php?captcha=1'; return false;">Reload</a>
+    [answer]  => DWB6
+    [expire]  => 300
+    [start]   => 1574265980
+)</code></pre>
+                    <p>You can use the <code class="inline-code">captcha</code> value to display the image in an HTML page and the <code class="inline-code">answer</code> value
+                        to validate the user's CAPTCHA input.</p>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>

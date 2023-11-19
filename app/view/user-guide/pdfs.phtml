@@ -1,0 +1,698 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2>PDFs</h2>
+                    <p>Pop PDF is a robust PDF processing component that's simple to use. With it, you can create
+                        PDF documents from scratch, or import existing ones and add to or modify them. It supports
+                        embedding images, fonts and URLs, as well as a set of drawing, effect and type features.</p>
+                    <h4 id="quickstart">Quickstart</h4>
+                    <h5>Create a simple PDF</h5>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Text;
+
+$document = new Document();
+$document->addFont(Font::ARIAL);
+
+$page = $document->createPage(Page::LETTER);
+$page->addText(new Text('Hello World', 12), Font::ARIAL, 50, 742);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 class="mt-4">Embed an image</h5>
+                    <p>Using the same example from above, let's add an image to it:</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Text;
+use Pop\Pdf\Document\Page\Image;
+
+$document = new Document();
+$document->addFont(Font::ARIAL);
+
+$page = $document->createPage(Page::LETTER);
+$page->addText(new Text('Look at this image:', 12), Font::ARIAL, 50, 742);
+$page->addImage(Image::createImageFromFile('my-image.jpg'), 50, 380);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="pdf">PDF</h4>
+                    <p>The PDF format specification is a vast and comprehensive format that has been around for a
+                        long time. It is comprised of other various media specifications such as fonts and images.
+                        The <code class="inline-code">pop-pdf</code> attempts to present all of these various components in an intuitive, object-oriented
+                        way so that a developer can assemble, build and compile valid PDF documents programmatically.</p>
+
+                    <p>The main <code class="inline-code">Pop\Pdf\Pdf</code> class serves as a simple processing class with a set of static methods
+                        to route the various object components to the right place to be processed.</p>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2"><code class="inline-code">writeToFile($document, $filename = 'pop.pdf'): void</code></li>
+                        <li class="mb-2"><code class="inline-code">outputToHttp($document, $filename = 'pop.pdf', $forceDownload = false, $headers = []): void</code></li>
+                        <li class="mb-2"><code class="inline-code">importFromFile($file, $pages = null): AbstractDocument</code></li>
+                        <li class="mb-2"><code class="inline-code">importRawData($data, $pages = null): AbstractDocument</code></li>
+                        <li class="mb-2"><code class="inline-code">importFromImages($images, $quality = 70): AbstractDocument</code></li>
+                    </ul>
+                    <h5 id="write-to-file">Write to File</h5>
+                    <p>Once a PDF document has been assembled, you can pass it to the <code class="inline-code">writeToFile()</code> method to
+                        compile the PDF and save it to a file on disk:</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+
+// Pass a valid document object and a path/filename
+Pdf::writeToFile($document, 'path/to/my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="output-to-http" class="mt-4">Output to HTTP</h5>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+
+// Pass a valid document object and a path/filename
+Pdf::outputToHttp($document, 'my-document.pdf', true);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="import-from-file" class="mt-4">Import from File</h5>
+                    <p>You can take an existing PDF and import it to add new content to it. It will translate
+                        the PDF document's content into the appropriate objects such as pages, fonts, images
+                        and text. From there, you can add more content to the PDF document object and save it.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+
+$doc = Pdf::importFromFile('path/to/document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can also choose which pages of a PDF document to import:</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+
+// Import pages 2, 4 and 6 from the PDF document
+$doc = Pdf::importFromFile('path/to/document.pdf', [2, 4, 6]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="import-from-raw-data" class="mt-4">Import from Raw Data</h5>
+                    <p>If you have a stream of raw data from a PDF file, you can import that as well.
+                        This method supports optional page selection as well</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+
+$doc = Pdf::importRawData($rawData, [2, 4, 6]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="import-from-images" class="mt-4">Import from Images</h5>
+                    <p>If you have an array of images, you can convert them into a PDF document object
+                        where each image becomes a page in the PDF document.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+
+$doc = Pdf::importFromImages($arrayOfImages);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="documents" class="mt-4">Documents</h4>
+                    <p>The document object serves as the main collection object of all of the components that go into
+                        building and compiling a PDF document. This includes pages, fonts and forms.</p>
+                    <h5 id="compression">Compression</h5>
+                    <p>A PDF document can be compressed if needed to attempt to reduce file size.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Document;
+
+$document = new Document();
+$document->setCompression(true);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="page-origin" class="mt-4">Page Origin</h5>
+                    <p>A potentially confusing aspect of PDF documents is that the default page origin is the bottom left.
+                        This means that all coordinates and any math based on the coordinates has to be calculated from the
+                        bottom left.</p>
+                    <p>If you'd prefer to calculate the origin from a different place, you can set that with the <code class="inline-code">setOrigin()</code>
+                        method on the document object. This will automatically translate your preferred origin to the native
+                        PDF origin.</p>
+                    <p>Options for setting the origin of the document are:</p>
+                    <ul class="list-disc text-sm ml-8 mb-8">
+                        <li class="mb-2"><code class="inline-code">ORIGIN_TOP_LEFT</code></li>
+                        <li class="mb-2"><code class="inline-code">ORIGIN_TOP_RIGHT</code></li>
+                        <li class="mb-2"><code class="inline-code">ORIGIN_BOTTOM_LEFT</code></li>
+                        <li class="mb-2"><code class="inline-code">ORIGIN_BOTTOM_RIGHT</code></li>
+                        <li class="mb-2"><code class="inline-code">ORIGIN_CENTER</code></li>
+                    </ul>
+                    <pre><code class="language-php">use Pop\Pdf\Document;
+
+$document = new Document();
+$document->setOrigin(Document::ORIGIN_TOP_LEFT);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="pages" class="mt-4">Pages</h4>
+                    <p>Pages can be virtually any size, but there are a number of pre-defined sizes available
+                        as constants in the <code class="inline-code">Pop\Pdf\Document\Page</code> class:</p>
+                    <table class="syntax-table mb-8">
+                        <thead>
+                        <tr>
+                            <th scope="col">Page</th>
+                            <th scope="col">(W x H)</th>
+                            <th scope="col">Page</th>
+                            <th scope="col">(W x H)</th>
+                            <th scope="col">Page</th>
+                            <th scope="col">(W x H)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code class="inline-code">ENVELOPE_10</code></td><td>(297  x 684)</td><td><code class="inline-code">A1</code></td><td>(1684 x 2384)</td><td><code class="inline-code">B1</code></td><td>(2064 x 2920)</td></tr>
+                            <tr><td><code class="inline-code">ENVELOPE_C5</code></td><td>(461  x 648)</td><td><code class="inline-code">A2</code></td><td>(1191 x 1684)</td><td><code class="inline-code">B2</code></td><td>(1460 x 2064)</td></tr>
+                            <tr><td><code class="inline-code">ENVELOPE_DL</code></td><td>(312  x 624)</td><td><code class="inline-code">A3</code></td><td>(842  x 1191)</td><td><code class="inline-code">B3</code></td><td>(1032 x 1460)</td></tr>
+                            <tr><td><code class="inline-code">FOLIO</code></td><td>(595  x 935)</td><td><code class="inline-code">A4</code></td><td>(595  x 842)</td><td><code class="inline-code">B4</code></td><td>(729  x 1032)</td></tr>
+                            <tr><td><code class="inline-code">EXECUTIVE</code></td><td>(522  x 756)</td><td><code class="inline-code">A5</code></td><td>(420  x 595)</td><td><code class="inline-code">B5</code></td><td>(516  x 729)</td></tr>
+                            <tr><td><code class="inline-code">LETTER</code></td><td>(612  x 792)</td><td><code class="inline-code">A6</code></td><td>(297  x 420)</td><td><code class="inline-code">B6</code></td><td>(363  x 516)</td></tr>
+                            <tr><td><code class="inline-code">LEGAL</code></td><td>(612  x 1008)</td><td><code class="inline-code">A7</code></td><td>(210  x 297)</td><td><code class="inline-code">B7</code></td><td>(258  x 363)</td></tr>
+                            <tr><td><code class="inline-code">LEDGER</code></td><td>(1224 x 792)</td><td><code class="inline-code">A8</code></td><td>(148  x 210)</td><td><code class="inline-code">B8</code></td><td>(181  x 258)</td></tr>
+                            <tr><td><code class="inline-code">TABLOID</code></td><td>(792  x 1224)</td><td><code class="inline-code">A9</code></td><td>(105  x 148)</td><td><code class="inline-code">B9</code></td><td>(127  x 181)</td></tr>
+                            <tr><td><code class="inline-code">A0</code></td><td>(2384 x 3370)</td><td><code class="inline-code">B0</code></td><td>(2920 x 4127)</td><td><code class="inline-code">B10</code></td><td>(91   x 127)</td></tr>
+                        </tbody>
+                    </table>
+                    <pre><code class="language-php">use Pop\Pdf\Document;
+use Pop\Pdf\Document\Page;
+
+$pageLetter = new Page(Page::LETTER);
+$pageCustom = new Page(500, 1000); // Custom width and height
+
+$document = new Document();
+$document->addPages([$pageLetter, $pageCustom]);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Alternatively, you can use the document object as a page factory, which will create a page
+                        object, automatically add the page to the document object and return the new page:</p>
+                    <pre><code class="language-php">use Pop\Pdf\Document;
+use Pop\Pdf\Document\Page;
+
+$document  = new Document();
+$pageLegal = $document->createPage(Page::LEGAL);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>There are a number of other methods within the document object to assist with managing
+                        various components:</p>
+                    <ul class="list-disc text-sm ml-8 mb-8">
+                        <li class="mb-2"><code class="inline-code">addPage(Page $page): Document</code></li>
+                        <li class="mb-2"><code class="inline-code">addPages(array $pages): Document</code></li>
+                        <li class="mb-2"><code class="inline-code">createPage(mixed $size, ?int $height = null): Page</code></li>
+                        <li class="mb-2"><code class="inline-code">copyPage(int $p, bool $preserveContent = true): Page</code></li>
+                        <li class="mb-2"><code class="inline-code">orderPages(array $pages): Document</code></li>
+                        <li class="mb-2"><code class="inline-code">deletePage(int $p): Document</code></li>
+                        <li class="mb-2"><code class="inline-code">addFont(Font|string $font, bool $embedOverride = false): Document</code></li>
+                        <li class="mb-2"><code class="inline-code">embedFont(Font $font, bool $embedOverride = false): Document</code></li>
+                        <li class="mb-2"><code class="inline-code">setCurrentPage(int $p): Document</code></li>
+                        <li class="mb-2"><code class="inline-code">setCurrentFont(string $name): Document</code></li>
+                    </ul>
+                    <h4 id="fonts">Fonts</h4>
+                    <p>Fonts are required to be added to a document for any text that might be added to any page.
+                        The font that a text object uses will be defined when adding the text to a page object, but
+                        that font will need to be present in the document object. Once fonts are added to a document,
+                        they can be used repeatedly by any text objects on any pages of the document.</p>
+                    <p>There are two types of supported fonts: <strong>standard</strong> and <strong>embedded</strong>.</p>
+                    <h5 id="standard">Standard</h5>
+                    <p>Part of the PDF specification is that a total of 25 standard fonts that are supported
+                        by PDF and PDF readers. This means that no additional font files have to be embedded and
+                        the fonts are available by default.</p>
+                    <table class="syntax-table mb-8">
+                        <thead>
+                        <tr>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col" class="text-center">Standard PDF Fonts</th>
+                            <th scope="col">&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Arial</td><td>CourierNew,Bold</td><td>Times-Bold</td></tr>
+                            <tr><td>Arial,Italic</td><td>Courier-BoldOblique</td><td>Times-Italic</td></tr>
+                            <tr><td>Arial,Bold</td><td>CourierNew,BoldItalic</td><td>Times-BoldItalic</td></tr>
+                            <tr><td>Arial,BoldItalic</td><td>Helvetica</td><td>TimesNewRoman</td></tr>
+                            <tr><td>Courier</td><td>Helvetica-Oblique</td><td>TimesNewRoman,Italic</td></tr>
+                            <tr><td>CourierNew</td><td>Helvetica-Bold</td><td>TimesNewRoman,Bold</td></tr>
+                            <tr><td>Courier-Oblique</td><td>Helvetica-BoldOblique</td><td>TimesNewRoman,BoldItalic</td></tr>
+                            <tr><td>CourierNew,Italic</td><td>Symbol</td><td>ZapfDingbats</td></tr>
+                            <tr><td>Courier-Bold</td><td>Times-Roman</td><td>&nbsp;</td></tr>
+                        </tbody>
+                    </table>
+                    <p>References to each of these standard fonts are available as constants on the main
+                        font class, <code class="inline-code">Pop\Pdf\Document\Font</code>:</p>
+                    <ul class="list-disc text-sm ml-8 mb-8">
+                        <li class="mb-2"><code class="inline-code">Font::ARIAL</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::ARIAL_ITALIC</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::ARIAL_BOLD</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::ARIAL_BOLD_ITALIC</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::COURIER</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::COURIER_OBLIQUE</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::COURIER_BOLD</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::COURIER_BOLD_OBLIQUE</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::COURIER_NEW</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::COURIER_NEW_ITALIC</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::COURIER_NEW_BOLD</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::COURIER_NEW_BOLD_ITALIC</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::HELVETICA</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::HELVETICA_OBLIQUE</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::HELVETICA_BOLD</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::HELVETICA_BOLD_OBLIQUE</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::SYMBOL</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::TIMES_ROMAN</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::TIMES_BOLD</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::TIMES_ITALIC</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::TIMES_BOLD_ITALIC</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::TIMES_NEW_ROMAN</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::TIMES_NEW_ROMAN_ITALIC</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::TIMES_NEW_ROMAN_BOLD</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::TIMES_NEW_ROMAN_BOLDITALIC</code></li>
+                        <li class="mb-2"><code class="inline-code">Font::ZAPF_DINGBATS</code></li>
+                    </ul>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Text;
+
+$document = new Document();
+$document->addFont(Font::HELVETICA_BOLD);
+
+$page = $document->createPage(Page::LETTER);
+$page->addText(new Text('Hello World', 12), Font::HELVETICA_BOLD, 50, 742);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="embedded" class="mt-4">Embedded</h5>
+                    <p>If you require a font outside of the set of standard fonts, the PDF specification
+                        supports embedding a number of different external font formats:</p>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2">TrueType (ttf)</li>
+                        <li class="mb-2">OpenType (otf)</li>
+                        <li class="mb-2">Type1 (pfb)</li>
+                    </ul>
+                    <p>Most fonts of these types should work, but there are situations were the font may not
+                        be parsable, such as when a font's embeddable flag is set to false.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+
+$font     = new Font('/path/to/some/font.ttf');
+$document = new Document();
+$document->embedFont($font);
+
+$page = new Page(Page::LETTER);
+$page->addText(new Page\Text('Hello World', 36), $font->getName(), 50, 600);
+
+$document->addPage($page);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="text" class="mt-4">Text</h4>
+                    <p>Once font objects have been added to a document object, text objects can then be added
+                        to page objects, while referencing the available font objects in the document.</p>
+                    <p>The constructor of the text object takes the string and the size:</p>
+                    <pre><code class="language-php">use Pop\Pdf\Document\Page\Text;
+
+$text = new Text('Hello World', 12);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>There are a number of methods to assist in modifying the text object:</p>
+                    <ul class="list-disc text-sm ml-8 mb-8">
+                        <li class="mb-2"><code class="inline-code">setSize(int|float $size): Text</code></li>
+                        <li class="mb-2"><code class="inline-code">setFillColor(ColorInterface $color): Text</code></li>
+                        <li class="mb-2"><code class="inline-code">setStrokeColor(ColorInterface $color): Text</code></li>
+                        <li class="mb-2"><code class="inline-code">setStroke(int $width, ?int $dashLength = null, ?int $dashGap = null): Text</code></li>
+                        <li class="mb-2"><code class="inline-code">setRotation(int $rotation): Text</code></li>
+                        <li class="mb-2"><code class="inline-code">setCharWrap(int $charWrap, ?int $leading = null): Text</code></li>
+                        <li class="mb-2"><code class="inline-code">setLeading(int $leading): Text</code></li>
+                    </ul>
+                    <p>A basic character wrap can be set with the <code class="inline-code">setCharWrap()</code> method. The leading of the
+                        wrapped text can be either set with the second parameter or by the <code class="inline-code">setLeading()</code> method.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Text;
+
+$document = new Document();
+$document->addFont(Font::ARIAL);
+
+$longString = 'Lorem ipsum [...really long string...] anim id est laborum.';
+$text = new Text($longString, 12);
+$text->setCharWrap(80, 16); // Set the wrap at 80 characters and a leading of 16
+
+$page = $document->createPage(Page::LETTER);
+$page->addText($text, Font::ARIAL, 50, 742);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="alignment" class="mt-4">Alignment</h5>
+                    <p>Alignment objects are objects that assist with handling more advanced alignment
+                        and wrapping of text based on geometric positioning. When creating an alignment
+                        object, you define a bounding areas to which the text will be confined.</p>
+                    <h6>Left-aligned box</h6>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Text;
+
+$document = new Document();
+$document->addFont(Font::ARIAL);
+
+$longString = 'Lorem ipsum [...really long string...] anim id est laborum.';
+$text = new Text($longString, 12);
+
+// Create a left-aligned bounding area with the
+// X between 50 and 350; leading set 16
+$text->setAlignment(Alignment::createLeft(50, 350, 16));
+
+$page = $document->createPage(Page::LETTER);
+$page->addText($text, Font::ARIAL, 50, 742);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Right-aligned box</h6>
+                    <pre><code class="language-php">// Create a right-aligned bounding area with the
+// X between 250 and 550; leading set 16
+$text->setAlignment(Alignment::createRight(250, 550, 16));</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Center-aligned box</h6>
+                    <pre><code class="language-php">// Create a center-aligned bounding area with the
+// X between 50 and 350; leading set 16
+$text->setAlignment(Alignment::createCenter(200, 412, 16));</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="string-width" class="mt-4">String Width</h5>
+                    <p>An important and useful tool with working with text and fonts to the ability
+                    to calculate the width of a string of characters rendered in a particular font.
+                        This is very helpful when attempting to correctly position text on the page.</p>
+
+                    <p>There is a method on the font object that will allow you pass a string of text
+                    to it, as well as the desired size, to give you the approximate width those characters
+                        will take up rendered in that font at that size.</p>
+
+                    <p>This works for both standard and embedded fonts.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Document\Font;
+
+$font  = new Font(Font::HELVETICA_BOLD);
+$width = $font->getStringWidth('Hello World', 12);
+var_dump($width);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>This will give us the approximate width in points of the string <code class="inline-code">Hello World</code> in
+                        12pt Helvetica Bold:</p>
+                    <pre><code class="language-plaintext">float(66.672)</code></pre>
+                    <h4 id="images" class="mt-4">Images</h4>
+                    <p>Images can be easily added to page objects. However, in a PDF document, the origin of an
+                    image is the bottom of the image. You will have to consider how the image's height affects
+                        the placement of the image on the page in relation to the page origin.</p>
+
+                    <p>In this example below, the image is 320 x 320. If you place the `$y` value at 742
+                    (top origin 792 - 50), then only the bottom 50 pixels of the image would display
+                    at the top of the page, while the remainder bleeds off the top page border. Therefore,
+                    the height should be taken into account and the `$y` value should be a value like 422
+                    (top origin 792 - 50 - 320). This would make the image appear with the top of it starting
+                    at 50 pixels from the top of the page, and you would be able to safely see the entire
+                        image on the page.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Image;
+
+$document = new Document();
+$page     = $document->createPage(Page::LETTER);
+$page->addImage(Image::createImageFromFile('my-image.jpg'), 50, 422);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>In the above example, the image is pulled from a file. You can also import an image from a
+                        raw stream:</p>
+                    <pre><code class="language-php">$page->addImage(Image::loadImageFromStream($imageContents), 50, 422);</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="image-size" class="mt-4">Image Size</h5>
+                    <p>You can resize a larger image when adding it to a page.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Image;
+
+$image = Image::createImageFromFile('my-image.jpg');
+$image->resizeToWidth(120);
+
+$document = new Document();
+$page     = $document->createPage(Page::LETTER);
+$page->addImage($image, 50, 622);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The following methods are available to resize an image:</p>
+                    <ul class="list-disc text-sm ml-8 mb-8">
+                        <li class="mb-2"><code class="inline-code">resizeToWidth(int $width, bool $preserveResolution = false): Image</code></li>
+                        <li class="mb-2"><code class="inline-code">resizeToHeight(int $height, bool $preserveResolution = false): Image</code></li>
+                        <li class="mb-2"><code class="inline-code">resize(int $pixel, bool $preserveResolution = false): Image</code></li>
+                        <li class="mb-2"><code class="inline-code">scale(float $scale, bool $preserveResolution = false): Image</code></li>
+                    </ul>
+                    <p>The <code class="inline-code">$preserveResolution</code> flag is set to <code class="inline-code">false</code> by default. This will
+                    resize the image resource, which will reduce it in not only dimensional size,
+                        but also reduce its data size as well.</p>
+
+                    <p>If you wish to keep the image in its original higher quality, and
+                    only reduce the dimensions, you can set the <code class="inline-code">$preserveResolution</code> flag
+                    to <code class="inline-code">true</code>. This is typically a good method to keep the image clean and crisp
+                        when being reduced to a smaller dimension.</p>
+                    <h4 id="paths" class="mt-4">Paths</h4>
+                    <p>You can add path objects to a page to draw vector lines and shapes on the page object.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Path;
+use Pop\Color\Color;
+
+$document = new Document();
+
+$path = new Path(Path::FILL_STROKE);
+$path->setFillColor(Color::rgb(155, 20, 20))
+    ->setStrokeColor(Color::rgb(81, 125, 153))
+    ->setStroke(5)
+    ->drawRectangle(50, 400, 320, 240);
+
+$page = new Page(Page::LETTER);
+$page->addPath($path);
+
+$document->addPage($page);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The methods to control color and style include:</p>
+                    <ul class="list-disc text-sm ml-8">
+                        <li class="mb-2"><code class="inline-code">setFillColor(Color\ColorInterface $color): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">setStrokeColor(Color\ColorInterface $color): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">setStroke(int $width, ?int $dashLength = null, ?int $dashGap = null): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">setStyle(string $style): Path</code></li>
+                    </ul>
+                    <p>The <code class="inline-code">setStyle()</code> method can take one of the available style constants as its parameter:</p>
+                    <ul class="list-disc text-sm ml-8">
+                        <li class="mb-2"><code class="inline-code">Path::STROKE</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::STROKE_CLOSE</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::FILL</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::FILL_EVEN_ODD</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::FILL_STROKE</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::FILL_STROKE_EVEN_ODD</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::FILL_STROKE_CLOSE</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::FILL_STROKE_CLOSE_EVEN_ODD</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::CLIPPING</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::CLIPPING_FILL</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::CLIPPING_NO_STYLE</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::CLIPPING_EVEN_ODD</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::CLIPPING_EVEN_ODD_FILL</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::CLIPPING_EVEN_ODD_NO_STYLE</code></li>
+                        <li class="mb-2"><code class="inline-code">Path::NO_STYLE</code></li>
+                    </ul>
+                    <p>The basic methods available to draw paths and shapes are:</p>
+                    <ul class="list-disc text-sm ml-8 mb-8">
+                        <li class="mb-2"><code class="inline-code">drawLine(int $x1, int $y1, int $x2, int $y2): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawRectangle(int $x, int $y, int $w, ?int $h = null): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawRoundedRectangle(int $x, int $y, int $w, ?int $h = null, int $rx = 10, ?int $ry = null): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawSquare(int $x, int $y, int $w): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawRoundedSquare(int $x, int $y, int $w, int $rx = 10, ?int $ry = null): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawPolygon(array $points): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawEllipse(int $x, int $y, int $w, ?int $h = null): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawCircle(int $x, int $y, int $w): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawArc(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawChord(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Path</code></li>
+                        <li class="mb-2"><code class="inline-code">drawPie(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Path</code></li>
+                    </ul>
+                    <h4 id="annotations">Annotations</h4>
+                    <p>Annotation objects provide a way to link to external URLs or an internal pointer
+                        within the document.</p>
+                    <h5 id="urls">URLs</h5>
+                    <p>The following example will generate an invisible annotation box area over the text
+                        <code class="inline-code">Visit Google</code> that links to Google's home page:</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Text;
+use Pop\Pdf\Document\Page\Annotation\Url;
+
+$document = new Document();
+$document->addFont(Font::ARIAL);
+
+$page = $document->createPage(Page::LETTER);
+$page->addText(new Text('Visit Google', 12), Font::ARIAL, 50, 742);
+
+$page->addUrl(new Url(100, 15, 'https://www.google.com/'), 50, 742);
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="internal" class="mt-4">Internal</h5>
+                    <p>The following example will add 2 pages to the document and link from the first page to
+                        the second page. When creating an internal link, you can define the following:</p>
+                    <ul class="list-disc text-sm ml-8 mb-8">
+                        <li class="mb-2">The X and Y coordinates to navigate to</li>
+                        <li class="mb-2">The Z (Zoom) target</li>
+                        <li class="mb-2">The page target</li>
+                    </ul>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Text;
+use Pop\Pdf\Document\Page\Annotation\Link;
+
+$document = new Document();
+$document->addFont(Font::ARIAL);
+
+$page1 = $document->createPage(Page::LETTER);
+$page1->addText(new Text('This is an internal link', 12), Font::ARIAL, 50, 742);
+$page2 = $document->createPage(Page::LETTER);
+$page2->addText(new Text('This is the destination', 12), Font::ARIAL, 50, 742);
+
+// Create a link to page 2 and set the zoom to 110%
+$link = new Link(120, 15, 10, 752);
+$link->setPageTarget(2)
+    ->setZTarget(110);
+
+$page1->addLink($link, 50, 742);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="forms" class="mt-4">Forms</h4>
+                    <p>Forms and form fields are supported in Pop PDF, however, please note that not all browsers
+                    consistently support forms and form fields in their default PDF readers. It is recommended
+                    that if you generate a PDF with a form in it using Pop PDF, that your end user views it
+                        in an Adobe product.</p>
+                    <p>The types of fields that are currently supported in Pop PDF are:</p>
+                    <ul class="list-disc text-sm ml-8">
+                        <li class="mb-2">Single-line text fields</li>
+                        <li class="mb-2">Multi-line text fields</li>
+                        <li class="mb-2">Single-select choice fields (e.g., an HTML select drop-down)</li>
+                        <li class="mb-2">Multi-select choice fields (e.g., an HTML multi-select drop-down)</li>
+                        <li class="mb-2">Push buttons (by default, display and act like a checkbox)</li>
+                        <li class="mb-2">Radio buttons</li>
+                    </ul>
+                    <p><em>(NOTE: A group of radio buttons is not supported at this time.)</em></p>
+                    <p>The following script below demonstrates how to add the various fields to a form in a
+                    PDF object. While lengthy, it includes text and graphic support for field names and
+                    borders:</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Form;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Document\Page\Path;
+use Pop\Pdf\Document\Page\Text;
+
+$form = new Form('contact_form');
+
+$document = new Document();
+$document->addForm($form);
+$document->addFont(new Font(Font::ARIAL));
+$document->addFont(new Font(Font::ARIAL_BOLD));
+
+$firstName = new Page\Field\Text('first_name');
+$firstName->setWidth(200)
+    ->setHeight(20);
+
+$lastName = new Page\Field\Text('last_name');
+$lastName->setWidth(200)
+    ->setHeight(20);
+
+$colors = new Page\Field\Choice('colors');
+$colors->addOption('Red')
+    ->addOption('Green')
+    ->addOption('Blue')
+    ->setMultiSelect()
+    ->setWidth(200)
+    ->setHeight(50)
+    ->setFont(Font::ARIAL)
+    ->setSize(11);
+
+$city = new Page\Field\Choice('city');
+$city->addOption('New Orleans')
+    ->addOption('New York')
+    ->addOption('Los Angeles')
+    ->setCombo()
+    ->setWidth(200)
+    ->setHeight(20)
+    ->setFont(Font::ARIAL)
+    ->setSize(11);
+
+$lovePhp = new Page\Field\Button('love_php');
+$lovePhp->addOption('PHP')->setWidth(20)
+    ->setHeight(20);
+
+$lovePdf = new Page\Field\Button('love_pdf');
+$lovePdf->addOption('PDF')->setRadio()
+    ->setWidth(20)
+    ->setHeight(20);
+
+$comments = new Page\Field\Text('comments');
+$comments->setWidth(500)
+    ->setHeight(150)
+    ->setMultiline();
+
+$page = new Page(Page::LETTER);
+
+$page->addText(new Text('First Name:', 14), Font::ARIAL_BOLD, 50, 680);
+$page->addText(new Text('Last Name:', 14), Font::ARIAL_BOLD, 300, 680);
+$page->addText(new Text('Favorite Colors?', 14), Font::ARIAL_BOLD, 50, 580);
+$page->addText(new Text('Favorite City?', 14), Font::ARIAL_BOLD, 300, 580);
+$page->addText(new Text('Love PHP?', 14), Font::ARIAL_BOLD, 80, 330);
+$page->addText(new Text('Love PDF?', 14), Font::ARIAL_BOLD, 80, 290);
+$page->addText(new Text('Comments:', 14), Font::ARIAL_BOLD, 50, 260);
+$page->addPath((new Path())->drawRectangle(50, 650, 200, 20));
+$page->addPath((new Path())->drawRectangle(300, 650, 200, 20));
+$page->addPath((new Path())->drawRectangle(50, 520, 200, 50));
+$page->addPath((new Path())->drawRectangle(300, 550, 200, 20));
+$page->addPath((new Path())->drawSquare(50, 325, 20));
+$page->addPath((new Path())->drawCircle(60, 295, 10));
+$page->addPath((new Path())->drawRectangle(50, 100, 500, 150));
+
+$page->addField($firstName, 'contact_form', 50, 650)
+    ->addField($lastName, 'contact_form', 300, 650)
+    ->addField($colors, 'contact_form', 50, 520)
+    ->addField($city, 'contact_form', 300, 550)
+    ->addField($lovePhp, 'contact_form', 50, 325)
+    ->addField($lovePdf, 'contact_form', 50, 285)
+    ->addField($comments, 'contact_form', 50, 100);
+
+$document->addPage($page);
+
+Pdf::writeToFile($document, 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above code produces a PDF with a form like this:</p>
+                    <img src="https://raw.githubusercontent.com/popphp/pop-pdf/master/tests/tmp/pop-pdf-form.jpg" />
+                    <h4 id="html" class="mt-4">HTML</h4>
+                    <p>HTML rendering is available in <code class="inline-code">pop-pdf</code>, however it is still in an experimental beta stage.</p>
+                    <h5>Parsing HTML from a file:</h5>
+                    <p>If you have an HTML file, it will parse all of the HTML in it, as well as any linked CSS and images:</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Build\Html\Parser;
+
+$document = new Document();
+$document->addFont(Font::ARIAL);
+$page = $document->createPage(Page::LETTER);
+
+$parser = new Parser($document);
+$parser->parseHtmlFile('test.html');
+$parser->process();
+
+Pdf::writeToFile($parser->document(), 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can also parse HTML and CSS strings directly. The directory path is needed to give the
+                        parser a base folder to attempt to access other assets, such as images.</p>
+                    <pre><code class="language-php">use Pop\Pdf\Pdf;
+use Pop\Pdf\Document;
+use Pop\Pdf\Document\Font;
+use Pop\Pdf\Document\Page;
+use Pop\Pdf\Build\Html\Parser;
+
+$html = &lt;&lt;&lt;HTML
+&lt;h1&gt;Hello World!&lt;/h1&gt;
+HTML;
+
+$css = &lt;&lt;&lt;CSS
+h1 {
+font-family: sans-serif;
+color: #f00;
+font-weight: normal;
+}
+h3 {
+font-family: serif;
+color: #009dff;
+}
+.red {
+font-weight: bold;
+color: #f00;
+}
+.img-med {
+width: 200px;
+}
+CSS;
+
+$document = new Document();
+$document->addFont(Font::ARIAL);
+$page = $document->createPage(Page::LETTER);
+
+$parser = new Parser($document);
+$parser->parseHtml($html, __DIR__);
+$parser->parseCss($css);
+$parser->process();
+
+Pdf::writeToFile($parser->document(), 'my-document.pdf');</code><a href="#" title="Copy" class="copy-link" onclick="copyCode(this); return false;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>
