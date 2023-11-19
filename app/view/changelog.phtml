@@ -3,5 +3,191 @@
             <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
                 <div class="main-content">
                     <h2><?=$title; ?></h2>
+                    <h4 id="5.0.0">5.0.0</h4>
+                    <h6>(11/08/2023)</h6>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2">Upgraded to PHP 8.1+</li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-http</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">
+                                    Better separation of Client and Server functionality
+                                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                        <li class="mb-2">Added standalone Client class</li>
+                                        <li class="mb-2">Added client handlers to support curl, streams and curl multi</li>
+                                        <li class="mb-2">Added standalone Server class</li>
+                                    </ul>
+                                </li>
+                                <li class="mb-2">Improved response content negotiation and handling</li>
+                                <li class="mb-2">Added Promises</li>
+                                <li class="mb-2">Added Curl CLI conversion functionality</li>
+                                <li class="mb-2">Added ability to create raw strings of a client request</li>
+                                <li class="mb-2">Added factories to the client Stream and Curl classes</li>
+                                <li class="mb-2">Added factories to the request, response and upload classes</li>
+                                <li class="mb-2">Improved Auth header object, added support for digest auth</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-mail</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">
+                                    Expanded the available mail transports to include:
+                                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                        <li class="mb-2">Mailgun</li>
+                                        <li class="mb-2">Sendgrid</li>
+                                        <li class="mb-2">Office 365</li>
+                                        <li class="mb-2">AWS SES</li>
+                                        <li class="mb-2">Google</li>
+                                    </ul>
+                                </li>
+                                <li class="mb-2">
+                                    Expanded the available mail clients to include:
+                                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                        <li class="mb-2">Office 365</li>
+                                        <li class="mb-2">Google</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-storage</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Added Azure adapter</li>
+                                <li class="mb-2">Refactored the S3 and Local adapters</li>
+                                <li class="mb-2">Added top-level normalized Storage class</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-queue</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Created a task object that extends the job object and has scheduling functionality</li>
+                                <li class="mb-2">
+                                    Deprecated the scheduler object and refactored worker object
+                                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                        <li class="mb-2">Reworked hierarchy of job/task -> queue -> worker</li>
+                                    </ul>
+                                </li>
+                                <li class="mb-2">Added a cron object to manage scheduling; greatly improved scheduling functionality</li>
+                                <li class="mb-2">Added the ability to have sub-minute scheduling</li>
+                                <li class="mb-2">Added max attempts</li>
+                                <li class="mb-2">Improved the "run until" functionality</li>
+                                <li class="mb-2">Added AWS SQS adapter</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">popphp</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Improved CLI route syntax and handling</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-auth</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Refactored for <code class="inline-code">pop-http</code> v5.0.0</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-db</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Added Seeder class with <code class="inline-code">create()</code> and <code class="inline-code">run()</code> methods</li>
+                                <li class="mb-2">Added the functionality to store DB migrations in a DB table</li>
+                                <li class="mb-2">Improved debugger functionality with the profiler</li>
+                            </ul>
+                        </li>
+
+                        <li class="mb-2">
+                            <code class="inline-code">pop-code</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Added support for return types and better support for type hints</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-cache</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Renamed <code class="inline-code">Db</code> adapter <code class="inline-code">Database</code> to limit possible namespace conflicts</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-color</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">New component for color value management, parsing and conversion</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-config</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Add support for YAML</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-console</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Added support for 4th console color to visually separate parameters and options</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-css</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Added <code class="inline-code">writeToFile($to)</code> method</li>
+                                <li class="mb-2">Improved comment functionality</li>
+                                <li class="mb-2">Improved the CSS object constructor</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-debug</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Improved get/retrieval of stored debug content</li>
+                                <li class="mb-2">Renamed <code class="inline-code">Db</code> storage adapter <code class="inline-code">Database</code> to limit possible namespace conflicts</li>
+                                <li class="mb-2">Added <code class="inline-code">timestamp</code> column to database storage adapter</li>
+                                <li class="mb-2">Deprecated/removed Redis adapter</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-image</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">
+                                    Deprecated and removed the following methods:
+                                    <ul class="list-disc text-sm ml-8 mb-2 mt-2">
+                                        <li class="mb-1"><code class="inline-code">setAdjust()</code>, <code class="inline-code">setDraw()</code>, <code class="inline-code">setEffect()</code>, <code class="inline-code">setFilter()</code>, <code class="inline-code">setLayer()</code>, <code class="inline-code">setType()</code></li>
+                                    </ul>
+                                </li>
+
+                                <li class="mb-2">
+                                    The following existing methods now serve as the constructor factories for their respective objects:
+                                    <ul class="list-disc text-sm ml-8 mb-2 mt-2">
+                                        <li class="mb-1"><code class="inline-code">adjust()</code>, <code class="inline-code">draw()</code>, <code class="inline-code">effect()</code>, <code class="inline-code">filter()</code>, <code class="inline-code">layer()</code>, <code class="inline-code">type()</code></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="mb-2">
+                            <code class="inline-code">pop-kettle</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Added the ability to store and manage migrations from a database table</li>
+                                <li class="mb-2">Moved seed functionality over to new <code class="inline-code">Pop\Db\Sql\Seeder</code> class</li>
+                                <li class="mb-2">Added the ability to export and import raw SQL files (MySQL only.)</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-log</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Renamed <code class="inline-code">Db</code> writer <code class="inline-code">Database</code> to limit possible namespace conflicts</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <code class="inline-code">pop-utils</code>
+                            <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                                <li class="mb-2">Added File helper class</li>
+                                <li class="mb-2">Deprecated and removed abstract error class and error interface</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h6>Deprecated Features</h6>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2">PHP 7.4 no longer supported</li>
+                        <li class="mb-2">The <code class="inline-code">pop-loader</code> component is no longer available</li>
+                        <li class="mb-2">Removed abstract error class and error interface in <code class="inline-code">pop-utils</code></li>
+                    </ul>
                 </div>
 <?php include __DIR__ . '/inc/footer.phtml'; ?>
