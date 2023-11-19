@@ -16,7 +16,7 @@ class IndexController extends AbstractController
     {
         $uri     = $this->request->getUriAsString();
         $version = '';
-        if (preg_match('/^\/\d\.\d\//', $uri)) {
+        if (preg_match('/^\/\d\.\d\/?/', $uri)) {
             $version = substr($uri, 0, 4);
             $uri     = substr($uri, 4);
         }
@@ -41,10 +41,12 @@ class IndexController extends AbstractController
     {
         $searchModel = new Model\Search();
         $query       = htmlentities(strip_tags($this->request->getQuery('query')), ENT_QUOTES, 'UTF-8');
+        $version     = strip_tags($this->request->getQuery('version'));
 
         $this->prepareView('search');
         $this->view->query   = $query;
-        $this->view->results = (!empty($query)) ? $searchModel->search($query) : [];
+        $this->view->version = $version;
+        $this->view->results = (!empty($query)) ? $searchModel->search($query, $version) : [];
 
         $this->send();
     }

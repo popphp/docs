@@ -8,7 +8,7 @@ use Pop\Dir\Dir;
 class Search extends AbstractModel
 {
 
-    public function search(string $query): array
+    public function search(string $query, string $version): array
     {
         $results = [];
         $omit    = [
@@ -21,7 +21,7 @@ class Search extends AbstractModel
             'inc/nav.phtml',
         ];
 
-        $dir = new Dir(__DIR__ . '/../../view', [
+        $dir = new Dir(__DIR__ . '/../../view' . $version, [
             'recursive' => true,
             'relative' => true,
             'filesOnly' => true
@@ -31,9 +31,9 @@ class Search extends AbstractModel
 
         foreach ($files as $file) {
             if (!in_array($file, $omit)) {
-                $contents = strip_tags(file_get_contents(__DIR__ . '/../../view/' . $file));
+                $contents = strip_tags(file_get_contents(__DIR__ . '/../../view' .$version . '/' . $file));
                 if ((stripos($contents, $query) !== false) || (stripos($file, $query) !== false)) {
-                    $uri   = '/' . str_replace(['index', '.phtml'], ['/', ''], $file);
+                    $uri   = $version . '/' . str_replace(['index', '.phtml'], ['/', ''], $file);
                     $title = ($file == 'index.phtml') ?
                         'Home' : ucwords(str_replace('-', ' ', substr($uri, (strrpos($uri, '/') + 1))));
 
