@@ -12,10 +12,9 @@ import css from 'highlight.js/lib/languages/css'
 import yaml from 'highlight.js/lib/languages/yaml'
 import plaintext from 'highlight.js/lib/languages/plaintext'
 
-import { copyCode, manageVersion, setActiveNav } from './modules/main'
+import { copyCode, manageVersion, manageNav } from './modules/main'
 
 window.Alpine = Alpine
-window.setActiveNav = setActiveNav
 
 Alpine.plugin(persist)
 Alpine.store('darkMode', {
@@ -32,7 +31,7 @@ Alpine.store('darkMode', {
 Alpine.store('navigationOpen', false)
 Alpine.data('copyCode', copyCode)
 Alpine.data('manageVersion', manageVersion)
-Alpine.data('setActiveNav', setActiveNav)
+Alpine.data('manageNav', manageNav)
 Alpine.start()
 
 // set initial page state after store is initialized
