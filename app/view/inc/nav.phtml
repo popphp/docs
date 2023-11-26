@@ -1,7 +1,7 @@
-            <aside id="sidebar" class="col-left bg-gray-200 pl-8 pr-8 pt-2 pb-2 overflow-y-auto dark:bg-gray-950">
+            <aside x-data id="sidebar" :style="{left: $store.navigationOpen ? '0px' : '-280px'}" class="col-left bg-gray-200 pl-8 pr-8 pt-2 pb-2 overflow-y-auto dark:bg-gray-950">
                 <ul class="side-nav" x-init="setActiveNav();">
                     <li x-data="{open: <?=$nav1Active; ?>}">
-                        <a href="#" x-on:click="open = !open; $event.preventDefault();">Overview</a>
+                        <a href="#" x-on:click.prevent="open = !open;">Overview</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="<?=$version; ?>/overview/introduction">Introduction</a></li>
                             <li><a href="<?=$version; ?>/overview/about">About</a></li>
@@ -9,14 +9,14 @@
                         </ul>
                     </li>
                     <li x-data="{open: <?=$nav2Active; ?>}">
-                        <a href="#" x-on:click="open = !open; $event.preventDefault();">Installation</a>
+                        <a href="#" x-on:click.prevent="open = !open;">Installation</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="<?=$version; ?>/installation/composer">Composer</a></li>
                             <li><a href="<?=$version; ?>/installation/requirements">Requirements</a></li>
                         </ul>
                     </li>
                     <li x-data="{open: <?=$nav3Active; ?>}">
-                        <a href="#" x-on:click="open = !open; $event.preventDefault();">Getting Started</a>
+                        <a href="#" x-on:click.prevent="open = !open;">Getting Started</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li>
                                 <a href="<?=$version; ?>/getting-started/applications">Applications</a>
@@ -98,7 +98,7 @@
                         </ul>
                     </li>
                     <li x-data="{open: <?=$nav4Active; ?>}">
-                        <a href="#" x-on:click="open = !open; $event.preventDefault();">User Guide</a>
+                        <a href="#" x-on:click.prevent="open = !open;">User Guide</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="<?=$version; ?>/user-guide/mvc">MVC</a></li>
                             <li>
@@ -349,7 +349,7 @@
                         </ul>
                     </li>
                     <li x-data="{open: <?=$nav5Active; ?>}">
-                        <a href="#" x-on:click="open = !open; $event.preventDefault();">Reference</a>
+                        <a href="#" x-on:click.prevent="open = !open;">Reference</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
                             <li><a href="https://github.com/popphp/pop-acl#readme" target="_blank">pop-acl</a></li>
                             <li><a href="https://github.com/popphp/popphp/#applications" target="_blank">pop-application</a></li>
