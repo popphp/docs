@@ -1,0 +1,530 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p><code class="inline-code">pop-mail</code> is the main mail component for the Pop PHP Framework.
+                        It provides a robust set of features to manage the many aspects of sending and receiving mail over the internet.
+                        It provides functionality for the following:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2">
+                            <strong>Messages</strong>
+                            <ul class="list-disc ml-8">
+                                <li class="mb-1">Create mail messages with multiple mime types and attachments</li>
+                                <li class="mb-1">Send the messages through the mailer object, or save mail messages to be sent later</li>
+                                <li class="mb-1">Send the messages through a queue with multiple recipients</li>
+                            </ul>
+                        <li class="mb-2">
+                            <strong>Mail Transports</strong>
+                            <ul class="list-disc ml-8">
+                                <li class="mb-1">Manage sending mail messages from a server-to-server application connection*</li>
+                                <li class="mb-1">Send emails to a queue of recipients, with individual message customization</li>
+                                <li class="mb-1">
+                                    The available mail transports are interchangeable:
+                                    <ul class="list-disc ml-8 mt-1">
+                                        <li class="mb-1"><strong>Mailgun Transport:</strong> utilizes the Mailgun API</li>
+                                        <li class="mb-1"><strong>Sendgrid Transport:</strong> utilizes the Sendgrid API</li>
+                                        <li class="mb-1"><strong>Office 365 Transport:</strong> utilizes the Office 365 Mail API</li>
+                                        <li class="mb-1"><strong>AWS SES Transport:</strong> utilizes the AWS SDK</li>
+                                        <li class="mb-1"><strong>Google Transport:</strong> utilizes the Gmail API</li>
+                                        <li class="mb-1"><strong>SMTP Transport:</strong> utilizes a standard SMTP connection</li>
+                                        <li class="mb-1"><strong>Sendmail Transport:</strong> utilizes a basic Sendmail connection</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Mail Clients</strong>
+                            <ul class="list-disc ml-8">
+                                <li class="mb-1">
+                                    Manage mailboxes, their messages, data, attachments and statuses from a server-to-server application connection
+                                    <ul class="list-disc ml-8 mt-1">
+                                        <li class="mb-1"><strong>Office 365 Client:</strong> utilizes the Office 365 Mail API</li>
+                                        <li class="mb-1"><strong>Google Client:</strong> utilizes the Gmail API</li>
+                                        <li class="mb-1"><strong>IMAP/POP3 Client:</strong> utilizes a standard IMAP or POP3 connection*</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="text-xs"><strong>*</strong> - <em>(for security purposes, IMAP & POP3 are not as widely supported anymore and their usage
+                            has been deprecated in some popular enterprise mail platforms)</em></p>
+                    <p><strong>NOTE: </strong>The main use-case for this component is that of a server-to-server application connection. This means
+                        that the component would be used with an application that has been granted the appropriate access and permissions to
+                        act on behalf of the user or users whose emails are being managed by the application. This component is not geared
+                        towards an individual user mail application use-case. Please refer to the online documentation, guidelines and polices
+                        for whichever mail platforms to which you are attempting to connect your application using this component. Please take
+                        care in granting access and assigning permissions to your application instance. Always follow the recommended security
+                        policies and guidelines of your chosen mail platform.</p>
+                    <h4 id="quickstart">Quickstart</h4>
+                    <p><strong>Example 1:</strong> Sending a message via the Mailgun API</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Mailgun;
+
+// Create the transport and mailer objects
+$transport = new Mailgun([
+    'api_url' => 'MAILGUN_API_URL',
+    'api_key' => 'MAILGUN_API_KEY',
+]);
+$mailer = new Mailer($transport);
+
+// Create the message object
+$message = new Message('My Message Subject');
+$message->setTo('you@domain.com');
+$message->setFrom('me@domain.com');
+$message->setBody('Hello World! This is a text body!');
+
+// Send the message
+$mailer->send($message);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p><strong>Example 2:</strong> Sending a message via an SMTP connection</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Smtp;
+
+$smtpOptions = [
+    'host'       => 'SMTP_HOST_DOMAIN',
+    'port'       => 'SMTP_PORT',
+    'username'   => 'SMTP_USERNAME',
+    'password'   => 'SMTP_PASSWORD',
+    'encryption' => 'SMTP_ENCRYPTION'
+];
+
+// Create the transport and mailer objects
+$transport = new Smtp($smtpOptions);
+$mailer    = new Mailer($transport);
+
+// Create the message object
+$message   = new Message('My Message Subject');
+$message->setTo('you@domain.com');
+$message->setFrom('me@domain.com');
+$message->setBody('Hello World! This is a text body!');
+
+// Send the message
+$mailer->send($message);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="messages" class="mt-4">Messages</h4>
+                    <p>Message objects can be created and passed to a mailer object to be sent by an application.</p>
+                    <p>Create a simple text mail message:</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+
+$message = new Message('My Message Subject');
+$message->setTo('you@domain.com');
+$message->setFrom('me@domain.com');
+$message->setBody('Hello World! This is a text body!');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Create a mail message with both text and HTML parts:</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+
+$message = new Message('My Message Subject');
+$message->setTo('you@domain.com');
+$message->setFrom('me@domain.com');
+$message->addText('Hello World! This is a text body!');
+$message->addHtml('&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;p&gt;This is an HTML body!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Create a mail message with a file attachment:</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+
+$message = new Message('My Message Subject');
+$message->setTo('you@domain.com');
+$message->setFrom('me@domain.com');
+$message->setBody('Hello World! This is a text body!');
+$message->attachFile(__DIR__ . '/image.jpg');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Create a mail message with a file attachment from a stream of file contents:</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+
+$message = new Message('My Message Subject');
+$message->setTo('you@domain.com');
+$message->setFrom('me@domain.com');
+$message->setBody('Hello World! This is a text body!');
+$message->attachFileFromStream($fileContents, 'filename.pdf');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="mailer" class="mt-4">Mailer</h4>
+                    <p>Once a message object is created, it can be passed to a mailer object to be sent.
+                        The mailer object will require a transport object to perform the required tasks
+                        to send the message through the provided mail platform.</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Sendmail;
+
+$transport = new Sendmail();
+$mailer    = new Mailer($transport);
+$message   = new Message('My Message Subject');
+$message->setTo('you@domain.com');
+$message->setFrom('me@domain.com');
+$message->setBody('Hello World! This is a text body!');
+
+$mailer->send($message);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="transports" class="mt-4">Transports</h4>
+                    <p>The available transports all share the same interface and are interchangeable. However, they
+                        each require different configuration that adheres to the specifications of their mail platform.</p>
+                    <h5 id="mailgun">Mailgun</h5>
+                    <p>The Mailgun transport requires an <code class="inline-code">api_url</code> and <code class="inline-code">api_key</code>.
+                        The API key is obtained from the Mailgun administration portal. The Mailgun API URL is typically a string comprised of your
+                        approved mail domain, for example:</p>
+                    <pre><code class="language-plaintext">https://api.mailgun.net/v3/YOUR_MAIL_DOMAIN/messages</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Mailgun;
+
+$mailgunOptions = [
+    'api_url' => 'MAILGUN_API_URL',
+    'api_key' => 'MAILGUN_API_KEY',
+];
+$transport = new Mailgun($mailgunOptions);
+$mailer    = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="sendgrid" class="mt-4">Sendgrid</h5>
+                    <p>The Sendgrid transport requires an <code class="inline-code">api_url</code> and <code class="inline-code">api_key</code>. These values are obtained from the
+                        Sendgrid administration portal.</p>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Sendgrid;
+
+$sendgridOptions = [
+    'api_url' => 'SENDGRID_API_URL',
+    'api_key' => 'SENDGRID_API_KEY',
+];
+$transport = new Sendgrid($sendgridOptions);
+$mailer    = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="office-365-transport" class="mt-4">Office 365</h5>
+                    <p>The Office 365 transport requires a few more configuration options that are obtained for the approved
+                        application from within the Office 365 administration portal. You will need the following:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2">Client ID</li>
+                        <li class="mb-2">Client Secret</li>
+                        <li class="mb-2">Scope (This is typically something like <code class="inline-code">https://graph.microsoft.com/.default</code>)</li>
+                        <li class="mb-2">Tenant ID</li>
+                        <li class="mb-2">Account ID (This is typically the <code class="inline-code">object_id</code> of the user mailbox that is being used)</li>
+                    </ul>
+                    <p>You can create an Office 365 transport object and then request and store the required token for future requests:</p>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Office365;
+
+$transport = new Office365();
+$transport->createClient([
+    'client_id'     => 'O365_CLIENT_ID',
+    'client_secret' => 'O365_CLIENT_SECRET',
+    'scope'         => 'O365_SCOPE',
+    'tenant_id'     => 'O365_TENANT_ID',
+    'account_id'    => 'O365_ACCOUNT_ID',
+]);
+
+// Fetch the token and its expiration to be stored with your application for future use
+$transport->requestToken();
+$accessToken  = $transport->getToken();
+$tokenExpires = $transport->getTokenExpires();
+
+$mailer = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>When calling the Office 365 transport object at a later time, you can reuse the token (if it hasn't expired):</p>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Office365;
+
+$transport = new Office365();
+$transport->createClient([
+    'client_id'     => 'O365_CLIENT_ID',
+    'client_secret' => 'O365_CLIENT_SECRET',
+    'scope'         => 'O365_SCOPE',
+    'tenant_id'     => 'O365_TENANT_ID',
+    'account_id'    => 'O365_ACCOUNT_ID',
+]);
+
+// Get the access token and its expiration from your application store
+$transport->setToken($accessToken)
+$transport->setTokenExpires($tokenExpires);
+
+$mailer = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If the token has expired, the transport object will automatically refresh it. At this point, you can fetch the
+                        new token and its expiration from the transport object and store them.</p>
+                    <h5 id="aws-ses">AWS SES</h5>
+                    <p>The AWS SES transport requires a <code class="inline-code">key</code> and <code class="inline-code">secret</code> that are obtained from the AWS SES admin console.</p>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Ses;
+
+$sesOptions = [
+    'key'    => 'AWS_SES_KEY',
+    'secret' => 'AWS_SES_SECRET',
+];
+$transport = new Ses($sesOptions);
+$mailer    = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="google-transport" class="mt-4">Google</h5>
+                    <p>The Google transport requires a number of configuration steps to be performed in the Google administration
+                        portal and cloud console. This includes setting up the approved application as a <code class="inline-code">service account</code> and its
+                        necessary requirements. When that is complete, you should be prompted to download a <code class="inline-code">JSON</code> file with
+                        the appropriate credentials and data for your application:</p>
+                    <pre><code class="language-json">{
+  "type": "service_account",
+  "project_id": "PROJECT_ID",
+  "private_key_id": "PRIVATE_KEY_ID",
+  "private_key": "PRIVATE_KEY",
+  "client_email": "CLIENT_EMAIL",
+  "client_id": "CLIENT_ID",
+  "auth_uri": "AUTH_URI",
+  "token_uri": "TOKEN_URI",
+  "auth_provider_x509_cert_url": "AUTH_PROVIDER",
+  "client_x509_cert_url": "CLIENT_CERT_URL",
+  "universe_domain": "UNIVERSE_DOMAIN"
+}</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>
+                        You can pass the <code class="inline-code">JSON</code> file directly into Google transport object, along with the user email being used.
+                        From there, you can request and store the required token for future requests:</p>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Google;
+
+$transport = new Google();
+$transport->createClient('my-google-app-config.json', 'me@domain.com');
+
+// Fetch the token and its expiration to be stored with your application for future use
+$transport->requestToken();
+$accessToken  = $transport->getToken();
+$tokenExpires = $transport->getTokenExpires();
+
+$mailer = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>When calling the Google transport object at a later time, you can reuse the token (if it hasn't expired):</p>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Google;
+
+$transport = new Google();
+$transport->createClient('my-google-app-config.json', 'me@domain.com');
+
+// Get the access token and its expiration from your application store
+$transport->setToken($accessToken)
+$transport->setTokenExpires($tokenExpires);
+
+$mailer = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If the token has expired, the transport object will automatically refresh it. At this point, you can fetch
+                        the new token and its expiration from the transport object and store them.</p>
+                    <h5 id="smtp">SMTP</h5>
+                    <p>The SMTP transport requires the standard configuration parameters for a typical SMTP connection:</p>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Smtp;
+
+$smtpOptions = [
+    'host'       => 'SMTP_HOST_DOMAIN',
+    'port'       => 'SMTP_PORT',
+    'username'   => 'SMTP_USERNAME',
+    'password'   => 'SMTP_PASSWORD',
+    'encryption' => 'SMTP_ENCRYPTION'
+];
+
+$transport = new Smtp($smtpOptions);
+$mailer    = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="sendmail" class="mt-4">Sendmail</h5>
+                    <p>Sendmail is the most basic transport. It is not used very often and is not recommended, but could be utilized
+                        within testing and dev environments. It leverages the <code class="inline-code">sendmail</code> application running on the server, so it is
+                        required that it be set up and configured properly on the server and within PHP for use with PHP's <code class="inline-code">mail</code>
+                        function. If needed, you can pass a string of <code class="inline-code">$params</code> into the constructor that will be passed on to the
+                        <code class="inline-code">mail</code> function call.</p>
+                    <pre><code class="language-php">use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Sendmail;
+
+$transport = new Sendmail();
+$mailer    = new Mailer($transport);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="clients" class="mt-4">Clients</h4>
+                    <p>The available mail clients can be used for monitoring mailboxes and their message content from within an application.</p>
+                    <h5 id="office-365-client">Office 365</h5>
+                    <p>Like the Office 365 transport, the Office 365 clients requires a few configuration options that are obtained
+                        for the approved application from within the Office 365 administration portal. You will need the following:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2">Client ID</li>
+                        <li class="mb-2">Client Secret</li>
+                        <li class="mb-2">Scope (This is typically something like <code class="inline-code">https://graph.microsoft.com/.default</code>)</li>
+                        <li class="mb-2">Tenant ID</li>
+                        <li class="mb-2">Account ID (This is typically the <code class="inline-code">object_id</code> of the user mailbox that is being used)</li>
+                    </ul>
+                    <p>You can create an Office 365 client object and then request and store the required token for future requests:</p>
+                    <pre><code class="language-php">use Pop\Mail\Client\Office365;
+
+$office365 = new Office365();
+$office365->createClient([
+    'client_id'     => 'O365_CLIENT_ID',
+    'client_secret' => 'O365_CLIENT_SECRET',
+    'scope'         => 'O365_SCOPE',
+    'tenant_id'     => 'O365_TENANT_ID',
+    'account_id'    => 'O365_ACCOUNT_ID',
+]);
+
+// Fetch the token and its expiration to be stored with your application for future use
+$office365->requestToken();
+$accessToken  = $office365->getToken();
+$tokenExpires = $office365->getTokenExpires();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>When calling the Office 365 client object at a later time, you can reuse the token (if it hasn't expired):</p>
+                    <pre><code class="language-php">use Pop\Mail\Client\Office365;
+
+$office365 = new Office365();
+$office365->createClient([
+    'client_id'     => 'O365_CLIENT_ID',
+    'client_secret' => 'O365_CLIENT_SECRET',
+    'scope'         => 'O365_SCOPE',
+    'tenant_id'     => 'O365_TENANT_ID',
+    'account_id'    => 'O365_ACCOUNT_ID',
+]);
+
+// Get the access token and its expiration from your application store
+$office365->setToken($accessToken)
+$office365->setTokenExpires($tokenExpires);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If the token has expired, the client object will automatically refresh it. At this point, you can fetch
+                        the new token and its expiration from the client object and store them.</p>
+
+                    <p>From there you can interact with the client to fetch messages and their content.</p>
+                    <h6>Get messages</h6>
+                    <pre><code class="language-php">// Defaults to the Inbox and a limit of 10 messages. Returns an array of messages
+$messages = $office365->getMessages();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Search for unread messages only, limit 5:</p>
+                    <pre><code class="language-php">$messages = $office365->getMessages('Inbox', ['unread' => true], 5);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Get a message</h6>
+                    <p>When the messages are returned, they will have any ID associated with them. Use that to get an individual message:</p>
+                    <pre><code class="language-php">// Returns an array of message data
+$message = $office365->getMessage($messageId);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can get the raw message as well:</p>
+                    <pre><code class="language-php">// Returns a string of the full message content
+$message = $office365->getMessage($messageId, true);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Get a message's attachments</h6>
+                    <pre><code class="language-php">// Returns an array of attachments
+$attachments = $office365->getAttachments($messageId);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Get an attachment</h6>
+                    <p>When the message's attachments are returned, they will have any ID associated with them.
+                        Use that to get an individual message attachment:</p>
+                    <pre><code class="language-php">// Returns an array of attachment data, including the attachment data contents
+$attachment = $office365->getAttachment($messageId, $attachmentId);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="google-client" class="mt-4">Google</h5>
+                    <p>Like the Google transport, the Google client requires a number of configuration steps to be performed in
+                        the Google administration portal and cloud console. This includes setting up the approved application as
+                        a <code class="inline-code">service account</code> and its necessary requirements. When that is complete, you should be prompted to
+                        download a <code class="inline-code">JSON</code> file with the appropriate credentials and data for your application:</p>
+                    <pre><code class="language-json">{
+  "type": "service_account",
+  "project_id": "PROJECT_ID",
+  "private_key_id": "PRIVATE_KEY_ID",
+  "private_key": "PRIVATE_KEY",
+  "client_email": "CLIENT_EMAIL",
+  "client_id": "CLIENT_ID",
+  "auth_uri": "AUTH_URI",
+  "token_uri": "TOKEN_URI",
+  "auth_provider_x509_cert_url": "AUTH_PROVIDER",
+  "client_x509_cert_url": "CLIENT_CERT_URL",
+  "universe_domain": "UNIVERSE_DOMAIN"
+}</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can pass the <code class="inline-code">JSON</code> file directly into Google client object, along with the user email being used.
+                        From there, you can request and store the required token for future requests:</p>
+                    <pre><code class="language-php">use Pop\Mail\Client\Google;
+
+$google = new Google();
+$google->createClient('my-google-app-config.json', 'me@domain.com');
+
+// Fetch the token and its expiration to be stored with your application for future use
+$google->requestToken();
+$accessToken  = $google->getToken();
+$tokenExpires = $google->getTokenExpires();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>When calling the Google client object at a later time, you can reuse the token (if it hasn't expired):</p>
+                    <pre><code class="language-php">use Pop\Mail\Client\Google;
+
+$google = new Google();
+$google->createClient('my-google-app-config.json', 'me@domain.com');
+
+// Get the access token and its expiration from your application store
+$google->setToken($accessToken)
+$google->setTokenExpires($tokenExpires);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>If the token has expired, the client object will automatically refresh it. At this point, you can fetch
+                        the new token and its expiration from the client object and store them.</p>
+
+                    <p>From there you can interact with the client to fetch messages and their content.</p>
+                    <h6>Get messages</h6>
+                    <pre><code class="language-php">// Defaults to the Inbox and a limit of 10 messages. Returns an array of messages
+$messages = $google->getMessages();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Search for unread messages only, limit 5:</p>
+                    <pre><code class="language-php">$messages = $google->getMessages('Inbox', ['unread' => true], 5);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Get a message</h6>
+                    <p>When the messages are returned, they will have any ID associated with them. Use that to get an individual message:</p>
+                    <pre><code class="language-php">// Returns an array of message data
+$message = $google->getMessage($messageId);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>You can get the raw message as well:</p>
+                    <pre><code class="language-php">// Returns a string of the full message content
+$message = $google->getMessage($messageId, true);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Get a message's attachments</h6>
+                    <pre><code class="language-php">// Returns an array of attachments
+$attachments = $google->getAttachments($messageId);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Get an attachment</h6>
+                    <p>When the message's attachments are returned, they will have any ID associated with them.
+                        Use that to get an individual message attachment:</p>
+                    <pre><code class="language-php">// Returns the attachment data contents
+$attachment = $google->getAttachment($messageId, $attachmentId);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 id="imap-pop3" class="mt-4">IMAP/POP3</h5>
+                    <p>IMAP & POP3 clients are available, but are becoming less supported. Their usage has been deprecated in some
+                        popular enterprise mail platforms. Use with caution.</p>
+                    <pre><code class="language-php">use Pop\Mail\Client\Imap;
+
+$imap = new Client\Imap('imap.gmail.com', 993);
+$imap->setUsername('me@domain.com')
+     ->setPassword('password');
+
+$imap->setFolder('INBOX');
+$imap->open('/ssl');
+
+// Sorted by date, reverse order (newest first)
+$ids     = $imap->getMessageIdsBy(SORTDATE, true);
+$headers = $imap->getMessageHeadersById($ids[0]);
+$parts   = $imap->getMessageParts($ids[0]);
+
+// Assuming the first part is an image attachment, display image
+header('Content-Type: image/jpeg');
+header('Content-Length: ' . strlen($parts[0]->content));
+echo $parts[0]->content;</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="mail-queues" class="mt-4">Mail Queues</h4>
+                    <p>You can create a mail queue to manage and send messages to multiple recipients at the same time.
+                        The benefit is that the body of the messages can contain placeholders that can be swapped for
+                        individual user data for customization and a better user experience.</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+use Pop\Mail\Queue;
+use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Sendmail;
+
+$queue = new Queue();
+$queue->addRecipient([
+    'email'   => 'me@domain.com',
+    'name'    => 'My Name',
+    'company' => 'My Company',
+    'url'     => 'http://www.domain1.com/'
+]);
+$queue->addRecipient([
+    'email'   => 'another@domain.com',
+    'name'    => 'Another Name',
+    'company' => 'Another Company',
+    'url'     => 'http://www.domain2.com/'
+]);
+
+$messageBody = &lt;&lt;&lt;TEXT
+How are you doing? Your [{company}] is great!
+I checked it out at [{url}]
+TEXT;
+
+$message = new Message('Hello [{name}]!');
+$message->setFrom('noreply@domain.com');
+$message->setBody($messageBody);
+
+$queue->addMessage($message);
+
+$mailer = new Mailer(new Sendmail());
+$mailer->sendFromQueue($queue);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="saving-mail" class="mt-4">Saving Mail</h4>
+                    <p>By saving mail messages to a storage location within your application, you can call them up at a later
+                        date and time to send them from that location.</p>
+                    <pre><code class="language-php">use Pop\Mail\Message;
+use Pop\Mail\Mailer;
+use Pop\Mail\Transport\Sendmail;
+
+$message1 = new Mail\Message('Hello World');
+$message1->setTo('user1@domain.com');
+$message1->setFrom('me@domain.com');
+$message1->addText('Hello World! This is a test!');
+$message1->addHtml('&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;p&gt;This is a test!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;');
+$message1->save(__DIR__ . '/mail-queue/message1.msg');
+
+$message2 = new Mail\Message('Hello World');
+$message2->setTo('user2@domain.com');
+$message2->setFrom('me@domain.com');
+$message2->addText('Hello World! This is a test!');
+$message2->addHtml('&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;p&gt;This is a test!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;');
+$message2->save(__DIR__ . '/mail-queue/message2.msg');
+
+$mailer = new Mailer(new Sendmail());
+$mailer->sendFromDir(__DIR__ . '/mail-queue');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>
