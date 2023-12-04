@@ -81,7 +81,6 @@ print_r($users);</code><a href="#" title="Copy" class="copy-link" x-data="copyCo
         (
             [id] => 1
             [username] => testuser
-            [password] => password
             [email] => test@test.com
         )
 
@@ -121,7 +120,6 @@ print_r($users->toArray());</code><a href="#" title="Copy" class="copy-link" x-d
         (
             [id] => 1
             [username] => testuser
-            [password] => 12345678
             [email] => test@test.com
         )
 
@@ -133,7 +131,6 @@ print_r($user->toArray());</code><a href="#" title="Copy" class="copy-link" x-da
 (
     [id] => 1
     [username] => testuser
-    [password] => 12345678
     [email] => test@test.com
 )</code></pre>
                     <h6 class="mt-4">Edit user ID 1</h6>
@@ -146,13 +143,11 @@ print_r($user->toArray());</code><a href="#" title="Copy" class="copy-link" x-da
 (
     [id] => 1
     [username] => testuser2
-    [password] => 12345678
     [email] => test2@test.com
 )</code></pre>
                     <h6 class="mt-4">Create new user</h6>
                     <pre><code class="language-php">$user = new Users([
     'username' => 'newuser',
-    'password' => 'somepassword',
     'email'    => 'newuser@test.com'
 ]);
 $user->save();
@@ -160,7 +155,6 @@ print_r($user->toArray());</code><a href="#" title="Copy" class="copy-link" x-da
                     <pre><code class="language-plaintext">Array
 (
     [username] => newuser
-    [password] => somepassword
     [email] => newuser@test.com
     [id] => 2
 )</code></pre>
