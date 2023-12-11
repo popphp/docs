@@ -64,4 +64,17 @@ class IndexController extends AbstractController
         $this->send(404);
     }
 
+    /**
+     * Maintenance action
+     *
+     * @return void
+     */
+    public function maintenance(): void
+    {
+        $this->prepareView('maintenance');
+        $this->view->title   = 'Down for Maintenance';
+        $this->view->version = '';
+        $this->send(503);
+    }
+
 }
