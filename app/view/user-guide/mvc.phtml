@@ -19,7 +19,7 @@ endif; ?>
                         class <code class="inline-code">Pop\Controller\AbstractController</code> that are provided with the core components of the
                         Pop PHP Framework. The main application object and router object are wired to interact with
                         controller objects that extend the abstract controller class, or at least implement the
-                        controller interface. The functionality is basic, as the API manages a default action and the
+                        controller interface. The functionality is basic, as the API manages a default action, a maintenance action and the
                         dispatch method:</p>
                     <ul class="list-disc ml-8">
                         <li class="mb-4">
@@ -27,7 +27,7 @@ endif; ?>
                             <ul class="list-disc ml-8 mt-2">
                                 <li class="text-sm">The "setDefaultAction" method sets the default action to handle a request that hasn't
                                     been assigned an action. Typically, this would be an "error" method or something along
-                                    those lines. This method may not be used at all, as you can set the protected <code class="inline-code">$defaultAction</code>
+                                    those lines. You can also set the protected <code class="inline-code">$defaultAction</code>
                                     property within your child controller class directly.</li>
                             </ul>
                         </li>
@@ -35,6 +35,31 @@ endif; ?>
                             <code class="inline-code">$controller->getDefaultAction()</code>
                             <ul class="list-disc ml-8 mt-2">
                                 <li class="text-sm">This method retrieves the name of the current default action.</li>
+                            </ul>
+                        </li>
+                        <li class="mb-4">
+                            <code class="inline-code">$controller->setMaintenanceAction($maintenance)</code>
+                            <ul class="list-disc ml-8 mt-2">
+                                <li class="text-sm">The "setMaintenanceAction" method sets the action to handle a request
+                                    while the application is in maintenance mode. You can also set the protected <code class="inline-code">$maintenanceAction</code>
+                                    property within your child controller class directly.</li>
+                            </ul>
+                        </li>
+                        <li class="mb-4">
+                            <code class="inline-code">$controller->getMaintenanceAction()</code>
+                            <ul class="list-disc ml-8 mt-2">
+                                <li class="text-sm">This method retrieves the name of the current maintenance action.</li>
+                            </ul>
+                        </li>
+                        <li class="mb-4">
+                            <code class="inline-code">$controller->bypassMaintenance()</code>
+                            <ul class="list-disc ml-8 mt-2">
+                                <li class="text-sm">This method retrieves the flag that determines if the controller can bypass the maintenance mode check.
+                                    This is useful for back-end applications that help manage the public-facing side of an application. With the
+                                    <code class="inline-code">$bypassMaintenance</code> property set to <code class="inline-code">false</code>,
+                                    the back-end side of an application will be allowed to continue to function while the public facing side will
+                                    display as "down for maintenance."
+                                </li>
                             </ul>
                         </li>
                         <li class="mb-4">

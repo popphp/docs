@@ -1,0 +1,77 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p>There is an "app helper" class that provides access to any environmental variables set in the <code class="inline-code">.env</code> file
+                        as well as provides quick access to the current application object from anywhere in your application life cycle.
+                        When an application object is created and bootstrapped, it is automatically registered with this static class.</p>
+                    <pre><code class="language-php">use Pop\App;
+
+$app = App::get(); // Returns the instance of the Pop\Application object</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>At anytime in the application life cycle, you can use the API of the app helper class to access environmental
+                    variables, like this:</p>
+                    <pre><code class="language-php">use Pop\App;
+
+if (App::env('SOME_VALUE') == 'foo') {
+    // Do something
+}</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="environment" class="mt-4">Environment</h4>
+                    <p>The application environment variable sets what type of environment the current running app is in. Supported values
+                        for the <code class="inline-code">APP_ENV</code> variable are:</p>
+                    <ul class="list-disc ml-8 mb-8">
+                        <li class="mb-1"><code class="inline-code">local</code></li>
+                        <li class="mb-1"><code class="inline-code">dev</code></li>
+                        <li class="mb-1"><code class="inline-code">testing</code></li>
+                        <li class="mb-1"><code class="inline-code">staging</code></li>
+                        <li class="mb-1"><code class="inline-code">production</code> (or just <code class="inline-code">prod</code>)</li>
+                    </ul>
+                    <pre><code class="language-php">use Pop\App;
+
+if (App::isLocal()) {
+    // Do something in the local environment
+} else if (App::isProduction()) {
+    // Do something in the production environment
+}</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h4 id="maintenance" class="mt-8">Maintenance</h4>
+                    <p>The <code class="inline-code">MAINTENANCE_MODE</code> variable can be set to either <code class="inline-code">true</code>
+                       or <code class="inline-code">false</code> to put the application into a controlled "down" state while upgrades and/or maintenance are being performed.</p>
+                    <pre><code class="language-php">use Pop\App;
+
+if (App::isDown()) {
+    // Handle the app in "maintenance mode"
+}</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The full API is:</p>
+                    <ul class="list-disc ml-8">
+                        <li class="mb-1"><code class="inline-code">App::config(?string $key = null)</code></li>
+                        <li class="mb-1"><code class="inline-code">App::name()</code></li>
+                        <li class="mb-1"><code class="inline-code">App::url()</code></li>
+                        <li class="mb-1"><code class="inline-code">App::env(string $key, mixed $default = null)</code></li>
+                        <li class="mb-1"><code class="inline-code">App::environment(mixed $env = null)</code></li>
+                        <li class="mb-1"><code class="inline-code">App::isLocal()</code></li>
+                        <li class="mb-1"><code class="inline-code">App::isDev()</code></li>
+                        <li class="mb-1"><code class="inline-code">App::isTesting()</code></li>
+                        <li class="mb-1"><code class="inline-code">App::isStaging()</code></li>
+                        <li class="mb-1"><code class="inline-code">App::isProduction()</code></li>
+                        <li class="mb-1"><code class="inline-code">App::isDown()</code></li>
+                        <li class="mb-1"><code class="inline-code">App::isUp()</code></li>
+                    </ul>
+                    <p>And the above static methods are also available on the application object instance as well:</p>
+                    <ul class="list-disc ml-8">
+                        <li class="mb-1"><code class="inline-code">$app->name()</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->url()</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->env(string $key, mixed $default = null)</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->environment(mixed $env = null)</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->isLocal()</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->isDev()</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->isTesting()</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->isStaging()</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->isProduction()</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->isDown()</code></li>
+                        <li class="mb-1"><code class="inline-code">$app->isUp()</code></li>
+                    </ul>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>
