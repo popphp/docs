@@ -1,7 +1,6 @@
 <?php
 
 $autoloader = include __DIR__ . '/../vendor/autoload.php';
-$autoloader->addPsr4('Pop\Docs\\', __DIR__ . '/../app/src');
 
 $dotEnv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotEnv->safeLoad();
