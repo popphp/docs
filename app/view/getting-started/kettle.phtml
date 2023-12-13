@@ -23,33 +23,63 @@ endif; ?>
                         a placeholder JSON response.</p>
                     <p>After running the command, the basic application file and folder structure will look like:</p>
                     <ul class="list-disc ml-8 text-sm">
-                        <li>app/
-                            <ul class="list-disc ml-8">
-                                <li>config/</li>
-                                <li>src/</li>
-                                <li>view/</li>
+                        <li class="mb-2">app/
+                            <ul class="list-disc mt-1 ml-8">
+                                <li class="mb-1">config/</li>
+                                <li class="mb-1">src/</li>
+                                <li class="mb-1">view/</li>
                             </ul>
                         </li>
-                        <li>
+                        <li class="mb-2">
                             database/
-                            <ul class="list-disc ml-8">
-                                <li>migrations/</li>
-                                <li>seeds/</li>
+                            <ul class="list-disc mt-1 ml-8">
+                                <li class="mb-1">migrations/</li>
+                                <li class="mb-1">seeds/</li>
                             </ul>
                         </li>
-                        <li>public/</li>
-                        <li>script/</li>
-                        <li>kettle</li>
-                        <li>kettle.inc.php</li>
+                        <li class="mb-2">public/</li>
+                        <li class="mb-2">script/</li>
+                        <li class="mb-2">kettle</li>
+                        <li class="mb-2">kettle.inc.php</li>
                     </ul>
                     <p>The web/API application's front controller will be located in <code class="inline-code">public/index.php</code> and
                         the main script for the CLI application will be located in <code class="inline-code">script/myapp</code> (named
                         according to the provided <code class="inline-code">&lt;namespace&gt;</code> value.)</p>
-
                     <p>After the application files and folders are copied over, you will be asked if you
                         would like to configure a database. Follow those steps to configure a database and
                         create the database configuration file.</p>
-                    <h4 id="include">Kettle Include</h4>
+                    <h5 id="application-status">Application Status</h5>
+                    <p>You can view and manage the status of the application with the following commands outlined below.</p>
+                    <h6>Check the current environment:</h6>
+                    <p>The environment is set in the <code class="inline-code">.env</code> file under the <code class="inline-code">APP_ENV</code> variable. Options available are:</p>
+                    <ul class="list-disc ml-8 mb-8 text-sm">
+                        <li class="mb-2"><code class="inline-code">local</code></li>
+                        <li class="mb-2"><code class="inline-code">dev</code></li>
+                        <li class="mb-2"><code class="inline-code">testing</code></li>
+                        <li class="mb-2"><code class="inline-code">staging</code></li>
+                        <li class="mb-2"><code class="inline-code">production</code> (or <code class="inline-code">prod</code>)</li>
+                    </ul>
+                    <pre><code class="language-bash">./kettle app:env</code></pre>
+                    <h6 class="mt-4">Check (or change) the current status:</h6>
+                    <p>The status of the application can either be "live" or in "maintenance mode". The value is set
+                        in the <code class="inline-code">.env</code> file under the <code class="inline-code">MAINTENANCE_MODE</code> variable (<code class="inline-code">true</code> or <code class="inline-code">false</code>).</p>
+                    <pre><code class="language-bash">./kettle app:status</code></pre>
+
+                    <p>To put the application into maintenance mode, where it's not accessible, use the following command:</p>
+                    <pre><code class="language-bash">./kettle app:down</code></pre>
+                    <p>You can generate a "secret" key to allow a select set of users to view the application while still in
+                        maintenance mode:</p>
+                    <pre><code class="language-bash">./kettle app:down --secret</code></pre>
+                    <p>When the command finishes, it will output the auto-generated secret:</p>
+                    <pre><code class="language-plaintext">The secret is SECRET_STRING</code></pre>
+                    <p>You can also provide your own secret:</p>
+                    <pre><code class="language-bash">./kettle app:down --secret=MY_SECRET_STRING</code></pre>
+                    <p>Use that string one time in the browser as a URL query parameter to view the application while it is
+                        still in maintenance mode. It will store in the browser's cookies so subsequent requests will be valid:</p>
+                    <pre><code class="language-plaintext">http://localhost:8000/?secret=SECRET_STRING</code></pre>
+                    <p>To take the application out of maintenance mode and make it live again, use the following command:</p>
+                    <pre><code class="language-bash">./kettle app:up</code></pre>
+                    <h4 id="include" class="mt-4">Kettle Include</h4>
                     <p>You should see a file <code class="inline-code">kettle.inc.php</code> next to the main <code class="inline-code">kettle</code> script. This serves
                     as a configuration file for anything additional that needs to be wired up for your
                     application to work with kettle. The file is included right after the creation of the
@@ -105,7 +135,7 @@ use Pop\Db\Sql\Seeder\AbstractSeeder;
 class MyFirstSeeder extends AbstractSeeder
 {
 
-    public function run(AbstractAdapter $db)
+    public function run(AbstractAdapter $db): void
     {
 
     }
@@ -118,7 +148,7 @@ use Pop\Db\Sql\Seeder\AbstractSeeder;
 class DatabaseSeeder extends AbstractSeeder
 {
 
-    public function run(AbstractAdapter $db)
+    public function run(AbstractAdapter $db): void
     {
         $sql = $db->createSql();
 
@@ -144,12 +174,12 @@ class DatabaseSeeder extends AbstractSeeder
 class MyFirstMigration5dd822cdede29 extends AbstractMigration
 {
 
-    public function up()
+    public function up(): void
     {
 
     }
 
-    public function down()
+    public function down(): void
     {
 
     }
@@ -161,7 +191,7 @@ class MyFirstMigration5dd822cdede29 extends AbstractMigration
 class MyFirstMigration5dd822cdede29 extends AbstractMigration
 {
 
-    public function up()
+    public function up(): void
     {
         $schema = $this->db->createSchema();
         $schema->create('users')
@@ -174,7 +204,7 @@ class MyFirstMigration5dd822cdede29 extends AbstractMigration
         $schema->execute();
     }
 
-    public function down()
+    public function down(): void
     {
         $schema = $this->db->createSchema();
         $schema->drop('users');

@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 /**
  * Pop Kettle Console Application
@@ -20,5 +20,3 @@ try {
     $app = new Pop\Kettle\Module();
     $app->cliError($exception);
 }
-
-

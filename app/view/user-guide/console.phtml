@@ -28,28 +28,19 @@ $console->send();</code><a href="#" title="Copy" class="copy-link" x-data="copyC
     Hope you enjoyed it!
 
     The End</code></pre>
-                    <p>The allowed text width can be enforced by passing the <code class="inline-code">$width</code> parameter to the constructor:</p>
+                    <h5 class="mt-4">Console wrap and margin</h5>
+                    <p>By default, the console object enforces a wrap width at 80 characters and provides a margin of 4 spaces for readability.
+                        These values can be changed to whatever is needed for the application.</p>
                     <pre><code class="language-php">use Pop\Console\Console;
 
-$console = new Console(40);
+$console = new Console(40, 2); // wrap width of 40, margin of 2 spaces
 $console->append(
     'Here is some console information. This is a really long string. It will have to wrap.'
 );
 $console->send();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
-                    <pre><code class="language-plaintext">    Here is some console information. This
-    is a really long string. It will have to
-    wrap.</code></pre>
-                    <p>By default, an indent of four spaces is set to provide a margin from the edge of the terminal. This can be adjusted
-                        or turned off by passing it to the constructor:</p>
-                    <pre><code class="language-php">use Pop\Console\Console;
-
-$console = new Console(40, '  ');
-$console->append(
-    'Here is some console information using a 2 space indent. It will have to wrap.'
-);
-$console->send();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
-                    <pre><code class="language-plaintext">  Here is some console information using a
-  2 space indent. It will have to wrap.</code></pre>
+                    <pre><code class="language-plaintext">  Here is some console information. This
+  is a really long string. It will have to
+  wrap.</code></pre>
                     <h4 id="response-buffer" class="mt-4">Response Buffer</h4>
                     <h5>Append vs Write</h5>
                     <p>In the above examples, the method <code class="inline-code">append()</code> was used in conjunction with <code class="inline-code">send()</code>. The method <code class="inline-code">append()</code>
@@ -66,46 +57,124 @@ $console = new Console(40);
 $console->write(
     'Here is some console information. This is a really long string. It will have to wrap.'
 );</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
-                    <h5 class="mt-4">Newlines and Indents</h5>
-                    <p>By default, calling the <code class="inline-code">append()</code> or <code class="inline-code">write()</code> methods will produce the indent value at the beginning
-                        of the content and a newline at the end of the content. If this is not the desired behavior, boolean flags
+                    <h5 class="mt-4">Newline and Margin</h5>
+                    <p>By default, calling the <code class="inline-code">append()</code> or <code class="inline-code">write()</code> methods will produce the margin
+                        value at the beginning of the content and a newline at the end of the content. If this is not the desired behavior, boolean flags
                         can be passed to control this:</p>
                     <pre><code class="language-php">use Pop\Console\Console;
 
 $console = new Console(40);
-$console->write('Here ', false);          // No new line, but use indent
-$console->write('is ', false, false);     // No new line, no indent
-$console->write('some ', false, false);   // No new line, no indent
-$console->write('content.', true, false); // Use new line, but no indent</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+$console->write('Here ', false);          // No new line, but use margin
+$console->write('is ', false, false);     // No new line, no margin
+$console->write('some ', false, false);   // No new line, no margin
+$console->write('content.', true, false); // Use new line, but no margin</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                     <h4 id="colors" class="mt-4">Colors</h4>
                     <p>On a console terminal that supports it, you can colorize text outputted to the console
                         with the <code class="inline-code">colorize()</code> method:</p>
-                    <pre><code class="language-php">$console->append(
+                    <pre><code class="language-php">use Pop\Console\Console;
+use Pop\Console\Color;
+
+$console = new Console();
+$console->write(
     'Here is some ' .
-    $console->colorize('IMPORTANT', Console::BOLD_RED) .
+    $console->colorize('IMPORTANT', Color::BOLD_RED) .
+    ' console information.'
+);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">colorize()</code> method is also available as a static method on the <code class="inline-code">Pop\Console\Color</code> class:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+use Pop\Console\Color;
+
+$console = new Console();
+$console->write(
+    'Here is some ' .
+    Color::colorize('IMPORTANT', Color::BOLD_RED) .
     ' console information.'
 );</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                     <p>Available color constants include:</p>
                     <ul class="list-disc ml-8 mb-4 text-sm">
-                        <li>NORMAL</li>
-                        <li>BLACK</li>
-                        <li>RED</li>
-                        <li>GREEN</li>
-                        <li>YELLOW</li>
-                        <li>BLUE</li>
-                        <li>MAGENTA</li>
-                        <li>CYAN</li>
-                        <li>WHITE</li>
-                        <li>GRAY</li>
-                        <li>BOLD_RED</li>
-                        <li>BOLD_GREEN</li>
-                        <li>BOLD_YELLOW</li>
-                        <li>BOLD_BLUE</li>
-                        <li>BOLD_MAGENTA</li>
-                        <li>BOLD_CYAN</li>
-                        <li>BOLD_WHITE</li>
+                        <li class="mb-2">NORMAL</li>
+                        <li class="mb-2">BLACK</li>
+                        <li class="mb-2">RED</li>
+                        <li class="mb-2">GREEN</li>
+                        <li class="mb-2">YELLOW</li>
+                        <li class="mb-2">BLUE</li>
+                        <li class="mb-2">MAGENTA</li>
+                        <li class="mb-2">CYAN</li>
+                        <li class="mb-2">WHITE</li>
+                        <li class="mb-2">BRIGHT_BLACK</li>
+                        <li class="mb-2">BRIGHT_RED</li>
+                        <li class="mb-2">BRIGHT_GREEN</li>
+                        <li class="mb-2">BRIGHT_YELLOW</li>
+                        <li class="mb-2">BRIGHT_BLUE</li>
+                        <li class="mb-2">BRIGHT_MAGENTA</li>
+                        <li class="mb-2">BRIGHT_CYAN</li>
+                        <li class="mb-2">BRIGHT_WHITE</li>
+                        <li class="mb-2">BOLD_BLACK</li>
+                        <li class="mb-2">BOLD_RED</li>
+                        <li class="mb-2">BOLD_GREEN</li>
+                        <li class="mb-2">BOLD_YELLOW</li>
+                        <li class="mb-2">BOLD_BLUE</li>
+                        <li class="mb-2">BOLD_MAGENTA</li>
+                        <li class="mb-2">BOLD_CYAN</li>
+                        <li class="mb-2">BOLD_WHITE</li>
+                        <li class="mb-2">BRIGHT_BOLD_BLACK</li>
+                        <li class="mb-2">BRIGHT_BOLD_RED</li>
+                        <li class="mb-2">BRIGHT_BOLD_GREEN</li>
+                        <li class="mb-2">BRIGHT_BOLD_YELLOW</li>
+                        <li class="mb-2">BRIGHT_BOLD_BLUE</li>
+                        <li class="mb-2">BRIGHT_BOLD_MAGENTA</li>
+                        <li class="mb-2">BRIGHT_BOLD_CYAN</li>
+                        <li class="mb-2">BRIGHT_BOLD_WHITE</li>
                     </ul>
-                    <h4 id="prompt">Prompt</h4>
+                    <h4 id="lines">Lines</h4>
+                    <p>The <code class="inline-code">line()</code> method provides a way to print a horizontal line rule out to the terminal. The default
+                        character for the line is a dash <code class="inline-code">-</code>, but any character can be passed into the method.</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console();
+$console->line();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">    ----------------------------------------</code></pre>
+                    <p>It will default to the wrap width of the console object. If no wrap width is available, it will take on
+                        the width of the terminal, unless a custom width is specified:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console();
+$console->line('=', 20);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">    ====================</code></pre>
+                    <h4 id="headers" class="mt-4">Headers</h4>
+                    <p>The <code class="inline-code">header()</code> method provides a way to output a separate block of text with an underline emphasis:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console(80);
+$console->header('Hello World');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">    Hello World
+    -----------</code></pre>
+                    <p>The character, size and alignment can be controlled as well:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console();
+$console->header('Hello World', '=', 40, 'center');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">                   Hello World
+    ========================================</code></pre>
+                    <h4 id="alerts" class="mt-4">Alerts</h4>
+                    <p>Alerts are specially formatted boxes that provide style and enhancement to the user's experience
+                        in regard to important information and notifications.</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console(40);
+$console->alertDanger('Hello World', 'auto');
+$console->alertWarning('Hello World', 'auto');
+$console->alertSuccess('Hello World', 'auto');
+$console->alertInfo('Hello World', 'auto');
+$console->alertPrimary('Hello World', 'auto');
+$console->alertSecondary('Hello World', 'auto');
+$console->alertDark('Hello World', 'auto');
+$console->alertLight('Hello World', 'auto');
+$console->alertBox('Hello World', '-', '|', 'auto');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">alertBox()</code> method produces a colorless alert box with a border made of character strings.
+                        The above code will produce the following output to the console terminal:</p>
+                    <img src="https://raw.githubusercontent.com/popphp/pop-console/master/tests/tmp/alerts.png" />
+                    <h4 id="prompt" class="mt-4">Prompt</h4>
                     <p>You can trigger a prompt to get information from the user:</p>
                     <pre><code class="language-php">use Pop\Console\Console;
 
@@ -131,6 +200,15 @@ $console->write('Your favorite letter is ' . $letter . '.');</code><a href="#" t
                     <pre><code class="language-bash">$ ./app
     Which is your favorite letter: A, B, C, or D? B
     Your favorite letter is B.</code></pre>
+                    <h5 class="mt-4">Confirm</h5>
+                    <p>The <code class="inline-code">confirm()</code> method is a shorthand version of a prompt to ask if the user is sure they want to proceed, else the application will exit:</p>
+                    <pre><code class="language-php">use Pop\Console\Console;
+
+$console = new Console();
+$console->confirm();
+$console->write('The user said yes.');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-plaintext">    Are you sure? [Y/N] y
+    The user said yes.</code></pre>
                     <h4 id="commands" class="mt-4">Commands</h4>
                     <p>A command object allows you to define the name, parameters and help string values of a command
                         and add the command to the console object:</p>
@@ -173,7 +251,7 @@ $this->console->addCommandsFromRoutes($cliRouteMatch, './myapp');</code><a href=
         $this->console     = $console;
 
         $this->console->setHelpColors(
-            Console::BOLD_CYAN, Console::BOLD_GREEN, Console::BOLD_MAGENTA
+            Color::BOLD_CYAN, Color::BOLD_GREEN, Color::BOLD_MAGENTA
             );
         $this->console->addCommandsFromRoutes(
             $application->router()->getRouteMatch(), './kettle'
@@ -190,6 +268,6 @@ $this->console->addCommandsFromRoutes($cliRouteMatch, './myapp');</code><a href=
                         to produce the colorful and well organized help screen for <code class="inline-code">pop-kettle</code>, which is called within the
                         controller's <code class="inline-code">help()</code> method.</p>
                         <p>The output looks like this:</p>
-                    <img src="https://raw.githubusercontent.com/popphp/pop-console/master/tests/tmp/console-help.jpg" />
+                    <img src="https://raw.githubusercontent.com/popphp/pop-console/master/tests/tmp/console-help.png" />
                 </div>
 <?php include __DIR__ . '/../inc/footer.phtml'; ?>

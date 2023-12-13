@@ -85,7 +85,12 @@
                             <li>
                                 <a href="<?=$version; ?>/getting-started/kettle">Kettle</a>
                                 <ul class="hidden">
-                                    <li><a href="<?=$version; ?>/getting-started/kettle#init">Initializing an Application</a></li>
+                                    <li>
+                                        <a href="<?=$version; ?>/getting-started/kettle#init">Initializing an Application</a>
+                                        <ul class="ml-4 pt-2 pb-1">
+                                            <li class="mb-2"><a href="<?=$version; ?>/getting-started/kettle#application-status">Application Status</a></li>
+                                        </ul>
+                                    </li>
                                     <li><a href="<?=$version; ?>/getting-started/kettle#include">Kettle Include</a></li>
                                     <li>
                                         <a href="<?=$version; ?>/getting-started/kettle#databases">Managing Databases</a>
@@ -170,6 +175,9 @@
                                     <li><a href="<?=$version; ?>/user-guide/console#output">Output</a></li>
                                     <li><a href="<?=$version; ?>/user-guide/console#response-buffer">Response Buffer</a></li>
                                     <li><a href="<?=$version; ?>/user-guide/console#colors">Colors</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#lines">Lines</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#headers">Headers</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/console#alerts">Alerts</a></li>
                                     <li><a href="<?=$version; ?>/user-guide/console#prompt">Prompt</a></li>
                                     <li><a href="<?=$version; ?>/user-guide/console#commands">Commands</a></li>
                                     <li><a href="<?=$version; ?>/user-guide/console#help-screen">Help Screen</a></li>
@@ -440,6 +448,7 @@
                     <li x-data="{open: <?=$nav6Active; ?>}">
                         <a href="<?=$version; ?>/changelog">Changelog</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
+                            <li><a href="<?=$version; ?>/changelog#5.1.0">5.1.0</a></li>
                             <li><a href="<?=$version; ?>/changelog#5.0.0">5.0.0</a></li>
                             <li><a href="<?=$version; ?>/changelog#4.8.0">4.8.0</a></li>
                             <li><a href="<?=$version; ?>/changelog#4.7.0">4.7.0</a></li>

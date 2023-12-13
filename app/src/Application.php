@@ -20,7 +20,7 @@ class Application extends \Pop\Application
      * Application version
      * @var ?string
      */
-    protected ?string $version = '5.0.0';
+    protected ?string $version = '5.1.0';
 
     /**
      * Load application
