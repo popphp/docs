@@ -53,16 +53,22 @@ $db = Db::mysqlConnect([
     'host'     => 'localhost'
 ]);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                     <ul class="list-disc ml-4 mt-8 text-sm">
-                        <li><code class="inline-code">mysqlConnect()</code></li>
-                        <li><code class="inline-code">pgsqlConnect()</code></li>
-                        <li><code class="inline-code">sqliteConnect()</code></li>
-                        <li><code class="inline-code">pdoConnect()</code></li>
-                        <li><code class="inline-code">sqlsrvConnect()</code></li>
+                        <li class="mt-2"><code class="inline-code">mysqlConnect()</code></li>
+                        <li class="mt-2"><code class="inline-code">pgsqlConnect()</code></li>
+                        <li class="mt-2"><code class="inline-code">sqliteConnect()</code></li>
+                        <li class="mt-2"><code class="inline-code">pdoConnect()</code></li>
+                        <li class="mt-2"><code class="inline-code">sqlsrvConnect()</code></li>
                     </ul>
                     <p>If no <code class="inline-code">host</code> value is given, it will default to <code class="inline-code">localhost</code>.</p>
                     <h5 id="query-a-database">Query a Database</h5>
                     <p>Once you have a database object that represents a database connection, you can
-                        use it to query the database:</p>
+                        use it to query the database. There is an API to support making a query and returning the result:</p>
+                    <ul class="list-disc ml-4 mb-8 text-sm">
+                        <li class="mt-2"><code class="inline-code">$db->select($sql, array $params = [])</code></li>
+                        <li class="mt-2"><code class="inline-code">$db->insert($sql, array $params = [])</code></li>
+                        <li class="mt-2"><code class="inline-code">$db->update($sql, array $params = [])</code></li>
+                        <li class="mt-2"><code class="inline-code">$db->delete($sql, array $params = [])</code></li>
+                    </ul>
                     <pre><code class="language-php">use Pop\Db\Db;
 
 $db = Db::mysqlConnect([
@@ -71,8 +77,7 @@ $db = Db::mysqlConnect([
     'password' => 'DB_PASS'
 ]);
 
-$db->query('SELECT * FROM `users`');
-$users = $db->fetchAll();
+$users = $db->select('SELECT * FROM `users`');
 print_r($users);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                     <p>If there are any user records in the `users` table, the result will be:</p>
                     <pre><code class="language-plaintext">Array
@@ -85,6 +90,31 @@ print_r($users);</code><a href="#" title="Copy" class="copy-link" x-data="copyCo
         )
 
 )</code></pre>
+                    <h6 class="mt-4">An INSERT Example</h6>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$db->insert(
+    'INSERT INTO `users` (`username`, `password`, `email`) VALUES (?, ?, ?)',
+    ['testuser1', 'password1', 'testuser1@test.com']
+);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p class="mt-4">The more verbose way to make a query would be:</p>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$db->query('SELECT * FROM `users`');
+$users = $db->fetchAll();
+print_r($users);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                     <h5 id="table-class" class="mt-4">Table Class</h5>
                     <p>Part of the benefit of using an ORM-style database library like <code class="inline-code">pop-db</code> is to
                         abstract away the layer of SQL required so that you only have to concern yourself
@@ -171,6 +201,15 @@ $user->delete();</code><a href="#" title="Copy" class="copy-link" x-data="copyCo
                         <li class="mb-2"><code class="inline-code">beginTransaction()</code></li>
                         <li class="mb-2"><code class="inline-code">commit()</code></li>
                         <li class="mb-2"><code class="inline-code">rollback()</code></li>
+                        <li class="mb-2"><code class="inline-code">isTransaction()</code></li>
+                        <li class="mb-2"><code class="inline-code">getTransactionDepth()</code></li>
+                        <li class="mb-2"><code class="inline-code">transaction($callable, array $params = [])</code></li>
+                        <li class="mb-2"><code class="inline-code">isSuccess()</code></li>
+                        <li class="mb-2"><code class="inline-code">select(string|Sql $sql, array $params = [])</code></li>
+                        <li class="mb-2"><code class="inline-code">insert(string|Sql $sql, array $params = [])</code></li>
+                        <li class="mb-2"><code class="inline-code">update(string|Sql $sql, array $params = [])</code></li>
+                        <li class="mb-2"><code class="inline-code">delete(string|Sql $sql, array $params = [])</code></li>
+                        <li class="mb-2"><code class="inline-code">executeSql(string|Sql $sql, array $params = [])</code></li>
                         <li class="mb-2"><code class="inline-code">query(mixed $sql)</code></li>
                         <li class="mb-2"><code class="inline-code">prepare(mixed $sql)</code></li>
                         <li class="mb-2"><code class="inline-code">bindParams(array $params)</code></li>
@@ -181,6 +220,7 @@ $user->delete();</code><a href="#" title="Copy" class="copy-link" x-data="copyCo
                         <li class="mb-2"><code class="inline-code">escape(?string $value = null)</code></li>
                         <li class="mb-2"><code class="inline-code">getLastId()</code></li>
                         <li class="mb-2"><code class="inline-code">getNumberOfRows()</code></li>
+                        <li class="mb-2"><code class="inline-code">getNumberOfAffectedRows()</code></li>
                         <li class="mb-2"><code class="inline-code">getVersion()</code></li>
                         <li class="mb-2"><code class="inline-code">getTables()</code></li>
                     </ul>
@@ -865,7 +905,39 @@ foreach ($user->orders as $order) {
                     <p>And would give you a user object with all of the user's <code class="inline-code">posts</code> and each of those post objects would have
                         their <code class="inline-code">comments</code> attached as well.</p>
                     <h4 id="querying">Querying</h4>
-                    <p>Instead of using the ORM-based components, you can directly query the database from the database adapter:</p>
+                    <p>Instead of using the ORM-based components, you can directly query the database from the database adapter.
+                        The API helps make specific queries or execute prepared statements, while returning the results:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2"><code class="inline-code">$db->select(string|Sql $sql, array $params = []): array</code></li>
+                        <li class="mb-2"><code class="inline-code">$db->insert(string|Sql $sql, array $params = []): int</code></li>
+                        <li class="mb-2"><code class="inline-code">$db->update(string|Sql $sql, array $params = []): int</code></li>
+                        <li class="mb-2"><code class="inline-code">$db->delete(string|Sql $sql, array $params = []): int</code></li>
+                    </ul>
+                    <p>In the case of <code class="inline-code">select()</code>, it will return an array of any found results.
+                        In the case of the others, it will return the number of affected rows.</p>
+                    <h5>Using a query</h5>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$users = $db->select('SELECT * FROM `users`');
+print_r($users);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h5 class="mt-4">Using a prepared statements with parameters</h5>
+                    <pre><code class="language-php">use Pop\Db\Db;
+
+$db = Db::mysqlConnect([
+    'database' => 'DATABASE',
+    'username' => 'DB_USER',
+    'password' => 'DB_PASS'
+]);
+
+$users = $db->select('SELECT * FROM `users` WHERE `id` < ?', [10]);
+print_r($users);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p class="mt-4">The more verbose way to query the database would be:</p>
                     <pre><code class="language-php">use Pop\Db\Db;
 
 $db = Db::mysqlConnect([
