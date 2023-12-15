@@ -112,7 +112,14 @@
                     <li x-data="{open: <?=$nav4Active; ?>}">
                         <a href="#" x-on:click.prevent="open = !open;">User Guide</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
-                            <li><a href="<?=$version; ?>/user-guide/mvc">MVC</a></li>
+                            <li>
+                                <a href="<?=$version; ?>/user-guide/mvc">MVC</a>
+                                <ul class="hidden">
+                                    <li><a href="<?=$version; ?>/user-guide/mvc#controllers">Controllers</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/mvc#views">Views</a></li>
+                                    <li><a href="<?=$version; ?>/user-guide/mvc#models">Models</a></li>
+                                </ul>
+                            </li>
                             <li>
                                 <a href="<?=$version; ?>/user-guide/views">Views</a>
                                 <ul class="hidden">

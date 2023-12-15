@@ -91,9 +91,82 @@ echo $view;</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x
                         needed for your application. The abstract model class is a simple and bare-bones data object that
                         can be extended with whatever methods or properties you need to work with your model. Data from
                         the abstract model object is accessible via array access and magic methods, and the model object
-                        is countable and iterable. You can reference <a href="<?=$version; ?>/getting-started/models">Models in Getting Started</a>
-                        to see a simple example.</p>
+                        is countable and iterable.</p>
+                    <h5>Data Models</h5>
+                    <p>Going one level further, the abstract class <code class="inline-code">Pop\Model\AbstractDataModel</code> is also available, which provides
+                        a tightly integrated API which some common interactions with a database and its records. The basic requirements
+                        are that there is a model class that extends the abstract data model and a subsequent related table class
+                        (see the <code class="inline-code">pop-db</code> <a href="<?=$version; ?>/user-guide/databases#table-class">documentation</a> for more info.) In the example
+                        below, the classes <code class="inline-code">MyApp\Model\User</code> and <code class="inline-code">MyApp\Table\Users</code> are created, and by that naming convention, they
+                        are linked together.</p>
+                    <pre><code class="language-php">&lt;?php
 
-                    <p>More in-depth examples connecting all of these concepts will be covered later in the user guide.</p>
+namespace MyApp\Table;
+
+use Pop\Db\Record;
+
+class Users extends Record
+{
+
+}</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <pre><code class="language-php">&lt;?php
+
+namespace MyApp\Model;
+
+use Pop\Model\AbstractModel;
+
+class User extends AbstractDataModel
+{
+
+}</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The available API in the data model object is:</p>
+                    <h6>Static Methods</h6>
+                    <ul class="list-disc ml-8 mt-4 mb-4">
+                        <li class="mb-2 text-sm"><code class="inline-code">fetchAll(?string $sort = null, mixed $limit = null, mixed $page = null, bool $asArray = true): array|Collection</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">fetch(mixed $id, bool $asArray = true): array|Record</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">createNew(array $data, bool $asArray = true): array|Record</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">filterBy(mixed $filters = null, mixed $select = null): static</code></li>
+                    </ul>
+                    <h6>Instance Methods</h6>
+                    <ul class="list-disc ml-8 mt-4 mb-4">
+                        <li class="mb-2 text-sm"><code class="inline-code">getAll(?string $sort = null, mixed $limit = null, mixed $page = null, bool $asArray = true): array|Collection</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">getById(mixed $id, bool $asArray = true): array|Record</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">create(array $data, bool $asArray = true): array|Record</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">update(mixed $id, array $data, bool $asArray = true): array|Record</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">replace(mixed $id, array $data, bool $asArray = true): array|Record</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">delete(mixed $id): int</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">remove(array $ids): int</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">count(): int</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">describe(mixed $columns = null): array</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">filter(mixed $filters = null, mixed $select = null): AbstractDataModel</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">select(mixed $select = null): AbstractDataModel</code></li>
+                    </ul>
+                    <h6>Create new</h6>
+                    <pre><code class="language-php">use MyApp\Model\User;
+
+$user = User::createNew($userData);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Update</h6>
+                    <pre><code class="language-php">use MyApp\Model\User;
+
+$userModel = new User();
+$user = $userModel->update(1, $userData);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The <code class="inline-code">update()</code> method acts like a <code class="inline-code">PATCH</code> call and <code class="inline-code">replace()</code> acts like a <code class="inline-code">PUT</code> call and will replace and reset all model data.</p>
+                    <h6>Delete</h6>
+                    <pre><code class="language-php">use MyApp\Model\User;
+
+$userModel = new User();
+$userModel->delete(1);
+$userModel->remove([2, 3, 4]);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Fetch</h6>
+                    <pre><code class="language-php">use MyApp\Model\User;
+
+$users = User::fetchAll();
+$user  = User::fetch(1);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <h6 class="mt-4">Filter and sort</h6>
+                    <pre><code class="language-php">use MyApp\Model\User;
+
+$users = User::filter('username LIKE myuser%')->getAll('-id', '10', 2);</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>The above call filters the search by the filter string and sorts by <code class="inline-code">ID DESC</code> (<code class="inline-code">-id</code>). Also, it sets the limit to <code class="inline-code">10</code>
+                        and starts the page offset on the second page.</p>
                 </div>
 <?php include __DIR__ . '/../inc/footer.phtml'; ?>
