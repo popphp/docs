@@ -137,7 +137,9 @@ class User extends AbstractDataModel
                         <li class="mb-2 text-sm"><code class="inline-code">delete(mixed $id): int</code></li>
                         <li class="mb-2 text-sm"><code class="inline-code">remove(array $ids): int</code></li>
                         <li class="mb-2 text-sm"><code class="inline-code">count(): int</code></li>
-                        <li class="mb-2 text-sm"><code class="inline-code">describe(mixed $columns = null): array</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">describe(bool $native = false, bool $full = false): array</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">hasRequirements(): bool</code></li>
+                        <li class="mb-2 text-sm"><code class="inline-code">validate(array $data): bool|array</code></li>
                         <li class="mb-2 text-sm"><code class="inline-code">filter(mixed $filters = null, mixed $select = null): AbstractDataModel</code></li>
                         <li class="mb-2 text-sm"><code class="inline-code">select(mixed $select = null): AbstractDataModel</code></li>
                     </ul>
