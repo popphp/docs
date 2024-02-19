@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="/assets/app.css">
     <link type="image/png" rel="shortcut icon" href="/assets/img/pop-php-icon.png" />
     <script defer src="/assets/app.js"></script>
+    <script>
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.querySelector('html').classList.add('dark')
+        }
+    </script>
 
 </head>
 <body class="text-gray-900 antialiased">

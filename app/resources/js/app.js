@@ -23,8 +23,8 @@ Alpine.store('darkMode', {
   toggle () {
     this.on = !this.on
     this.on
-      ? document.querySelector('body').classList.add('dark')
-      : document.querySelector('body').classList.remove('dark')
+      ? document.querySelector('html').classList.add('dark')
+      : document.querySelector('html').classList.remove('dark')
   }
 })
 
@@ -36,7 +36,7 @@ Alpine.start()
 
 // set initial page state after store is initialized
 if (Alpine.store('darkMode').on === true) {
-  document.querySelector('body').classList.add('dark')
+  document.querySelector('html').classList.add('dark')
 }
 
 hljs.registerLanguage('php', php)
