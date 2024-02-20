@@ -13,7 +13,7 @@ function copyCode (a) {
   }
 }
 
-function manageVersion() {
+function manageVersion () {
   return {
     changeVersion: () => {
       window.location.href = document.querySelector('#version-select').value
