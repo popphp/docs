@@ -12,5 +12,6 @@ return [
             'default'    => true
         ]
     ],
-    'database' => include __DIR__ . '/database.php'
+    'database' => include __DIR__ . '/database.php',
+    'version'  => $_ENV['CURRENT_VERSION']
 ];

@@ -163,6 +163,8 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
         $title      = ucwords(end($segments));
         $this->view = new View($this->viewPath . '/' . $template . '.phtml');
 
+        $this->view->currentVersion = $this->application->config['version'];
+
         $this->view->nav1Active = (($title == 'Index') || (str_contains($template, '/overview'))) ? 'true' : 'false';
         $this->view->nav2Active = (str_contains($template, '/installation')) ? 'true' : 'false';
         $this->view->nav3Active = (str_contains($template, '/getting-started')) ? 'true' : 'false';

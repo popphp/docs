@@ -20,7 +20,7 @@ class Application extends \Pop\Application
      * Application version
      * @var ?string
      */
-    protected ?string $version = '5.1.0';
+    protected ?string $version = null;
 
     /**
      * Load application
@@ -30,6 +30,8 @@ class Application extends \Pop\Application
      */
     public function load(): Application
     {
+        $this->version = $_ENV['CURRENT_VERSION'];
+
         $this->router()?->addControllerParams(
             '*', [
                 'application' => $this,
