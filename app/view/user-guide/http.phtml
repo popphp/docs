@@ -131,7 +131,7 @@ $response = Client::post(
                         <li class="mb-1"><code class="inline-code">data</code><span class="text-sm"> - an array of request data - can be any request data</span></li>
                         <li class="mb-1"><code class="inline-code">files</code><span class="text-sm"> - an array of files on disk to be sent with the request</span></li>
                         <li class="mb-1"><code class="inline-code">type</code><span class="text-sm"> - set the request type (URL-form, JSON, XML or multipart/form)</span></li>
-                        <li class="mb-1"><code class="inline-code">Request::URLFORM</code><span class="text-sm"> - <code class="inline-code">application/x-www-form-urlencoded</code></span></li>
+                        <li class="mb-1"><code class="inline-code">Request::URLENCODED</code><span class="text-sm"> - <code class="inline-code">application/x-www-form-urlencoded</code></span></li>
                         <li class="mb-1"><code class="inline-code">Request::JSON</code><span class="text-sm"> - <code class="inline-code">application/json</code></span></li>
                         <li class="mb-1"><code class="inline-code">Request::XML</code><span class="text-sm"> - <code class="inline-code">application/xml</code></span></li>
                         <li class="mb-1"><code class="inline-code">Request::MULTIPART</code><span class="text-sm"> - <code class="inline-code">multipart/form-data</code></span></li>
@@ -257,7 +257,7 @@ $client = new Client('http://localhost:8000/files.php', [
     'headers' => [
         'Authorization' => 'Bearer 123456789',
     ],
-    'type' => Request::URLFORM
+    'type' => Request::URLENCODED
 ]);
 echo $client->render();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                     <p>Which would produce a string like this:</p>
