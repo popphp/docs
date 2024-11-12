@@ -150,7 +150,9 @@ $app->get('/', [
     'controller' => 'MyApp\Controller\IndexController',
     'action'     => 'index',
     'default'    => true
-])->get('/hello/:name', [
+]);
+
+$app->get('/hello/:name', [
     'controller' => 'MyApp\Controller\IndexController',
     'action'     => 'hello'
 ]);
