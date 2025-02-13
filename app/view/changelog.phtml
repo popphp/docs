@@ -3,6 +3,31 @@
             <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
                 <div class="main-content">
                     <h2><?=$title; ?></h2>
+                    <h4 id="5.5.0">5.5.0</h4>
+                    <h6>(02/12/2025)</h6>
+                    <ul class="list-disc text-sm ml-8 mb-4 mt-4">
+                        <li class="mb-2">Updated for PHP 8.2+</li>
+                        <li class="mb-2">Updated test for PHPUnit 11.5+</li>
+                        <li class="mb-2">Updates & Improvements to the following packages:
+                            <ul class="list-disc text-sm ml-8 mb-2 mt-2">
+                                <li class="mb-2"><code class="inline-code">pop-db</code>
+                                    <ul class="list-disc text-sm ml-8 mb-2 mt-2">
+                                        <li class="mb-2">Added support <code class="inline-code">latest()</code> and <code class="inline-code">oldest()</code> methods with `hasMany` relationships</li>
+                                        <li class="mb-2">Added support for <code class="inline-code">UPDATE</code> SQL in the Sql Data class</li>
+                                    </ul>
+                                </li>
+                                <li class="mb-2"><code class="inline-code">pop-csv</code> - added support to map array and multi-dimensional array values to a single cell value</li>
+                                <li class="mb-2"><code class="inline-code">pop-mail</code> - bug fixes</li>
+                                <li class="mb-2"><code class="inline-code">pop-debug</code> - Added support for adding loggers to the debugger</li>
+                                <li class="mb-2"><code class="inline-code">pop-form</code> - Improved support for i18n for the required message</li>
+                                <li class="mb-2"><code class="inline-code">pop-http</code> - Improved support for custom content-type headers</li>
+                                <li class="mb-2"><code class="inline-code">pop-kettle</code> - Added bash and zsh completion</li>
+                                <li class="mb-2"><code class="inline-code">pop-log</code> - Added serialization support for context</li>
+                                <li class="mb-2"><code class="inline-code">pop-storage</code> - Improved the Azure adapter</li>
+                                <li class="mb-2"><code class="inline-code">pop-validator</code> - Added optional results property</li>
+                            </ul>
+                        </li>
+                    </ul>
                     <h4 id="5.4.0">5.4.0</h4>
                     <h6>(9/11/2024)</h6>
                     <ul class="list-disc text-sm ml-8 mb-4 mt-4">
