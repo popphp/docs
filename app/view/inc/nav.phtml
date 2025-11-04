@@ -59,6 +59,12 @@
                                 </ul>
                             </li>
                             <li>
+                                <a href="<?=$version; ?>/getting-started/middleware">Middleware</a>
+                                <ul class="hidden">
+                                    <li><a href="<?=$version; ?>/getting-started/middleware#routes">Routes</a></li>
+                                </ul>
+                            </li>
+                            <li>
                                 <a href="<?=$version; ?>/getting-started/modules">Modules</a>
                                 <ul class="hidden">
                                     <li><a href="<?=$version; ?>/getting-started/modules#custom">Custom Modules</a></li>
@@ -425,6 +431,7 @@
                             <li><a href="https://github.com/popphp/pop-console#readme" target="_blank">pop-console</a></li>
                             <li><a href="https://github.com/popphp/popphp/#controllers" target="_blank">pop-controller</a></li>
                             <li><a href="https://github.com/popphp/pop-cookie#readme" target="_blank">pop-cookie</a></li>
+                            <li><a href="https://github.com/popphp/pop-crypt#readme" target="_blank">pop-crypt</a></li>
                             <li><a href="https://github.com/popphp/pop-css#readme" target="_blank">pop-css</a></li>
                             <li><a href="https://github.com/popphp/pop-csv#readme" target="_blank">pop-csv</a></li>
                             <li><a href="https://github.com/popphp/pop-db#readme" target="_blank">pop-db</a></li>
@@ -459,10 +466,11 @@
                             <li><a href="https://github.com/popphp/popphp#readme" target="_blank">popphp</a></li>
                         </ul>
                     </li>
-                    <li><a href="https://api.popphp.org/5.0/" target="_blank">API Docs</a></li>
+                    <li><a href="https://api.popphp.org/6.x/" target="_blank">API Docs</a></li>
                     <li x-data="{open: <?=$nav6Active; ?>}">
                         <a href="<?=$version; ?>/changelog">Changelog</a>
                         <ul x-show="open" x-transition:enter.duration.200ms x-transition:leave.duration.200ms x-cloak>
+                            <li><a href="<?=$version; ?>/changelog#6.0.0">6.0.0</a></li>
                             <li><a href="<?=$version; ?>/changelog#5.5.0">5.5.0</a></li>
                             <li><a href="<?=$version; ?>/changelog#5.4.0">5.4.0</a></li>
                             <li><a href="<?=$version; ?>/changelog#5.3.1">5.3.1</a></li>

@@ -1,0 +1,79 @@
+<?php include __DIR__ . '/../inc/header.phtml'; ?>
+<?php include __DIR__ . '/../inc/nav.phtml'; ?>
+            <main class="col-right bg-white overflow-y-auto pl-24 pr-24 pt-12 pb-12 max-[976px]:pl-12 max-[976px]:pr-12 max-[976px]:pt-4 max-[976px]:pb-4 dark:text-gray-300 dark:bg-gray-900">
+                <div class="main-content">
+<?php if (!empty($segments)):
+    include __DIR__ . '/../inc/breadcrumb.phtml';
+endif; ?>
+                    <h2><?=$title; ?></h2>
+                    <p>The middleware manager provides a way to hook specific functionality in and around the `dispatch` action
+                        in an application object. Middleware themselves are classes that would implement the following interfaces:</p>
+                    <ul class="list-disc ml-8 mb-8">
+                        <li><code class="inline-code">Pop\Middleware\MiddlewareInterface</code><span class="text-sm"> - required, defines the <code class="inline-code">handle()</code> method that will be called to execute the middleware</span></li>
+                        <li><code class="inline-code">Pop\Middleware\TerminableInterface</code><span class="text-sm"> - optional, defines the <code class="inline-code">terminate()</code> method that can be called to execute any post-dispatch code</span></li>
+                    </ul>
+                    <pre><code class="language-php">class TestMiddleware implements MiddlewareInterface, TerminableInterface
+{
+
+    public function handle(mixed $request, \Closure $next): mixed
+    {
+        echo 'Entering Test Middleware.<br />';
+        $response = $next($request);
+        echo 'Exiting Test Middleware.<br />';
+        return $response;
+    }
+
+    public function terminate(mixed $request = null, mixed $response = null): void
+    {
+        file_put_contents(
+            __DIR__ . '/logs/mw.log',
+            'Executing terminate method for test middleware.' . PHP_EOL,
+            FILE_APPEND
+        );
+    }
+}</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Middleware can be added directly to the application object:</p>
+                    <pre><code class="language-php">$app = new Pop\Application();
+$app->middleware->addHandler('TestMiddleware');</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>Or via the application config:</p>
+                    <pre><code class="language-php">$config = [
+    'middleware' => ['TestMiddleware'],
+    'routes'     => [
+        '/' => [
+            'controller' => function() {
+                echo 'Index Page.<br />';
+            }
+        ],
+    ]
+]
+$app = new Pop\Application($config);
+$app->run();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                    <p>When making the request to the above application (e.g., <code class="inline-code">http://localhost:8000/</code>), the response will be:</p>
+                    <pre><code class="language-plaintext">Entering Test Middleware.
+Index page.
+Exiting Test Middleware.</code></pre>
+                    <p>Furthermore, the <code class="inline-code">terminate()</code> method will have been executed post-dispatch and added the following entry to the <code class="inline-code">logs/mw.log</code> log file:</p>
+                    <pre><code class="language-plaintext">Executing terminate method for test middleware.</code></pre>
+                    <h4 id="routes" class="mt-4">Routes</h4>
+                    <p>Middleware can be applied globally or on a specific route-level. Middleware assigned to a specific route
+                        will only execute on that route.</p>
+                    <pre><code class="language-php">$config = [
+    'middleware' => ['TestMiddleware'],
+    'routes'     => [
+        '/' => [
+            'controller' => function() {
+                echo 'Index Page.<br />';
+            }
+        ],
+        '/admin[/]' => [
+            'middleware' => 'AdminMiddleware',
+            'controller' => function() {
+                echo 'Admin Page.<br />';
+            }
+        ],
+    ]
+]
+$app = new Pop\Application($config);
+$app->run();</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
+                </div>
+<?php include __DIR__ . '/../inc/footer.phtml'; ?>

@@ -77,6 +77,7 @@ $app = new Pop\Application($autoloader, [
                         <li class="mb-1"><code class="inline-code">$app->registerRouter($router)</code><span class="text-sm"> - Register a new router object</span></li>
                         <li class="mb-1"><code class="inline-code">$app->registerServices($services)</code><span class="text-sm"> - Register a new service locator</span></li>
                         <li class="mb-1"><code class="inline-code">$app->registerEvents($events)</code><span class="text-sm"> - Register a new event manager</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->registerMiddleware($middleware)</code><span class="text-sm"> - Register a middleware manager</span></li>
                         <li class="mb-1"><code class="inline-code">$app->registerModules($modules)</code><span class="text-sm"> - Register a new module manager</span></li>
                         <li class="mb-1"><code class="inline-code">$app->registerAutoloader($autoloader)</code><span class="text-sm"> - Register an autoloader with the application</span></li>
                         <li class="mb-1"><code class="inline-code">$app->mergeConfig($config, $preserve = false)</code><span class="text-sm"> - Merge config values into the application</span></li>
@@ -90,6 +91,7 @@ $app = new Pop\Application($autoloader, [
                         <li class="mb-1"><code class="inline-code">$app->router()</code><span class="text-sm"> - Access the router</span></li>
                         <li class="mb-1"><code class="inline-code">$app->services()</code><span class="text-sm"> - Access the service locator</span></li>
                         <li class="mb-1"><code class="inline-code">$app->events()</code><span class="text-sm"> - Access the event manager</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->middleware()</code><span class="text-sm"> - Access the middleware manager</span></li>
                         <li class="mb-1"><code class="inline-code">$app->modules()</code><span class="text-sm"> - Access the module manager</span></li>
                     </ul>
                     <p>Also, magic methods expose them as direct properties as well:</p>
@@ -99,6 +101,7 @@ $app = new Pop\Application($autoloader, [
                         <li class="mb-1"><code class="inline-code">$app->router</code><span class="text-sm"> - Access the router</span></li>
                         <li class="mb-1"><code class="inline-code">$app->services</code><span class="text-sm"> - Access the service locator</span></li>
                         <li class="mb-1"><code class="inline-code">$app->events</code><span class="text-sm"> - Access the event manager</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->middleware</code><span class="text-sm"> - Access the middleware manager</span></li>
                         <li class="mb-1"><code class="inline-code">$app->modules</code><span class="text-sm"> - Access the module manager</span></li>
                     </ul>
                     <h4 id="advanced-api" class="mt-8">Advanced API</h4>
@@ -117,6 +120,9 @@ $app = new Pop\Application($autoloader, [
                         <li class="mb-1"><code class="inline-code">$app->on($name, $action, $priority = 0);</code><span class="text-sm"> - Attach an event</span></li>
                         <li class="mb-1"><code class="inline-code">$app->off($name, $action);</code><span class="text-sm"> - Detach an event</span></li>
                         <li class="mb-1"><code class="inline-code">$app->trigger($name, array $args = []);</code><span class="text-sm"> - Trigger an event</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->addMiddleware($handler, $name = null);</code><span class="text-sm"> - Add a middleware handler</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->getMiddleware($name);</code><span class="text-sm"> - Get a middleware handler</span></li>
+                        <li class="mb-1"><code class="inline-code">$app->removeMiddleware($name);</code><span class="text-sm"> - Remove a middleware handler</span></li>
                     </ul>
                     <h4 id="running-an-application" class="mt-8">Running an Application</h4>
                     <p>Once you've configured your application object, you can run the application by simply executing the <code class="inline-code">run</code> method.
