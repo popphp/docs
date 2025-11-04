@@ -508,7 +508,7 @@ class Users extends Encoded
 
     protected array  $hashFields    = ['password'];
     protected string $hashAlgorithm = PASSWORD_BCRYPT;
-    protected array  $hashOptions   = ['cost' => 10];
+    protected array  $hashOptions   = ['cost' => 12];
 }</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
                     <p>This configuration will use the defined algorithm and options to safely create and store the one-way
                         hash value in the database. Then, when needed, you can use the <code class="inline-code">verify()</code> method and check an attempted
@@ -521,22 +521,26 @@ if ($user->verify('password', $attemptedPassword)) {
                     <p>An even more advanced example would be using an 2-way encrypted field, which uses the
                         Open SSL library extension. It requires a few more table properties to be configured:</p>
                     <ul class="list-disc ml-8 text-sm">
-                        <li class="mb-2"><code class="inline-code">$cipherMethod</code></li>
-                        <li class="mb-2"><code class="inline-code">$key</code></li>
-                        <li class="mb-2"><code class="inline-code">$iv</code></li>
+                        <li class="mb-2"><code class="inline-code">$cipherMethod</code><span class="text-sm"> - available cipher method string from the <code class="inline-code">Pop\Crypt\Encryption\Encrypter</code> class</span></li>
+                        <li class="mb-2"><code class="inline-code">$key</code><span class="text-sm"> - base64 encoded value generated from the <code class="inline-code">Pop\Crypt\Encryption\Encrypter</code> class</span></li>
+                        <li class="mb-2"><code class="inline-code">$previousKeys</code><span class="text-sm"> - base64 encoded values generated from the <code class="inline-code">Pop\Crypt\Encryption\Encrypter</code> class of previous keys to provide graceful key rotation</span></li>
                     </ul>
-                    <p>You have to create an IV value and base64 encode it to set it as the <code class="inline-code">$iv</code> property.</p>
+                    <p>The encryption properties can be stored within the class directly:</p>
                     <pre><code class="language-php">use Pop\Db\Record\Encoded
 
 class Users extends Encoded
 {
-    protected array   $encryptedFields = ['sensitive_data'];
+    protected array   $encryptedFields = ['sensitive_data_field'];
     protected ?string $cipherMethod    = 'aes-256-cbc';
-    protected ?string $key             = 'YOUR_KEY';
-    protected ?string $iv              = 'BASE64_ENCODED_IV_STRING';
+    protected ?string $key             = 'BASE64_ENCODED_KEY';
+    protected array   $previousKeys    = ['BASE64_OLD_ENCODED_KEY1', 'BASE64_OLD_ENCODED_KEY2'];
 }</code><a href="#" title="Copy" class="copy-link" x-data="copyCode" x-on:click.prevent="copy($el)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 relative"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" /></svg></a></pre>
-                    <p>This configuration will allow you to store the encrypted value in the database and
-                        securely extract it when you fetch the record.</p>
+                    <p>Or, they can be autoloaded from the application's <code class="inline-code">.env</code> file as the following values:</p>
+                    <ul class="list-disc ml-8 text-sm">
+                        <li class="mb-2"><code class="inline-code">APP_CIPHER_METHOD</code><span class="text-sm"> -  a string of the cipher to be used, e.g.<code class="inline-code">aes-256-cbc</code></span></li>
+                        <li class="mb-2"><code class="inline-code">APP_KEY</code><span class="text-sm"> - a base-64 encoded string of the current active key</span></li>
+                        <li class="mb-2"><code class="inline-code">APP_PREVIOUS_KEYS</code><span class="text-sm"> - a comma-separated list of base-64 encoded strings of the previous keys</span></li>
+                    </ul>
                     <h5 id="table-gateway">Table Gateway</h5>
                     <p>The <code class="inline-code">Pop\Db\Record</code> class actually has functionality that allows you to fetch multiple records,
                     or rows, at a time, much like a table data gateway. The default value returned from most of these
