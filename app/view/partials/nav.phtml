@@ -1,0 +1,26 @@
+<?php
+/**
+ * Section navigation. Expects $nav and $attr.
+ *
+ * The same markup serves the desktop column and the mobile drawer; only the wrapper differs, so
+ * there is one nav to keep correct rather than two.
+ *
+ * The section holding the current page opens; the rest start collapsed. The design artboard showed
+ * every section expanded, but it listed a handful of pages per section — all 61 at once is a
+ * 1,200px column the reader has to scroll past to reach anything.
+ */
+?>
+<?php foreach ($nav as $section => $pages): ?>
+<div class="mb-5" x-data="{ open: <?=in_array(true, array_column($pages, 'current'), true) ? 'true' : 'false' ?> }">
+    <button type="button" @click="open = !open" :aria-expanded="open.toString()"
+            class="flex w-full items-center gap-1.5 py-1 text-left">
+        <svg class="transition-transform duration-150" :class="open ? 'rotate-90' : ''" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
+        <span class="eyebrow text-[10.5px]"><?=$attr($section) ?></span>
+    </button>
+    <div x-show="open" x-cloak class="mt-1.5 flex flex-col gap-px">
+<?php foreach ($pages as $page): ?>
+        <a href="<?=$attr($page['slug']) ?>" class="side-link<?=$page['current'] ? ' side-link-active' : '' ?>"<?=$page['current'] ? ' aria-current="page"' : '' ?>><?=$attr($page['title']) ?></a>
+<?php endforeach; ?>
+    </div>
+</div>
+<?php endforeach; ?>

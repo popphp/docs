@@ -1,0 +1,43 @@
+<?php
+/**
+ * Site header. Expects $attr. Sits above the search overlay and the mobile nav drawer, both of
+ * which it opens through Alpine's global store.
+ */
+?>
+<header class="sticky top-0 z-40 border-b border-line bg-bg/95 backdrop-blur">
+    <div class="flex items-center gap-4 px-5 py-2.5 lg:gap-7 lg:px-8">
+
+        <button type="button" class="tap-target lg:hidden" @click="$store.docs.toggleNav()"
+                :aria-expanded="$store.docs.nav.toString()" aria-controls="docs-nav" aria-label="Open navigation">
+            <svg x-show="!$store.docs.nav" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+            <svg x-show="$store.docs.nav" x-cloak viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+        </button>
+
+        <a href="/" class="shrink-0" aria-label="Pop PHP documentation home">
+            <img src="https://media.popphp.org/img/pop-php-logo2.png" alt="Pop PHP" class="block h-[34px] w-auto lg:h-[38px]">
+        </a>
+
+        <span class="tag hidden px-2.5 py-0.5 text-[11px] sm:inline">v7.0</span>
+
+        <div class="flex grow justify-end lg:justify-center">
+            <button type="button" @click="$store.docs.openSearch()"
+                    class="flex w-full max-w-[340px] items-center gap-2.5 rounded-full border border-line bg-panel px-3.5 py-2 text-sm text-muted transition-colors duration-150 hover:border-pop-orange/40">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+                <span class="grow text-left">Search the docs</span>
+                <span class="key hidden sm:inline">⌘K</span>
+            </button>
+        </div>
+
+        <nav class="hidden items-center gap-6 lg:flex">
+            <a href="/components" class="nav-link">Components</a>
+            <a href="https://github.com/popphp" class="nav-link">GitHub</a>
+        </nav>
+
+        <button type="button" class="tap-target" @click="$store.docs.toggleTheme()"
+                :aria-label="$store.docs.dark ? 'Switch to light mode' : 'Switch to dark mode'"
+                aria-label="Toggle dark mode">
+            <svg x-show="$store.docs.dark" x-cloak viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"></path></svg>
+            <svg x-show="!$store.docs.dark" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a6.8 6.8 0 0 0 9.5 9.5Z"></path></svg>
+        </button>
+    </div>
+</header>

@@ -1,0 +1,49 @@
+<?php
+/**
+ * Search overlay. The index is fetched once, on first open, from /search-index.json — 38 KB that
+ * no visitor pays for unless they search.
+ */
+?>
+<div x-cloak x-show="$store.docs.search" x-data="docsSearch"
+     class="fixed inset-0 z-50 flex justify-center px-4 pt-16 sm:pt-24" role="dialog" aria-modal="true" aria-label="Search the documentation">
+
+    <div class="absolute inset-0 bg-[rgba(23,21,15,.42)]" @click="$store.docs.closeSearch()"></div>
+
+    <div class="relative flex max-h-[70vh] w-full max-w-[640px] flex-col overflow-hidden rounded-2xl border border-line bg-panel shadow-[0_28px_70px_rgba(23,21,15,.30)]">
+
+        <div class="flex items-center gap-3 border-b border-line px-5 py-4">
+            <svg class="text-pop-orange" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input x-ref="field" x-model="query" @keydown.down.prevent="move(1)" @keydown.up.prevent="move(-1)"
+                   @keydown.enter.prevent="open()" @keydown.escape="$store.docs.closeSearch()"
+                   type="search" placeholder="Search 61 pages" aria-label="Search the documentation"
+                   class="grow border-0 bg-transparent text-base text-fg outline-none placeholder:text-muted">
+            <button type="button" class="key" @click="$store.docs.closeSearch()">ESC</button>
+        </div>
+
+        <div class="grow overflow-y-auto p-2" x-ref="results">
+            <template x-for="group in groups" :key="group.section">
+                <div class="mb-1.5">
+                    <div class="eyebrow px-3.5 pb-1 pt-2 text-[10px]" x-text="group.section"></div>
+                    <template x-for="hit in group.hits" :key="hit.key">
+                        <a :href="hit.href" class="hit" :class="hit.index === cursor ? 'hit-active' : ''"
+                           @mouseenter="cursor = hit.index">
+                            <span class="hit-title" x-text="hit.title"></span>
+                            <span class="hit-summary" x-text="hit.summary"></span>
+                        </a>
+                    </template>
+                </div>
+            </template>
+
+            <div x-show="!loading && flat.length === 0" class="px-3.5 py-9 text-center text-sm text-muted">
+                Nothing matches <span class="text-fg" x-text="'“' + query + '”'"></span>.
+            </div>
+            <div x-show="loading" class="px-3.5 py-9 text-center text-sm text-muted">Loading the index…</div>
+        </div>
+
+        <div class="flex items-center gap-4 border-t border-line px-5 py-2.5 text-xs text-muted">
+            <span class="hidden items-center gap-1.5 sm:flex"><span class="key">↑</span><span class="key">↓</span> to navigate</span>
+            <span class="hidden items-center gap-1.5 sm:flex"><span class="key">↵</span> to open</span>
+            <span class="ml-auto" x-text="flat.length + ' results'"></span>
+        </div>
+    </div>
+</div>

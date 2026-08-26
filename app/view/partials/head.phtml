@@ -1,0 +1,38 @@
+<?php
+/**
+ * Document head. Expects $title, $description, $attr.
+ *
+ * og:image is deliberately unset: the marketing site points it at a screenshot of its own
+ * homepage, which says nothing about a documentation page. A per-page card belongs here once
+ * there is one to render.
+ */
+?>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?=$attr($title) ?> — Pop PHP Framework</title>
+<meta name="description" content="<?=$attr($description) ?>">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Pop PHP Framework">
+<meta property="og:title" content="<?=$attr($title) ?>">
+<meta property="og:description" content="<?=$attr($description) ?>">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="shortcut icon" type="image/png" href="https://media.popphp.org/img/pop-php-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<link rel="stylesheet" href="/assets/css/app.css">
+<script>
+    // Set the color mode before first paint so the page never flashes the wrong theme.
+    // Light is the default; the key matches the marketing site so a visitor's choice carries over.
+    document.documentElement.classList.remove('no-js');
+    try {
+        if (localStorage.getItem('pop-theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+    } catch (e) {}
+</script>
+<script type="module" src="/assets/js/app.js"></script>

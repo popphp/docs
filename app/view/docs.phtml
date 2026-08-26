@@ -1,101 +1,103 @@
 <?php
 /**
- * Scaffolding, not the design.
+ * The documentation page shell.
  *
- * This exists so the generated routes, the page index and the prev/next chain can be exercised
- * end to end before a layout is drawn. It uses brand tokens only — no invented styling — so
- * whatever the design produces replaces this file outright rather than being untangled from it.
+ * Built from the approved design canvas: three columns on a wide screen, the section nav
+ * collapsing to a drawer below it, and the on-this-page rail appearing only where there is room
+ * for it. The landing page at / drops the section nav so the front door reads as an entry point
+ * rather than a page you navigated to.
+ *
+ * Expects: $title $description $section $components $slug $nav $headings $prev $next $content
  */
-$attr = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+$attr    = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+$landing = ($slug === '/');
 ?><!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?=$attr($title) ?> — Pop PHP Framework</title>
-    <link rel="shortcut icon" type="image/png" href="https://media.popphp.org/img/pop-php-icon.png">
-
-    <!-- The brand's --font-display/--font-sans/--font-mono name families that have to be
-         loaded, or every surface falls back to the system stack. Same three the v7 site loads. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-
-    <link rel="stylesheet" href="/assets/css/app.css">
-
-    <!-- Social sharing. The v7 marketing site points og:image at a screenshot of its own
-         homepage, which is wrong for a docs page — the card should carry the page's title.
-         Left unset until the docs site has a look to render a card from. -->
-    <meta name="description" content="<?=$attr($description) ?>">
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="Pop PHP Framework">
-    <meta property="og:title" content="<?=$attr($title) ?>">
-    <meta property="og:description" content="<?=$attr($description) ?>">
-    <meta name="twitter:card" content="summary_large_image">
+<?php include __DIR__ . '/partials/head.phtml'; ?>
 </head>
-<body class="bg-bg text-fg font-sans">
-    <div class="mx-auto flex max-w-7xl gap-10 px-6 py-10">
+<body class="bg-bg font-sans text-fg antialiased" x-data>
 
-        <nav class="hidden w-64 shrink-0 lg:block">
-            <a href="/" class="mb-8 block" aria-label="Pop PHP home">
-                <!-- Same file in both themes: the approved v7 site does not swap the logo for dark. -->
-                <img src="https://media.popphp.org/img/pop-php-logo2.png" alt="Pop PHP" class="block h-[46px] w-auto">
-            </a>
-<?php foreach ($nav as $section => $pages): ?>
-            <div class="mb-6">
-                <div class="eyebrow mb-2 text-[11px]"><?=$section ?></div>
-                <ul class="space-y-1">
-<?php foreach ($pages as $page): ?>
-                    <li>
-                        <a href="<?=$page['slug'] ?>" class="side-link<?=$page['current'] ? ' side-link-active' : '' ?>"><?=$page['title'] ?></a>
-                    </li>
-<?php endforeach; ?>
-                </ul>
-            </div>
-<?php endforeach; ?>
-        </nav>
+<?php include __DIR__ . '/partials/header.phtml'; ?>
 
-        <main class="min-w-0 flex-1">
-            <div class="eyebrow text-[11px]"><?=$section ?></div>
-            <h1 class="mb-6 font-display text-section"><?=$title ?></h1>
+<div class="mx-auto flex w-full max-w-[1440px] items-start gap-8 px-5 pb-20 pt-8 lg:gap-10 lg:px-8">
+
+<?php if (!$landing): ?>
+    <!-- One nav, not two: a sticky column from lg up, the same element sliding in as a drawer
+         below it. Rendering it twice would ship 61 extra links on every page. -->
+    <div x-cloak x-show="$store.docs.nav" class="fixed inset-0 z-30 bg-[rgba(23,21,15,.42)] lg:hidden"
+         @click="$store.docs.closeNav()"></div>
+
+    <aside id="docs-nav" aria-label="Documentation sections"
+           class="fixed inset-y-0 left-0 z-40 w-[300px] max-w-[85vw] overflow-y-auto border-r border-line bg-panel px-3 pt-[68px] transition-transform duration-200
+                  lg:sticky lg:top-[68px] lg:z-auto lg:max-h-[calc(100vh-88px)] lg:w-60 lg:shrink-0 lg:translate-x-0 lg:border-0 lg:bg-transparent lg:px-0 lg:pt-0"
+           :class="$store.docs.nav ? 'translate-x-0' : '-translate-x-full'">
+<?php include __DIR__ . '/partials/nav.phtml'; ?>
+    </aside>
+<?php endif; ?>
+
+    <main class="min-w-0 grow <?=$landing ? 'mx-auto max-w-[64rem]' : 'max-w-[46rem]' ?>">
+        <div class="eyebrow mb-2.5 text-[11px]"><?=$attr($landing ? 'Documentation' : $section) ?></div>
+        <h1 class="mb-3.5 font-display text-[clamp(2rem,4vw,2.75rem)] leading-[1.06] tracking-[-0.03em]"><?=$attr($title) ?></h1>
 
 <?php if (!empty($components)): ?>
-            <div class="mb-6 flex flex-wrap gap-2">
+        <div class="mb-7 flex flex-wrap gap-2">
 <?php foreach ($components as $component): ?>
-                <span class="tag"><?=$component ?></span>
+            <a href="https://github.com/popphp/<?=$attr($component) ?>" class="tag"><?=$attr($component) ?></a>
 <?php endforeach; ?>
-            </div>
+        </div>
 <?php endif; ?>
 
 <?php if ($content !== null): ?>
-            <div class="prose">
+        <div class="prose">
 <?php include $content; ?>
-            </div>
+        </div>
 <?php else: ?>
-            <div class="card">
-                <p class="text-muted">Content for <code class="font-mono text-pop-orange"><?=$attr($slug) ?></code>
-                   has not been generated yet. Run <code class="font-mono">php tools/build-views.php</code>
-                   in the new-docs folder.</p>
-            </div>
+        <div class="card">
+            <p class="text-muted">Content for <code class="font-mono text-pop-orange"><?=$attr($slug) ?></code>
+               has not been generated yet. Run <code class="font-mono">php tools/build-views.php</code>
+               in the new-docs folder.</p>
+        </div>
 <?php endif; ?>
 
-            <div class="mt-12 flex justify-between border-t border-line pt-6 text-sm">
-                <span><?php if ($prev !== null): ?><a href="<?=$prev['slug'] ?>">← <?=$prev['title'] ?></a><?php endif; ?></span>
-                <span><?php if ($next !== null): ?><a href="<?=$next['slug'] ?>"><?=$next['title'] ?> →</a><?php endif; ?></span>
-            </div>
-        </main>
+<?php if ($prev !== null || $next !== null): ?>
+        <nav class="mt-14 flex flex-col gap-3 sm:flex-row" aria-label="Page navigation">
+<?php if ($prev !== null): ?>
+            <a href="<?=$attr($prev['slug']) ?>" class="page-turn">
+                <span class="page-turn-label">Previous</span>
+                <span class="flex items-center gap-2 font-semibold">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="m11 6-6 6 6 6"></path></svg>
+                    <?=$attr($prev['title']) ?>
+                </span>
+            </a>
+<?php endif; ?>
+<?php if ($next !== null): ?>
+            <a href="<?=$attr($next['slug']) ?>" class="page-turn sm:text-right">
+                <span class="page-turn-label">Next</span>
+                <span class="flex items-center gap-2 font-semibold sm:justify-end">
+                    <?=$attr($next['title']) ?>
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+                </span>
+            </a>
+<?php endif; ?>
+        </nav>
+<?php endif; ?>
+    </main>
 
-<?php if (!empty($headings)): ?>
-        <aside class="hidden w-52 shrink-0 xl:block" x-data="reading">
-            <div class="eyebrow mb-3 text-[10.5px]">On this page</div>
-            <nav class="flex flex-col">
+<?php if (!$landing && !empty($headings)): ?>
+    <aside class="sticky top-[68px] hidden max-h-[calc(100vh-88px)] w-52 shrink-0 overflow-y-auto xl:block" x-data="reading">
+        <div class="eyebrow mb-3 text-[10.5px]">On this page</div>
+        <nav class="flex flex-col" aria-label="On this page">
 <?php foreach ($headings as $heading): ?>
-                <a href="#<?=$attr($heading['id']) ?>" class="rail-link<?=($heading['level'] === 3) ? ' rail-link-sub' : '' ?>"><?=$attr($heading['text']) ?></a>
+            <a href="#<?=$attr($heading['id']) ?>" class="rail-link<?=($heading['level'] === 3) ? ' rail-link-sub' : '' ?>"><?=$attr($heading['text']) ?></a>
 <?php endforeach; ?>
-            </nav>
-        </aside>
+        </nav>
+    </aside>
 <?php endif; ?>
-    </div>
-    <script type="module" src="/assets/js/app.js"></script>
+
+</div>
+
+<?php include __DIR__ . '/partials/search.phtml'; ?>
+
 </body>
 </html>
