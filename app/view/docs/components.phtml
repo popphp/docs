@@ -33,36 +33,36 @@ everything else in the core is something it coordinates. v7 absorbed the Popcorn
 routing, custom verbs and real 404-versus-405 handling are native rather than an add-on. It also gained
 PSR-11 for the service locator, PSR-14 for events and PSR-15 for middleware, so a container, listener or
 handler written against those interfaces drops in.</p>
-<p><a href="/basics/applications">Applications &amp; Bootstrap</a> · <a href="/basics/routing">Routing</a> · <a href="https://github.com/popphp/popphp#popphp">popphp README</a></p>
+<p><a href="/basics/applications">Applications &amp; Bootstrap</a> · <a href="/basics/routing">Routing</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/popphp#popphp">popphp README</a></p>
 <p><strong>pop-kettle</strong> — the CLI companion that scaffolds, migrates and manages your application. The <code>kettle</code>
 script in your project root runs <code>pop:init</code> to write the skeleton, <code>db:*</code> and <code>migrate:*</code> for database
 management and migrations, <code>queue:*</code> for job queues, <code>create:*</code> to quickly create stub code files and
 <code>web:*</code> for the development server and asset building. Commands you write yourself in the application
 namespace are autoloaded alongside the built-in ones.</p>
-<p><a href="/console/kettle">Kettle</a> · <a href="https://github.com/popphp/pop-kettle#pop-kettle">pop-kettle README</a></p>
+<p><a href="/console/kettle">Kettle</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-kettle#pop-kettle">pop-kettle README</a></p>
 <p><strong>pop-console</strong> — the output and input layer for console applications: a response buffer, ANSI colors,
 headers and footers, alerts, tables, progress bars, and prompts including a multi-select. It's what
 <code>kettle</code> renders through, and what your own commands render through when you build a CLI application on
 the same <code>Pop\Application</code> object an HTTP application uses.</p>
-<p><a href="/console/applications">Building Console Applications</a> · <a href="https://github.com/popphp/pop-console#pop-console">pop-console README</a></p>
+<p><a href="/console/applications">Building Console Applications</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-console#pop-console">pop-console README</a></p>
 <p><strong>pop-utils</strong> — the shared helper layer every other component leans on: <code>Str</code> and <code>Arr</code> for string and
 array work, <code>Collection</code> for the results of a multi-row query, <code>ArrayObject</code>, <code>CallableObject</code>, <code>DateTime</code>,
 <code>Num</code>, <code>Uuid</code>, <code>File</code> and the type-coercion helpers. <code>Pop\Utils\AbstractModel</code> also lives here in v7,
 having moved out of the core.</p>
-<p><a href="/toolkit/utilities">Utilities &amp; Helpers</a> · <a href="/basics/models">Models</a> · <a href="https://github.com/popphp/pop-utils#pop-utils">pop-utils README</a></p>
+<p><a href="/toolkit/utilities">Utilities &amp; Helpers</a> · <a href="/basics/models">Models</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-utils#pop-utils">pop-utils README</a></p>
 <p><strong>pop-config</strong> — configuration objects loaded from PHP, JSON, INI, XML or YAML. A <code>Config</code> reads as an
 array, an object or a dot path, refuses writes unless you ask for them, and merges another array in with
 either side winning. <code>Pop\Application</code> accepts one directly in place of a bare array.</p>
-<p><a href="/toolkit/config">Config Objects</a> · <a href="/getting-started/configuration">Configuration</a> · <a href="https://github.com/popphp/pop-config#pop-config">pop-config README</a></p>
+<p><a href="/toolkit/config">Config Objects</a> · <a href="/getting-started/configuration">Configuration</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-config#pop-config">pop-config README</a></p>
 <p><strong>pop-code</strong> — generate PHP source with generator objects, or reflect existing source back into them.
 v7 caught the generator up with modern PHP: attributes, enums, readonly properties, constructor
 promotion, variadic and by-reference parameters, typed constants and intersection types. It's the
 engine behind Kettle's <code>create:*</code> commands.</p>
-<p><a href="/toolkit/code-generation">Code Generation</a> · <a href="https://github.com/popphp/pop-code#pop-code">pop-code README</a></p>
+<p><a href="/toolkit/code-generation">Code Generation</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-code#pop-code">pop-code README</a></p>
 <p><strong>pop-debug</strong> — a debugger that collects timing, memory, query, request and exception data during a
 request and stores it for later, through storage adapters for files and databases, a PSR-3 logger, or
 both. v7 added NDJSON storage and automatic redaction of sensitive request data.</p>
-<p><a href="/toolkit/debugging">Debugging</a> · <a href="https://github.com/popphp/pop-debug#pop-debug">pop-debug README</a></p>
+<p><a href="/toolkit/debugging">Debugging</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-debug#pop-debug">pop-debug README</a></p>
 <h2 id="http-api-security">HTTP, API &amp; Security<a class="anchor" href="#http-api-security" aria-label="Link to this section">#</a></h2>
 
 <p>Everything between the network and your application code: parsing what arrives, sending what leaves, and
@@ -75,32 +75,32 @@ stream and mock handlers, a middleware pipeline, promises and curl-command conve
 PSR-7, PSR-17 and PSR-18 compliant alongside its native API, and added a <code>Mock</code> handler that answers
 requests from a canned script, which is what makes code that calls other services testable without a
 network.</p>
-<p><a href="/basics/requests-responses">Requests &amp; Responses</a> · <a href="/toolkit/http-client">HTTP Client</a> · <a href="https://github.com/popphp/pop-http#pop-http">pop-http README</a></p>
+<p><a href="/basics/requests-responses">Requests &amp; Responses</a> · <a href="/toolkit/http-client">HTTP Client</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-http#pop-http">pop-http README</a></p>
 <p><strong>pop-session</strong> — session management with namespaces, so one part of an application cannot read
 another's keys by accident, plus values that expire after a number of requests or a number of seconds.
 v7 turned on secure cookie flags and strict mode by default.</p>
-<p><a href="/basics/sessions">Sessions &amp; Cookies</a> · <a href="https://github.com/popphp/pop-session#pop-session">pop-session README</a></p>
+<p><a href="/basics/sessions">Sessions &amp; Cookies</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-session#pop-session">pop-session README</a></p>
 <p><strong>pop-auth</strong> — authentication, and in v7 authentication only. Two adapters ship: <code>File</code> for a flat
 password file, and <code>Jwt</code> for verifying a signed token's signature and claims. Database-backed
 authentication moved to <code>pop-db</code> as <code>Record\Auth</code>, the HTTP adapter was replaced by using <code>pop-http</code>
 directly, and the LDAP adapter was removed.</p>
-<p><a href="/toolkit/authentication">Authentication</a> · <a href="https://github.com/popphp/pop-auth#pop-auth">pop-auth README</a></p>
+<p><a href="/toolkit/authentication">Authentication</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-auth#pop-auth">pop-auth README</a></p>
 <p><strong>pop-acl</strong> — role-based access control: roles with inheritance, resources, per-role and per-resource
 permissions, assertions that add a runtime condition to a rule, and policies that delegate the decision
 to a method on your own class. <code>pop-form</code> and <code>pop-nav</code> both consume it.</p>
-<p><a href="/toolkit/authorization">Authorization</a> · <a href="https://github.com/popphp/pop-acl#pop-acl">pop-acl README</a></p>
+<p><a href="/toolkit/authorization">Authorization</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-acl#pop-acl">pop-acl README</a></p>
 <p><strong>pop-crypt</strong> — password hashing with bcrypt and Argon2, two-way encryption over OpenSSL and
 Sodium, and HMAC, RSA and EC signature verification. v7 added XChaCha20-Poly1305 and HKDF key
 separation, and the signature verifier is what <code>pop-auth</code>'s JWT adapter checks tokens with.</p>
-<p><a href="/toolkit/encryption">Hashing &amp; Encryption</a> · <a href="https://github.com/popphp/pop-crypt#pop-crypt">pop-crypt README</a></p>
+<p><a href="/toolkit/encryption">Hashing &amp; Encryption</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-crypt#pop-crypt">pop-crypt README</a></p>
 <p><strong>pop-cookie</strong> — cookie management with the same shape as the session API, including the SameSite,
 Secure and HttpOnly flags and array access over the request's cookies. It's a direct requirement of the
 core, so it's present in every install.</p>
-<p><a href="/basics/sessions">Sessions &amp; Cookies</a> · <a href="https://github.com/popphp/pop-cookie#pop-cookie">pop-cookie README</a></p>
+<p><a href="/basics/sessions">Sessions &amp; Cookies</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-cookie#pop-cookie">pop-cookie README</a></p>
 <p><strong>pop-mime</strong> — MIME message parsing and building: headers with their parameters, single and multipart
 bodies, base64 and quoted-printable encoding, and multipart form data. v7 moved <code>pop-mail</code>'s message and
 part classes here, so this is now where a mail message is actually assembled.</p>
-<p><a href="/toolkit/mime">MIME</a> · <a href="https://github.com/popphp/pop-mime#pop-mime">pop-mime README</a></p>
+<p><a href="/toolkit/mime">MIME</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-mime#pop-mime">pop-mime README</a></p>
 <h2 id="data">Data<a class="anchor" href="#data" aria-label="Link to this section">#</a></h2>
 
 <p>Getting data in, checking it, storing it and getting it back out. <code>pop-db</code> is the large one and has six
@@ -113,30 +113,30 @@ relationships and eager loading. v7 turned the shorthand predicate syntax into a
 added lifecycle hooks and mass-assignment protection, and absorbed <code>pop-auth</code>'s table adapter as
 <code>Record\Auth</code>. It has no dependency on the framework core, and the core has no dependency on it — an
 application that never touches a database never loads any of this.</p>
-<p><a href="/database/connecting">Connecting &amp; Adapters</a> · <a href="/database/records">Records &amp; the ORM</a> · <a href="https://github.com/popphp/pop-db#pop-db">pop-db README</a></p>
+<p><a href="/database/connecting">Connecting &amp; Adapters</a> · <a href="/database/records">Records &amp; the ORM</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-db#pop-db">pop-db README</a></p>
 <p><strong>pop-audit</strong> — application auditing: record what changed on a model, who changed it and when, and send
 it to a database table or a remote HTTP endpoint. It reads a record's dirty attributes, so the audit
 trail is the diff rather than a full copy of the row.</p>
-<p><a href="/toolkit/auditing">Auditing</a> · <a href="https://github.com/popphp/pop-audit#pop-audit">pop-audit README</a></p>
+<p><a href="/toolkit/auditing">Auditing</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-audit#pop-audit">pop-audit README</a></p>
 <p><strong>pop-csv</strong> — read and write CSV from PHP arrays, with control over delimiters, enclosures, escapes,
 which columns to include, and how nested values collapse into a cell. v7 added a generator row reader for
 files too large to hold in memory, and formula-injection escaping for output opened in a spreadsheet.</p>
-<p><a href="/toolkit/csv">CSV</a> · <a href="https://github.com/popphp/pop-csv#pop-csv">pop-csv README</a></p>
+<p><a href="/toolkit/csv">CSV</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-csv#pop-csv">pop-csv README</a></p>
 <p><strong>pop-validator</strong> — validate a value against a rule object: types, ranges, lengths, counts, dates,
 regular expressions, credit cards, email addresses and set membership, each a class you construct with
 its bound and call. <code>pop-form</code> uses it for field validation, and it works standalone on any value.</p>
-<p><a href="/basics/forms">Forms &amp; Validation</a> · <a href="https://github.com/popphp/pop-validator#pop-validator">pop-validator README</a></p>
+<p><a href="/basics/forms">Forms &amp; Validation</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-validator#pop-validator">pop-validator README</a></p>
 <p><strong>pop-filter</strong> — filter and sanitize values on the way in or the way out, by naming a callable and its
 arguments. <code>pop-form</code>, <code>pop-http</code> and <code>pop-view</code> all route their filtering through it rather than
 carrying their own.</p>
-<p><a href="/basics/forms">Forms &amp; Validation</a> · <a href="https://github.com/popphp/pop-filter#pop-filter">pop-filter README</a></p>
+<p><a href="/basics/forms">Forms &amp; Validation</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-filter#pop-filter">pop-filter README</a></p>
 <p><strong>pop-parser</strong> — new in v7. Two native parsers with no third-party dependencies:
 <code>Pop\Parser\Address\AddressParser</code> breaks a free-form US or Canadian street address into street number,
 name, route type, direction, unit, city, state, postal code and country, detecting PO boxes; and
 <code>Pop\Parser\Name\NameParser</code> breaks a personal name into salutation, first, middle and last name,
 surname prefix, initials, nickname and suffix, including the <code>Last, First</code> form. Both construct with or
 without data, parse, and read back through <code>get*()</code> methods, <code>toArray()</code> or a string cast.</p>
-<p><a href="/toolkit/parsing">Name &amp; Address Parsing</a> · <a href="https://github.com/popphp/pop-parser#pop-parser">pop-parser README</a></p>
+<p><a href="/toolkit/parsing">Name &amp; Address Parsing</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-parser#pop-parser">pop-parser README</a></p>
 <h2 id="views-front-end">Views &amp; Front-End<a class="anchor" href="#views-front-end" aria-label="Link to this section">#</a></h2>
 
 <p>Turning data into what a browser receives. <code>pop-view</code> is a robust component to cleanly and securely
@@ -148,31 +148,31 @@ stream template with its own small language for iteration, conditionals, include
 v7 can compile stream templates to PHP so every render after the first is an <code>include</code>, and fixed
 multi-block inheritance, which in v6 resolved only a block named <code>header</code>. A controller does not have to
 use it: rendering a template is a call you make, not a step the framework takes on your behalf.</p>
-<p><a href="/basics/views">Views &amp; Templates</a> · <a href="https://github.com/popphp/pop-view#pop-view">pop-view README</a></p>
+<p><a href="/basics/views">Views &amp; Templates</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-view#pop-view">pop-view README</a></p>
 <p><strong>pop-form</strong> — build a form from a config array, render it, and validate and filter what comes back,
 with errors attached to the fields that produced them. It integrates with <code>pop-validator</code> for rules,
 <code>pop-filter</code> for sanitizing and <code>pop-acl</code> for hiding fields a role may not see. v7 rebuilt CSRF
 protection as per-field tokens compared in constant time, and added ARIA attributes.</p>
-<p><a href="/basics/forms">Forms &amp; Validation</a> · <a href="https://github.com/popphp/pop-form#pop-form">pop-form README</a></p>
+<p><a href="/basics/forms">Forms &amp; Validation</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-form#pop-form">pop-form README</a></p>
 <p><strong>pop-nav</strong> — render a navigation tree from a config array, with per-branch attributes, an active-state
 class driven by the current URL, and ACL filtering so a branch a role cannot reach never renders.</p>
-<p><a href="/toolkit/navigation">Navigation</a> · <a href="https://github.com/popphp/pop-nav#pop-nav">pop-nav README</a></p>
+<p><a href="/toolkit/navigation">Navigation</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-nav#pop-nav">pop-nav README</a></p>
 <p><strong>pop-paginator</strong> — turn a total row count and a per-page size into either a range of page links or a
 jump-to-page form, with bookends and ellipsis handling for sets too large to list every page of.</p>
-<p><a href="/toolkit/pagination">Pagination</a> · <a href="https://github.com/popphp/pop-paginator#pop-paginator">pop-paginator README</a></p>
+<p><a href="/toolkit/pagination">Pagination</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-paginator#pop-paginator">pop-paginator README</a></p>
 <p><strong>pop-dom</strong> — build, render and parse XML and HTML as a tree of <code>Child</code> nodes, each with attributes,
 child nodes and a node value. It's what <code>pop-form</code> and <code>pop-nav</code> render through. v7 escapes
 attribute values, which is a security fix and a behavior change for anything that was escaping them
 itself.</p>
-<p><a href="/toolkit/dom">DOM</a> · <a href="https://github.com/popphp/pop-dom#pop-dom">pop-dom README</a></p>
+<p><a href="/toolkit/dom">DOM</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-dom#pop-dom">pop-dom README</a></p>
 <p><strong>pop-css</strong> — generate a stylesheet from selector and declaration objects, parse an existing one back
 into them, and minify either. Color values go through <code>pop-color</code>, so a declaration can take a color in
 any space the color component understands.</p>
-<p><a href="/toolkit/css">CSS &amp; Color</a> · <a href="https://github.com/popphp/pop-css#pop-css">pop-css README</a></p>
+<p><a href="/toolkit/css">CSS &amp; Color</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-css#pop-css">pop-css README</a></p>
 <p><strong>pop-i18n</strong> — translate application strings from XML or JSON language files, with positional
 parameters and alternate phrasings under one source string. Files are per language and region, and the
 component escapes what it renders.</p>
-<p><a href="/toolkit/i18n">I18n</a> · <a href="https://github.com/popphp/pop-i18n#pop-i18n">pop-i18n README</a></p>
+<p><a href="/toolkit/i18n">I18n</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-i18n#pop-i18n">pop-i18n README</a></p>
 <h2 id="infrastructure">Infrastructure<a class="anchor" href="#infrastructure" aria-label="Link to this section">#</a></h2>
 
 <p>The parts of an application that keep running when nobody is looking at a browser. Each of these is an
@@ -185,28 +185,28 @@ reserve, release, bury — so a worker that dies mid-job no longer loses it, and
 store, a worker registry with heartbeats, and daemon loops with signal handling. Kettle's <code>queue:*</code>
 commands drive all of it from the project root, so running a worker does not need an application script
 of your own.</p>
-<p><a href="/toolkit/queues">Queues &amp; Scheduled Tasks</a> · <a href="https://github.com/popphp/pop-queue#pop-queue">pop-queue README</a></p>
+<p><a href="/toolkit/queues">Queues &amp; Scheduled Tasks</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-queue#pop-queue">pop-queue README</a></p>
 <p><strong>pop-cache</strong> — one caching API over adapters for files, Redis, Memcached, APCu, a database table, the
 session, memory and a null sink. v7 added PSR-6 and PSR-16 surfaces alongside the native one, plus
 <code>remember()</code> with stampede protection, tag-based invalidation, atomic counters and an injectable clock
 for deterministic TTL tests.</p>
-<p><a href="/toolkit/cache">Cache</a> · <a href="https://github.com/popphp/pop-cache#pop-cache">pop-cache README</a></p>
+<p><a href="/toolkit/cache">Cache</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-cache#pop-cache">pop-cache README</a></p>
 <p><strong>pop-log</strong> — logging through writers for files, syslog, a stream such as stdout, a database table,
 mail and an HTTP endpoint. v7 made it a real PSR-3 logger: string levels, placeholder interpolation,
 context processors, pluggable formatters and JSON Lines output.</p>
-<p><a href="/toolkit/logging">Logging</a> · <a href="https://github.com/popphp/pop-log#pop-log">pop-log README</a></p>
+<p><a href="/toolkit/logging">Logging</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-log#pop-log">pop-log README</a></p>
 <p><strong>pop-mail</strong> — compose and send mail over SMTP, sendmail, or the hosted APIs for Mailgun, SendGrid,
 Office 365, Amazon SES and Google; read it back over IMAP or the Office 365 and Google clients. It also
 queues messages to a directory and sends them later. Message assembly moved to <code>pop-mime</code> in v7.</p>
-<p><a href="/toolkit/mail">Mail</a> · <a href="https://github.com/popphp/pop-mail#pop-mail">pop-mail README</a></p>
+<p><a href="/toolkit/mail">Mail</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-mail#pop-mail">pop-mail README</a></p>
 <p><strong>pop-storage</strong> — one file API over local disk, AWS S3 and Azure Blob, so the calling code does not
 change when the backend does. v7 added streaming put and fetch for large objects, presigned URLs and
 path-traversal rejection.</p>
-<p><a href="/toolkit/storage">File Storage</a> · <a href="https://github.com/popphp/pop-storage#pop-storage">pop-storage README</a></p>
+<p><a href="/toolkit/storage">File Storage</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-storage#pop-storage">pop-storage README</a></p>
 <p><strong>pop-dir</strong> — directory traversal and file listing: recursive or flat, absolute or relative paths,
 filtered by search string, with the entries available by array access. v7 collapsed it to a single
 filesystem walk.</p>
-<p><a href="/toolkit/storage">File Storage</a> · <a href="https://github.com/popphp/pop-dir#pop-dir">pop-dir README</a></p>
+<p><a href="/toolkit/storage">File Storage</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-dir#pop-dir">pop-dir README</a></p>
 <h2 id="media-documents">Media &amp; Documents<a class="anchor" href="#media-documents" aria-label="Link to this section">#</a></h2>
 
 <p>Producing files a person opens rather than a browser renders. Often overlooked until it's needed,
@@ -219,12 +219,12 @@ a native <code>Pop\Pdf\Extract</code> engine — cross-reference and object stre
 CID font decoding — replacing the third-party parser v6 depended on. It's the largest single addition
 in the release, and it's what makes reading, merging and OCR-routing a PDF possible without shelling out
 to an external tool.</p>
-<p><a href="/toolkit/pdf">PDFs</a> · <a href="https://github.com/popphp/pop-pdf#pop-pdf">pop-pdf README</a></p>
+<p><a href="/toolkit/pdf">PDFs</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-pdf#pop-pdf">pop-pdf README</a></p>
 <p><strong>pop-image</strong> — resize, crop, scale, convert, adjust, filter and draw on images through either GD or
 Imagick, behind one API. Effects, layers, drawing and text each have their own object reached from the
 image.</p>
-<p><a href="/toolkit/images">Images</a> · <a href="https://github.com/popphp/pop-image#pop-image">pop-image README</a></p>
+<p><a href="/toolkit/images">Images</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-image#pop-image">pop-image README</a></p>
 <p><strong>pop-color</strong> — color values and conversion across twelve spaces: RGB, hex, CMYK, grayscale, HSL, HSB,
 HSV, HWB, Lab, Lch, Oklab and Oklch. Seven of those are new in v7, along with CSS Color 4 parsing and
 rendering and hex with alpha. <code>pop-css</code> and <code>pop-pdf</code> both use it.</p>
-<p><a href="/toolkit/css">CSS &amp; Color</a> · <a href="https://github.com/popphp/pop-color#pop-color">pop-color README</a></p>
+<p><a href="/toolkit/css">CSS &amp; Color</a> · <a rel="noopener noreferrer" target="_blank" class="external" href="https://github.com/popphp/pop-color#pop-color">pop-color README</a></p>

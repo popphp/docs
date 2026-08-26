@@ -215,3 +215,14 @@
         @apply text-[13px];
     }
 }
+
+@layer components {
+    /* A link that leaves the docs carries a mark, so a reader knows before clicking that the
+       tab is about to change. The renderer adds .external; the glyph is a mask so it inherits
+       the link's color in both themes. */
+    .prose a.external::after {
+        content: "";
+        @apply ml-1 inline-block h-[0.72em] w-[0.72em] shrink-0 bg-current align-[-0.02em] opacity-70;
+        mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6'/%3E%3Cpath d='M20 4 11 13'/%3E%3Cpath d='M18 14v5a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 19V8.6A1.6 1.6 0 0 1 5.6 7h5'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+}

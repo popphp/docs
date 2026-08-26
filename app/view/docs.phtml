@@ -27,8 +27,8 @@ $attr = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTE
          @click="$store.docs.closeNav()"></div>
 
     <aside id="docs-nav" aria-label="Documentation sections"
-           class="fixed inset-y-0 left-0 z-40 w-[300px] max-w-[85vw] overflow-y-auto border-r border-line bg-panel px-3 pt-[72px] transition-transform duration-200
-                  lg:sticky lg:top-[72px] lg:z-auto lg:max-h-[calc(100vh-92px)] lg:w-60 lg:shrink-0 lg:translate-x-0 lg:border-0 lg:bg-transparent lg:px-0 lg:pt-0"
+           class="fixed inset-y-0 left-0 z-40 w-[300px] max-w-[85vw] overflow-y-auto border-r border-line bg-panel px-3 pt-[78px] transition-transform duration-200
+                  lg:sticky lg:top-[78px] lg:z-auto lg:max-h-[calc(100vh-98px)] lg:w-60 lg:shrink-0 lg:translate-x-0 lg:border-0 lg:bg-transparent lg:px-0 lg:pt-0"
            :class="$store.docs.nav ? 'translate-x-0' : '-translate-x-full'">
 <?php include __DIR__ . '/partials/nav.phtml'; ?>
     </aside>
@@ -40,7 +40,7 @@ $attr = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTE
 <?php if (!empty($components)): ?>
         <div class="mb-7 flex flex-wrap gap-2">
 <?php foreach ($components as $component): ?>
-            <a href="https://github.com/popphp/<?=$attr($component) ?>" class="tag"><?=$attr($component) ?></a>
+            <a href="https://github.com/popphp/<?=$attr($component) ?>" class="tag" target="_blank" rel="noopener noreferrer"><?=$attr($component) ?></a>
 <?php endforeach; ?>
         </div>
 <?php endif; ?>
@@ -82,7 +82,7 @@ $attr = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTE
     </main>
 
 <?php if (!empty($headings)): ?>
-    <aside class="sticky top-[72px] hidden max-h-[calc(100vh-92px)] w-52 shrink-0 overflow-y-auto xl:block" x-data="reading">
+    <aside class="sticky top-[78px] hidden max-h-[calc(100vh-98px)] w-52 shrink-0 overflow-y-auto xl:block" x-data="reading">
         <div class="eyebrow mb-3 text-[10.5px]">On this page</div>
         <nav class="flex flex-col" aria-label="On this page">
 <?php foreach ($headings as $heading): ?>
