@@ -15,11 +15,11 @@ class IndexController extends AbstractController
     public function route(): void
     {
         $uri     = $this->request->getUriAsString();
-        $version = '';
-        if (preg_match('/^\/\d\.\d\/?/', $uri)) {
-            $version = substr($uri, 0, 4);
-            $uri     = substr($uri, 4);
-        }
+        $version = '/6.x';
+//        if (preg_match('/^\/\d\.\d\/?/', $uri)) {
+//            $version = substr($uri, 0, 4);
+//            $uri     = substr($uri, 4);
+//        }
 
         $template = (($uri == '') || ($uri == '/')) ? '/index' : $uri;
 
