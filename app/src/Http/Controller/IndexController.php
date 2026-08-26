@@ -14,18 +14,12 @@ class IndexController extends AbstractController
      */
     public function route(): void
     {
-        $uri     = $this->request->getUriAsString();
-        $version = '/6.x';
-//        if (preg_match('/^\/\d\.\d\/?/', $uri)) {
-//            $version = substr($uri, 0, 4);
-//            $uri     = substr($uri, 4);
-//        }
-
+        $uri      = $this->request->getUriAsString();
         $template = (($uri == '') || ($uri == '/')) ? '/index' : $uri;
 
-        if (file_exists($this->viewPath . $version . $template . '.phtml')) {
-            $this->prepareView($version . $template);
-            $this->view->version = $version;
+        if (file_exists($this->viewPath . $template . '.phtml')) {
+            $this->prepareView($template);
+            $this->view->version = '/6.x';
             $this->send();
         } else {
             $this->error();
@@ -41,11 +35,11 @@ class IndexController extends AbstractController
     {
         $searchModel = new Model\Search();
         $query       = htmlentities(strip_tags($this->request->getQuery('query')), ENT_QUOTES, 'UTF-8');
-        $version     = strip_tags($this->request->getQuery('version'));
+        $version     = '/6.x';
 
         $this->prepareView('search');
         $this->view->query   = $query;
-        $this->view->version = $version;
+        $this->view->version = '/6.x';
         $this->view->results = (!empty($query)) ? $searchModel->search($query, $version) : [];
 
         $this->send();
@@ -60,7 +54,7 @@ class IndexController extends AbstractController
     {
         $this->prepareView('error');
         $this->view->title   = '404 : Page Not Found';
-        $this->view->version = '';
+        $this->view->version = '/6.x';
         $this->send(404);
     }
 
@@ -73,7 +67,7 @@ class IndexController extends AbstractController
     {
         $this->prepareView('maintenance');
         $this->view->title   = 'Down for Maintenance';
-        $this->view->version = '';
+        $this->view->version = '/6.x';
         $this->send(503);
     }
 
