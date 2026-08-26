@@ -16,11 +16,13 @@ return [
                 'action'     => 'index'
             ],
         ],
+        // The catch-all sits at the top level, not inside a method group: the router treats a
+        // bare method name as a group key but never '*', so nesting it registered a wildcard
+        // route whose controller spec was another route array — malformed, and every unmatched
+        // path fell through to the router's own bare 404 instead of reaching the controller.
         '*' => [
-            '*' => [
-                'controller' => 'Pop\Docs\Http\Controller\IndexController',
-                'action'     => 'error'
-            ]
+            'controller' => 'Pop\Docs\Http\Controller\IndexController',
+            'action'     => 'error'
         ]
     ],
 

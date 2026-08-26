@@ -26,38 +26,38 @@ an application from a CLI routes config and runs it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>#!/usr/bin/env php
-<span class="text-var">&lt;?php
-$autoloader </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/vendor/autoload.php&#039;</span><span class="text-kw">;
+<span class="text-kw">&lt;?php
+</span><span class="text-var">$autoloader</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/vendor/autoload.php&#039;</span>;
 
-</span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app/config/app.cli.php&#039;</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app/config/app.cli.php&#039;</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p><code>Pop\Application</code> decides which router to build by looking at how PHP was invoked, so nothing in that
 script says &quot;this is CLI&quot;. The route table is what makes it a console application:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.cli.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;users list [--limit=]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\UsersController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;help&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;List the users&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;help&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;help&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;help&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Show the help screen&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;*&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;error&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;users list [--limit=]&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\UsersController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>,
+            <span class="text-str">&#039;help&#039;</span>       =&gt; <span class="text-str">&#039;List the users&#039;</span>
+        ],
+        <span class="text-str">&#039;help&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;help&#039;</span>,
+            <span class="text-str">&#039;help&#039;</span>       =&gt; <span class="text-str">&#039;Show the help screen&#039;</span>
+        ],
+        <span class="text-str">&#039;*&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;error&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A controller reaches the console the same way an HTTP controller reaches the request and response — through
@@ -65,26 +65,26 @@ a trait. <code>Pop\Dispatch\ConsoleTrait</code> supplies a constructor taking th
 <code>Pop\Console\Console</code>, the second defaulted, so <code>$this-&gt;console</code> and <code>$this-&gt;application</code> are both there:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Console/Controller/UsersController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Console\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Console\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Controller\AbstractController</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Dispatch\ConsoleTrait</span>;
 
-use </span><span class="text-var">Pop\Controller\AbstractController</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Dispatch\ConsoleTrait</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">UsersController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">UsersController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
+    <span class="text-kw">use</span> <span class="text-type">ConsoleTrait</span>;
 
-    use </span><span class="text-var">ConsoleTrait</span><span class="text-kw">;
-
-    public function </span><span class="text-var">index</span><span class="text-kw">(array </span><span class="text-var">$options </span><span class="text-kw">= []): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$limit </span><span class="text-kw">= </span><span class="text-var">$options</span><span class="text-kw">[</span><span class="text-str">&#039;limit&#039;</span><span class="text-kw">] ?? </span><span class="text-str">&#039;all&#039;</span><span class="text-kw">;
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;Listing &#039; </span><span class="text-kw">. </span><span class="text-var">$limit </span><span class="text-kw">. </span><span class="text-str">&#039; users.&#039;</span><span class="text-kw">);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">index</span>(<span class="text-kw">array</span> <span class="text-var">$options</span> = []): <span class="text-type">void</span>
+    {
+        <span class="text-var">$limit</span> = <span class="text-var">$options</span>[<span class="text-str">&#039;limit&#039;</span>] <span class="text-kw">??</span> <span class="text-str">&#039;all&#039;</span>;
+        <span class="text-var">$this</span>-&gt;<span class="text-type">console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;Listing &#039;</span> . <span class="text-var">$limit</span> . <span class="text-str">&#039; users.&#039;</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -108,33 +108,33 @@ all, and the user has no way to tell a typo from a command that did nothing. Rou
 says so:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Console/Controller/ConsoleController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Console\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Console\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Controller\AbstractController</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Dispatch\ConsoleTrait</span>;
 
-use </span><span class="text-var">Pop\Controller\AbstractController</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Dispatch\ConsoleTrait</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">ConsoleController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">ConsoleController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
+    <span class="text-kw">use</span> <span class="text-type">ConsoleTrait</span>;
 
-    use </span><span class="text-var">ConsoleTrait</span><span class="text-kw">;
-
-    public function </span><span class="text-var">help</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">console</span><span class="text-kw">-&gt;</span><span class="text-var">addCommandsFromRoutes</span><span class="text-kw">(
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">application</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">getRouteMatch</span><span class="text-kw">(), </span><span class="text-str">&#039;./app&#039;
-        </span><span class="text-kw">);
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">console</span><span class="text-kw">-&gt;</span><span class="text-var">help</span><span class="text-kw">();
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">help</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-type">console</span>-&gt;<span class="text-fn">addCommandsFromRoutes</span>(
+            <span class="text-var">$this</span>-&gt;<span class="text-type">application</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">getRouteMatch</span>(), <span class="text-str">&#039;./app&#039;</span>
+        );
+        <span class="text-var">$this</span>-&gt;<span class="text-type">console</span>-&gt;<span class="text-fn">help</span>();
     }
 
-    public function </span><span class="text-var">error</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">console</span><span class="text-kw">-&gt;</span><span class="text-var">alertDanger</span><span class="text-kw">(</span><span class="text-str">&#039;Invalid command&#039;</span><span class="text-kw">, </span><span class="text-var">40</span><span class="text-kw">);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">error</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-type">console</span>-&gt;<span class="text-fn">alertDanger</span>(<span class="text-str">&#039;Invalid command&#039;</span>, <span class="text-num">40</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Two routes, a controller each, and the application answers both a real command and a wrong one. The rest
@@ -154,17 +154,17 @@ it finds:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>#!/usr/bin/env php
-<span class="text-var">&lt;?php
-$autoloader </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/vendor/autoload.php&#039;</span><span class="text-kw">;
+<span class="text-kw">&lt;?php
+</span><span class="text-var">$autoloader</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/vendor/autoload.php&#039;</span>;
 
-</span><span class="text-var">$config </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app/config/app.cli.php&#039;</span><span class="text-kw">;
-</span><span class="text-var">$config</span><span class="text-kw">[</span><span class="text-str">&#039;routes&#039;</span><span class="text-kw">] = </span><span class="text-var">Pop\Console\CommandRegistry</span><span class="text-kw">::</span><span class="text-var">loadRoutes</span><span class="text-kw">(
-    </span><span class="text-var">$config</span><span class="text-kw">[</span><span class="text-str">&#039;routes&#039;</span><span class="text-kw">], </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app/src/Console/Command&#039;
-</span><span class="text-kw">);
+<span class="text-var">$config</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app/config/app.cli.php&#039;</span>;
+<span class="text-var">$config</span>[<span class="text-str">&#039;routes&#039;</span>] = <span class="text-type">Pop\Console\CommandRegistry</span>::<span class="text-fn">loadRoutes</span>(
+    <span class="text-var">$config</span>[<span class="text-str">&#039;routes&#039;</span>], <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app/src/Console/Command&#039;</span>
+);
 
-</span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, </span><span class="text-var">$config</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-var">$config</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p>Each <code>.php</code> file holds one loadable class named after the file, and every class in a directory shares the
@@ -173,17 +173,17 @@ string cast, so a command class names itself. A <code>UsersList</code> class nam
 <code>[--limit=]</code> comes back as:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$config</span><span class="text-kw">[</span><span class="text-str">&#039;routes&#039;</span><span class="text-kw">] = [
-    </span><span class="text-str">&#039;users list [--limit=]&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Command\UsersList&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;help&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;List the users&#039;
-    </span><span class="text-kw">],
-    </span><span class="text-str">&#039;help&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;help&#039;
-    </span><span class="text-kw">]
+<pre><code><span class="text-var">$config</span>[<span class="text-str">&#039;routes&#039;</span>] = [
+    <span class="text-str">&#039;users list [--limit=]&#039;</span> =&gt; [
+        <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Command\UsersList&#039;</span>,
+        <span class="text-str">&#039;help&#039;</span>       =&gt; <span class="text-str">&#039;List the users&#039;</span>
+    ],
+    <span class="text-str">&#039;help&#039;</span> =&gt; [
+        <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span>,
+        <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;help&#039;</span>
+    ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The third argument, <code>$prepend</code>, defaults to <code>true</code> and merges discovered routes before the ones you passed,
@@ -196,23 +196,23 @@ so your explicit route wins a key collision. Pass <code>false</code> to let the 
 the console is what puts it on the help screen:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Command</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Command</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$users </span><span class="text-kw">= new </span><span class="text-var">Command</span><span class="text-kw">(</span><span class="text-var">name</span><span class="text-kw">: </span><span class="text-str">&#039;users list&#039;</span><span class="text-kw">);
-</span><span class="text-var">$users</span><span class="text-kw">-&gt;</span><span class="text-var">setParams</span><span class="text-kw">(</span><span class="text-str">&#039;[--limit=]&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setHelp</span><span class="text-kw">(</span><span class="text-str">&#039;List the users&#039;</span><span class="text-kw">);
+<span class="text-var">$users</span> = <span class="text-kw">new</span> <span class="text-type">Command</span>(<span class="text-type">name</span>: <span class="text-str">&#039;users list&#039;</span>);
+<span class="text-var">$users</span>-&gt;<span class="text-fn">setParams</span>(<span class="text-str">&#039;[--limit=]&#039;</span>)
+    -&gt;<span class="text-fn">setHelp</span>(<span class="text-str">&#039;List the users&#039;</span>);
 
-</span><span class="text-var">$roles </span><span class="text-kw">= new </span><span class="text-var">Command</span><span class="text-kw">(</span><span class="text-var">name</span><span class="text-kw">: </span><span class="text-str">&#039;roles list&#039;</span><span class="text-kw">, </span><span class="text-var">params</span><span class="text-kw">: </span><span class="text-str">&#039;[--limit=]&#039;</span><span class="text-kw">, </span><span class="text-var">help</span><span class="text-kw">: </span><span class="text-str">&#039;List the roles&#039;</span><span class="text-kw">);
+<span class="text-var">$roles</span> = <span class="text-kw">new</span> <span class="text-type">Command</span>(<span class="text-type">name</span>: <span class="text-str">&#039;roles list&#039;</span>, <span class="text-type">params</span>: <span class="text-str">&#039;[--limit=]&#039;</span>, <span class="text-type">help</span>: <span class="text-str">&#039;List the roles&#039;</span>);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">addCommands</span><span class="text-kw">([</span><span class="text-var">$users</span><span class="text-kw">, </span><span class="text-var">$roles</span><span class="text-kw">]);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">addCommands</span>([<span class="text-var">$users</span>, <span class="text-var">$roles</span>]);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">hasCommand</span><span class="text-kw">(</span><span class="text-str">&#039;users list&#039;</span><span class="text-kw">);   </span><span class="text-comment">// true
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">getCommand</span><span class="text-kw">(</span><span class="text-str">&#039;roles list&#039;</span><span class="text-kw">);   </span><span class="text-comment">// the $roles object, or null
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">getCommands</span><span class="text-kw">();              </span><span class="text-comment">// [&#039;users list&#039; =&gt; $users, &#039;roles list&#039; =&gt; $roles]
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">hasCommand</span>(<span class="text-str">&#039;users list&#039;</span>);   <span class="text-comment">// true</span>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">getCommand</span>(<span class="text-str">&#039;roles list&#039;</span>);   <span class="text-comment">// the $roles object, or null</span>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">getCommands</span>();              <span class="text-comment">// [&#039;users list&#039; =&gt; $users, &#039;roles list&#039; =&gt; $roles]</span>
+</code></pre>
 </div>
 
 <p><code>addCommand()</code> takes one, <code>addCommands()</code> takes an array. The named arguments are the constructor's
@@ -224,30 +224,30 @@ so a route can point at a <code>Command</code> subclass with no <code>action</co
 whatever signature the route's parameters call for:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Console/Command/UsersShow.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Console\Command</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Console\Command</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Command</span>;
 
-use </span><span class="text-var">Pop\Console\Command</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">UsersShow</span> <span class="text-kw">extends</span> <span class="text-type">Command</span>
+{
 
-class </span><span class="text-var">UsersShow </span><span class="text-kw">extends </span><span class="text-var">Command
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">__construct</span><span class="text-kw">(...</span><span class="text-var">$args</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">__construct</span>(<span class="text-kw">...</span><span class="text-var">$args</span>)
     {
-        </span><span class="text-var">parent</span><span class="text-kw">::</span><span class="text-var">__construct</span><span class="text-kw">(...</span><span class="text-var">$args</span><span class="text-kw">);
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">setName</span><span class="text-kw">(</span><span class="text-str">&#039;users show&#039;</span><span class="text-kw">)
-            -&gt;</span><span class="text-var">setParams</span><span class="text-kw">(</span><span class="text-str">&#039;&lt;id&gt;&#039;</span><span class="text-kw">)
-            -&gt;</span><span class="text-var">setHelp</span><span class="text-kw">(</span><span class="text-str">&#039;Show one user&#039;</span><span class="text-kw">);
+        <span class="text-type">parent</span>::<span class="text-fn">__construct</span>(<span class="text-kw">...</span><span class="text-var">$args</span>);
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">setName</span>(<span class="text-str">&#039;users show&#039;</span>)
+            -&gt;<span class="text-fn">setParams</span>(<span class="text-str">&#039;&lt;id&gt;&#039;</span>)
+            -&gt;<span class="text-fn">setHelp</span>(<span class="text-str">&#039;Show one user&#039;</span>);
     }
 
-    public function </span><span class="text-var">handle</span><span class="text-kw">(</span><span class="text-var">string $id</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">console</span><span class="text-kw">()-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;Showing user &#039; </span><span class="text-kw">. </span><span class="text-var">$id</span><span class="text-kw">);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">handle</span>(<span class="text-type">string</span> <span class="text-var">$id</span>): <span class="text-type">void</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">console</span>()-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;Showing user &#039;</span> . <span class="text-var">$id</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -284,16 +284,16 @@ help screen.</p>
 that exist so an application does not spend its time counting dashes.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">(</span><span class="text-var">40</span><span class="text-kw">);
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>(<span class="text-num">40</span>);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;Migrating the database.&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">line</span><span class="text-kw">();
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">line</span><span class="text-kw">(</span><span class="text-str">&#039;=&#039;</span><span class="text-kw">, </span><span class="text-var">20</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">header</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">header</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;=&#039;</span><span class="text-kw">, </span><span class="text-var">40</span><span class="text-kw">, </span><span class="text-str">&#039;center&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;Migrating the database.&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">line</span>();
+<span class="text-var">$console</span>-&gt;<span class="text-fn">line</span>(<span class="text-str">&#039;=&#039;</span>, <span class="text-num">20</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">header</span>(<span class="text-str">&#039;Hello World&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">header</span>(<span class="text-str">&#039;Hello World&#039;</span>, <span class="text-str">&#039;=&#039;</span>, <span class="text-num">40</span>, <span class="text-str">&#039;center&#039;</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -315,15 +315,15 @@ to <code>'auto'</code> — the wrap width, falling back to the terminal's own wi
 <p>Alerts are the loud option: a padded, colored block for something the user has to notice.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">(</span><span class="text-var">40</span><span class="text-kw">);
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>(<span class="text-num">40</span>);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">alertDanger</span><span class="text-kw">(</span><span class="text-str">&#039;Migration failed&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;auto&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">alertWarning</span><span class="text-kw">(</span><span class="text-str">&#039;Two tables were skipped&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;auto&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">alertSuccess</span><span class="text-kw">(</span><span class="text-str">&#039;Migration complete&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;auto&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">alertInfo</span><span class="text-kw">(</span><span class="text-str">&#039;Nothing to do&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;auto&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">alertDanger</span>(<span class="text-str">&#039;Migration failed&#039;</span>, <span class="text-str">&#039;auto&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">alertWarning</span>(<span class="text-str">&#039;Two tables were skipped&#039;</span>, <span class="text-str">&#039;auto&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">alertSuccess</span>(<span class="text-str">&#039;Migration complete&#039;</span>, <span class="text-str">&#039;auto&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">alertInfo</span>(<span class="text-str">&#039;Nothing to do&#039;</span>, <span class="text-str">&#039;auto&#039;</span>);
+</code></pre>
 </div>
 
 <p>Each renders three lines — a blank line, the centered message, a blank line — filled with the alert's
@@ -331,12 +331,12 @@ background color. <code>alertPrimary()</code>, <code>alertSecondary()</code>, <c
 set. <code>alertBox()</code> is the colorless one, drawing a border out of characters you choose instead:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">(</span><span class="text-var">40</span><span class="text-kw">);
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>(<span class="text-num">40</span>);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">alertBox</span><span class="text-kw">(</span><span class="text-str">&#039;Boxed&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;-&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;|&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;auto&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">alertBox</span>(<span class="text-str">&#039;Boxed&#039;</span>, <span class="text-str">&#039;-&#039;</span>, <span class="text-str">&#039;|&#039;</span>, <span class="text-str">&#039;auto&#039;</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -355,13 +355,13 @@ hands back the rendered string instead of printing it, which is how you put one 
 something else — a string you are building, a value you are testing against:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">(</span><span class="text-var">40</span><span class="text-kw">);
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>(<span class="text-num">40</span>);
 
-</span><span class="text-var">$header </span><span class="text-kw">= </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">header</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;-&#039;</span><span class="text-kw">, </span><span class="text-var">40</span><span class="text-kw">, </span><span class="text-str">&#039;left&#039;</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
-</span><span class="text-var">$alert  </span><span class="text-kw">= </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">alertSuccess</span><span class="text-kw">(</span><span class="text-str">&#039;Done&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;auto&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;center&#039;</span><span class="text-kw">, </span><span class="text-var">4</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$header</span> = <span class="text-var">$console</span>-&gt;<span class="text-fn">header</span>(<span class="text-str">&#039;Hello World&#039;</span>, <span class="text-str">&#039;-&#039;</span>, <span class="text-num">40</span>, <span class="text-str">&#039;left&#039;</span>, <span class="text-num">true</span>, <span class="text-num">true</span>);
+<span class="text-var">$alert</span>  = <span class="text-var">$console</span>-&gt;<span class="text-fn">alertSuccess</span>(<span class="text-str">&#039;Done&#039;</span>, <span class="text-str">&#039;auto&#039;</span>, <span class="text-str">&#039;center&#039;</span>, <span class="text-num">4</span>, <span class="text-num">true</span>, <span class="text-num">true</span>);
+</code></pre>
 </div>
 
 <p>The argument before <code>$return</code> is <code>$newline</code> in both, so the flags are positional and the defaults in
@@ -373,17 +373,17 @@ what you want whenever the console's own width should decide.</p>
 immediately. <code>append()</code> adds to an internal buffer that stays there until <code>send()</code> flushes it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">setHeader</span><span class="text-kw">(</span><span class="text-str">&#039;My Application&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">setFooter</span><span class="text-kw">(</span><span class="text-str">&#039;The End&#039;</span><span class="text-kw">);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">setHeader</span>(<span class="text-str">&#039;My Application&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">setFooter</span>(<span class="text-str">&#039;The End&#039;</span>);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">append</span><span class="text-kw">(</span><span class="text-str">&#039;Here is some console information.&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">append</span><span class="text-kw">(</span><span class="text-str">&#039;Hope you enjoyed it!&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">append</span>(<span class="text-str">&#039;Here is some console information.&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">append</span>(<span class="text-str">&#039;Hope you enjoyed it!&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -409,15 +409,15 @@ them set.</p>
 margin.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">(</span><span class="text-var">40</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">);
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>(<span class="text-num">40</span>, <span class="text-num">2</span>);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">append</span><span class="text-kw">(
-    </span><span class="text-str">&#039;Here is some console information. This is a really long string. It will have to wrap.&#039;
-</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">append</span>(
+    <span class="text-str">&#039;Here is some console information. This is a really long string. It will have to wrap.&#039;</span>
+);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -435,15 +435,15 @@ methods that take <code>'auto'</code> fall back to the terminal's real width, de
 turn each off, which is how several calls compose one line:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">(</span><span class="text-var">40</span><span class="text-kw">);
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>(<span class="text-num">40</span>);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;Here &#039;</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);          </span><span class="text-comment">// margin, no newline
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;is &#039;</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);     </span><span class="text-comment">// no margin, no newline
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;some &#039;</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);   </span><span class="text-comment">// no margin, no newline
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;content.&#039;</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">); </span><span class="text-comment">// no margin, newline
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;Here &#039;</span>, <span class="text-num">false</span>);          <span class="text-comment">// margin, no newline</span>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;is &#039;</span>, <span class="text-num">false</span>, <span class="text-num">false</span>);     <span class="text-comment">// no margin, no newline</span>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;some &#039;</span>, <span class="text-num">false</span>, <span class="text-num">false</span>);   <span class="text-comment">// no margin, no newline</span>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;content.&#039;</span>, <span class="text-num">true</span>, <span class="text-num">false</span>); <span class="text-comment">// no margin, newline</span>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -458,40 +458,40 @@ turn each off, which is how several calls compose one line:</p>
 so a colored word sits inside an ordinary line of output:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(
-    </span><span class="text-str">&#039;Here is some &#039; </span><span class="text-kw">.
-    </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">colorize</span><span class="text-kw">(</span><span class="text-str">&#039;IMPORTANT&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_RED</span><span class="text-kw">) .
-    </span><span class="text-str">&#039; console information.&#039;
-</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(
+    <span class="text-str">&#039;Here is some &#039;</span> .
+    <span class="text-var">$console</span>-&gt;<span class="text-fn">colorize</span>(<span class="text-str">&#039;IMPORTANT&#039;</span>, <span class="text-type">Color</span>::<span class="text-num">BOLD_RED</span>) .
+    <span class="text-str">&#039; console information.&#039;</span>
+);
+</code></pre>
 </div>
 
 <p>The same method is a static on <code>Pop\Console\Color</code>, which is what you reach for in code that has no
 console object in hand — a formatter, a value object, anything below the output layer:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Color</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Color</span>;
 
-</span><span class="text-var">$important </span><span class="text-kw">= </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">colorize</span><span class="text-kw">(</span><span class="text-str">&#039;IMPORTANT&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_RED</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$important</span> = <span class="text-type">Color</span>::<span class="text-fn">colorize</span>(<span class="text-str">&#039;IMPORTANT&#039;</span>, <span class="text-type">Color</span>::<span class="text-num">BOLD_RED</span>);
+</code></pre>
 </div>
 
 <p>The second argument is the foreground and the third is the background, so a highlighted run of text is
 one call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">colorize</span><span class="text-kw">(</span><span class="text-str">&#039;white on red&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_WHITE</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">RED</span><span class="text-kw">));
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-var">$console</span>-&gt;<span class="text-fn">colorize</span>(<span class="text-str">&#039;white on red&#039;</span>, <span class="text-type">Color</span>::<span class="text-num">BOLD_WHITE</span>, <span class="text-type">Color</span>::<span class="text-num">RED</span>));
+</code></pre>
 </div>
 
 <p>The constants come in four families of eight — <code>RED</code> through <code>WHITE</code> plus <code>BLACK</code>, then <code>BRIGHT_</code>,
@@ -500,29 +500,29 @@ use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw
 them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">getAvailableColors</span><span class="text-kw">();   </span><span class="text-comment">// [&#039;NORMAL&#039; =&gt; 0, &#039;BLACK&#039; =&gt; 1, &#039;RED&#039; =&gt; 2, ...]
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">getAvailableColors</span>();   <span class="text-comment">// [&#039;NORMAL&#039; =&gt; 0, &#039;BLACK&#039; =&gt; 1, &#039;RED&#039; =&gt; 2, ...]</span>
+</code></pre>
 </div>
 
 <p>Two more helpers answer questions about the terminal rather than about the text. <code>isColor()</code> reports
 whether the <code>TERM</code> environment variable indicates color support, and <code>isWindows()</code> reports the platform:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$label </span><span class="text-kw">= (</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">isColor</span><span class="text-kw">())
-    ? </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">colorize</span><span class="text-kw">(</span><span class="text-str">&#039;OK&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_GREEN</span><span class="text-kw">)
-    : </span><span class="text-str">&#039;OK&#039;</span><span class="text-kw">;
+<span class="text-var">$label</span> = (<span class="text-var">$console</span>-&gt;<span class="text-fn">isColor</span>())
+    ? <span class="text-var">$console</span>-&gt;<span class="text-fn">colorize</span>(<span class="text-str">&#039;OK&#039;</span>, <span class="text-type">Color</span>::<span class="text-num">BOLD_GREEN</span>)
+    : <span class="text-str">&#039;OK&#039;</span>;
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-var">$label</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-var">$label</span>);
+</code></pre>
 </div>
 
 <p>Gate colorized output on <code>isColor()</code> so output piped into a file or another program stays clean —
@@ -532,20 +532,20 @@ use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw
 <p><code>table()</code> renders headers and rows into a bordered grid, sizing every column to its widest cell.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">table</span><span class="text-kw">(
-    [</span><span class="text-str">&#039;Name&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Status&#039;</span><span class="text-kw">],
+<span class="text-var">$console</span>-&gt;<span class="text-fn">table</span>(
+    [<span class="text-str">&#039;Name&#039;</span>, <span class="text-str">&#039;Status&#039;</span>],
     [
-        [</span><span class="text-str">&#039;foo&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">],
-        [</span><span class="text-str">&#039;brew&#039;</span><span class="text-kw">,   </span><span class="text-str">&#039;idle&#039;</span><span class="text-kw">],
+        [<span class="text-str">&#039;foo&#039;</span>, <span class="text-str">&#039;active&#039;</span>],
+        [<span class="text-str">&#039;brew&#039;</span>,   <span class="text-str">&#039;idle&#039;</span>],
     ],
-    </span><span class="text-str">&#039;-&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;|&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_GREEN
-</span><span class="text-kw">);
-</span></code></pre>
+    <span class="text-str">&#039;-&#039;</span>, <span class="text-str">&#039;|&#039;</span>, <span class="text-type">Color</span>::<span class="text-num">BOLD_GREEN</span>
+);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -564,12 +564,12 @@ sixth are a foreground and background color for the header row. Passing <code>nu
 drops the column dividers and the box corners, leaving two rules around a plainer listing:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">table</span><span class="text-kw">([], [[</span><span class="text-str">&#039;a&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;bb&#039;</span><span class="text-kw">], [</span><span class="text-str">&#039;ccc&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;d&#039;</span><span class="text-kw">]], </span><span class="text-str">&#039;-&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">table</span>([], [[<span class="text-str">&#039;a&#039;</span>, <span class="text-str">&#039;bb&#039;</span>], [<span class="text-str">&#039;ccc&#039;</span>, <span class="text-str">&#039;d&#039;</span>]], <span class="text-str">&#039;-&#039;</span>, <span class="text-num">null</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -587,17 +587,17 @@ grid back as a string instead of on the terminal.</p>
 <p>Give table rows as plain lists rather than associative arrays, so the values line up under the headers.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$rows </span><span class="text-kw">= [
-    [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1001</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1002</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">],
+<span class="text-var">$rows</span> = [
+    [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1001</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;admin&#039;</span>],
+    [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1002</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;editor&#039;</span>],
 ];
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">table</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Username&#039;</span><span class="text-kw">], </span><span class="text-var">$rows</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">table</span>([<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-str">&#039;Id&#039;</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;Username&#039;</span>], <span class="text-var">$rows</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -617,20 +617,20 @@ grid back as a string instead of on the terminal.</p>
 <code>Pop\Console\ProgressBar</code> object that redraws a single terminal line in place as you advance it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
-</span><span class="text-var">$items   </span><span class="text-kw">= </span><span class="text-var">range</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">100</span><span class="text-kw">);
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
+<span class="text-var">$items</span>   = <span class="text-fn">range</span>(<span class="text-num">1</span>, <span class="text-num">100</span>);
 
-</span><span class="text-var">$bar </span><span class="text-kw">= </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">progressBar</span><span class="text-kw">(</span><span class="text-var">count</span><span class="text-kw">(</span><span class="text-var">$items</span><span class="text-kw">), </span><span class="text-str">&#039;Processing&#039;</span><span class="text-kw">);
+<span class="text-var">$bar</span> = <span class="text-var">$console</span>-&gt;<span class="text-fn">progressBar</span>(<span class="text-fn">count</span>(<span class="text-var">$items</span>), <span class="text-str">&#039;Processing&#039;</span>);
 
-foreach (</span><span class="text-var">$items </span><span class="text-kw">as </span><span class="text-var">$item</span><span class="text-kw">) {
-    </span><span class="text-comment">// do the work for $item
-    </span><span class="text-var">$bar</span><span class="text-kw">-&gt;</span><span class="text-var">advance</span><span class="text-kw">();
+<span class="text-kw">foreach</span> (<span class="text-var">$items</span> <span class="text-kw">as</span> <span class="text-var">$item</span>) {
+    <span class="text-comment">// do the work for $item</span>
+    <span class="text-var">$bar</span>-&gt;<span class="text-fn">advance</span>();
 }
 
-</span><span class="text-var">$bar</span><span class="text-kw">-&gt;</span><span class="text-var">finish</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$bar</span>-&gt;<span class="text-fn">finish</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -650,17 +650,17 @@ call it.</p>
 appearance:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$bar </span><span class="text-kw">= </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">progressBar</span><span class="text-kw">(</span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-str">&#039;Importing&#039;</span><span class="text-kw">, </span><span class="text-var">40</span><span class="text-kw">);
-</span><span class="text-var">$bar</span><span class="text-kw">-&gt;</span><span class="text-var">setChars</span><span class="text-kw">(</span><span class="text-str">&#039;#&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;#&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;.&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setColor</span><span class="text-kw">(</span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_CYAN</span><span class="text-kw">);
+<span class="text-var">$bar</span> = <span class="text-var">$console</span>-&gt;<span class="text-fn">progressBar</span>(<span class="text-num">50</span>, <span class="text-str">&#039;Importing&#039;</span>, <span class="text-num">40</span>);
+<span class="text-var">$bar</span>-&gt;<span class="text-fn">setChars</span>(<span class="text-str">&#039;#&#039;</span>, <span class="text-str">&#039;#&#039;</span>, <span class="text-str">&#039;.&#039;</span>)
+    -&gt;<span class="text-fn">setColor</span>(<span class="text-type">Color</span>::<span class="text-num">BOLD_CYAN</span>);
 
-</span><span class="text-var">$bar</span><span class="text-kw">-&gt;</span><span class="text-var">setProgress</span><span class="text-kw">(</span><span class="text-var">25</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$bar</span>-&gt;<span class="text-fn">setProgress</span>(<span class="text-num">25</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -681,13 +681,13 @@ terminal and print plain lines when it might not be.</p>
 <p><code>prompt()</code> writes a question and returns what the user typed:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$name </span><span class="text-kw">= </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">prompt</span><span class="text-kw">(</span><span class="text-str">&#039;Please provide your name: &#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;Hello &#039; </span><span class="text-kw">. </span><span class="text-var">$name </span><span class="text-kw">. </span><span class="text-str">&#039;!&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$name</span> = <span class="text-var">$console</span>-&gt;<span class="text-fn">prompt</span>(<span class="text-str">&#039;Please provide your name: &#039;</span>, <span class="text-num">null</span>, <span class="text-num">true</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;Hello &#039;</span> . <span class="text-var">$name</span> . <span class="text-str">&#039;!&#039;</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -703,18 +703,18 @@ Pass <code>true</code> when you want it back as the user typed it.</p>
 so the value you get back is always valid and needs no checking:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$letter </span><span class="text-kw">= </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">prompt</span><span class="text-kw">(
-    </span><span class="text-str">&#039;Which is your favorite letter: A, B, C, or D? &#039;</span><span class="text-kw">,
-    [</span><span class="text-str">&#039;A&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;B&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;C&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;D&#039;</span><span class="text-kw">],
-    </span><span class="text-var">true
-</span><span class="text-kw">);
+<span class="text-var">$letter</span> = <span class="text-var">$console</span>-&gt;<span class="text-fn">prompt</span>(
+    <span class="text-str">&#039;Which is your favorite letter: A, B, C, or D? &#039;</span>,
+    [<span class="text-str">&#039;A&#039;</span>, <span class="text-str">&#039;B&#039;</span>, <span class="text-str">&#039;C&#039;</span>, <span class="text-str">&#039;D&#039;</span>],
+    <span class="text-num">true</span>
+);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;Your favorite letter is &#039; </span><span class="text-kw">. </span><span class="text-var">$letter </span><span class="text-kw">. </span><span class="text-str">&#039;.&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;Your favorite letter is &#039;</span> . <span class="text-var">$letter</span> . <span class="text-str">&#039;.&#039;</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -729,12 +729,12 @@ so the value you get back is always valid and needs no checking:</p>
 returns an array of the values that matched:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$types </span><span class="text-kw">= </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">promptMulti</span><span class="text-kw">(</span><span class="text-str">&#039;Select one or more, comma-separated: &#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;1&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;2&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;3&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$types</span> = <span class="text-var">$console</span>-&gt;<span class="text-fn">promptMulti</span>(<span class="text-str">&#039;Select one or more, comma-separated: &#039;</span>, [<span class="text-str">&#039;1&#039;</span>, <span class="text-str">&#039;2&#039;</span>, <span class="text-str">&#039;3&#039;</span>]);
+</code></pre>
 </div>
 
 <p>Typing <code>1,3</code> returns <code>['1', '3']</code>.</p>
@@ -742,13 +742,13 @@ returns an array of the values that matched:</p>
 returning:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">confirm</span><span class="text-kw">(</span><span class="text-str">&#039;Drop every table?&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;The user said yes.&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">confirm</span>(<span class="text-str">&#039;Drop every table?&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;The user said yes.&#039;</span>);
+</code></pre>
 </div>
 
 <p>The exit status on <code>N</code> is <code>127</code>, which is what a shell script wrapping the command should test. Pass
@@ -761,17 +761,17 @@ by default. <code>setInputStream()</code> swaps that for a stream you control �
 exactly the way real input is:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$stream </span><span class="text-kw">= </span><span class="text-var">fopen</span><span class="text-kw">(</span><span class="text-str">&#039;php://memory&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;r+&#039;</span><span class="text-kw">);
-</span><span class="text-var">fwrite</span><span class="text-kw">(</span><span class="text-var">$stream</span><span class="text-kw">, </span><span class="text-str">&#039;Nick&#039; </span><span class="text-kw">. </span><span class="text-var">PHP_EOL</span><span class="text-kw">);
-</span><span class="text-var">rewind</span><span class="text-kw">(</span><span class="text-var">$stream</span><span class="text-kw">);
+<span class="text-var">$stream</span> = <span class="text-fn">fopen</span>(<span class="text-str">&#039;php://memory&#039;</span>, <span class="text-str">&#039;r+&#039;</span>);
+<span class="text-fn">fwrite</span>(<span class="text-var">$stream</span>, <span class="text-str">&#039;Nick&#039;</span> . <span class="text-num">PHP_EOL</span>);
+<span class="text-fn">rewind</span>(<span class="text-var">$stream</span>);
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">setInputStream</span><span class="text-kw">(</span><span class="text-var">$stream</span><span class="text-kw">);
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
+<span class="text-var">$console</span>-&gt;<span class="text-fn">setInputStream</span>(<span class="text-var">$stream</span>);
 
-</span><span class="text-var">$name </span><span class="text-kw">= </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">prompt</span><span class="text-kw">(</span><span class="text-str">&#039;Please provide your name: &#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$name</span> = <span class="text-var">$console</span>-&gt;<span class="text-fn">prompt</span>(<span class="text-str">&#039;Please provide your name: &#039;</span>, <span class="text-num">null</span>, <span class="text-num">true</span>);
+</code></pre>
 </div>
 
 <p><code>$name</code> is <code>'Nick'</code> with no terminal involved. <code>hasInputStream()</code> and <code>getInputStream()</code> read the
@@ -784,19 +784,19 @@ what it has rather than looping forever on input that will never arrive.</p>
 <code>help()</code> prints the list:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Command</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Command</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">addCommands</span><span class="text-kw">([
-    new </span><span class="text-var">Command</span><span class="text-kw">(</span><span class="text-var">name</span><span class="text-kw">: </span><span class="text-str">&#039;db:migrate&#039;</span><span class="text-kw">, </span><span class="text-var">help</span><span class="text-kw">: </span><span class="text-str">&#039;Migrate the database&#039;</span><span class="text-kw">),
-    new </span><span class="text-var">Command</span><span class="text-kw">(</span><span class="text-var">name</span><span class="text-kw">: </span><span class="text-str">&#039;db:seed&#039;</span><span class="text-kw">,    </span><span class="text-var">help</span><span class="text-kw">: </span><span class="text-str">&#039;Seed the database&#039;</span><span class="text-kw">),
-    new </span><span class="text-var">Command</span><span class="text-kw">(</span><span class="text-var">name</span><span class="text-kw">: </span><span class="text-str">&#039;user:list&#039;</span><span class="text-kw">,  </span><span class="text-var">help</span><span class="text-kw">: </span><span class="text-str">&#039;List users&#039;</span><span class="text-kw">),
+<span class="text-var">$console</span>-&gt;<span class="text-fn">addCommands</span>([
+    <span class="text-kw">new</span> <span class="text-type">Command</span>(<span class="text-type">name</span>: <span class="text-str">&#039;db:migrate&#039;</span>, <span class="text-type">help</span>: <span class="text-str">&#039;Migrate the database&#039;</span>),
+    <span class="text-kw">new</span> <span class="text-type">Command</span>(<span class="text-type">name</span>: <span class="text-str">&#039;db:seed&#039;</span>,    <span class="text-type">help</span>: <span class="text-str">&#039;Seed the database&#039;</span>),
+    <span class="text-kw">new</span> <span class="text-type">Command</span>(<span class="text-type">name</span>: <span class="text-str">&#039;user:list&#039;</span>,  <span class="text-type">help</span>: <span class="text-str">&#039;List users&#039;</span>),
 ]);
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">help</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">help</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -814,13 +814,13 @@ table. <code>addCommandsFromRoutes()</code> reads them straight out of the CLI r
 <code>help</code> value as the description and prefixing every line with the script name you pass:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">addCommandsFromRoutes</span><span class="text-kw">(</span><span class="text-var">$routeMatch</span><span class="text-kw">, </span><span class="text-str">&#039;./app&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">help</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">addCommandsFromRoutes</span>(<span class="text-var">$routeMatch</span>, <span class="text-str">&#039;./app&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">help</span>();
+</code></pre>
 </div>
 
 <p>Those are the two lines inside the <code>help()</code> action of the <code>ConsoleController</code> under
@@ -843,13 +843,13 @@ help. <code>help(?string $command, bool $raw, ?string $subCommand)</code> takes 
 <code>displayHelp(bool $raw, ?string $subCommand)</code> takes them first and second.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">help</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">, </span><span class="text-str">&#039;db&#039;</span><span class="text-kw">);   </span><span class="text-comment">// only commands under &#039;db&#039;
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">help</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);          </span><span class="text-comment">// no ANSI codes
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">help</span>(<span class="text-num">null</span>, <span class="text-num">false</span>, <span class="text-str">&#039;db&#039;</span>);   <span class="text-comment">// only commands under &#039;db&#039;</span>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">help</span>(<span class="text-num">null</span>, <span class="text-num">true</span>);          <span class="text-comment">// no ANSI codes</span>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -867,27 +867,27 @@ filter matching nothing renders an empty list rather than throwing.</p>
 <code>setFooter()</code> the way <a href="#the-response-buffer">The response buffer</a> describes:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">setHeader</span><span class="text-kw">(</span><span class="text-str">&#039;My Application&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">setFooter</span><span class="text-kw">(</span><span class="text-str">&#039;The End&#039;</span><span class="text-kw">);
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">displayHelp</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">setHeader</span>(<span class="text-str">&#039;My Application&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">setFooter</span>(<span class="text-str">&#039;The End&#039;</span>);
+<span class="text-var">$console</span>-&gt;<span class="text-fn">displayHelp</span>();
+</code></pre>
 </div>
 
 <p>Finally, <code>setHelpColors()</code> takes up to four colors and uses them to break each command line into its
 parts — the first word of the command name, the second word, then the parameters:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Console\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Console\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-</span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">();
+<span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>();
 
-</span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">setHelpColors</span><span class="text-kw">(</span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_CYAN</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_GREEN</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">BOLD_MAGENTA</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$console</span>-&gt;<span class="text-fn">setHelpColors</span>(<span class="text-type">Color</span>::<span class="text-num">BOLD_CYAN</span>, <span class="text-type">Color</span>::<span class="text-num">BOLD_GREEN</span>, <span class="text-type">Color</span>::<span class="text-num">BOLD_MAGENTA</span>);
+</code></pre>
 </div>
 
 <p>Against <code>users list [-l|--limit=]</code> that colors <code>users</code> cyan, <code>list</code> green and <code>[-l|--limit=]</code> magenta;

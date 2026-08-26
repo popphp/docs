@@ -13,31 +13,31 @@ errors and submitted values in place.</p>
 the key you read the value back by — and each value describes the field:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Form\Form</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Validator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Form\Form</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Validator</span>;
 
-</span><span class="text-var">$form </span><span class="text-kw">= </span><span class="text-var">Form</span><span class="text-kw">::</span><span class="text-var">createFromConfig</span><span class="text-kw">([
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;type&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;text&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;label&#039;      </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Username:&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;required&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-        </span><span class="text-str">&#039;hint&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Letters and numbers only.&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;validators&#039; </span><span class="text-kw">=&gt; [new </span><span class="text-var">Validator\AlphaNumeric</span><span class="text-kw">()]
+<span class="text-var">$form</span> = <span class="text-type">Form</span>::<span class="text-fn">createFromConfig</span>([
+    <span class="text-str">&#039;username&#039;</span> =&gt; [
+        <span class="text-str">&#039;type&#039;</span>       =&gt; <span class="text-str">&#039;text&#039;</span>,
+        <span class="text-str">&#039;label&#039;</span>      =&gt; <span class="text-str">&#039;Username:&#039;</span>,
+        <span class="text-str">&#039;required&#039;</span>   =&gt; <span class="text-num">true</span>,
+        <span class="text-str">&#039;hint&#039;</span>       =&gt; <span class="text-str">&#039;Letters and numbers only.&#039;</span>,
+        <span class="text-str">&#039;validators&#039;</span> =&gt; [<span class="text-kw">new</span> <span class="text-type">Validator\AlphaNumeric</span>()]
     ],
-    </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;type&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;label&#039;      </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Email:&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;required&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-        </span><span class="text-str">&#039;validators&#039; </span><span class="text-kw">=&gt; [new </span><span class="text-var">Validator\Email</span><span class="text-kw">()]
+    <span class="text-str">&#039;email&#039;</span> =&gt; [
+        <span class="text-str">&#039;type&#039;</span>       =&gt; <span class="text-str">&#039;email&#039;</span>,
+        <span class="text-str">&#039;label&#039;</span>      =&gt; <span class="text-str">&#039;Email:&#039;</span>,
+        <span class="text-str">&#039;required&#039;</span>   =&gt; <span class="text-num">true</span>,
+        <span class="text-str">&#039;validators&#039;</span> =&gt; [<span class="text-kw">new</span> <span class="text-type">Validator\Email</span>()]
     ],
-    </span><span class="text-str">&#039;submit&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;type&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;submit&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;value&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Register&#039;
-    </span><span class="text-kw">]
+    <span class="text-str">&#039;submit&#039;</span> =&gt; [
+        <span class="text-str">&#039;type&#039;</span>  =&gt; <span class="text-str">&#039;submit&#039;</span>,
+        <span class="text-str">&#039;value&#039;</span> =&gt; <span class="text-str">&#039;Register&#039;</span>
+    ]
 ]);
 
-echo </span><span class="text-var">$form</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$form</span>;
+</code></pre>
 </div>
 
 <p>That renders a complete <code>&lt;form&gt;</code>: a <code>&lt;fieldset&gt;</code>, a <code>&lt;dl&gt;</code> of label and input pairs, <code>required=&quot;required&quot;</code> on
@@ -95,13 +95,13 @@ request URI as its action; <code>createFromConfig($config, $container, $action, 
 some condition:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$company </span><span class="text-kw">= new </span><span class="text-var">Pop\Form\Element\Input\Text</span><span class="text-kw">(</span><span class="text-str">&#039;company&#039;</span><span class="text-kw">);
-</span><span class="text-var">$company</span><span class="text-kw">-&gt;</span><span class="text-var">setLabel</span><span class="text-kw">(</span><span class="text-str">&#039;Company:&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setRequired</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setAttribute</span><span class="text-kw">(</span><span class="text-str">&#039;size&#039;</span><span class="text-kw">, </span><span class="text-var">40</span><span class="text-kw">);
+<pre><code><span class="text-var">$company</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Form\Element\Input\Text</span>(<span class="text-str">&#039;company&#039;</span>);
+<span class="text-var">$company</span>-&gt;<span class="text-fn">setLabel</span>(<span class="text-str">&#039;Company:&#039;</span>)
+    -&gt;<span class="text-fn">setRequired</span>(<span class="text-num">true</span>)
+    -&gt;<span class="text-fn">setAttribute</span>(<span class="text-str">&#039;size&#039;</span>, <span class="text-num">40</span>);
 
-</span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">insertFieldAfter</span><span class="text-kw">(</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">, </span><span class="text-var">$company</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$form</span>-&gt;<span class="text-fn">insertFieldAfter</span>(<span class="text-str">&#039;username&#039;</span>, <span class="text-var">$company</span>);
+</code></pre>
 </div>
 
 <p><code>addField()</code> appends, <code>insertFieldBefore()</code> and <code>insertFieldAfter()</code> place a field relative to another by
@@ -112,39 +112,39 @@ everything that is not conditional.</p>
 form stays about the fields:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Form/RegisterForm.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Form</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Form</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Form\Form</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Validator</span>;
 
-use </span><span class="text-var">Pop\Form\Form</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Validator</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">RegisterForm</span> <span class="text-kw">extends</span> <span class="text-type">Form</span>
+{
 
-class </span><span class="text-var">RegisterForm </span><span class="text-kw">extends </span><span class="text-var">Form
-</span><span class="text-kw">{
-
-    public static function </span><span class="text-var">build</span><span class="text-kw">(): </span><span class="text-var">RegisterForm
-    </span><span class="text-kw">{
-        return </span><span class="text-var">self</span><span class="text-kw">::</span><span class="text-var">createFromConfig</span><span class="text-kw">([
-            </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; [
-                </span><span class="text-str">&#039;type&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;text&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;label&#039;      </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Username:&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;required&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-                </span><span class="text-str">&#039;validators&#039; </span><span class="text-kw">=&gt; [new </span><span class="text-var">Validator\AlphaNumeric</span><span class="text-kw">()]
+    <span class="text-kw">public</span> <span class="text-kw">static</span> <span class="text-kw">function</span> <span class="text-fn">build</span>(): <span class="text-type">RegisterForm</span>
+    {
+        <span class="text-kw">return</span> <span class="text-type">self</span>::<span class="text-fn">createFromConfig</span>([
+            <span class="text-str">&#039;username&#039;</span> =&gt; [
+                <span class="text-str">&#039;type&#039;</span>       =&gt; <span class="text-str">&#039;text&#039;</span>,
+                <span class="text-str">&#039;label&#039;</span>      =&gt; <span class="text-str">&#039;Username:&#039;</span>,
+                <span class="text-str">&#039;required&#039;</span>   =&gt; <span class="text-num">true</span>,
+                <span class="text-str">&#039;validators&#039;</span> =&gt; [<span class="text-kw">new</span> <span class="text-type">Validator\AlphaNumeric</span>()]
             ],
-            </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; [
-                </span><span class="text-str">&#039;type&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;label&#039;      </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Password:&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;required&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-                </span><span class="text-str">&#039;validators&#039; </span><span class="text-kw">=&gt; [
-                    new </span><span class="text-var">Validator\LengthGreaterThanEqual</span><span class="text-kw">(</span><span class="text-var">8</span><span class="text-kw">, </span><span class="text-str">&#039;Your password must be at least 8 characters.&#039;</span><span class="text-kw">)
+            <span class="text-str">&#039;password&#039;</span> =&gt; [
+                <span class="text-str">&#039;type&#039;</span>       =&gt; <span class="text-str">&#039;password&#039;</span>,
+                <span class="text-str">&#039;label&#039;</span>      =&gt; <span class="text-str">&#039;Password:&#039;</span>,
+                <span class="text-str">&#039;required&#039;</span>   =&gt; <span class="text-num">true</span>,
+                <span class="text-str">&#039;validators&#039;</span> =&gt; [
+                    <span class="text-kw">new</span> <span class="text-type">Validator\LengthGreaterThanEqual</span>(<span class="text-num">8</span>, <span class="text-str">&#039;Your password must be at least 8 characters.&#039;</span>)
                 ]
             ],
-            </span><span class="text-str">&#039;submit&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;submit&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;value&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Register&#039;</span><span class="text-kw">]
+            <span class="text-str">&#039;submit&#039;</span> =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;submit&#039;</span>, <span class="text-str">&#039;value&#039;</span> =&gt; <span class="text-str">&#039;Register&#039;</span>]
         ]);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>createFromConfig()</code> constructs <code>new static()</code>, so a subclass gets its own type back. Name the factory
@@ -156,39 +156,39 @@ incompatible signature, and redeclaring it is a fatal error at class-load time.<
 rendering the form afterward produces the version with errors and repopulated values.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Controller/SignupController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">App\Form\RegisterForm</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\View\View</span>;
 
-use </span><span class="text-var">App\Form\RegisterForm</span><span class="text-kw">;
-use </span><span class="text-var">Pop\View\View</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">SignupController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">SignupController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">register</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-var">$form</span> = <span class="text-type">RegisterForm</span>::<span class="text-fn">build</span>();
 
-    public function </span><span class="text-var">register</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$form </span><span class="text-kw">= </span><span class="text-var">RegisterForm</span><span class="text-kw">::</span><span class="text-var">build</span><span class="text-kw">();
+        <span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">isPost</span>()) {
+            <span class="text-var">$form</span>-&gt;<span class="text-fn">setFieldValues</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getPost</span>());
 
-        if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">isPost</span><span class="text-kw">()) {
-            </span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">setFieldValues</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getPost</span><span class="text-kw">());
-
-            if (</span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">isValid</span><span class="text-kw">()) {
-                </span><span class="text-comment">// create the account, then redirect
-                </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">::</span><span class="text-var">redirectAndExit</span><span class="text-kw">(</span><span class="text-str">&#039;/welcome&#039;</span><span class="text-kw">);
-                return;
+            <span class="text-kw">if</span> (<span class="text-var">$form</span>-&gt;<span class="text-fn">isValid</span>()) {
+                <span class="text-comment">// create the account, then redirect</span>
+                <span class="text-type">Pop\Http\Server\Response</span>::<span class="text-fn">redirectAndExit</span>(<span class="text-str">&#039;/welcome&#039;</span>);
+                <span class="text-kw">return</span>;
             }
         }
 
-        </span><span class="text-var">$view </span><span class="text-kw">= new </span><span class="text-var">View</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../../../view/register.phtml&#039;</span><span class="text-kw">);
-        </span><span class="text-var">$view</span><span class="text-kw">-&gt;</span><span class="text-var">form </span><span class="text-kw">= </span><span class="text-var">$form</span><span class="text-kw">;
+        <span class="text-var">$view</span> = <span class="text-kw">new</span> <span class="text-type">View</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../../../view/register.phtml&#039;</span>);
+        <span class="text-var">$view</span>-&gt;<span class="text-type">form</span> = <span class="text-var">$form</span>;
 
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">$view</span><span class="text-kw">-&gt;</span><span class="text-var">render</span><span class="text-kw">());
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-var">$view</span>-&gt;<span class="text-fn">render</span>());
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>();
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The view assigns the object and echoes it — <code>Form::__toString()</code> renders it, so a template needs one line for
@@ -203,7 +203,7 @@ the whole form:</p>
 &lt;/head&gt;
 &lt;body&gt;
     &lt;h1&gt;Create an account&lt;/h1&gt;
-    <span class="text-var">&lt;?=$form</span><span class="text-kw">; </span><span class="text-var">?&gt;
+    <span class="text-kw">&lt;?=</span><span class="text-var">$form</span>; <span class="text-kw">?&gt;
 </span>&lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
@@ -227,15 +227,15 @@ A field carrying a <code>hint</code> gets a <code>&lt;span id=&quot;{name}-hint&
 <p>Errors are readable as data too, which is what an API endpoint wants:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">setFieldValues</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getParsedData</span><span class="text-kw">());
+<pre><code><span class="text-var">$form</span>-&gt;<span class="text-fn">setFieldValues</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getParsedData</span>());
 
-if (!</span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">isValid</span><span class="text-kw">()) {
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setCode</span><span class="text-kw">(</span><span class="text-var">422</span><span class="text-kw">);
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;errors&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">getAllErrors</span><span class="text-kw">()]));
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-    return;
+<span class="text-kw">if</span> (!<span class="text-var">$form</span>-&gt;<span class="text-fn">isValid</span>()) {
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setCode</span>(<span class="text-num">422</span>);
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;errors&#039;</span> =&gt; <span class="text-var">$form</span>-&gt;<span class="text-fn">getAllErrors</span>()]));
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>();
+    <span class="text-kw">return</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>getAllErrors()</code> returns <code>['username' =&gt; ['The value must only contain alphanumeric characters.']]</code> — field
@@ -254,17 +254,17 @@ is not. <code>pop-validator</code> ships the common ones, and its constructor ta
 and an optional replacement message second:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Validator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Validator</span>;
 
-</span><span class="text-var">$fields</span><span class="text-kw">[</span><span class="text-str">&#039;password&#039;</span><span class="text-kw">] = [
-    </span><span class="text-str">&#039;type&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;required&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-    </span><span class="text-str">&#039;validators&#039; </span><span class="text-kw">=&gt; [
-        new </span><span class="text-var">Validator\LengthGreaterThanEqual</span><span class="text-kw">(</span><span class="text-var">8</span><span class="text-kw">, </span><span class="text-str">&#039;Your password must be at least 8 characters.&#039;</span><span class="text-kw">),
-        new </span><span class="text-var">Validator\NotContains</span><span class="text-kw">(</span><span class="text-str">&#039; &#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Your password cannot contain spaces.&#039;</span><span class="text-kw">)
+<span class="text-var">$fields</span>[<span class="text-str">&#039;password&#039;</span>] = [
+    <span class="text-str">&#039;type&#039;</span>       =&gt; <span class="text-str">&#039;password&#039;</span>,
+    <span class="text-str">&#039;required&#039;</span>   =&gt; <span class="text-num">true</span>,
+    <span class="text-str">&#039;validators&#039;</span> =&gt; [
+        <span class="text-kw">new</span> <span class="text-type">Validator\LengthGreaterThanEqual</span>(<span class="text-num">8</span>, <span class="text-str">&#039;Your password must be at least 8 characters.&#039;</span>),
+        <span class="text-kw">new</span> <span class="text-type">Validator\NotContains</span>(<span class="text-str">&#039; &#039;</span>, <span class="text-str">&#039;Your password cannot contain spaces.&#039;</span>)
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Several validators on one field all run, and every failure adds a message, so a field can report more than one
@@ -273,18 +273,18 @@ problem at a time. <code>AlphaNumeric</code>, <code>Email</code>, <code>Url</cod
 <p>A closure is the shortest route to a rule that is specific to one form:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$fields</span><span class="text-kw">[</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">] = [
-    </span><span class="text-str">&#039;type&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;text&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;label&#039;      </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Username:&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;validators&#039; </span><span class="text-kw">=&gt; [
-        function (</span><span class="text-var">$value</span><span class="text-kw">) {
-            if (</span><span class="text-var">str_contains</span><span class="text-kw">((string)</span><span class="text-var">$value</span><span class="text-kw">, </span><span class="text-str">&#039; &#039;</span><span class="text-kw">)) {
-                return </span><span class="text-str">&#039;A username cannot contain spaces.&#039;</span><span class="text-kw">;
+<pre><code><span class="text-var">$fields</span>[<span class="text-str">&#039;username&#039;</span>] = [
+    <span class="text-str">&#039;type&#039;</span>       =&gt; <span class="text-str">&#039;text&#039;</span>,
+    <span class="text-str">&#039;label&#039;</span>      =&gt; <span class="text-str">&#039;Username:&#039;</span>,
+    <span class="text-str">&#039;validators&#039;</span> =&gt; [
+        <span class="text-kw">function</span> (<span class="text-var">$value</span>) {
+            <span class="text-kw">if</span> (<span class="text-fn">str_contains</span>(<span class="text-kw">(string)</span><span class="text-var">$value</span>, <span class="text-str">&#039; &#039;</span>)) {
+                <span class="text-kw">return</span> <span class="text-str">&#039;A username cannot contain spaces.&#039;</span>;
             }
         }
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Returning nothing is returning <code>null</code>, so the success branch needs no <code>return</code>. Any other callable works
@@ -295,14 +295,14 @@ the terms&quot; box a value rule rather than <code>required</code>.</p>
 boxes that were checked, so <code>required</code> behaves:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$fields</span><span class="text-kw">[</span><span class="text-str">&#039;terms&#039;</span><span class="text-kw">] = [
-    </span><span class="text-str">&#039;type&#039;             </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;checkbox-set&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;label&#039;            </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Terms:&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;values&#039;           </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;yes&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;I accept the terms&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;required&#039;         </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-    </span><span class="text-str">&#039;required_message&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;You must accept the terms.&#039;
-</span><span class="text-kw">];
-</span></code></pre>
+<pre><code><span class="text-var">$fields</span>[<span class="text-str">&#039;terms&#039;</span>] = [
+    <span class="text-str">&#039;type&#039;</span>             =&gt; <span class="text-str">&#039;checkbox-set&#039;</span>,
+    <span class="text-str">&#039;label&#039;</span>            =&gt; <span class="text-str">&#039;Terms:&#039;</span>,
+    <span class="text-str">&#039;values&#039;</span>           =&gt; [<span class="text-str">&#039;yes&#039;</span> =&gt; <span class="text-str">&#039;I accept the terms&#039;</span>],
+    <span class="text-str">&#039;required&#039;</span>         =&gt; <span class="text-num">true</span>,
+    <span class="text-str">&#039;required_message&#039;</span> =&gt; <span class="text-str">&#039;You must accept the terms.&#039;</span>
+];
+</code></pre>
 </div>
 
 <p>Keep the option keys non-numeric. A key such as <code>'1'</code> becomes an integer array key in PHP, and
@@ -314,13 +314,13 @@ page unescaped unless something intervenes. <code>Pop\Filter\Filter</code> objec
 as it is set:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Filter\Filter</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Filter\Filter</span>;
 
-</span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">addFilter</span><span class="text-kw">(new </span><span class="text-var">Filter</span><span class="text-kw">(</span><span class="text-str">&#039;strip_tags&#039;</span><span class="text-kw">))
-    -&gt;</span><span class="text-var">addFilter</span><span class="text-kw">(new </span><span class="text-var">Filter</span><span class="text-kw">(</span><span class="text-str">&#039;htmlentities&#039;</span><span class="text-kw">, [</span><span class="text-var">ENT_QUOTES</span><span class="text-kw">, </span><span class="text-str">&#039;UTF-8&#039;</span><span class="text-kw">]));
+<span class="text-var">$form</span>-&gt;<span class="text-fn">addFilter</span>(<span class="text-kw">new</span> <span class="text-type">Filter</span>(<span class="text-str">&#039;strip_tags&#039;</span>))
+    -&gt;<span class="text-fn">addFilter</span>(<span class="text-kw">new</span> <span class="text-type">Filter</span>(<span class="text-str">&#039;htmlentities&#039;</span>, [<span class="text-num">ENT_QUOTES</span>, <span class="text-str">&#039;UTF-8&#039;</span>]));
 
-</span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">setFieldValues</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getPost</span><span class="text-kw">());
-</span></code></pre>
+<span class="text-var">$form</span>-&gt;<span class="text-fn">setFieldValues</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getPost</span>());
+</code></pre>
 </div>
 
 <p><code>strip_tags</code> removes markup; <code>htmlentities</code> makes what remains safe to put back inside a <code>value=&quot;…&quot;</code>
@@ -330,13 +330,13 @@ filter.</p>
 the filters for the inverse before reading the values out:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">if (</span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">isValid</span><span class="text-kw">()) {
-    </span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">clearFilters</span><span class="text-kw">();
-    </span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">addFilter</span><span class="text-kw">(new </span><span class="text-var">Filter</span><span class="text-kw">(</span><span class="text-str">&#039;html_entity_decode&#039;</span><span class="text-kw">, [</span><span class="text-var">ENT_QUOTES</span><span class="text-kw">, </span><span class="text-str">&#039;UTF-8&#039;</span><span class="text-kw">]));
+<pre><code><span class="text-kw">if</span> (<span class="text-var">$form</span>-&gt;<span class="text-fn">isValid</span>()) {
+    <span class="text-var">$form</span>-&gt;<span class="text-fn">clearFilters</span>();
+    <span class="text-var">$form</span>-&gt;<span class="text-fn">addFilter</span>(<span class="text-kw">new</span> <span class="text-type">Filter</span>(<span class="text-str">&#039;html_entity_decode&#039;</span>, [<span class="text-num">ENT_QUOTES</span>, <span class="text-str">&#039;UTF-8&#039;</span>]));
 
-    </span><span class="text-var">$values </span><span class="text-kw">= </span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">filter</span><span class="text-kw">(</span><span class="text-var">$form</span><span class="text-kw">-&gt;</span><span class="text-var">toArray</span><span class="text-kw">());
+    <span class="text-var">$values</span> = <span class="text-var">$form</span>-&gt;<span class="text-fn">filter</span>(<span class="text-var">$form</span>-&gt;<span class="text-fn">toArray</span>());
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A filter's third constructor argument excludes named fields, so <code>new Filter('strip_tags', null, 'body')</code>
@@ -350,20 +350,20 @@ request level.</p>
 numeric key renders without one:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$form </span><span class="text-kw">= </span><span class="text-var">Pop\Form\Form</span><span class="text-kw">::</span><span class="text-var">createFromFieldsetConfig</span><span class="text-kw">([
-    </span><span class="text-str">&#039;Account&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;text&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;label&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Username:&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;required&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">],
-        </span><span class="text-str">&#039;email&#039;    </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;label&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Email:&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;required&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">]
+<pre><code><span class="text-var">$form</span> = <span class="text-type">Pop\Form\Form</span>::<span class="text-fn">createFromFieldsetConfig</span>([
+    <span class="text-str">&#039;Account&#039;</span> =&gt; [
+        <span class="text-str">&#039;username&#039;</span> =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;text&#039;</span>, <span class="text-str">&#039;label&#039;</span> =&gt; <span class="text-str">&#039;Username:&#039;</span>, <span class="text-str">&#039;required&#039;</span> =&gt; <span class="text-num">true</span>],
+        <span class="text-str">&#039;email&#039;</span>    =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;email&#039;</span>, <span class="text-str">&#039;label&#039;</span> =&gt; <span class="text-str">&#039;Email:&#039;</span>, <span class="text-str">&#039;required&#039;</span> =&gt; <span class="text-num">true</span>]
     ],
-    </span><span class="text-str">&#039;Profile&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;text&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;label&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;First Name:&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;last_name&#039;  </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;text&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;label&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Last Name:&#039;</span><span class="text-kw">]
+    <span class="text-str">&#039;Profile&#039;</span> =&gt; [
+        <span class="text-str">&#039;first_name&#039;</span> =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;text&#039;</span>, <span class="text-str">&#039;label&#039;</span> =&gt; <span class="text-str">&#039;First Name:&#039;</span>],
+        <span class="text-str">&#039;last_name&#039;</span>  =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;text&#039;</span>, <span class="text-str">&#039;label&#039;</span> =&gt; <span class="text-str">&#039;Last Name:&#039;</span>]
     ],
     [
-        </span><span class="text-str">&#039;submit&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;submit&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;value&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Save&#039;</span><span class="text-kw">]
+        <span class="text-str">&#039;submit&#039;</span> =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;submit&#039;</span>, <span class="text-str">&#039;value&#039;</span> =&gt; <span class="text-str">&#039;Save&#039;</span>]
     ]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Fields stay addressable by name regardless of which fieldset holds them, so <code>setFieldValues()</code>, <code>isValid()</code>
@@ -374,8 +374,8 @@ if you need one directly, and <code>setLegend()</code> changes a legend after th
 field in that element.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$form </span><span class="text-kw">= </span><span class="text-var">Pop\Form\Form</span><span class="text-kw">::</span><span class="text-var">createFromConfig</span><span class="text-kw">(</span><span class="text-var">$fields</span><span class="text-kw">, </span><span class="text-str">&#039;div&#039;</span><span class="text-kw">);
-</span></code></pre>
+<pre><code><span class="text-var">$form</span> = <span class="text-type">Pop\Form\Form</span>::<span class="text-fn">createFromConfig</span>(<span class="text-var">$fields</span>, <span class="text-str">&#039;div&#039;</span>);
+</code></pre>
 </div>
 
 <p>For markup the component does not produce, <code>prepareForView()</code> hands back the rendered pieces instead of the
@@ -388,12 +388,12 @@ field that failed. Merge that into a view's data and lay the fields out in the t
 and validates the submitted value against it with a timing-safe comparison:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$form </span><span class="text-kw">= </span><span class="text-var">Pop\Form\Form</span><span class="text-kw">::</span><span class="text-var">createFromConfig</span><span class="text-kw">([
-    </span><span class="text-str">&#039;csrf_token&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;csrf&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;username&#039;   </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;text&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;label&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Username:&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;required&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">],
-    </span><span class="text-str">&#039;submit&#039;     </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;submit&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;value&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Register&#039;</span><span class="text-kw">]
+<pre><code><span class="text-var">$form</span> = <span class="text-type">Pop\Form\Form</span>::<span class="text-fn">createFromConfig</span>([
+    <span class="text-str">&#039;csrf_token&#039;</span> =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;csrf&#039;</span>],
+    <span class="text-str">&#039;username&#039;</span>   =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;text&#039;</span>, <span class="text-str">&#039;label&#039;</span> =&gt; <span class="text-str">&#039;Username:&#039;</span>, <span class="text-str">&#039;required&#039;</span> =&gt; <span class="text-num">true</span>],
+    <span class="text-str">&#039;submit&#039;</span>     =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;submit&#039;</span>, <span class="text-str">&#039;value&#039;</span> =&gt; <span class="text-str">&#039;Register&#039;</span>]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>There's nothing else to wire up: <code>isValid()</code> covers the token along with every other field, and a wrong one
@@ -412,17 +412,17 @@ to a console command's input.</p>
 <code>&lt;form&gt;</code> tag by itself whenever one is present:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$form </span><span class="text-kw">= </span><span class="text-var">Pop\Form\Form</span><span class="text-kw">::</span><span class="text-var">createFromConfig</span><span class="text-kw">([
-    </span><span class="text-str">&#039;avatar&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;type&#039;          </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;file&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;label&#039;         </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Avatar:&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;required&#039;      </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-        </span><span class="text-str">&#039;allowed-types&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;jpg&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;jpeg&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;png&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;gif&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;max-size&#039;      </span><span class="text-kw">=&gt; </span><span class="text-var">2000000
-    </span><span class="text-kw">],
-    </span><span class="text-str">&#039;submit&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;submit&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;value&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Upload&#039;</span><span class="text-kw">]
+<pre><code><span class="text-var">$form</span> = <span class="text-type">Pop\Form\Form</span>::<span class="text-fn">createFromConfig</span>([
+    <span class="text-str">&#039;avatar&#039;</span> =&gt; [
+        <span class="text-str">&#039;type&#039;</span>          =&gt; <span class="text-str">&#039;file&#039;</span>,
+        <span class="text-str">&#039;label&#039;</span>         =&gt; <span class="text-str">&#039;Avatar:&#039;</span>,
+        <span class="text-str">&#039;required&#039;</span>      =&gt; <span class="text-num">true</span>,
+        <span class="text-str">&#039;allowed-types&#039;</span> =&gt; [<span class="text-str">&#039;jpg&#039;</span>, <span class="text-str">&#039;jpeg&#039;</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-str">&#039;gif&#039;</span>],
+        <span class="text-str">&#039;max-size&#039;</span>      =&gt; <span class="text-num">2000000</span>
+    ],
+    <span class="text-str">&#039;submit&#039;</span> =&gt; [<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;submit&#039;</span>, <span class="text-str">&#039;value&#039;</span> =&gt; <span class="text-str">&#039;Upload&#039;</span>]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>allowed-types</code> is an extension allowlist and <code>max-size</code> a byte count, each with a human-readable message on
@@ -435,9 +435,9 @@ validates the submitted filename and the size PHP reports rather than the file's
 form that stays in step with its table:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$config </span><span class="text-kw">= </span><span class="text-var">Pop\Form\Fields</span><span class="text-kw">::</span><span class="text-var">getConfigFromTable</span><span class="text-kw">(</span><span class="text-var">App\Table\Users</span><span class="text-kw">::</span><span class="text-var">getTableInfo</span><span class="text-kw">(), </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-str">&#039;id&#039;</span><span class="text-kw">);
-</span><span class="text-var">$form   </span><span class="text-kw">= </span><span class="text-var">Pop\Form\Form</span><span class="text-kw">::</span><span class="text-var">createFromConfig</span><span class="text-kw">(</span><span class="text-var">$config</span><span class="text-kw">);
-</span></code></pre>
+<pre><code><span class="text-var">$config</span> = <span class="text-type">Pop\Form\Fields</span>::<span class="text-fn">getConfigFromTable</span>(<span class="text-type">App\Table\Users</span>::<span class="text-fn">getTableInfo</span>(), <span class="text-num">null</span>, <span class="text-num">null</span>, <span class="text-str">&#039;id&#039;</span>);
+<span class="text-var">$form</span>   = <span class="text-type">Pop\Form\Form</span>::<span class="text-fn">createFromConfig</span>(<span class="text-var">$config</span>);
+</code></pre>
 </div>
 
 <p>The fourth argument omits columns — the primary key, almost always. Column types map to element types:
@@ -452,23 +452,23 @@ can still carry hand-written validators on the fields that need them. This requi
 rendered somewhere else entirely:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Form\FormValidator</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Validator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Form\FormValidator</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Validator</span>;
 
-</span><span class="text-var">$validator </span><span class="text-kw">= new </span><span class="text-var">FormValidator</span><span class="text-kw">([
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; new </span><span class="text-var">Validator\AlphaNumeric</span><span class="text-kw">(),
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; new </span><span class="text-var">Validator\LengthGreaterThanEqual</span><span class="text-kw">(</span><span class="text-var">8</span><span class="text-kw">)
+<span class="text-var">$validator</span> = <span class="text-kw">new</span> <span class="text-type">FormValidator</span>([
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-kw">new</span> <span class="text-type">Validator\AlphaNumeric</span>(),
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-kw">new</span> <span class="text-type">Validator\LengthGreaterThanEqual</span>(<span class="text-num">8</span>)
 ]);
 
-</span><span class="text-var">$validator</span><span class="text-kw">-&gt;</span><span class="text-var">setValues</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getParsedData</span><span class="text-kw">());
+<span class="text-var">$validator</span>-&gt;<span class="text-fn">setValues</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getParsedData</span>());
 
-if (!</span><span class="text-var">$validator</span><span class="text-kw">-&gt;</span><span class="text-var">validate</span><span class="text-kw">()) {
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setCode</span><span class="text-kw">(</span><span class="text-var">422</span><span class="text-kw">);
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;errors&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$validator</span><span class="text-kw">-&gt;</span><span class="text-var">getErrors</span><span class="text-kw">()]));
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-    return;
+<span class="text-kw">if</span> (!<span class="text-var">$validator</span>-&gt;<span class="text-fn">validate</span>()) {
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setCode</span>(<span class="text-num">422</span>);
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;errors&#039;</span> =&gt; <span class="text-var">$validator</span>-&gt;<span class="text-fn">getErrors</span>()]));
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>();
+    <span class="text-kw">return</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>It takes the same validators and produces the same message strings, and <code>getErrors()</code> with no argument returns

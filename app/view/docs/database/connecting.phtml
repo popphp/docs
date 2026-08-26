@@ -13,15 +13,15 @@ accepted, and what you catch on failure.</p>
 <p><code>Db::connect()</code> takes the adapter name and the credentials:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">connect</span><span class="text-kw">(</span><span class="text-str">&#039;mysql&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popuser&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;db_password&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;127.0.0.1&#039;
-</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">connect</span>(<span class="text-str">&#039;mysql&#039;</span>, [
+    <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>,
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;popuser&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;db_password&#039;</span>,
+    <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-str">&#039;127.0.0.1&#039;</span>
+]);
+</code></pre>
 </div>
 
 <p>The name is lower-cased and capitalized into a class under <code>Pop\Db\Adapter</code>, so <code>'mysql'</code> resolves to
@@ -30,14 +30,14 @@ opened: <code>Error: The database adapter \Pop\Db\Adapter\Bogus does not exist.<
 <p>Five shorthand methods skip the adapter string. They take the options array and nothing else:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">mysqlConnect</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;db_password&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">pgsqlConnect</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;postgres&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;db_password&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">sqliteConnect</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;/var/data/my_database.sqlite&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">sqlsrvConnect</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;sa&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;secret&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">pdoConnect</span><span class="text-kw">([</span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;mysql&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;db_password&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">mysqlConnect</span>([<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;popuser&#039;</span>, <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;db_password&#039;</span>]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">pgsqlConnect</span>([<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;postgres&#039;</span>, <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;db_password&#039;</span>]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">sqliteConnect</span>([<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;/var/data/my_database.sqlite&#039;</span>]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">sqlsrvConnect</span>([<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;sa&#039;</span>, <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;secret&#039;</span>]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">pdoConnect</span>([<span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-str">&#039;mysql&#039;</span>, <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;popuser&#039;</span>, <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;db_password&#039;</span>]);
+</code></pre>
 </div>
 
 <p><code>host</code> defaults to <code>localhost</code> on every adapter that uses one. The connection is opened in the
@@ -81,21 +81,21 @@ error message as a string on failure. It catches the driver exception for you, w
 right call for a startup gate:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">$options </span><span class="text-kw">= [
-    </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popuser&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;db_password&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;127.0.0.1&#039;
-</span><span class="text-kw">];
+<span class="text-var">$options</span> = [
+    <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>,
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;popuser&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;db_password&#039;</span>,
+    <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-str">&#039;127.0.0.1&#039;</span>
+];
 
-</span><span class="text-var">$check </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">check</span><span class="text-kw">(</span><span class="text-str">&#039;mysql&#039;</span><span class="text-kw">, </span><span class="text-var">$options</span><span class="text-kw">);
+<span class="text-var">$check</span> = <span class="text-type">Db</span>::<span class="text-fn">check</span>(<span class="text-str">&#039;mysql&#039;</span>, <span class="text-var">$options</span>);
 
-if (</span><span class="text-var">$check </span><span class="text-kw">!== </span><span class="text-var">true</span><span class="text-kw">) {
-    throw new </span><span class="text-var">\Pop\Db\Adapter\Exception</span><span class="text-kw">(</span><span class="text-str">&#039;Error: &#039; </span><span class="text-kw">. </span><span class="text-var">$check</span><span class="text-kw">);
+<span class="text-kw">if</span> (<span class="text-var">$check</span> <span class="text-kw">!==</span> <span class="text-num">true</span>) {
+    <span class="text-kw">throw</span> <span class="text-kw">new</span> <span class="text-type">\Pop\Db\Adapter\Exception</span>(<span class="text-str">&#039;Error: &#039;</span> . <span class="text-var">$check</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Db::check()</code> does not protect you from a missing extension either — it catches <code>\Exception</code>, and a
@@ -105,14 +105,14 @@ extension throws <code>Error: Call to undefined function Pop\Db\Adapter\sqlsrv_c
 map at once:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">isAvailable</span><span class="text-kw">(</span><span class="text-str">&#039;mysql&#039;</span><span class="text-kw">));       </span><span class="text-comment">// true where the mysqli extension is loaded
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">isAvailable</span><span class="text-kw">(</span><span class="text-str">&#039;sqlsrv&#039;</span><span class="text-kw">));      </span><span class="text-comment">// false where the sqlsrv extension is not
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">isAvailable</span><span class="text-kw">(</span><span class="text-str">&#039;pdo_pgsql&#039;</span><span class="text-kw">));   </span><span class="text-comment">// PDO drivers take a pdo_ prefix
+<span class="text-fn">var_dump</span>(<span class="text-type">Db</span>::<span class="text-fn">isAvailable</span>(<span class="text-str">&#039;mysql&#039;</span>));       <span class="text-comment">// true where the mysqli extension is loaded</span>
+<span class="text-fn">var_dump</span>(<span class="text-type">Db</span>::<span class="text-fn">isAvailable</span>(<span class="text-str">&#039;sqlsrv&#039;</span>));      <span class="text-comment">// false where the sqlsrv extension is not</span>
+<span class="text-fn">var_dump</span>(<span class="text-type">Db</span>::<span class="text-fn">isAvailable</span>(<span class="text-str">&#039;pdo_pgsql&#039;</span>));   <span class="text-comment">// PDO drivers take a pdo_ prefix</span>
 
-</span><span class="text-var">print_r</span><span class="text-kw">(</span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">getAvailableAdapters</span><span class="text-kw">());
-</span></code></pre>
+<span class="text-fn">print_r</span>(<span class="text-type">Db</span>::<span class="text-fn">getAvailableAdapters</span>());
+</code></pre>
 </div>
 
 <h2 id="mysql">MySQL<a class="anchor" href="#mysql" aria-label="Link to this section">#</a></h2>
@@ -154,17 +154,17 @@ map at once:</p>
 </table>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">mysqlConnect</span><span class="text-kw">([
-    </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popuser&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;db_password&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;127.0.0.1&#039;
-</span><span class="text-kw">]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">mysqlConnect</span>([
+    <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>,
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;popuser&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;db_password&#039;</span>,
+    <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-str">&#039;127.0.0.1&#039;</span>
+]);
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getVersion</span><span class="text-kw">();   </span><span class="text-comment">// MySQL 8.4.6-0ubuntu3
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getVersion</span>();   <span class="text-comment">// MySQL 8.4.6-0ubuntu3</span>
+</code></pre>
 </div>
 
 <p>MySQL is the one adapter whose connection failure isn't a Pop exception. PHP's mysqli driver throws
@@ -210,18 +210,18 @@ basics are appended to the connection string as-is.</p>
 </table>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">pgsqlConnect</span><span class="text-kw">([
-    </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;postgres&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;postgres&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;127.0.0.1&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;sslmode&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;prefer&#039;
-</span><span class="text-kw">]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">pgsqlConnect</span>([
+    <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>,
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;postgres&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;postgres&#039;</span>,
+    <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-str">&#039;127.0.0.1&#039;</span>,
+    <span class="text-str">&#039;sslmode&#039;</span>  =&gt; <span class="text-str">&#039;prefer&#039;</span>
+]);
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getVersion</span><span class="text-kw">();   </span><span class="text-comment">// PostgreSQL 17.6 (Ubuntu 17.6-1build1)
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getVersion</span>();   <span class="text-comment">// PostgreSQL 17.6 (Ubuntu 17.6-1build1)</span>
+</code></pre>
 </div>
 
 <p>This adapter throws <code>Unable to connect to the database.</code> whatever went wrong. The specifics — <code>FATAL: database &quot;nope_popdb&quot; does not exist</code> against <code>FATAL: role &quot;nosuchuser&quot; does not exist</code> — reach you through
@@ -254,12 +254,12 @@ no credentials — <code>database</code> is a path on disk.</p>
 </table>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">sqliteConnect</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;/var/data/my_database.sqlite&#039;</span><span class="text-kw">]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">sqliteConnect</span>([<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;/var/data/my_database.sqlite&#039;</span>]);
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getVersion</span><span class="text-kw">();   </span><span class="text-comment">// SQLite 3.46.1
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getVersion</span>();   <span class="text-comment">// SQLite 3.46.1</span>
+</code></pre>
 </div>
 
 <p>Create the SQLite file before connecting. The adapter checks <code>file_exists()</code> while reading its options,
@@ -306,15 +306,15 @@ fails on the first write.</p>
 </table>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">sqlsrvConnect</span><span class="text-kw">([
-    </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;sa&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;secret&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;localhost&#039;
-</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">sqlsrvConnect</span>([
+    <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>,
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;sa&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;secret&#039;</span>,
+    <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-str">&#039;localhost&#039;</span>
+]);
+</code></pre>
 </div>
 
 <p>The <code>sqlsrv</code> extension is a hard requirement for SQL Server, so gate on <code>Db::isAvailable('sqlsrv')</code> first —
@@ -363,19 +363,19 @@ when the native extension for your database is not available — and the one ada
 </table>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">pdoConnect</span><span class="text-kw">([
-    </span><span class="text-str">&#039;type&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;pgsql&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;postgres&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;postgres&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;127.0.0.1&#039;
-</span><span class="text-kw">]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">pdoConnect</span>([
+    <span class="text-str">&#039;type&#039;</span>     =&gt; <span class="text-str">&#039;pgsql&#039;</span>,
+    <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>,
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;postgres&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;postgres&#039;</span>,
+    <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-str">&#039;127.0.0.1&#039;</span>
+]);
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getVersion</span><span class="text-kw">();   </span><span class="text-comment">// PDO pgsql 17.6 (Ubuntu 17.6-1build1)
-</span><span class="text-kw">echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getType</span><span class="text-kw">();      </span><span class="text-comment">// pgsql
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getVersion</span>();   <span class="text-comment">// PDO pgsql 17.6 (Ubuntu 17.6-1build1)</span>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getType</span>();      <span class="text-comment">// pgsql</span>
+</code></pre>
 </div>
 
 <p><code>type</code> is checked before the credentials are, and a driver name PDO does not know is reported as
@@ -391,27 +391,27 @@ environment. <code>kettle pop:init</code> writes this file when you answer yes t
 one <code>default</code> entry:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/database.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;default&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_DATABASE&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;adapter&#039;  </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_ADAPTER&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_USERNAME&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_PASSWORD&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_HOST&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;type&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_TYPE&#039;</span><span class="text-kw">],
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;default&#039;</span> =&gt; [
+        <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_DATABASE&#039;</span>],
+        <span class="text-str">&#039;adapter&#039;</span>  =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_ADAPTER&#039;</span>],
+        <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_USERNAME&#039;</span>],
+        <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_PASSWORD&#039;</span>],
+        <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_HOST&#039;</span>],
+        <span class="text-str">&#039;type&#039;</span>     =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_TYPE&#039;</span>],
     ],
-    </span><span class="text-str">&#039;reports&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;REPORTS_DB_DATABASE&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;adapter&#039;  </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;REPORTS_DB_ADAPTER&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;REPORTS_DB_USERNAME&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;REPORTS_DB_PASSWORD&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;REPORTS_DB_HOST&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;type&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;REPORTS_DB_TYPE&#039;</span><span class="text-kw">],
+    <span class="text-str">&#039;reports&#039;</span> =&gt; [
+        <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;REPORTS_DB_DATABASE&#039;</span>],
+        <span class="text-str">&#039;adapter&#039;</span>  =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;REPORTS_DB_ADAPTER&#039;</span>],
+        <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;REPORTS_DB_USERNAME&#039;</span>],
+        <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;REPORTS_DB_PASSWORD&#039;</span>],
+        <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;REPORTS_DB_HOST&#039;</span>],
+        <span class="text-str">&#039;type&#039;</span>     =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;REPORTS_DB_TYPE&#039;</span>],
     ],
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>adapter</code> is the string <code>Db::connect()</code> takes — <code>mysql</code>, <code>pgsql</code>, <code>sqlite</code>, <code>sqlsrv</code> or <code>pdo</code> — and
@@ -424,11 +424,11 @@ adapter — see <a href="/getting-started/configuration">Configuration</a>.</p>
 application, and from <code>Pop\Db\Record</code> for any table class bound to it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db      </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
-</span><span class="text-var">$version </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getVersion</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$db</span>      = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
+<span class="text-var">$version</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">getVersion</span>();
+</code></pre>
 </div>
 
 <p><code>Db::getAll()</code> returns every adapter registered with <code>Pop\Db\Db</code>, and <code>Db::db('App\Table\Users')</code>

@@ -12,15 +12,15 @@ record class actually sent.</p>
 <p>Register a query listener and the adapter builds the profiler itself, so there is nothing to construct:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">listen</span><span class="text-kw">(</span><span class="text-str">&#039;Pop\Debug\Handler\QueryHandler&#039;</span><span class="text-kw">);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">listen</span>(<span class="text-str">&#039;Pop\Debug\Handler\QueryHandler&#039;</span>);
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM `users` WHERE `id` &lt; ?&#039;</span><span class="text-kw">, [</span><span class="text-var">3</span><span class="text-kw">]);
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM orders&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$db</span>-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;SELECT * FROM `users` WHERE `id` &lt; ?&#039;</span>, [<span class="text-num">3</span>]);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&#039;SELECT * FROM orders&#039;</span>);
+</code></pre>
 </div>
 
 <p>Everything the adapter runs from that point on is recorded, whether it came from a raw query, a builder or
@@ -31,17 +31,17 @@ a record class.</p>
 parameters bound to it, and how long it took:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-foreach (</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getProfiler</span><span class="text-kw">()-&gt;</span><span class="text-var">getSteps</span><span class="text-kw">() as </span><span class="text-var">$step</span><span class="text-kw">) {
-    </span><span class="text-var">printf</span><span class="text-kw">(</span><span class="text-str">&quot;%s [%s]\n&quot;</span><span class="text-kw">, </span><span class="text-var">$step</span><span class="text-kw">-&gt;</span><span class="text-var">getQuery</span><span class="text-kw">(), </span><span class="text-var">$step</span><span class="text-kw">-&gt;</span><span class="text-var">getElapsed</span><span class="text-kw">());
-    </span><span class="text-var">print_r</span><span class="text-kw">(</span><span class="text-var">$step</span><span class="text-kw">-&gt;</span><span class="text-var">getParams</span><span class="text-kw">());
+<span class="text-kw">foreach</span> (<span class="text-var">$db</span>-&gt;<span class="text-fn">getProfiler</span>()-&gt;<span class="text-fn">getSteps</span>() <span class="text-kw">as</span> <span class="text-var">$step</span>) {
+    <span class="text-fn">printf</span>(<span class="text-str">&quot;%s [%s]\n&quot;</span>, <span class="text-var">$step</span>-&gt;<span class="text-fn">getQuery</span>(), <span class="text-var">$step</span>-&gt;<span class="text-fn">getElapsed</span>());
+    <span class="text-fn">print_r</span>(<span class="text-var">$step</span>-&gt;<span class="text-fn">getParams</span>());
 }
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getProfiler</span><span class="text-kw">()-&gt;</span><span class="text-var">getElapsed</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getProfiler</span>()-&gt;<span class="text-fn">getElapsed</span>();
+</code></pre>
 </div>
 
 <p>That prints each statement with its elapsed time, then the total for the run.</p>
@@ -81,22 +81,22 @@ pop-debug is the one to reach for, and <code>listen()</code> returns the handler
 debugger and choose when the log is written:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$queryHandler </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">listen</span><span class="text-kw">(</span><span class="text-str">&#039;Pop\Debug\Handler\QueryHandler&#039;</span><span class="text-kw">);
+<span class="text-var">$queryHandler</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">listen</span>(<span class="text-str">&#039;Pop\Debug\Handler\QueryHandler&#039;</span>);
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">();
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(</span><span class="text-var">$queryHandler</span><span class="text-kw">);
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">setStorage</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>();
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-var">$queryHandler</span>);
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">setStorage</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs&#039;</span>));
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM `users` WHERE `id` &lt; ?&#039;</span><span class="text-kw">, [</span><span class="text-var">3</span><span class="text-kw">]);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;SELECT * FROM `users` WHERE `id` &lt; ?&#039;</span>, [<span class="text-num">3</span>]);
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <h2 id="writing-as-it-runs">Writing as It Runs<a class="anchor" href="#writing-as-it-runs" aria-label="Link to this section">#</a></h2>
@@ -106,19 +106,19 @@ the moment it finishes, with no <code>save()</code> of your own. That is the sha
 request you cannot reproduce:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Db\Adapter\Profiler\Profiler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Adapter\Profiler\Profiler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>(<span class="text-num">null</span>, <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs&#039;</span>));
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">listen</span><span class="text-kw">(</span><span class="text-str">&#039;Pop\Debug\Handler\QueryHandler&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, new </span><span class="text-var">Profiler</span><span class="text-kw">(</span><span class="text-var">$debugger</span><span class="text-kw">));
+<span class="text-var">$db</span>-&gt;<span class="text-fn">listen</span>(<span class="text-str">&#039;Pop\Debug\Handler\QueryHandler&#039;</span>, <span class="text-num">null</span>, <span class="text-kw">new</span> <span class="text-type">Profiler</span>(<span class="text-var">$debugger</span>));
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM `users` WHERE `id` &lt; ?&#039;</span><span class="text-kw">, [</span><span class="text-var">3</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$db</span>-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;SELECT * FROM `users` WHERE `id` &lt; ?&#039;</span>, [<span class="text-num">3</span>]);
+</code></pre>
 </div>
 
 <h2 id="see-also">See Also<a class="anchor" href="#see-also" aria-label="Link to this section">#</a></h2>

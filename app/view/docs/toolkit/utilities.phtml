@@ -21,18 +21,18 @@ dynamic — <code>Str::&lt;from&gt;To&lt;To&gt;()</code> — across seven forms:
 spelled <code>Uri</code>).</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Str</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Str</span>;
 
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">titleCaseToKebabCase</span><span class="text-kw">(</span><span class="text-str">&#039;TitleCase&#039;</span><span class="text-kw">);         </span><span class="text-comment">// &#039;title-case&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">titleCaseToSnakeCase</span><span class="text-kw">(</span><span class="text-str">&#039;TitleCase&#039;</span><span class="text-kw">);         </span><span class="text-comment">// &#039;title_case&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">camelCaseToDash</span><span class="text-kw">(</span><span class="text-str">&#039;camelCase&#039;</span><span class="text-kw">);              </span><span class="text-comment">// &#039;camel-case&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">camelCaseToUnderscore</span><span class="text-kw">(</span><span class="text-str">&#039;camelCase&#039;</span><span class="text-kw">);        </span><span class="text-comment">// &#039;camel_case&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">kebabCaseToTitleCase</span><span class="text-kw">(</span><span class="text-str">&#039;kebab-string&#039;</span><span class="text-kw">);      </span><span class="text-comment">// &#039;KebabString&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">snakeCaseToCamelCase</span><span class="text-kw">(</span><span class="text-str">&#039;snake_case_string&#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;snakeCaseString&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">snakeCaseToNamespace</span><span class="text-kw">(</span><span class="text-str">&#039;snake_case_string&#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;Snake\Case\String&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">kebabCaseToPath</span><span class="text-kw">(</span><span class="text-str">&#039;kebab-string&#039;</span><span class="text-kw">);           </span><span class="text-comment">// &#039;Kebab/String&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">camelCaseToUrl</span><span class="text-kw">(</span><span class="text-str">&#039;camelCase&#039;</span><span class="text-kw">);               </span><span class="text-comment">// &#039;camel/Case&#039;
-</span></code></pre>
+<span class="text-type">Str</span>::<span class="text-fn">titleCaseToKebabCase</span>(<span class="text-str">&#039;TitleCase&#039;</span>);         <span class="text-comment">// &#039;title-case&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">titleCaseToSnakeCase</span>(<span class="text-str">&#039;TitleCase&#039;</span>);         <span class="text-comment">// &#039;title_case&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">camelCaseToDash</span>(<span class="text-str">&#039;camelCase&#039;</span>);              <span class="text-comment">// &#039;camel-case&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">camelCaseToUnderscore</span>(<span class="text-str">&#039;camelCase&#039;</span>);        <span class="text-comment">// &#039;camel_case&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">kebabCaseToTitleCase</span>(<span class="text-str">&#039;kebab-string&#039;</span>);      <span class="text-comment">// &#039;KebabString&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">snakeCaseToCamelCase</span>(<span class="text-str">&#039;snake_case_string&#039;</span>); <span class="text-comment">// &#039;snakeCaseString&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">snakeCaseToNamespace</span>(<span class="text-str">&#039;snake_case_string&#039;</span>); <span class="text-comment">// &#039;Snake\Case\String&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">kebabCaseToPath</span>(<span class="text-str">&#039;kebab-string&#039;</span>);           <span class="text-comment">// &#039;Kebab/String&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">camelCaseToUrl</span>(<span class="text-str">&#039;camelCase&#039;</span>);               <span class="text-comment">// &#039;camel/Case&#039;</span>
+</code></pre>
 </div>
 
 <p>The path, namespace and URL conversions preserve the source string's casing, so
@@ -45,17 +45,17 @@ spelling of a conversion name against the list above rather than trusting a clea
 <p>Slugs, links and random strings round out the class:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Str</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Str</span>;
 
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">createSlug</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World | Home Page&#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;hello-world-home-page&#039;
+<span class="text-type">Str</span>::<span class="text-fn">createSlug</span>(<span class="text-str">&#039;Hello World | Home Page&#039;</span>); <span class="text-comment">// &#039;hello-world-home-page&#039;</span>
 
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">createRandom</span><span class="text-kw">(</span><span class="text-var">10</span><span class="text-kw">);                         </span><span class="text-comment">// 10 chars including punctuation
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">createRandomAlpha</span><span class="text-kw">(</span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">LOWERCASE</span><span class="text-kw">);    </span><span class="text-comment">// &#039;uwuctybahc&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">createRandomAlphaNum</span><span class="text-kw">(</span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">UPPERCASE</span><span class="text-kw">); </span><span class="text-comment">// &#039;E7KQC04961&#039;
+<span class="text-type">Str</span>::<span class="text-fn">createRandom</span>(<span class="text-num">10</span>);                         <span class="text-comment">// 10 chars including punctuation</span>
+<span class="text-type">Str</span>::<span class="text-fn">createRandomAlpha</span>(<span class="text-num">10</span>, <span class="text-type">Str</span>::<span class="text-num">LOWERCASE</span>);    <span class="text-comment">// &#039;uwuctybahc&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">createRandomAlphaNum</span>(<span class="text-num">10</span>, <span class="text-type">Str</span>::<span class="text-num">UPPERCASE</span>); <span class="text-comment">// &#039;E7KQC04961&#039;</span>
 
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">stripSpecialCharacters</span><span class="text-kw">(</span><span class="text-str">&#039;Hello_World! #1&#039;</span><span class="text-kw">);                                    </span><span class="text-comment">// &#039;Hello_World 1&#039;
-</span><span class="text-var">Str</span><span class="text-kw">::</span><span class="text-var">stripSpecialCharacters</span><span class="text-kw">(</span><span class="text-str">&#039;Hello_World! #1&#039;</span><span class="text-kw">, </span><span class="text-var">alphaNumOnly</span><span class="text-kw">: </span><span class="text-var">true</span><span class="text-kw">, </span><span class="text-var">spaces</span><span class="text-kw">: </span><span class="text-var">false</span><span class="text-kw">); </span><span class="text-comment">// &#039;HelloWorld1&#039;
-</span></code></pre>
+<span class="text-type">Str</span>::<span class="text-fn">stripSpecialCharacters</span>(<span class="text-str">&#039;Hello_World! #1&#039;</span>);                                    <span class="text-comment">// &#039;Hello_World 1&#039;</span>
+<span class="text-type">Str</span>::<span class="text-fn">stripSpecialCharacters</span>(<span class="text-str">&#039;Hello_World! #1&#039;</span>, <span class="text-type">alphaNumOnly</span>: <span class="text-num">true</span>, <span class="text-type">spaces</span>: <span class="text-num">false</span>); <span class="text-comment">// &#039;HelloWorld1&#039;</span>
+</code></pre>
 </div>
 
 <p><code>Str::createLinks()</code> turns bare email addresses and URLs in a block of text into anchor tags —
@@ -68,18 +68,18 @@ array and returns a new one, with <code>Arr::pull()</code> as the single excepti
 reference and removes the key it returns.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Arr</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Arr</span>;
 
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">collapse</span><span class="text-kw">([[</span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">], [</span><span class="text-var">3</span><span class="text-kw">, </span><span class="text-var">4</span><span class="text-kw">]]);        </span><span class="text-comment">// [1, 2, 3, 4]
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">flatten</span><span class="text-kw">([</span><span class="text-var">1</span><span class="text-kw">, [</span><span class="text-var">2</span><span class="text-kw">, [</span><span class="text-var">3</span><span class="text-kw">, [</span><span class="text-var">4</span><span class="text-kw">]]]]);       </span><span class="text-comment">// [1, 2, 3, 4]
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">flatten</span><span class="text-kw">([</span><span class="text-var">1</span><span class="text-kw">, [</span><span class="text-var">2</span><span class="text-kw">, [</span><span class="text-var">3</span><span class="text-kw">, [</span><span class="text-var">4</span><span class="text-kw">]]]], </span><span class="text-var">1</span><span class="text-kw">);    </span><span class="text-comment">// [1, 2, [3, [4]]]
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">divide</span><span class="text-kw">([</span><span class="text-str">&#039;a&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-str">&#039;b&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">2</span><span class="text-kw">]);      </span><span class="text-comment">// [[&#039;a&#039;, &#039;b&#039;], [1, 2]]
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">prepend</span><span class="text-kw">([</span><span class="text-var">2</span><span class="text-kw">, </span><span class="text-var">3</span><span class="text-kw">], </span><span class="text-var">1</span><span class="text-kw">);                </span><span class="text-comment">// [1, 2, 3]
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">join</span><span class="text-kw">([</span><span class="text-str">&#039;a&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;b&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;c&#039;</span><span class="text-kw">], </span><span class="text-str">&#039;, &#039;</span><span class="text-kw">, </span><span class="text-str">&#039; and &#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;a, b and c&#039;
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">trim</span><span class="text-kw">([</span><span class="text-str">&#039;  a  &#039;</span><span class="text-kw">, </span><span class="text-str">&#039; b&#039;</span><span class="text-kw">]);             </span><span class="text-comment">// [&#039;a&#039;, &#039;b&#039;]
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">make</span><span class="text-kw">(</span><span class="text-str">&#039;x&#039;</span><span class="text-kw">);                         </span><span class="text-comment">// [&#039;x&#039;]
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">split</span><span class="text-kw">(</span><span class="text-str">&#039;a,b,c&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;,&#039;</span><span class="text-kw">);               </span><span class="text-comment">// [&#039;a&#039;, &#039;b&#039;, &#039;c&#039;]
-</span></code></pre>
+<span class="text-type">Arr</span>::<span class="text-fn">collapse</span>([[<span class="text-num">1</span>, <span class="text-num">2</span>], [<span class="text-num">3</span>, <span class="text-num">4</span>]]);        <span class="text-comment">// [1, 2, 3, 4]</span>
+<span class="text-type">Arr</span>::<span class="text-fn">flatten</span>([<span class="text-num">1</span>, [<span class="text-num">2</span>, [<span class="text-num">3</span>, [<span class="text-num">4</span>]]]]);       <span class="text-comment">// [1, 2, 3, 4]</span>
+<span class="text-type">Arr</span>::<span class="text-fn">flatten</span>([<span class="text-num">1</span>, [<span class="text-num">2</span>, [<span class="text-num">3</span>, [<span class="text-num">4</span>]]]], <span class="text-num">1</span>);    <span class="text-comment">// [1, 2, [3, [4]]]</span>
+<span class="text-type">Arr</span>::<span class="text-fn">divide</span>([<span class="text-str">&#039;a&#039;</span> =&gt; <span class="text-num">1</span>, <span class="text-str">&#039;b&#039;</span> =&gt; <span class="text-num">2</span>]);      <span class="text-comment">// [[&#039;a&#039;, &#039;b&#039;], [1, 2]]</span>
+<span class="text-type">Arr</span>::<span class="text-fn">prepend</span>([<span class="text-num">2</span>, <span class="text-num">3</span>], <span class="text-num">1</span>);                <span class="text-comment">// [1, 2, 3]</span>
+<span class="text-type">Arr</span>::<span class="text-fn">join</span>([<span class="text-str">&#039;a&#039;</span>, <span class="text-str">&#039;b&#039;</span>, <span class="text-str">&#039;c&#039;</span>], <span class="text-str">&#039;, &#039;</span>, <span class="text-str">&#039; and &#039;</span>); <span class="text-comment">// &#039;a, b and c&#039;</span>
+<span class="text-type">Arr</span>::<span class="text-fn">trim</span>([<span class="text-str">&#039;  a  &#039;</span>, <span class="text-str">&#039; b&#039;</span>]);             <span class="text-comment">// [&#039;a&#039;, &#039;b&#039;]</span>
+<span class="text-type">Arr</span>::<span class="text-fn">make</span>(<span class="text-str">&#039;x&#039;</span>);                         <span class="text-comment">// [&#039;x&#039;]</span>
+<span class="text-type">Arr</span>::<span class="text-fn">split</span>(<span class="text-str">&#039;a,b,c&#039;</span>, <span class="text-str">&#039;,&#039;</span>);               <span class="text-comment">// [&#039;a&#039;, &#039;b&#039;, &#039;c&#039;]</span>
+</code></pre>
 </div>
 
 <p><code>collapse()</code> merges one level of nested arrays; <code>flatten()</code> goes all the way down unless you cap the
@@ -88,14 +88,14 @@ difference between a list and a sentence.</p>
 <p>Three predicates answer the questions that come up before a branch:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Arr</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Arr</span>;
 
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">isArray</span><span class="text-kw">([</span><span class="text-str">&#039;a&#039;</span><span class="text-kw">]);       </span><span class="text-comment">// true — an array or an ArrayAccess object
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">isAssoc</span><span class="text-kw">([</span><span class="text-str">&#039;a&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">]);  </span><span class="text-comment">// true — has at least one string key
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">isNumeric</span><span class="text-kw">([</span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">]);    </span><span class="text-comment">// true — keys are sequential integers
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">exists</span><span class="text-kw">([</span><span class="text-str">&#039;a&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">], </span><span class="text-str">&#039;a&#039;</span><span class="text-kw">); </span><span class="text-comment">// true — works on arrays and ArrayAccess alike
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">key</span><span class="text-kw">([</span><span class="text-str">&#039;a&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-str">&#039;b&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">2</span><span class="text-kw">], </span><span class="text-var">2</span><span class="text-kw">); </span><span class="text-comment">// &#039;b&#039; — the key holding a given value
-</span></code></pre>
+<span class="text-type">Arr</span>::<span class="text-fn">isArray</span>([<span class="text-str">&#039;a&#039;</span>]);       <span class="text-comment">// true — an array or an ArrayAccess object</span>
+<span class="text-type">Arr</span>::<span class="text-fn">isAssoc</span>([<span class="text-str">&#039;a&#039;</span> =&gt; <span class="text-num">1</span>]);  <span class="text-comment">// true — has at least one string key</span>
+<span class="text-type">Arr</span>::<span class="text-fn">isNumeric</span>([<span class="text-num">1</span>, <span class="text-num">2</span>]);    <span class="text-comment">// true — keys are sequential integers</span>
+<span class="text-type">Arr</span>::<span class="text-fn">exists</span>([<span class="text-str">&#039;a&#039;</span> =&gt; <span class="text-num">1</span>], <span class="text-str">&#039;a&#039;</span>); <span class="text-comment">// true — works on arrays and ArrayAccess alike</span>
+<span class="text-type">Arr</span>::<span class="text-fn">key</span>([<span class="text-str">&#039;a&#039;</span> =&gt; <span class="text-num">1</span>, <span class="text-str">&#039;b&#039;</span> =&gt; <span class="text-num">2</span>], <span class="text-num">2</span>); <span class="text-comment">// &#039;b&#039; — the key holding a given value</span>
+</code></pre>
 </div>
 
 <p>Sorting has six forms — <code>sort()</code>, <code>sortDesc()</code>, <code>ksort()</code>, <code>ksortDesc()</code>, <code>usort()</code> and <code>uksort()</code> — each
@@ -103,11 +103,11 @@ taking the array and returning a sorted copy. The <code>$assoc</code> argument, 
 keys are preserved:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Arr</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Arr</span>;
 
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">sort</span><span class="text-kw">([</span><span class="text-str">&#039;c&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">3</span><span class="text-kw">, </span><span class="text-str">&#039;a&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-str">&#039;b&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">2</span><span class="text-kw">]); </span><span class="text-comment">// [&#039;a&#039; =&gt; 1, &#039;b&#039; =&gt; 2, &#039;c&#039; =&gt; 3]
-</span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">usort</span><span class="text-kw">([</span><span class="text-var">3</span><span class="text-kw">, </span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">], fn(</span><span class="text-var">$a</span><span class="text-kw">, </span><span class="text-var">$b</span><span class="text-kw">) =&gt; </span><span class="text-var">$a </span><span class="text-kw">&lt;=&gt; </span><span class="text-var">$b</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Arr</span>::<span class="text-fn">sort</span>([<span class="text-str">&#039;c&#039;</span> =&gt; <span class="text-num">3</span>, <span class="text-str">&#039;a&#039;</span> =&gt; <span class="text-num">1</span>, <span class="text-str">&#039;b&#039;</span> =&gt; <span class="text-num">2</span>]); <span class="text-comment">// [&#039;a&#039; =&gt; 1, &#039;b&#039; =&gt; 2, &#039;c&#039; =&gt; 3]</span>
+<span class="text-type">Arr</span>::<span class="text-fn">usort</span>([<span class="text-num">3</span>, <span class="text-num">1</span>, <span class="text-num">2</span>], <span class="text-kw">fn</span>(<span class="text-var">$a</span>, <span class="text-var">$b</span>) =&gt; <span class="text-var">$a</span> <span class="text-kw">&lt;=&gt;</span> <span class="text-var">$b</span>, <span class="text-num">false</span>);
+</code></pre>
 </div>
 
 <p><code>Arr::slice()</code> takes the array, a <strong>limit</strong> and then an offset — in that order, which is the reverse of
@@ -116,13 +116,13 @@ starting at index one.</p>
 <p><code>Arr::pull()</code> is the mutating one, and worth calling out for that reason alone:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Arr</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Arr</span>;
 
-</span><span class="text-var">$options </span><span class="text-kw">= [</span><span class="text-str">&#039;driver&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;mysql&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;host&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;localhost&#039;</span><span class="text-kw">];
+<span class="text-var">$options</span> = [<span class="text-str">&#039;driver&#039;</span> =&gt; <span class="text-str">&#039;mysql&#039;</span>, <span class="text-str">&#039;host&#039;</span> =&gt; <span class="text-str">&#039;localhost&#039;</span>];
 
-</span><span class="text-var">$driver </span><span class="text-kw">= </span><span class="text-var">Arr</span><span class="text-kw">::</span><span class="text-var">pull</span><span class="text-kw">(</span><span class="text-var">$options</span><span class="text-kw">, </span><span class="text-str">&#039;driver&#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;mysql&#039;
-// $options is now [&#039;host&#039; =&gt; &#039;localhost&#039;]
-</span></code></pre>
+<span class="text-var">$driver</span> = <span class="text-type">Arr</span>::<span class="text-fn">pull</span>(<span class="text-var">$options</span>, <span class="text-str">&#039;driver&#039;</span>); <span class="text-comment">// &#039;mysql&#039;</span>
+<span class="text-comment">// $options is now [&#039;host&#039; =&gt; &#039;localhost&#039;]</span>
+</code></pre>
 </div>
 
 <p>Every method here accepts a <code>Pop\Utils\AbstractArray</code> as well as a plain array, so an <code>ArrayObject</code> or a
@@ -134,14 +134,14 @@ return more than one row hands back a <code>Pop\Db\Record\Collection</code>, whi
 <code>findAll()</code> gives you has all of this on it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-class </span><span class="text-var">SiteUser </span><span class="text-kw">extends </span><span class="text-var">Record </span><span class="text-kw">{}
+<span class="text-kw">class</span> <span class="text-type">SiteUser</span> <span class="text-kw">extends</span> <span class="text-type">Record</span> {}
 
-</span><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">SiteUser</span><span class="text-kw">::</span><span class="text-var">findAll</span><span class="text-kw">([</span><span class="text-str">&#039;order&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;id ASC&#039;</span><span class="text-kw">]);
+<span class="text-var">$users</span> = <span class="text-type">SiteUser</span>::<span class="text-fn">findAll</span>([<span class="text-str">&#039;order&#039;</span> =&gt; <span class="text-str">&#039;id ASC&#039;</span>]);
 
-</span><span class="text-var">$emails </span><span class="text-kw">= </span><span class="text-var">$users</span><span class="text-kw">-&gt;</span><span class="text-var">column</span><span class="text-kw">(</span><span class="text-str">&#039;email&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">values</span><span class="text-kw">()-&gt;</span><span class="text-var">toArray</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$emails</span> = <span class="text-var">$users</span>-&gt;<span class="text-fn">column</span>(<span class="text-str">&#039;email&#039;</span>)-&gt;<span class="text-fn">values</span>()-&gt;<span class="text-fn">toArray</span>();
+</code></pre>
 </div>
 
 <p>That subclass adds exactly two methods — a <code>toArray()</code> that knows how to unwrap <code>Record</code> objects into
@@ -149,25 +149,25 @@ arrays, and a <code>getItems()</code> — and inherits the rest, so everything b
 <p>A collection is array-like on the outside: countable, iterable, and readable by offset.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Collection</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Collection</span>;
 
-</span><span class="text-var">$people </span><span class="text-kw">= new </span><span class="text-var">Collection</span><span class="text-kw">([
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Nick&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">40</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Jane&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">35</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Amy&#039;</span><span class="text-kw">,  </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">28</span><span class="text-kw">],
+<span class="text-var">$people</span> = <span class="text-kw">new</span> <span class="text-type">Collection</span>([
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Nick&#039;</span>, <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">40</span>],
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Jane&#039;</span>, <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">35</span>],
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Amy&#039;</span>,  <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">28</span>],
 ]);
 
-</span><span class="text-var">count</span><span class="text-kw">(</span><span class="text-var">$people</span><span class="text-kw">);        </span><span class="text-comment">// 3
-</span><span class="text-var">$people</span><span class="text-kw">[</span><span class="text-var">0</span><span class="text-kw">][</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">];    </span><span class="text-comment">// &#039;Nick&#039;
-</span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">first</span><span class="text-kw">();      </span><span class="text-comment">// [&#039;name&#039; =&gt; &#039;Nick&#039;, &#039;age&#039; =&gt; 40]
-</span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">last</span><span class="text-kw">();       </span><span class="text-comment">// [&#039;name&#039; =&gt; &#039;Amy&#039;, &#039;age&#039; =&gt; 28]
-</span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">isEmpty</span><span class="text-kw">();    </span><span class="text-comment">// false
-</span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">has</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">);       </span><span class="text-comment">// true
+<span class="text-fn">count</span>(<span class="text-var">$people</span>);        <span class="text-comment">// 3</span>
+<span class="text-var">$people</span>[<span class="text-num">0</span>][<span class="text-str">&#039;name&#039;</span>];    <span class="text-comment">// &#039;Nick&#039;</span>
+<span class="text-var">$people</span>-&gt;<span class="text-fn">first</span>();      <span class="text-comment">// [&#039;name&#039; =&gt; &#039;Nick&#039;, &#039;age&#039; =&gt; 40]</span>
+<span class="text-var">$people</span>-&gt;<span class="text-fn">last</span>();       <span class="text-comment">// [&#039;name&#039; =&gt; &#039;Amy&#039;, &#039;age&#039; =&gt; 28]</span>
+<span class="text-var">$people</span>-&gt;<span class="text-fn">isEmpty</span>();    <span class="text-comment">// false</span>
+<span class="text-var">$people</span>-&gt;<span class="text-fn">has</span>(<span class="text-num">0</span>);       <span class="text-comment">// true</span>
 
-</span><span class="text-kw">foreach (</span><span class="text-var">$people </span><span class="text-kw">as </span><span class="text-var">$person</span><span class="text-kw">) {
-    echo </span><span class="text-var">$person</span><span class="text-kw">[</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">];
+<span class="text-kw">foreach</span> (<span class="text-var">$people</span> <span class="text-kw">as</span> <span class="text-var">$person</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$person</span>[<span class="text-str">&#039;name&#039;</span>];
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The constructor takes an array, another <code>Collection</code>, an <code>\ArrayObject</code>, any <code>\Traversable</code>, or any
@@ -175,20 +175,20 @@ object exposing its own <code>toArray()</code>.</p>
 <p>The transforming methods return a <strong>new</strong> collection and leave the original alone, so they chain:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Collection</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Collection</span>;
 
-</span><span class="text-var">$people </span><span class="text-kw">= new </span><span class="text-var">Collection</span><span class="text-kw">([
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Nick&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">40</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Jane&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">35</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Amy&#039;</span><span class="text-kw">,  </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">28</span><span class="text-kw">],
+<span class="text-var">$people</span> = <span class="text-kw">new</span> <span class="text-type">Collection</span>([
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Nick&#039;</span>, <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">40</span>],
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Jane&#039;</span>, <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">35</span>],
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Amy&#039;</span>,  <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">28</span>],
 ]);
 
-</span><span class="text-var">$names </span><span class="text-kw">= </span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">column</span><span class="text-kw">(</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">values</span><span class="text-kw">()-&gt;</span><span class="text-var">toArray</span><span class="text-kw">();   </span><span class="text-comment">// [&#039;Nick&#039;, &#039;Jane&#039;, &#039;Amy&#039;]
+<span class="text-var">$names</span> = <span class="text-var">$people</span>-&gt;<span class="text-fn">column</span>(<span class="text-str">&#039;name&#039;</span>)-&gt;<span class="text-fn">values</span>()-&gt;<span class="text-fn">toArray</span>();   <span class="text-comment">// [&#039;Nick&#039;, &#039;Jane&#039;, &#039;Amy&#039;]</span>
 
-</span><span class="text-var">$adults </span><span class="text-kw">= </span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">filter</span><span class="text-kw">(fn(</span><span class="text-var">$p</span><span class="text-kw">) =&gt; </span><span class="text-var">$p</span><span class="text-kw">[</span><span class="text-str">&#039;age&#039;</span><span class="text-kw">] &gt; </span><span class="text-var">30</span><span class="text-kw">)-&gt;</span><span class="text-var">values</span><span class="text-kw">();
+<span class="text-var">$adults</span> = <span class="text-var">$people</span>-&gt;<span class="text-fn">filter</span>(<span class="text-kw">fn</span>(<span class="text-var">$p</span>) =&gt; <span class="text-var">$p</span>[<span class="text-str">&#039;age&#039;</span>] &gt; <span class="text-num">30</span>)-&gt;<span class="text-fn">values</span>();
 
-</span><span class="text-var">$shouted </span><span class="text-kw">= </span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">map</span><span class="text-kw">(fn(</span><span class="text-var">$p</span><span class="text-kw">) =&gt; </span><span class="text-var">strtoupper</span><span class="text-kw">(</span><span class="text-var">$p</span><span class="text-kw">[</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">toArray</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$shouted</span> = <span class="text-var">$people</span>-&gt;<span class="text-fn">map</span>(<span class="text-kw">fn</span>(<span class="text-var">$p</span>) =&gt; <span class="text-fn">strtoupper</span>(<span class="text-var">$p</span>[<span class="text-str">&#039;name&#039;</span>]))-&gt;<span class="text-fn">toArray</span>();
+</code></pre>
 </div>
 
 <h3 id="filtering-mapping-and-paging">Filtering, Mapping and Paging<a class="anchor" href="#filtering-mapping-and-paging" aria-label="Link to this section">#</a></h3>
@@ -201,16 +201,16 @@ anything that has been filtered.</p>
 callback stops the walk early:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Collection</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Collection</span>;
 
-</span><span class="text-var">$people </span><span class="text-kw">= new </span><span class="text-var">Collection</span><span class="text-kw">([[</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Nick&#039;</span><span class="text-kw">], [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Jane&#039;</span><span class="text-kw">]]);
+<span class="text-var">$people</span> = <span class="text-kw">new</span> <span class="text-type">Collection</span>([[<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Nick&#039;</span>], [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Jane&#039;</span>]]);
 
-</span><span class="text-var">$names </span><span class="text-kw">= [];
+<span class="text-var">$names</span> = [];
 
-</span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">each</span><span class="text-kw">(function (array </span><span class="text-var">$person</span><span class="text-kw">) use (&amp;</span><span class="text-var">$names</span><span class="text-kw">): </span><span class="text-var">void </span><span class="text-kw">{
-    </span><span class="text-var">$names</span><span class="text-kw">[] = </span><span class="text-var">$person</span><span class="text-kw">[</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">];
+<span class="text-var">$people</span>-&gt;<span class="text-fn">each</span>(<span class="text-kw">function</span> (<span class="text-kw">array</span> <span class="text-var">$person</span>) <span class="text-kw">use</span> (<span class="text-kw">&amp;</span><span class="text-var">$names</span>): <span class="text-type">void</span> {
+    <span class="text-var">$names</span>[] = <span class="text-var">$person</span>[<span class="text-str">&#039;name&#039;</span>];
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>forPage($page, $perPage)</code> pages a collection you already hold in memory, and <code>every($step, $offset)</code> takes
@@ -219,19 +219,19 @@ a string with an optional different separator before the last element, and <code
 membership by value and by key.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Collection</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Collection</span>;
 
-</span><span class="text-var">$people </span><span class="text-kw">= new </span><span class="text-var">Collection</span><span class="text-kw">([
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Nick&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">40</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Jane&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">35</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Amy&#039;</span><span class="text-kw">,  </span><span class="text-str">&#039;age&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">28</span><span class="text-kw">],
+<span class="text-var">$people</span> = <span class="text-kw">new</span> <span class="text-type">Collection</span>([
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Nick&#039;</span>, <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">40</span>],
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Jane&#039;</span>, <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">35</span>],
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Amy&#039;</span>,  <span class="text-str">&#039;age&#039;</span> =&gt; <span class="text-num">28</span>],
 ]);
 
-</span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">forPage</span><span class="text-kw">(</span><span class="text-var">2</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">)-&gt;</span><span class="text-var">values</span><span class="text-kw">()-&gt;</span><span class="text-var">toArray</span><span class="text-kw">(); </span><span class="text-comment">// the third row, on page two of two per page
-</span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">every</span><span class="text-kw">(</span><span class="text-var">2</span><span class="text-kw">)-&gt;</span><span class="text-var">toArray</span><span class="text-kw">();                </span><span class="text-comment">// rows one and three
+<span class="text-var">$people</span>-&gt;<span class="text-fn">forPage</span>(<span class="text-num">2</span>, <span class="text-num">2</span>)-&gt;<span class="text-fn">values</span>()-&gt;<span class="text-fn">toArray</span>(); <span class="text-comment">// the third row, on page two of two per page</span>
+<span class="text-var">$people</span>-&gt;<span class="text-fn">every</span>(<span class="text-num">2</span>)-&gt;<span class="text-fn">toArray</span>();                <span class="text-comment">// rows one and three</span>
 
-</span><span class="text-var">$people</span><span class="text-kw">-&gt;</span><span class="text-var">column</span><span class="text-kw">(</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">join</span><span class="text-kw">(</span><span class="text-str">&#039;, &#039;</span><span class="text-kw">, </span><span class="text-str">&#039; and &#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;Nick, Jane and Amy&#039;
-</span></code></pre>
+<span class="text-var">$people</span>-&gt;<span class="text-fn">column</span>(<span class="text-str">&#039;name&#039;</span>)-&gt;<span class="text-fn">join</span>(<span class="text-str">&#039;, &#039;</span>, <span class="text-str">&#039; and &#039;</span>); <span class="text-comment">// &#039;Nick, Jane and Amy&#039;</span>
+</code></pre>
 </div>
 
 <p>Not every method leaves the original alone, and the split is not where the README's &quot;most methods return
@@ -282,18 +282,18 @@ rows with their columns inverted. Use <code>array_flip()</code> on <code>toArray
 object notation, countable and iterable, with JSON and PHP-serialization round trips.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\ArrayObject</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\ArrayObject</span>;
 
-</span><span class="text-var">$arrayObject </span><span class="text-kw">= new </span><span class="text-var">ArrayObject</span><span class="text-kw">([</span><span class="text-str">&#039;foo&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;bar&#039;</span><span class="text-kw">]);
+<span class="text-var">$arrayObject</span> = <span class="text-kw">new</span> <span class="text-type">ArrayObject</span>([<span class="text-str">&#039;foo&#039;</span> =&gt; <span class="text-str">&#039;bar&#039;</span>]);
 
-</span><span class="text-var">$arrayObject</span><span class="text-kw">-&gt;</span><span class="text-var">foo</span><span class="text-kw">;      </span><span class="text-comment">// &#039;bar&#039;
-</span><span class="text-var">$arrayObject</span><span class="text-kw">[</span><span class="text-str">&#039;foo&#039;</span><span class="text-kw">];    </span><span class="text-comment">// &#039;bar&#039;
-</span><span class="text-var">count</span><span class="text-kw">(</span><span class="text-var">$arrayObject</span><span class="text-kw">);    </span><span class="text-comment">// 1
-</span><span class="text-var">$arrayObject</span><span class="text-kw">-&gt;</span><span class="text-var">toArray</span><span class="text-kw">();
+<span class="text-var">$arrayObject</span>-&gt;<span class="text-type">foo</span>;      <span class="text-comment">// &#039;bar&#039;</span>
+<span class="text-var">$arrayObject</span>[<span class="text-str">&#039;foo&#039;</span>];    <span class="text-comment">// &#039;bar&#039;</span>
+<span class="text-fn">count</span>(<span class="text-var">$arrayObject</span>);    <span class="text-comment">// 1</span>
+<span class="text-var">$arrayObject</span>-&gt;<span class="text-fn">toArray</span>();
 
-</span><span class="text-var">ArrayObject</span><span class="text-kw">::</span><span class="text-var">createFromJson</span><span class="text-kw">(</span><span class="text-str">&#039;{&quot;foo&quot;:&quot;bar&quot;}&#039;</span><span class="text-kw">);
-</span><span class="text-var">ArrayObject</span><span class="text-kw">::</span><span class="text-var">createFromSerialized</span><span class="text-kw">(</span><span class="text-str">&#039;a:1:{s:3:&quot;foo&quot;;s:3:&quot;bar&quot;;}&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">ArrayObject</span>::<span class="text-fn">createFromJson</span>(<span class="text-str">&#039;{&quot;foo&quot;:&quot;bar&quot;}&#039;</span>);
+<span class="text-type">ArrayObject</span>::<span class="text-fn">createFromSerialized</span>(<span class="text-str">&#039;a:1:{s:3:&quot;foo&quot;;s:3:&quot;bar&quot;;}&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>$arrayObject-&gt;jsonSerialize()</code> returns the JSON string — optionally with flags such as
@@ -305,12 +305,12 @@ sorting methods <code>ArrayObject</code> shares with <code>Collection</code> com
 the one behavior worth keeping in mind when moving between the two types.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\ArrayObject</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\ArrayObject</span>;
 
-</span><span class="text-var">$arrayObject </span><span class="text-kw">= new </span><span class="text-var">ArrayObject</span><span class="text-kw">([</span><span class="text-str">&#039;b&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">2</span><span class="text-kw">, </span><span class="text-str">&#039;a&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">]);
+<span class="text-var">$arrayObject</span> = <span class="text-kw">new</span> <span class="text-type">ArrayObject</span>([<span class="text-str">&#039;b&#039;</span> =&gt; <span class="text-num">2</span>, <span class="text-str">&#039;a&#039;</span> =&gt; <span class="text-num">1</span>]);
 
-</span><span class="text-var">$arrayObject</span><span class="text-kw">-&gt;</span><span class="text-var">ksort</span><span class="text-kw">(); </span><span class="text-comment">// the object itself is now sorted; nothing new was returned
-</span></code></pre>
+<span class="text-var">$arrayObject</span>-&gt;<span class="text-fn">ksort</span>(); <span class="text-comment">// the object itself is now sorted; nothing new was returned</span>
+</code></pre>
 </div>
 
 <p><code>Pop\Utils\AbstractModel</code> is an empty subclass of <code>ArrayObject</code>, there so an application's models share
@@ -323,22 +323,22 @@ the serialization round trips — without writing any of it.</p>
 week of any year; and it carries default formats so the object casts to a string:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\DateTime</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\DateTime</span>;
 
-</span><span class="text-var">$times </span><span class="text-kw">= [</span><span class="text-str">&#039;08:45:18&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;15:13:58&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;09:05:09&#039;</span><span class="text-kw">];
+<span class="text-var">$times</span> = [<span class="text-str">&#039;08:45:18&#039;</span>, <span class="text-str">&#039;15:13:58&#039;</span>, <span class="text-str">&#039;09:05:09&#039;</span>];
 
-</span><span class="text-var">DateTime</span><span class="text-kw">::</span><span class="text-var">getTotal</span><span class="text-kw">(</span><span class="text-var">$times</span><span class="text-kw">, </span><span class="text-str">&#039;%H:%I:%S&#039;</span><span class="text-kw">);   </span><span class="text-comment">// &#039;33:04:25&#039;
-</span><span class="text-var">DateTime</span><span class="text-kw">::</span><span class="text-var">getAverage</span><span class="text-kw">(</span><span class="text-var">$times</span><span class="text-kw">, </span><span class="text-str">&#039;%H:%I:%S&#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;11:01:28&#039;
+<span class="text-type">DateTime</span>::<span class="text-fn">getTotal</span>(<span class="text-var">$times</span>, <span class="text-str">&#039;%H:%I:%S&#039;</span>);   <span class="text-comment">// &#039;33:04:25&#039;</span>
+<span class="text-type">DateTime</span>::<span class="text-fn">getAverage</span>(<span class="text-var">$times</span>, <span class="text-str">&#039;%H:%I:%S&#039;</span>); <span class="text-comment">// &#039;11:01:28&#039;</span>
 
-</span><span class="text-var">DateTime</span><span class="text-kw">::</span><span class="text-var">getWeekDates</span><span class="text-kw">(</span><span class="text-var">40</span><span class="text-kw">, </span><span class="text-var">2023</span><span class="text-kw">, </span><span class="text-str">&#039;Y-m-d&#039;</span><span class="text-kw">); </span><span class="text-comment">// the seven dates of week 40
+<span class="text-type">DateTime</span>::<span class="text-fn">getWeekDates</span>(<span class="text-num">40</span>, <span class="text-num">2023</span>, <span class="text-str">&#039;Y-m-d&#039;</span>); <span class="text-comment">// the seven dates of week 40</span>
 
-</span><span class="text-var">DateTime</span><span class="text-kw">::</span><span class="text-var">isDst</span><span class="text-kw">(</span><span class="text-str">&#039;2023-07-04&#039;</span><span class="text-kw">); </span><span class="text-comment">// true — US rules unless you pass a window
-</span><span class="text-var">DateTime</span><span class="text-kw">::</span><span class="text-var">isDst</span><span class="text-kw">(</span><span class="text-str">&#039;2023-01-04&#039;</span><span class="text-kw">); </span><span class="text-comment">// false
+<span class="text-type">DateTime</span>::<span class="text-fn">isDst</span>(<span class="text-str">&#039;2023-07-04&#039;</span>); <span class="text-comment">// true — US rules unless you pass a window</span>
+<span class="text-type">DateTime</span>::<span class="text-fn">isDst</span>(<span class="text-str">&#039;2023-01-04&#039;</span>); <span class="text-comment">// false</span>
 
-</span><span class="text-var">$dateTime </span><span class="text-kw">= </span><span class="text-var">DateTime</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;2026-08-24 14:32:10&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-str">&#039;Y-m-d&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;H:i:s&#039;</span><span class="text-kw">);
+<span class="text-var">$dateTime</span> = <span class="text-type">DateTime</span>::<span class="text-fn">create</span>(<span class="text-str">&#039;2026-08-24 14:32:10&#039;</span>, <span class="text-num">null</span>, <span class="text-str">&#039;Y-m-d&#039;</span>, <span class="text-str">&#039;H:i:s&#039;</span>);
 
-echo </span><span class="text-var">$dateTime</span><span class="text-kw">; </span><span class="text-comment">// &#039;2026-08-24 14:32:10&#039;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$dateTime</span>; <span class="text-comment">// &#039;2026-08-24 14:32:10&#039;</span>
+</code></pre>
 </div>
 
 <p>Set a default format on a <code>Pop\Utils\DateTime</code> before casting it to a string.</p>
@@ -347,15 +347,15 @@ echo </span><span class="text-var">$dateTime</span><span class="text-kw">; </spa
 <p><code>Pop\Utils\Uuid</code> generates identifiers:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Uuid</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Uuid</span>;
 
-</span><span class="text-var">Uuid</span><span class="text-kw">::</span><span class="text-var">v4</span><span class="text-kw">(); </span><span class="text-comment">// &#039;5bd40425-489b-4cef-acf6-6d0b06a52cfa&#039; — random
-</span><span class="text-var">Uuid</span><span class="text-kw">::</span><span class="text-var">v7</span><span class="text-kw">(); </span><span class="text-comment">// &#039;01a0358b-365f-7a5c-bafa-5616ba12475a&#039; — time-ordered
+<span class="text-type">Uuid</span>::<span class="text-fn">v4</span>(); <span class="text-comment">// &#039;5bd40425-489b-4cef-acf6-6d0b06a52cfa&#039; — random</span>
+<span class="text-type">Uuid</span>::<span class="text-fn">v7</span>(); <span class="text-comment">// &#039;01a0358b-365f-7a5c-bafa-5616ba12475a&#039; — time-ordered</span>
 
-</span><span class="text-kw">if (</span><span class="text-var">Uuid</span><span class="text-kw">::</span><span class="text-var">v4LinuxAvailable</span><span class="text-kw">()) {
-    </span><span class="text-var">Uuid</span><span class="text-kw">::</span><span class="text-var">v4Linux</span><span class="text-kw">(); </span><span class="text-comment">// read from the kernel&#039;s UUID file instead
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-type">Uuid</span>::<span class="text-fn">v4LinuxAvailable</span>()) {
+    <span class="text-type">Uuid</span>::<span class="text-fn">v4Linux</span>(); <span class="text-comment">// read from the kernel&#039;s UUID file instead</span>
+}
+</code></pre>
 </div>
 
 <p><code>v7()</code> puts a millisecond timestamp in the leading bits, so values sort chronologically as strings and
@@ -365,18 +365,18 @@ cluster in an index instead of scattering the way <code>v4()</code> does — the
 <p><code>Pop\Utils\File</code> reads a path's metadata without reading the file:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\File</span>;
 
-</span><span class="text-var">$file </span><span class="text-kw">= new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/notes.txt&#039;</span><span class="text-kw">);
+<span class="text-var">$file</span> = <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/notes.txt&#039;</span>);
 
-</span><span class="text-var">$file</span><span class="text-kw">-&gt;</span><span class="text-var">getBasename</span><span class="text-kw">();  </span><span class="text-comment">// &#039;notes.txt&#039;
-</span><span class="text-var">$file</span><span class="text-kw">-&gt;</span><span class="text-var">getFilename</span><span class="text-kw">();  </span><span class="text-comment">// &#039;notes&#039;
-</span><span class="text-var">$file</span><span class="text-kw">-&gt;</span><span class="text-var">getExtension</span><span class="text-kw">(); </span><span class="text-comment">// &#039;txt&#039;
-</span><span class="text-var">$file</span><span class="text-kw">-&gt;</span><span class="text-var">getMimeType</span><span class="text-kw">();  </span><span class="text-comment">// &#039;text/plain&#039;
-</span><span class="text-var">$file</span><span class="text-kw">-&gt;</span><span class="text-var">getSize</span><span class="text-kw">();      </span><span class="text-comment">// 13
-</span><span class="text-var">$file</span><span class="text-kw">-&gt;</span><span class="text-var">exists</span><span class="text-kw">();       </span><span class="text-comment">// true
-</span><span class="text-var">$file</span><span class="text-kw">-&gt;</span><span class="text-var">getContents</span><span class="text-kw">();  </span><span class="text-comment">// reads the file — the one method that does
-</span></code></pre>
+<span class="text-var">$file</span>-&gt;<span class="text-fn">getBasename</span>();  <span class="text-comment">// &#039;notes.txt&#039;</span>
+<span class="text-var">$file</span>-&gt;<span class="text-fn">getFilename</span>();  <span class="text-comment">// &#039;notes&#039;</span>
+<span class="text-var">$file</span>-&gt;<span class="text-fn">getExtension</span>(); <span class="text-comment">// &#039;txt&#039;</span>
+<span class="text-var">$file</span>-&gt;<span class="text-fn">getMimeType</span>();  <span class="text-comment">// &#039;text/plain&#039;</span>
+<span class="text-var">$file</span>-&gt;<span class="text-fn">getSize</span>();      <span class="text-comment">// 13</span>
+<span class="text-var">$file</span>-&gt;<span class="text-fn">exists</span>();       <span class="text-comment">// true</span>
+<span class="text-var">$file</span>-&gt;<span class="text-fn">getContents</span>();  <span class="text-comment">// reads the file — the one method that does</span>
+</code></pre>
 </div>
 
 <p>The mime type is looked up from the extension rather than sniffed, falling back to
@@ -392,33 +392,33 @@ closure the database runs inside a transaction. <code>Pop\Utils\CallableObject</
 call it with, and does neither until you say <code>call()</code>.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\CallableObject</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\CallableObject</span>;
 
-</span><span class="text-var">$callable </span><span class="text-kw">= new </span><span class="text-var">CallableObject</span><span class="text-kw">(</span><span class="text-str">&#039;trim&#039;</span><span class="text-kw">, </span><span class="text-str">&#039; Hello World!&#039;</span><span class="text-kw">);
+<span class="text-var">$callable</span> = <span class="text-kw">new</span> <span class="text-type">CallableObject</span>(<span class="text-str">&#039;trim&#039;</span>, <span class="text-str">&#039; Hello World!&#039;</span>);
 
-</span><span class="text-var">$callable</span><span class="text-kw">-&gt;</span><span class="text-var">call</span><span class="text-kw">(); </span><span class="text-comment">// &#039;Hello World!&#039;
-</span></code></pre>
+<span class="text-var">$callable</span>-&gt;<span class="text-fn">call</span>(); <span class="text-comment">// &#039;Hello World!&#039;</span>
+</code></pre>
 </div>
 
 <p>Parameters can arrive at any point in the object's life — in the constructor, through the fluent setters
 afterward, or at the moment of the call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\CallableObject</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\CallableObject</span>;
 
-</span><span class="text-var">$callable </span><span class="text-kw">= new </span><span class="text-var">CallableObject</span><span class="text-kw">(function (</span><span class="text-var">string $var</span><span class="text-kw">): </span><span class="text-var">string </span><span class="text-kw">{
-    return </span><span class="text-var">strtoupper</span><span class="text-kw">(</span><span class="text-var">$var</span><span class="text-kw">) . </span><span class="text-str">&#039;!&#039;</span><span class="text-kw">;
+<span class="text-var">$callable</span> = <span class="text-kw">new</span> <span class="text-type">CallableObject</span>(<span class="text-kw">function</span> (<span class="text-type">string</span> <span class="text-var">$var</span>): <span class="text-type">string</span> {
+    <span class="text-kw">return</span> <span class="text-fn">strtoupper</span>(<span class="text-var">$var</span>) . <span class="text-str">&#039;!&#039;</span>;
 });
 
-</span><span class="text-var">$callable</span><span class="text-kw">-&gt;</span><span class="text-var">addParameter</span><span class="text-kw">(</span><span class="text-str">&#039;hello world&#039;</span><span class="text-kw">);
-</span><span class="text-var">$callable</span><span class="text-kw">-&gt;</span><span class="text-var">call</span><span class="text-kw">();              </span><span class="text-comment">// &#039;HELLO WORLD!&#039;
+<span class="text-var">$callable</span>-&gt;<span class="text-fn">addParameter</span>(<span class="text-str">&#039;hello world&#039;</span>);
+<span class="text-var">$callable</span>-&gt;<span class="text-fn">call</span>();              <span class="text-comment">// &#039;HELLO WORLD!&#039;</span>
 
-</span><span class="text-var">$other </span><span class="text-kw">= new </span><span class="text-var">CallableObject</span><span class="text-kw">(function (</span><span class="text-var">string $var</span><span class="text-kw">): </span><span class="text-var">string </span><span class="text-kw">{
-    return </span><span class="text-var">strtoupper</span><span class="text-kw">(</span><span class="text-var">$var</span><span class="text-kw">) . </span><span class="text-str">&#039;!&#039;</span><span class="text-kw">;
+<span class="text-var">$other</span> = <span class="text-kw">new</span> <span class="text-type">CallableObject</span>(<span class="text-kw">function</span> (<span class="text-type">string</span> <span class="text-var">$var</span>): <span class="text-type">string</span> {
+    <span class="text-kw">return</span> <span class="text-fn">strtoupper</span>(<span class="text-var">$var</span>) . <span class="text-str">&#039;!&#039;</span>;
 });
 
-</span><span class="text-var">$other</span><span class="text-kw">-&gt;</span><span class="text-var">call</span><span class="text-kw">(</span><span class="text-str">&#039;hello world&#039;</span><span class="text-kw">);    </span><span class="text-comment">// the same result, bound at call time
-</span></code></pre>
+<span class="text-var">$other</span>-&gt;<span class="text-fn">call</span>(<span class="text-str">&#039;hello world&#039;</span>);    <span class="text-comment">// the same result, bound at call time</span>
+</code></pre>
 </div>
 
 <p>That's the whole point of the class: the callable and its arguments are configurable data until the
@@ -428,44 +428,44 @@ is a static call, <code>'Maths-&gt;triple'</code> constructs an instance and cal
 name — or <code>'new Maths'</code>, which means the same thing — constructs the object and hands it back:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\CallableObject</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\CallableObject</span>;
 
-class </span><span class="text-var">Greeter
-</span><span class="text-kw">{
-    public function </span><span class="text-var">__construct</span><span class="text-kw">(protected </span><span class="text-var">string $name</span><span class="text-kw">) {}
+<span class="text-kw">class</span> <span class="text-type">Greeter</span>
+{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">__construct</span>(<span class="text-kw">protected</span> <span class="text-type">string</span> <span class="text-var">$name</span>) {}
 
-    public function </span><span class="text-var">greet</span><span class="text-kw">(): </span><span class="text-var">string
-    </span><span class="text-kw">{
-        return </span><span class="text-str">&#039;Hello, &#039; </span><span class="text-kw">. </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">name</span><span class="text-kw">;
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">greet</span>(): <span class="text-type">string</span>
+    {
+        <span class="text-kw">return</span> <span class="text-str">&#039;Hello, &#039;</span> . <span class="text-var">$this</span>-&gt;<span class="text-type">name</span>;
     }
 }
 
-</span><span class="text-var">$callable </span><span class="text-kw">= new </span><span class="text-var">CallableObject</span><span class="text-kw">(</span><span class="text-str">&#039;Greeter&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;World&#039;</span><span class="text-kw">);
+<span class="text-var">$callable</span> = <span class="text-kw">new</span> <span class="text-type">CallableObject</span>(<span class="text-str">&#039;Greeter&#039;</span>, <span class="text-str">&#039;World&#039;</span>);
 
-</span><span class="text-var">$greeter </span><span class="text-kw">= </span><span class="text-var">$callable</span><span class="text-kw">-&gt;</span><span class="text-var">call</span><span class="text-kw">(); </span><span class="text-comment">// a Greeter instance, constructed now and not before
-</span><span class="text-var">$greeter</span><span class="text-kw">-&gt;</span><span class="text-var">greet</span><span class="text-kw">();            </span><span class="text-comment">// &#039;Hello, World&#039;
-</span></code></pre>
+<span class="text-var">$greeter</span> = <span class="text-var">$callable</span>-&gt;<span class="text-fn">call</span>(); <span class="text-comment">// a Greeter instance, constructed now and not before</span>
+<span class="text-var">$greeter</span>-&gt;<span class="text-fn">greet</span>();            <span class="text-comment">// &#039;Hello, World&#039;</span>
+</code></pre>
 </div>
 
 <p>Arguments can be named as well as positional, which matters when a method's signature is long enough
 that position stops being obvious:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\CallableObject</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\CallableObject</span>;
 
-class </span><span class="text-var">Finder
-</span><span class="text-kw">{
-    public function </span><span class="text-var">find</span><span class="text-kw">(</span><span class="text-var">int $id</span><span class="text-kw">, </span><span class="text-var">string $status</span><span class="text-kw">): </span><span class="text-var">string
-    </span><span class="text-kw">{
-        return </span><span class="text-var">$id </span><span class="text-kw">. </span><span class="text-str">&#039;/&#039; </span><span class="text-kw">. </span><span class="text-var">$status</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Finder</span>
+{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">find</span>(<span class="text-type">int</span> <span class="text-var">$id</span>, <span class="text-type">string</span> <span class="text-var">$status</span>): <span class="text-type">string</span>
+    {
+        <span class="text-kw">return</span> <span class="text-var">$id</span> . <span class="text-str">&#039;/&#039;</span> . <span class="text-var">$status</span>;
     }
 }
 
-</span><span class="text-var">$callable </span><span class="text-kw">= new </span><span class="text-var">CallableObject</span><span class="text-kw">(</span><span class="text-str">&#039;Finder-&gt;find&#039;</span><span class="text-kw">);
+<span class="text-var">$callable</span> = <span class="text-kw">new</span> <span class="text-type">CallableObject</span>(<span class="text-str">&#039;Finder-&gt;find&#039;</span>);
 
-</span><span class="text-var">$callable</span><span class="text-kw">-&gt;</span><span class="text-var">addNamedParameter</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">123</span><span class="text-kw">)-&gt;</span><span class="text-var">addParameter</span><span class="text-kw">(</span><span class="text-str">&#039;active&#039;</span><span class="text-kw">);
-</span><span class="text-var">$callable</span><span class="text-kw">-&gt;</span><span class="text-var">call</span><span class="text-kw">(); </span><span class="text-comment">// &#039;123/active&#039;
-</span></code></pre>
+<span class="text-var">$callable</span>-&gt;<span class="text-fn">addNamedParameter</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-num">123</span>)-&gt;<span class="text-fn">addParameter</span>(<span class="text-str">&#039;active&#039;</span>);
+<span class="text-var">$callable</span>-&gt;<span class="text-fn">call</span>(); <span class="text-comment">// &#039;123/active&#039;</span>
+</code></pre>
 </div>
 
 <p>A parameter that is itself callable — a closure, a plain callable, or another <code>CallableObject</code> — is
@@ -481,20 +481,20 @@ whatever callable you hand them and wrap it in a <code>CallableObject</code> —
 whether you already built one, using yours as-is when you did:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Service\Locator</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Utils\CallableObject</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Service\Locator</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Utils\CallableObject</span>;
 
-class </span><span class="text-var">Reporter
-</span><span class="text-kw">{
-    public function </span><span class="text-var">__construct</span><span class="text-kw">(protected </span><span class="text-var">string $format</span><span class="text-kw">) {}
+<span class="text-kw">class</span> <span class="text-type">Reporter</span>
+{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">__construct</span>(<span class="text-kw">protected</span> <span class="text-type">string</span> <span class="text-var">$format</span>) {}
 }
 
-</span><span class="text-var">$locator </span><span class="text-kw">= new </span><span class="text-var">Locator</span><span class="text-kw">();
+<span class="text-var">$locator</span> = <span class="text-kw">new</span> <span class="text-type">Locator</span>();
 
-</span><span class="text-var">$locator</span><span class="text-kw">-&gt;</span><span class="text-var">set</span><span class="text-kw">(</span><span class="text-str">&#039;reporter&#039;</span><span class="text-kw">, new </span><span class="text-var">CallableObject</span><span class="text-kw">(</span><span class="text-str">&#039;Reporter&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;pdf&#039;</span><span class="text-kw">));
+<span class="text-var">$locator</span>-&gt;<span class="text-fn">set</span>(<span class="text-str">&#039;reporter&#039;</span>, <span class="text-kw">new</span> <span class="text-type">CallableObject</span>(<span class="text-str">&#039;Reporter&#039;</span>, <span class="text-str">&#039;pdf&#039;</span>));
 
-</span><span class="text-var">$locator</span><span class="text-kw">[</span><span class="text-str">&#039;reporter&#039;</span><span class="text-kw">]; </span><span class="text-comment">// constructed on this first access, not before
-</span></code></pre>
+<span class="text-var">$locator</span>[<span class="text-str">&#039;reporter&#039;</span>]; <span class="text-comment">// constructed on this first access, not before</span>
+</code></pre>
 </div>
 
 <p>Registering a plain closure would work identically; building the <code>CallableObject</code> yourself is what lets
@@ -505,15 +505,15 @@ you configure and inspect the parameters before the service is ever constructed.
 number, so the result is for display and not for further arithmetic:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Num</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Num</span>;
 
-</span><span class="text-var">Num</span><span class="text-kw">::</span><span class="text-var">float</span><span class="text-kw">(</span><span class="text-var">1234.5</span><span class="text-kw">);             </span><span class="text-comment">// &#039;1234.50&#039;
-</span><span class="text-var">Num</span><span class="text-kw">::</span><span class="text-var">currency</span><span class="text-kw">(</span><span class="text-var">1234.5</span><span class="text-kw">);          </span><span class="text-comment">// &#039;$1,234.50&#039;
-</span><span class="text-var">Num</span><span class="text-kw">::</span><span class="text-var">percentage</span><span class="text-kw">(</span><span class="text-var">12.345</span><span class="text-kw">);        </span><span class="text-comment">// &#039;12.35%&#039;
-</span><span class="text-var">Num</span><span class="text-kw">::</span><span class="text-var">convertPercentage</span><span class="text-kw">(</span><span class="text-var">0.1234</span><span class="text-kw">); </span><span class="text-comment">// &#039;12.34%&#039;
-</span><span class="text-var">Num</span><span class="text-kw">::</span><span class="text-var">abbreviate</span><span class="text-kw">(</span><span class="text-var">1234567</span><span class="text-kw">);       </span><span class="text-comment">// &#039;1.23M&#039;
-</span><span class="text-var">Num</span><span class="text-kw">::</span><span class="text-var">readable</span><span class="text-kw">(</span><span class="text-var">1234567</span><span class="text-kw">);         </span><span class="text-comment">// &#039;1 Million&#039;
-</span></code></pre>
+<span class="text-type">Num</span>::<span class="text-fn">float</span>(<span class="text-num">1234.5</span>);             <span class="text-comment">// &#039;1234.50&#039;</span>
+<span class="text-type">Num</span>::<span class="text-fn">currency</span>(<span class="text-num">1234.5</span>);          <span class="text-comment">// &#039;$1,234.50&#039;</span>
+<span class="text-type">Num</span>::<span class="text-fn">percentage</span>(<span class="text-num">12.345</span>);        <span class="text-comment">// &#039;12.35%&#039;</span>
+<span class="text-type">Num</span>::<span class="text-fn">convertPercentage</span>(<span class="text-num">0.1234</span>); <span class="text-comment">// &#039;12.34%&#039;</span>
+<span class="text-type">Num</span>::<span class="text-fn">abbreviate</span>(<span class="text-num">1234567</span>);       <span class="text-comment">// &#039;1.23M&#039;</span>
+<span class="text-type">Num</span>::<span class="text-fn">readable</span>(<span class="text-num">1234567</span>);         <span class="text-comment">// &#039;1 Million&#039;</span>
+</code></pre>
 </div>
 
 <p><code>percentage()</code> formats a number that is already a percentage; <code>convertPercentage()</code> multiplies a fraction
@@ -525,23 +525,23 @@ before you try.</p>
 until something asks for them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Utils\Helper</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Utils\Helper</span>;
 
-if (!</span><span class="text-var">Helper</span><span class="text-kw">::</span><span class="text-var">isLoaded</span><span class="text-kw">()) {
-    </span><span class="text-var">Helper</span><span class="text-kw">::</span><span class="text-var">loadFunctions</span><span class="text-kw">();
+<span class="text-kw">if</span> (!<span class="text-type">Helper</span>::<span class="text-fn">isLoaded</span>()) {
+    <span class="text-type">Helper</span>::<span class="text-fn">loadFunctions</span>();
 }
 
-</span><span class="text-var">str_slug</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World | Home Page&#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;hello-world-home-page&#039;
-</span><span class="text-var">str_to_camel</span><span class="text-kw">(</span><span class="text-str">&#039;snake_case_string&#039;</span><span class="text-kw">);   </span><span class="text-comment">// &#039;snakeCaseString&#039;
-</span><span class="text-var">str_kebab_case</span><span class="text-kw">(</span><span class="text-str">&#039;TitleCase&#039;</span><span class="text-kw">);         </span><span class="text-comment">// &#039;title-case&#039;
-</span><span class="text-var">str_snake_case</span><span class="text-kw">(</span><span class="text-str">&#039;TitleCase&#039;</span><span class="text-kw">);         </span><span class="text-comment">// &#039;title_case&#039;
-</span><span class="text-var">str_title_case</span><span class="text-kw">(</span><span class="text-str">&#039;kebab-string&#039;</span><span class="text-kw">);      </span><span class="text-comment">// &#039;KebabString&#039;
-</span><span class="text-var">str_from_camel</span><span class="text-kw">(</span><span class="text-str">&#039;camelCase&#039;</span><span class="text-kw">);         </span><span class="text-comment">// &#039;camel-case&#039;
+<span class="text-fn">str_slug</span>(<span class="text-str">&#039;Hello World | Home Page&#039;</span>); <span class="text-comment">// &#039;hello-world-home-page&#039;</span>
+<span class="text-fn">str_to_camel</span>(<span class="text-str">&#039;snake_case_string&#039;</span>);   <span class="text-comment">// &#039;snakeCaseString&#039;</span>
+<span class="text-fn">str_kebab_case</span>(<span class="text-str">&#039;TitleCase&#039;</span>);         <span class="text-comment">// &#039;title-case&#039;</span>
+<span class="text-fn">str_snake_case</span>(<span class="text-str">&#039;TitleCase&#039;</span>);         <span class="text-comment">// &#039;title_case&#039;</span>
+<span class="text-fn">str_title_case</span>(<span class="text-str">&#039;kebab-string&#039;</span>);      <span class="text-comment">// &#039;KebabString&#039;</span>
+<span class="text-fn">str_from_camel</span>(<span class="text-str">&#039;camelCase&#039;</span>);         <span class="text-comment">// &#039;camel-case&#039;</span>
 
-</span><span class="text-var">array_collapse</span><span class="text-kw">([[</span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">], [</span><span class="text-var">3</span><span class="text-kw">]]);       </span><span class="text-comment">// [1, 2, 3]
-</span><span class="text-var">array_flatten</span><span class="text-kw">([</span><span class="text-var">1</span><span class="text-kw">, [</span><span class="text-var">2</span><span class="text-kw">, [</span><span class="text-var">3</span><span class="text-kw">]]]);        </span><span class="text-comment">// [1, 2, 3]
-</span><span class="text-var">array_join</span><span class="text-kw">([</span><span class="text-str">&#039;a&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;b&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;c&#039;</span><span class="text-kw">], </span><span class="text-str">&#039;, &#039;</span><span class="text-kw">, </span><span class="text-str">&#039; and &#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;a, b and c&#039;
-</span></code></pre>
+<span class="text-fn">array_collapse</span>([[<span class="text-num">1</span>, <span class="text-num">2</span>], [<span class="text-num">3</span>]]);       <span class="text-comment">// [1, 2, 3]</span>
+<span class="text-fn">array_flatten</span>([<span class="text-num">1</span>, [<span class="text-num">2</span>, [<span class="text-num">3</span>]]]);        <span class="text-comment">// [1, 2, 3]</span>
+<span class="text-fn">array_join</span>([<span class="text-str">&#039;a&#039;</span>, <span class="text-str">&#039;b&#039;</span>, <span class="text-str">&#039;c&#039;</span>], <span class="text-str">&#039;, &#039;</span>, <span class="text-str">&#039; and &#039;</span>); <span class="text-comment">// &#039;a, b and c&#039;</span>
+</code></pre>
 </div>
 
 <p>The full set covers string case conversion, slugs, random strings, <code>is_json()</code>, the <code>Arr</code> methods, and

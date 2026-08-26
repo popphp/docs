@@ -14,22 +14,22 @@ route and dispatches it.</p>
 <p><code>public/index.php</code> is the only PHP file a web server ever executes. Everything else is reached from here.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">public/index.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-var">$autoloader</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../vendor/autoload.php&#039;</span>;
 
-$autoloader </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../vendor/autoload.php&#039;</span><span class="text-kw">;
+<span class="text-var">$dotEnv</span> = <span class="text-type">Dotenv\Dotenv</span>::<span class="text-fn">createImmutable</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../&#039;</span>);
+<span class="text-var">$dotEnv</span>-&gt;<span class="text-fn">safeLoad</span>();
 
-</span><span class="text-var">$dotEnv </span><span class="text-kw">= </span><span class="text-var">Dotenv\Dotenv</span><span class="text-kw">::</span><span class="text-var">createImmutable</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../&#039;</span><span class="text-kw">);
-</span><span class="text-var">$dotEnv</span><span class="text-kw">-&gt;</span><span class="text-var">safeLoad</span><span class="text-kw">();
-
-try {
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/config/app.http.php&#039;</span><span class="text-kw">);
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">load</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-} catch (</span><span class="text-var">\Exception $exception</span><span class="text-kw">) {
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">httpError</span><span class="text-kw">(</span><span class="text-var">$exception</span><span class="text-kw">);
+<span class="text-kw">try</span> {
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/config/app.http.php&#039;</span>);
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">load</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+} <span class="text-kw">catch</span> (<span class="text-type">\Exception</span> <span class="text-var">$exception</span>) {
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">httpError</span>(<span class="text-var">$exception</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>include</code> on Composer's autoloader returns the <code>ClassLoader</code> object, which is why it is captured rather than
@@ -69,12 +69,12 @@ rest given in any order. An autoloader, a config array or <code>ArrayAccess</cod
 are all recognized:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(
-    new </span><span class="text-var">Pop\Router\Router</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, new </span><span class="text-var">Pop\Router\Match\Http</span><span class="text-kw">()),
-    new </span><span class="text-var">Pop\Service\Locator</span><span class="text-kw">(),
-    [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;my-app&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;version&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;1.0.0&#039;</span><span class="text-kw">]
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(
+    <span class="text-kw">new</span> <span class="text-type">Pop\Router\Router</span>(<span class="text-num">null</span>, <span class="text-kw">new</span> <span class="text-type">Pop\Router\Match\Http</span>()),
+    <span class="text-kw">new</span> <span class="text-type">Pop\Service\Locator</span>(),
+    [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;my-app&#039;</span>, <span class="text-str">&#039;version&#039;</span> =&gt; <span class="text-str">&#039;1.0.0&#039;</span>]
 );
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Bootstrap then runs immediately, in this order:</p>
@@ -102,41 +102,41 @@ turns config data into live wiring, and it's the one place that work belongs —
 which holds data only.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Application.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Console\Console</span>;
 
-use </span><span class="text-var">Pop\Console\Console</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Application</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Application</span>
+{
 
-class </span><span class="text-var">Application </span><span class="text-kw">extends </span><span class="text-var">\Pop\Application
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">load</span><span class="text-kw">(): </span><span class="text-var">Application
-    </span><span class="text-kw">{
-        if (isset(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">config</span><span class="text-kw">[</span><span class="text-str">&#039;database&#039;</span><span class="text-kw">])) {
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">initDb</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">config</span><span class="text-kw">[</span><span class="text-str">&#039;database&#039;</span><span class="text-kw">]);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">load</span>(): <span class="text-type">Application</span>
+    {
+        <span class="text-kw">if</span> (<span class="text-kw">isset</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">config</span>[<span class="text-str">&#039;database&#039;</span>])) {
+            <span class="text-var">$this</span>-&gt;<span class="text-fn">initDb</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">config</span>[<span class="text-str">&#039;database&#039;</span>]);
         }
 
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">, [
-            </span><span class="text-str">&#039;call&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Log\Logger&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;params&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;writer&#039; </span><span class="text-kw">=&gt; new </span><span class="text-var">\Pop\Log\Writer\File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../../data/logs/app.log&#039;</span><span class="text-kw">)]
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;logger&#039;</span>, [
+            <span class="text-str">&#039;call&#039;</span>   =&gt; <span class="text-str">&#039;Pop\Log\Logger&#039;</span>,
+            <span class="text-str">&#039;params&#039;</span> =&gt; [<span class="text-str">&#039;writer&#039;</span> =&gt; <span class="text-kw">new</span> <span class="text-type">\Pop\Log\Writer\File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../../data/logs/app.log&#039;</span>)]
         ]);
 
-        if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">() !== </span><span class="text-var">null</span><span class="text-kw">) {
-            if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">isHttp</span><span class="text-kw">()) {
-                </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Http\Event\Options::send&#039;</span><span class="text-kw">, </span><span class="text-var">1</span><span class="text-kw">);
-            } else if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">isCli</span><span class="text-kw">()) {
-                </span><span class="text-var">$console </span><span class="text-kw">= new </span><span class="text-var">Console</span><span class="text-kw">(</span><span class="text-var">120</span><span class="text-kw">);
-                </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-var">PHP_EOL </span><span class="text-kw">. </span><span class="text-var">$console</span><span class="text-kw">-&gt;</span><span class="text-var">header</span><span class="text-kw">(</span><span class="text-str">&#039;My App&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;=&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-str">&#039;left&#039;</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">));
-                </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.post&#039;</span><span class="text-kw">, function() { echo </span><span class="text-var">PHP_EOL</span><span class="text-kw">; });
+        <span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>() <span class="text-kw">!==</span> <span class="text-num">null</span>) {
+            <span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">isHttp</span>()) {
+                <span class="text-var">$this</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.pre&#039;</span>, <span class="text-str">&#039;App\Http\Event\Options::send&#039;</span>, <span class="text-num">1</span>);
+            } <span class="text-kw">else</span> <span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">isCli</span>()) {
+                <span class="text-var">$console</span> = <span class="text-kw">new</span> <span class="text-type">Console</span>(<span class="text-num">120</span>);
+                <span class="text-var">$console</span>-&gt;<span class="text-fn">write</span>(<span class="text-num">PHP_EOL</span> . <span class="text-var">$console</span>-&gt;<span class="text-fn">header</span>(<span class="text-str">&#039;My App&#039;</span>, <span class="text-str">&#039;=&#039;</span>, <span class="text-num">null</span>, <span class="text-str">&#039;left&#039;</span>, <span class="text-num">false</span>, <span class="text-num">true</span>));
+                <span class="text-var">$this</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.post&#039;</span>, <span class="text-kw">function</span>() { <span class="text-kw">echo</span> <span class="text-num">PHP_EOL</span>; });
             }
         }
 
-        return </span><span class="text-var">$this</span><span class="text-kw">;
+        <span class="text-kw">return</span> <span class="text-var">$this</span>;
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Three jobs, and they are the three most applications need. <code>load()</code> returns the application so the front
@@ -160,15 +160,15 @@ lazy — nothing is constructed until something asks for the service by name, an
 every later <code>getService('logger')</code> returns the same object until <code>services()-&gt;reload('logger')</code> rebuilds it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;call&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Log\Logger&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;params&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;writer&#039; </span><span class="text-kw">=&gt; new </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app.log&#039;</span><span class="text-kw">)]
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;logger&#039;</span>, [
+    <span class="text-str">&#039;call&#039;</span>   =&gt; <span class="text-str">&#039;Pop\Log\Logger&#039;</span>,
+    <span class="text-str">&#039;params&#039;</span> =&gt; [<span class="text-str">&#039;writer&#039;</span> =&gt; <span class="text-kw">new</span> <span class="text-type">Pop\Log\Writer\File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app.log&#039;</span>)]
 ]);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;Application started&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;logger&#039;</span>)-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;Application started&#039;</span>);
+</code></pre>
 </div>
 
 <p>An unknown name throws <code>Pop\Service\NotFoundException</code> with the message
@@ -193,33 +193,33 @@ need, it can be done with the router's <code>addDispatchableParams</code> method
 <p>Defining a specific dispatchable class will inject the parameters into only an object of that class:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Application.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Request</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Response</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Uri</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Sendmail</span>;
 
-use </span><span class="text-var">Pop\Http\Server\Request</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Uri</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Sendmail</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Application</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Application</span>
+{
 
-class </span><span class="text-var">Application </span><span class="text-kw">extends </span><span class="text-var">\Pop\Application
-</span><span class="text-kw">{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">load</span>(): <span class="text-type">Application</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;mailer&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-kw">new</span> <span class="text-type">Sendmail</span>()));
 
-    public function </span><span class="text-var">load</span><span class="text-kw">(): </span><span class="text-var">Application
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;mailer&#039;</span><span class="text-kw">, new </span><span class="text-var">Mailer</span><span class="text-kw">(new </span><span class="text-var">Sendmail</span><span class="text-kw">()));
-
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">addDispatchableParams</span><span class="text-kw">(
-            </span><span class="text-str">&#039;App\Http\Controller\InvoicesController&#039;</span><span class="text-kw">,
-            [</span><span class="text-var">$this</span><span class="text-kw">, new </span><span class="text-var">Request</span><span class="text-kw">(new </span><span class="text-var">Uri</span><span class="text-kw">(), [</span><span class="text-str">&#039;strip_tags&#039;</span><span class="text-kw">]), new </span><span class="text-var">Response</span><span class="text-kw">(), </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;mailer&#039;</span><span class="text-kw">)]
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">addDispatchableParams</span>(
+            <span class="text-str">&#039;App\Http\Controller\InvoicesController&#039;</span>,
+            [<span class="text-var">$this</span>, <span class="text-kw">new</span> <span class="text-type">Request</span>(<span class="text-kw">new</span> <span class="text-type">Uri</span>(), [<span class="text-str">&#039;strip_tags&#039;</span>]), <span class="text-kw">new</span> <span class="text-type">Response</span>(), <span class="text-var">$this</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;mailer&#039;</span>)]
         );
 
-        return </span><span class="text-var">$this</span><span class="text-kw">;
+        <span class="text-kw">return</span> <span class="text-var">$this</span>;
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <h4 id="target-dispatchable-objects-with-a-fallback">Target dispatchable objects with a fallback<a class="anchor" href="#target-dispatchable-objects-with-a-fallback" aria-label="Link to this section">#</a></h4>
@@ -228,32 +228,32 @@ class </span><span class="text-var">Application </span><span class="text-kw">ext
 <code>addDispatchableParams</code> call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Application.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Request</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Response</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Uri</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Sendmail</span>;
 
-use </span><span class="text-var">Pop\Http\Server\Request</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Uri</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Sendmail</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Application</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Application</span>
+{
 
-class </span><span class="text-var">Application </span><span class="text-kw">extends </span><span class="text-var">\Pop\Application
-</span><span class="text-kw">{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">load</span>(): <span class="text-type">Application</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;mailer&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-kw">new</span> <span class="text-type">Sendmail</span>()));
 
-    public function </span><span class="text-var">load</span><span class="text-kw">(): </span><span class="text-var">Application
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;mailer&#039;</span><span class="text-kw">, new </span><span class="text-var">Mailer</span><span class="text-kw">(new </span><span class="text-var">Sendmail</span><span class="text-kw">()));
-
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">addDispatchableParams</span><span class="text-kw">(
-            </span><span class="text-str">&#039;*&#039;</span><span class="text-kw">, [</span><span class="text-var">$this</span><span class="text-kw">, new </span><span class="text-var">Request</span><span class="text-kw">(new </span><span class="text-var">Uri</span><span class="text-kw">(), [</span><span class="text-str">&#039;strip_tags&#039;</span><span class="text-kw">]), new </span><span class="text-var">Response</span><span class="text-kw">(), </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;mailer&#039;</span><span class="text-kw">)]
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">addDispatchableParams</span>(
+            <span class="text-str">&#039;*&#039;</span>, [<span class="text-var">$this</span>, <span class="text-kw">new</span> <span class="text-type">Request</span>(<span class="text-kw">new</span> <span class="text-type">Uri</span>(), [<span class="text-str">&#039;strip_tags&#039;</span>]), <span class="text-kw">new</span> <span class="text-type">Response</span>(), <span class="text-var">$this</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;mailer&#039;</span>)]
         );
 
-        return </span><span class="text-var">$this</span><span class="text-kw">;
+        <span class="text-kw">return</span> <span class="text-var">$this</span>;
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>They are keyed by the <strong>dispatchable class</strong>, not by the route, so every route naming that class is
@@ -292,12 +292,12 @@ constructed the same way. Five methods manage the registry:</p>
 values rather than services:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">addRoute</span><span class="text-kw">(</span><span class="text-str">&#039;/invoices&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\InvoicesController&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;params&#039;     </span><span class="text-kw">=&gt; [</span><span class="text-var">$app</span><span class="text-kw">, </span><span class="text-str">&#039;sendmail&#039;</span><span class="text-kw">]
+<pre><code><span class="text-var">$app</span>-&gt;<span class="text-fn">addRoute</span>(<span class="text-str">&#039;/invoices&#039;</span>, [
+    <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\InvoicesController&#039;</span>,
+    <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>,
+    <span class="text-str">&#039;params&#039;</span>     =&gt; [<span class="text-var">$app</span>, <span class="text-str">&#039;sendmail&#039;</span>]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A bare value is wrapped for you, so <code>'params' =&gt; 'sendmail'</code> and <code>'params' =&gt; ['sendmail']</code> are the same.</p>
@@ -359,12 +359,12 @@ header when a path matched but its method constraint did not.</p>
 <code>catch</code> block is for. A listener's first parameter is the exception itself and its second is the application:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.error&#039;</span><span class="text-kw">, function(</span><span class="text-var">\Throwable $exception</span><span class="text-kw">, </span><span class="text-var">Pop\Application $application</span><span class="text-kw">) {
-    </span><span class="text-var">error_log</span><span class="text-kw">(</span><span class="text-var">$exception</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">());
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.error&#039;</span>, <span class="text-kw">function</span>(<span class="text-type">\Throwable</span> <span class="text-var">$exception</span>, <span class="text-type">Pop\Application</span> <span class="text-var">$application</span>) {
+    <span class="text-fn">error_log</span>(<span class="text-var">$exception</span>-&gt;<span class="text-fn">getMessage</span>());
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>One exception is treated differently. <code>Pop\Event\AbortException</code>, thrown from any listener, makes <code>run()</code>
@@ -387,13 +387,13 @@ that needs nothing from the application. <a href="/basics/errors">Error Handling
 else, <code>Pop\App</code> is a static accessor onto the application registered during bootstrap:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\App</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\App</span>;
 
-</span><span class="text-var">$app    </span><span class="text-kw">= </span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">();                   </span><span class="text-comment">// the Application object, or null
-</span><span class="text-var">$dbConf </span><span class="text-kw">= </span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">config</span><span class="text-kw">(</span><span class="text-str">&#039;database&#039;</span><span class="text-kw">);      </span><span class="text-comment">// one config key, or null
-</span><span class="text-var">$logger </span><span class="text-kw">= </span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">services</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">);      </span><span class="text-comment">// a resolved service
-</span><span class="text-var">$router </span><span class="text-kw">= </span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">router</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$app</span>    = <span class="text-type">App</span>::<span class="text-fn">get</span>();                   <span class="text-comment">// the Application object, or null</span>
+<span class="text-var">$dbConf</span> = <span class="text-type">App</span>::<span class="text-fn">config</span>(<span class="text-str">&#039;database&#039;</span>);      <span class="text-comment">// one config key, or null</span>
+<span class="text-var">$logger</span> = <span class="text-type">App</span>::<span class="text-fn">services</span>(<span class="text-str">&#039;logger&#039;</span>);      <span class="text-comment">// a resolved service</span>
+<span class="text-var">$router</span> = <span class="text-type">App</span>::<span class="text-fn">router</span>();
+</code></pre>
 </div>
 
 <p>Every one of those returns <code>null</code> rather than throwing when no application has been constructed, so a class
@@ -408,22 +408,22 @@ a stand-alone console application:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">script/app</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>#!/usr/bin/env php
-<span class="text-var">&lt;?php
+<span class="text-kw">&lt;?php
+</span>
+<span class="text-var">$autoloader</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../vendor/autoload.php&#039;</span>;
 
-$autoloader </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../vendor/autoload.php&#039;</span><span class="text-kw">;
+<span class="text-var">$dotEnv</span> = <span class="text-type">Dotenv\Dotenv</span>::<span class="text-fn">createImmutable</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../&#039;</span>);
+<span class="text-var">$dotEnv</span>-&gt;<span class="text-fn">safeLoad</span>();
 
-</span><span class="text-var">$dotEnv </span><span class="text-kw">= </span><span class="text-var">Dotenv\Dotenv</span><span class="text-kw">::</span><span class="text-var">createImmutable</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../&#039;</span><span class="text-kw">);
-</span><span class="text-var">$dotEnv</span><span class="text-kw">-&gt;</span><span class="text-var">safeLoad</span><span class="text-kw">();
-
-try {
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/config/app.console.php&#039;</span><span class="text-kw">);
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">load</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-} catch (</span><span class="text-var">\Exception $exception</span><span class="text-kw">) {
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">cliError</span><span class="text-kw">(</span><span class="text-var">$exception</span><span class="text-kw">);
+<span class="text-kw">try</span> {
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/config/app.console.php&#039;</span>);
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">load</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+} <span class="text-kw">catch</span> (<span class="text-type">\Exception</span> <span class="text-var">$exception</span>) {
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">cliError</span>(<span class="text-var">$exception</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Same three calls, same application class. The router detects that it is running under the CLI SAPI and matches

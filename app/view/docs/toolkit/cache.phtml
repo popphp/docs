@@ -20,17 +20,17 @@ backend once, when you construct the object, and nothing downstream changes.</p>
 the global time-to-live, in whole seconds.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Cache\Cache</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Cache\Adapter\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Cache\Cache</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Cache\Adapter\File</span>;
 
-</span><span class="text-var">$cache </span><span class="text-kw">= new </span><span class="text-var">Cache</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../cache&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">));
+<span class="text-var">$cache</span> = <span class="text-kw">new</span> <span class="text-type">Cache</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../cache&#039;</span>, <span class="text-num">300</span>));
 
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">saveItem</span><span class="text-kw">(</span><span class="text-str">&#039;user-1001&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1001</span><span class="text-kw">, </span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;John Smith&#039;</span><span class="text-kw">]);
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">saveItem</span>(<span class="text-str">&#039;user-1001&#039;</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1001</span>, <span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;John Smith&#039;</span>]);
 
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">getItem</span><span class="text-kw">(</span><span class="text-str">&#039;user-1001&#039;</span><span class="text-kw">);  </span><span class="text-comment">// the array back
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">hasItem</span><span class="text-kw">(</span><span class="text-str">&#039;user-1001&#039;</span><span class="text-kw">);  </span><span class="text-comment">// true
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">deleteItem</span><span class="text-kw">(</span><span class="text-str">&#039;user-1001&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">getItem</span>(<span class="text-str">&#039;user-1001&#039;</span>);  <span class="text-comment">// the array back</span>
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">hasItem</span>(<span class="text-str">&#039;user-1001&#039;</span>);  <span class="text-comment">// true</span>
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">deleteItem</span>(<span class="text-str">&#039;user-1001&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>saveItem()</code> takes an optional third argument to override the global TTL for one item. A TTL of <code>0</code> means
@@ -43,16 +43,16 @@ at the first write.</p>
 argument and that value is returned on a genuine miss instead:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Cache\Cache</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Cache\Adapter\Memory</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Cache\Cache</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Cache\Adapter\Memory</span>;
 
-</span><span class="text-var">$cache </span><span class="text-kw">= new </span><span class="text-var">Cache</span><span class="text-kw">(new </span><span class="text-var">Memory</span><span class="text-kw">());
+<span class="text-var">$cache</span> = <span class="text-kw">new</span> <span class="text-type">Cache</span>(<span class="text-kw">new</span> <span class="text-type">Memory</span>());
 
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">saveItem</span><span class="text-kw">(</span><span class="text-str">&#039;feature-enabled&#039;</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">saveItem</span>(<span class="text-str">&#039;feature-enabled&#039;</span>, <span class="text-num">false</span>);
 
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">getItem</span><span class="text-kw">(</span><span class="text-str">&#039;feature-enabled&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">); </span><span class="text-comment">// false — the real cached value
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">getItem</span><span class="text-kw">(</span><span class="text-str">&#039;never-cached&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">);    </span><span class="text-comment">// null — a genuine miss
-</span></code></pre>
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">getItem</span>(<span class="text-str">&#039;feature-enabled&#039;</span>, <span class="text-num">null</span>); <span class="text-comment">// false — the real cached value</span>
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">getItem</span>(<span class="text-str">&#039;never-cached&#039;</span>, <span class="text-num">null</span>);    <span class="text-comment">// null — a genuine miss</span>
+</code></pre>
 </div>
 
 <p>Keys are validated. <code>{</code>, <code>}</code>, <code>(</code>, <code>)</code>, <code>/</code>, <code>\</code>, <code>@</code> and <code>:</code> are the characters PSR-16 reserves, and an empty
@@ -123,14 +123,14 @@ backend.</p>
 assumption about the deployment:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Cache\Cache</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Cache\Adapter\File</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Cache\Adapter\Redis</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Cache\Cache</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Cache\Adapter\File</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Cache\Adapter\Redis</span>;
 
-</span><span class="text-var">$cache </span><span class="text-kw">= </span><span class="text-var">Cache</span><span class="text-kw">::</span><span class="text-var">isAvailable</span><span class="text-kw">(</span><span class="text-str">&#039;redis&#039;</span><span class="text-kw">)
-    ? new </span><span class="text-var">Cache</span><span class="text-kw">(new </span><span class="text-var">Redis</span><span class="text-kw">(</span><span class="text-var">300</span><span class="text-kw">))
-    : new </span><span class="text-var">Cache</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../cache&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">));
-</span></code></pre>
+<span class="text-var">$cache</span> = <span class="text-type">Cache</span>::<span class="text-fn">isAvailable</span>(<span class="text-str">&#039;redis&#039;</span>)
+    ? <span class="text-kw">new</span> <span class="text-type">Cache</span>(<span class="text-kw">new</span> <span class="text-type">Redis</span>(<span class="text-num">300</span>))
+    : <span class="text-kw">new</span> <span class="text-type">Cache</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../cache&#039;</span>, <span class="text-num">300</span>));
+</code></pre>
 </div>
 
 <p><code>Cache::getAvailableAdapters()</code> returns the whole map, keyed <code>apc</code>, <code>file</code>, <code>memcached</code>, <code>memory</code>, <code>null</code>,
@@ -146,15 +146,15 @@ answers, so confirm the connection itself before relying on Redis, Memcached or 
 a miss it runs the callback, caches what comes back, and returns it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Cache\Cache</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Cache\Adapter\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Cache\Cache</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Cache\Adapter\File</span>;
 
-</span><span class="text-var">$cache </span><span class="text-kw">= new </span><span class="text-var">Cache</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../cache&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">));
+<span class="text-var">$cache</span> = <span class="text-kw">new</span> <span class="text-type">Cache</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../cache&#039;</span>, <span class="text-num">300</span>));
 
-</span><span class="text-var">$report </span><span class="text-kw">= </span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">remember</span><span class="text-kw">(</span><span class="text-str">&#039;sales-report&#039;</span><span class="text-kw">, function () {
-    return [</span><span class="text-str">&#039;total&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">4820</span><span class="text-kw">]; </span><span class="text-comment">// runs only on a miss
-</span><span class="text-kw">}, </span><span class="text-var">300</span><span class="text-kw">, </span><span class="text-var">1.0</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$report</span> = <span class="text-var">$cache</span>-&gt;<span class="text-fn">remember</span>(<span class="text-str">&#039;sales-report&#039;</span>, <span class="text-kw">function</span> () {
+    <span class="text-kw">return</span> [<span class="text-str">&#039;total&#039;</span> =&gt; <span class="text-num">4820</span>]; <span class="text-comment">// runs only on a miss</span>
+}, <span class="text-num">300</span>, <span class="text-num">1.0</span>);
+</code></pre>
 </div>
 
 <p>A falsy return — <code>false</code>, <code>null</code>, <code>0</code>, <code>''</code> — is cached correctly and does not send the callback round again.
@@ -168,17 +168,17 @@ protects the steady state rather than a cold key, which still lets every concurr
 <p>When one change invalidates a set of keys you cannot enumerate, tag them on the way in and invalidate the tag.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Cache\Cache</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Cache\Adapter\Memory</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Cache\Cache</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Cache\Adapter\Memory</span>;
 
-</span><span class="text-var">$cache </span><span class="text-kw">= new </span><span class="text-var">Cache</span><span class="text-kw">(new </span><span class="text-var">Memory</span><span class="text-kw">());
+<span class="text-var">$cache</span> = <span class="text-kw">new</span> <span class="text-type">Cache</span>(<span class="text-kw">new</span> <span class="text-type">Memory</span>());
 
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">saveTaggedItem</span><span class="text-kw">(</span><span class="text-str">&#039;product-1&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;widget&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;products&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;category-electronics&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">saveTaggedItem</span><span class="text-kw">(</span><span class="text-str">&#039;product-2&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;novel&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;products&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;category-books&#039;</span><span class="text-kw">]);
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">saveTaggedItem</span>(<span class="text-str">&#039;product-1&#039;</span>, <span class="text-str">&#039;widget&#039;</span>, [<span class="text-str">&#039;products&#039;</span>, <span class="text-str">&#039;category-electronics&#039;</span>]);
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">saveTaggedItem</span>(<span class="text-str">&#039;product-2&#039;</span>, <span class="text-str">&#039;novel&#039;</span>, [<span class="text-str">&#039;products&#039;</span>, <span class="text-str">&#039;category-books&#039;</span>]);
 
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">invalidateTag</span><span class="text-kw">(</span><span class="text-str">&#039;category-electronics&#039;</span><span class="text-kw">); </span><span class="text-comment">// deletes product-1, leaves product-2
-</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">invalidateTags</span><span class="text-kw">([</span><span class="text-str">&#039;products&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;category-books&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">invalidateTag</span>(<span class="text-str">&#039;category-electronics&#039;</span>); <span class="text-comment">// deletes product-1, leaves product-2</span>
+<span class="text-var">$cache</span>-&gt;<span class="text-fn">invalidateTags</span>([<span class="text-str">&#039;products&#039;</span>, <span class="text-str">&#039;category-books&#039;</span>]);
+</code></pre>
 </div>
 
 <p>Tag names go through the same reserved-character rule as keys, so <code>category:electronics</code> throws. Re-saving an
@@ -191,17 +191,17 @@ valid PSR-16 cache — <code>get()</code>, <code>set()</code>, <code>has()</code
 alongside the <code>*Item()</code> names and read the same values.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Cache\Cache</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Cache\Adapter\File</span><span class="text-kw">;
-use </span><span class="text-var">Psr\SimpleCache\CacheInterface</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Cache\Cache</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Cache\Adapter\File</span>;
+<span class="text-kw">use</span> <span class="text-type">Psr\SimpleCache\CacheInterface</span>;
 
-function </span><span class="text-var">warmUp</span><span class="text-kw">(</span><span class="text-var">CacheInterface $cache</span><span class="text-kw">): </span><span class="text-var">void
-</span><span class="text-kw">{
-    </span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">set</span><span class="text-kw">(</span><span class="text-str">&#039;greeting&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Hello&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">);
+<span class="text-kw">function</span> <span class="text-fn">warmUp</span>(<span class="text-type">CacheInterface</span> <span class="text-var">$cache</span>): <span class="text-type">void</span>
+{
+    <span class="text-var">$cache</span>-&gt;<span class="text-fn">set</span>(<span class="text-str">&#039;greeting&#039;</span>, <span class="text-str">&#039;Hello&#039;</span>, <span class="text-num">300</span>);
 }
 
-</span><span class="text-var">warmUp</span><span class="text-kw">(new </span><span class="text-var">Cache</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../cache&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">)));
-</span></code></pre>
+<span class="text-fn">warmUp</span>(<span class="text-kw">new</span> <span class="text-type">Cache</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../cache&#039;</span>, <span class="text-num">300</span>)));
+</code></pre>
 </div>
 
 <p>A TTL of <code>0</code> means &quot;forever&quot; to <code>saveItem()</code> and &quot;delete&quot; to <code>set()</code>, which is what PSR-16 mandates.
@@ -210,19 +210,19 @@ Pick one family per call site.</p>
 signatures, so it ships as <code>Pop\Cache\Psr6\CacheItemPool</code> wrapping the same adapters:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Cache\Adapter\File</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Cache\Psr6\CacheItemPool</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Cache\Adapter\File</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Cache\Psr6\CacheItemPool</span>;
 
-</span><span class="text-var">$pool </span><span class="text-kw">= new </span><span class="text-var">CacheItemPool</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../cache&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">));
+<span class="text-var">$pool</span> = <span class="text-kw">new</span> <span class="text-type">CacheItemPool</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../cache&#039;</span>, <span class="text-num">300</span>));
 
-</span><span class="text-var">$item </span><span class="text-kw">= </span><span class="text-var">$pool</span><span class="text-kw">-&gt;</span><span class="text-var">getItem</span><span class="text-kw">(</span><span class="text-str">&#039;config-hash&#039;</span><span class="text-kw">);
+<span class="text-var">$item</span> = <span class="text-var">$pool</span>-&gt;<span class="text-fn">getItem</span>(<span class="text-str">&#039;config-hash&#039;</span>);
 
-if (!</span><span class="text-var">$item</span><span class="text-kw">-&gt;</span><span class="text-var">isHit</span><span class="text-kw">()) {
-    </span><span class="text-var">$item</span><span class="text-kw">-&gt;</span><span class="text-var">set</span><span class="text-kw">(</span><span class="text-str">&#039;abc123&#039;</span><span class="text-kw">);
-    </span><span class="text-var">$item</span><span class="text-kw">-&gt;</span><span class="text-var">expiresAfter</span><span class="text-kw">(</span><span class="text-var">300</span><span class="text-kw">);
-    </span><span class="text-var">$pool</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">$item</span><span class="text-kw">);
+<span class="text-kw">if</span> (!<span class="text-var">$item</span>-&gt;<span class="text-fn">isHit</span>()) {
+    <span class="text-var">$item</span>-&gt;<span class="text-fn">set</span>(<span class="text-str">&#039;abc123&#039;</span>);
+    <span class="text-var">$item</span>-&gt;<span class="text-fn">expiresAfter</span>(<span class="text-num">300</span>);
+    <span class="text-var">$pool</span>-&gt;<span class="text-fn">save</span>(<span class="text-var">$item</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Build both around one adapter instance when an application needs the native API and a PSR-6 pool at once.</p>

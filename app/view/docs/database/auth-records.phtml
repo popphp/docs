@@ -15,20 +15,20 @@ and keeps what it declared — <code>$jsonFields</code> and <code>$hashOptions</
 hash its password column.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Users.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record\Auth</span>;
 
-use </span><span class="text-var">Pop\Db\Record\Auth</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Users</span> <span class="text-kw">extends</span> <span class="text-type">Auth</span>
+{
 
-class </span><span class="text-var">Users </span><span class="text-kw">extends </span><span class="text-var">Auth
-</span><span class="text-kw">{
-
-    protected array </span><span class="text-var">$jsonFields  </span><span class="text-kw">= [</span><span class="text-str">&#039;preferences&#039;</span><span class="text-kw">];
-    protected array </span><span class="text-var">$hashOptions </span><span class="text-kw">= [</span><span class="text-str">&#039;cost&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">12</span><span class="text-kw">];
+    <span class="text-kw">protected</span> <span class="text-kw">array</span> <span class="text-var">$jsonFields</span>  = [<span class="text-str">&#039;preferences&#039;</span>];
+    <span class="text-kw">protected</span> <span class="text-kw">array</span> <span class="text-var">$hashOptions</span> = [<span class="text-str">&#039;cost&#039;</span> =&gt; <span class="text-num">12</span>];
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>An empty <code>class Users extends Auth {}</code> is a working auth class too — every column the class reads has a
@@ -115,27 +115,27 @@ since the failure path is the one that reads them.</p>
 <p>A table with different column names needs no more than those overrides.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Accounts.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record\Auth</span>;
 
-use </span><span class="text-var">Pop\Db\Record\Auth</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Accounts</span> <span class="text-kw">extends</span> <span class="text-type">Auth</span>
+{
 
-class </span><span class="text-var">Accounts </span><span class="text-kw">extends </span><span class="text-var">Auth
-</span><span class="text-kw">{
-
-    protected </span><span class="text-var">string $usernameField </span><span class="text-kw">= </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">;
-    protected </span><span class="text-var">int    $attemptsLimit </span><span class="text-kw">= </span><span class="text-var">5</span><span class="text-kw">;
-    protected array  </span><span class="text-var">$mfaConfig     </span><span class="text-kw">= [
-        </span><span class="text-str">&#039;length&#039;              </span><span class="text-kw">=&gt; </span><span class="text-var">8</span><span class="text-kw">,
-        </span><span class="text-str">&#039;expires&#039;             </span><span class="text-kw">=&gt; </span><span class="text-var">600</span><span class="text-kw">,
-        </span><span class="text-str">&#039;alphanumeric&#039;        </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-        </span><span class="text-str">&#039;mfa_code_field&#039;      </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;otp&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;mfa_timestamp_field&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;otp_expires&#039;
-    </span><span class="text-kw">];
+    <span class="text-kw">protected</span> <span class="text-type">string</span> <span class="text-var">$usernameField</span> = <span class="text-str">&#039;email&#039;</span>;
+    <span class="text-kw">protected</span> <span class="text-type">int</span>    <span class="text-var">$attemptsLimit</span> = <span class="text-num">5</span>;
+    <span class="text-kw">protected</span> <span class="text-kw">array</span>  <span class="text-var">$mfaConfig</span>     = [
+        <span class="text-str">&#039;length&#039;</span>              =&gt; <span class="text-num">8</span>,
+        <span class="text-str">&#039;expires&#039;</span>             =&gt; <span class="text-num">600</span>,
+        <span class="text-str">&#039;alphanumeric&#039;</span>        =&gt; <span class="text-num">true</span>,
+        <span class="text-str">&#039;mfa_code_field&#039;</span>      =&gt; <span class="text-str">&#039;otp&#039;</span>,
+        <span class="text-str">&#039;mfa_timestamp_field&#039;</span> =&gt; <span class="text-str">&#039;otp_expires&#039;</span>
+    ];
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <h2 id="single-factor-login">Single-Factor Login<a class="anchor" href="#single-factor-login" aria-label="Link to this section">#</a></h2>
@@ -145,16 +145,16 @@ argument, <code>$mfa</code>, defaults to <code>true</code> — pass <code>false<
 and the instance is left loaded with the matched row.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">$user </span><span class="text-kw">= new </span><span class="text-var">Users</span><span class="text-kw">();
+<span class="text-var">$user</span> = <span class="text-kw">new</span> <span class="text-type">Users</span>();
 
-if (</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-var">$username</span><span class="text-kw">, </span><span class="text-var">$attemptedPassword</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">)) {
-    echo </span><span class="text-str">&#039;Welcome back, &#039; </span><span class="text-kw">. </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">username</span><span class="text-kw">;
-} else {
-    </span><span class="text-comment">// log $user-&gt;getAuthFailure(); show the visitor something generic
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-var">$user</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$username</span>, <span class="text-var">$attemptedPassword</span>, <span class="text-num">false</span>)) {
+    <span class="text-kw">echo</span> <span class="text-str">&#039;Welcome back, &#039;</span> . <span class="text-var">$user</span>-&gt;<span class="text-type">username</span>;
+} <span class="text-kw">else</span> {
+    <span class="text-comment">// log $user-&gt;getAuthFailure(); show the visitor something generic</span>
+}
+</code></pre>
 </div>
 
 <h2 id="multi-factor-login">Multi-Factor Login<a class="anchor" href="#multi-factor-login" aria-label="Link to this section">#</a></h2>
@@ -164,15 +164,15 @@ expiration are generated, saved to the record, and <strong>the loaded record is 
 the application can deliver the code however it likes.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">$user   </span><span class="text-kw">= new </span><span class="text-var">Users</span><span class="text-kw">();
-</span><span class="text-var">$result </span><span class="text-kw">= </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-var">$username</span><span class="text-kw">, </span><span class="text-var">$attemptedPassword</span><span class="text-kw">);
+<span class="text-var">$user</span>   = <span class="text-kw">new</span> <span class="text-type">Users</span>();
+<span class="text-var">$result</span> = <span class="text-var">$user</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$username</span>, <span class="text-var">$attemptedPassword</span>);
 
-if (</span><span class="text-var">$result </span><span class="text-kw">!== </span><span class="text-var">false</span><span class="text-kw">) {
-    </span><span class="text-var">$mailer</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">$result</span><span class="text-kw">-&gt;</span><span class="text-var">email</span><span class="text-kw">, </span><span class="text-var">$result</span><span class="text-kw">-&gt;</span><span class="text-var">mfa_code</span><span class="text-kw">);
+<span class="text-kw">if</span> (<span class="text-var">$result</span> <span class="text-kw">!==</span> <span class="text-num">false</span>) {
+    <span class="text-var">$mailer</span>-&gt;<span class="text-fn">send</span>(<span class="text-var">$result</span>-&gt;<span class="text-type">email</span>, <span class="text-var">$result</span>-&gt;<span class="text-type">mfa_code</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The success value is an object rather than <code>true</code>, so compare against <code>false</code> explicitly. The second
@@ -180,14 +180,14 @@ step is <code>authenticateMfa()</code>, which needs the record loaded — either
 back by username between requests.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">$user </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findOne</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$username</span><span class="text-kw">]);
+<span class="text-var">$user</span> = <span class="text-type">Users</span>::<span class="text-fn">findOne</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$username</span>]);
 
-if (</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">authenticateMfa</span><span class="text-kw">(</span><span class="text-var">$attemptedCode</span><span class="text-kw">)) {
-    echo </span><span class="text-str">&#039;Welcome back, &#039; </span><span class="text-kw">. </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">username</span><span class="text-kw">;
+<span class="text-kw">if</span> (<span class="text-var">$user</span>-&gt;<span class="text-fn">authenticateMfa</span>(<span class="text-var">$attemptedCode</span>)) {
+    <span class="text-kw">echo</span> <span class="text-str">&#039;Welcome back, &#039;</span> . <span class="text-var">$user</span>-&gt;<span class="text-type">username</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Codes are compared with <code>hash_equals()</code>, and a successful check clears the stored code and timestamp,
@@ -242,16 +242,16 @@ a bad password does — a locked-out account is locked out of MFA guessing too.<
 counting — so <code>attempts</code> records total failures rather than remaining tries.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">$user </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findOne</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$username</span><span class="text-kw">]);
+<span class="text-var">$user</span> = <span class="text-type">Users</span>::<span class="text-fn">findOne</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$username</span>]);
 
-if (</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">attemptsExceeded</span><span class="text-kw">()) {
-    echo </span><span class="text-str">&#039;This account is locked.&#039;</span><span class="text-kw">;
+<span class="text-kw">if</span> (<span class="text-var">$user</span>-&gt;<span class="text-fn">attemptsExceeded</span>()) {
+    <span class="text-kw">echo</span> <span class="text-str">&#039;This account is locked.&#039;</span>;
 }
 
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">resetAttempts</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$user</span>-&gt;<span class="text-fn">resetAttempts</span>();
+</code></pre>
 </div>
 
 <p>Both read the currently loaded record, so a fresh unloaded instance reports <code>false</code> from

@@ -33,7 +33,9 @@ class IndexController extends AbstractController
     {
         if ($this->request->acceptsHtml()) {
             $this->prepareView('error.phtml');
-            $this->view->title = $code . ' ' . ($message ?? \Pop\Http\Server\Response::getMessageFromCode($code));
+            $this->view->code    = $code;
+            $this->view->message = $message;
+            $this->view->title   = $code . ' ' . ($message ?? \Pop\Http\Server\Response::getMessageFromCode($code));
             $this->send($code);
         } else {
             parent::error($code, $message);
@@ -51,7 +53,8 @@ class IndexController extends AbstractController
     {
         if ($this->request->acceptsHtml()) {
             $this->prepareView('maintenance.phtml');
-            $this->view->title = 'Website is Down';
+            $this->view->code  = $code;
+            $this->view->title = 'Down for maintenance';
             $this->send($code);
         } else {
             parent::error($code, $message);

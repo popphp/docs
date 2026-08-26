@@ -19,13 +19,13 @@ the first path; card numbers, API tokens and anything you hand back to a service
 single <code>make()</code> no matter how you have tuned the algorithm.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Hashing\BcryptHasher</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Hashing\BcryptHasher</span>;
 
-</span><span class="text-var">$hasher </span><span class="text-kw">= </span><span class="text-var">BcryptHasher</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">();
+<span class="text-var">$hasher</span> = <span class="text-type">BcryptHasher</span>::<span class="text-fn">create</span>();
 
-</span><span class="text-var">$hashedValue </span><span class="text-kw">= </span><span class="text-var">$hasher</span><span class="text-kw">-&gt;</span><span class="text-var">make</span><span class="text-kw">(</span><span class="text-str">&#039;password&#039;</span><span class="text-kw">);
-</span><span class="text-comment">// $2y$12$bRm6Tbo57ZpPeXXYjwkpb.K0ysOJaROnzTchKgSenqP6oSkk.CEwy
-</span></code></pre>
+<span class="text-var">$hashedValue</span> = <span class="text-var">$hasher</span>-&gt;<span class="text-fn">make</span>(<span class="text-str">&#039;password&#039;</span>);
+<span class="text-comment">// $2y$12$bRm6Tbo57ZpPeXXYjwkpb.K0ysOJaROnzTchKgSenqP6oSkk.CEwy</span>
+</code></pre>
 </div>
 
 <p>That's the string you store. It's 60 characters for bcrypt, self-describing, and carries its own salt — you
@@ -35,17 +35,17 @@ never generate or store a salt yourself.</p>
 arguments, or as an options array through <code>create()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Hashing\Argon2IdHasher</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Crypt\Hashing\BcryptHasher</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Hashing\Argon2IdHasher</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Hashing\BcryptHasher</span>;
 
-</span><span class="text-var">$bcrypt </span><span class="text-kw">= new </span><span class="text-var">BcryptHasher</span><span class="text-kw">(</span><span class="text-var">13</span><span class="text-kw">);
+<span class="text-var">$bcrypt</span> = <span class="text-kw">new</span> <span class="text-type">BcryptHasher</span>(<span class="text-num">13</span>);
 
-</span><span class="text-var">$argon </span><span class="text-kw">= </span><span class="text-var">Argon2IdHasher</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">([
-    </span><span class="text-str">&#039;memory_cost&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">131072</span><span class="text-kw">,
-    </span><span class="text-str">&#039;time_cost&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">4</span><span class="text-kw">,
-    </span><span class="text-str">&#039;threads&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">,
+<span class="text-var">$argon</span> = <span class="text-type">Argon2IdHasher</span>::<span class="text-fn">create</span>([
+    <span class="text-str">&#039;memory_cost&#039;</span> =&gt; <span class="text-num">131072</span>,
+    <span class="text-str">&#039;time_cost&#039;</span>   =&gt; <span class="text-num">4</span>,
+    <span class="text-str">&#039;threads&#039;</span>     =&gt; <span class="text-num">1</span>,
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The defaults are PHP's own — cost 12 for bcrypt, <code>PASSWORD_ARGON2_DEFAULT_*</code> for Argon2. Raise the cost until
@@ -54,13 +54,13 @@ a single <code>make()</code> takes as long as you are willing to make a login wa
 want when the algorithm comes from config rather than from the code:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Hashing\Hasher</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Hashing\Hasher</span>;
 
-</span><span class="text-var">$hasher </span><span class="text-kw">= </span><span class="text-var">Hasher</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-var">PASSWORD_ARGON2ID</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;memory_cost&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">131072</span><span class="text-kw">,
-    </span><span class="text-str">&#039;time_cost&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">4</span><span class="text-kw">,
+<span class="text-var">$hasher</span> = <span class="text-type">Hasher</span>::<span class="text-fn">create</span>(<span class="text-num">PASSWORD_ARGON2ID</span>, [
+    <span class="text-str">&#039;memory_cost&#039;</span> =&gt; <span class="text-num">131072</span>,
+    <span class="text-str">&#039;time_cost&#039;</span>   =&gt; <span class="text-num">4</span>,
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Anything other than <code>PASSWORD_BCRYPT</code>, <code>PASSWORD_ARGON2I</code> or <code>PASSWORD_ARGON2ID</code> throws
@@ -74,15 +74,15 @@ returns a boolean — there's no &quot;decrypt the stored hash and compare&quot;
 hash.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Hashing\BcryptHasher</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Hashing\BcryptHasher</span>;
 
-</span><span class="text-var">$hasher </span><span class="text-kw">= new </span><span class="text-var">BcryptHasher</span><span class="text-kw">();
+<span class="text-var">$hasher</span> = <span class="text-kw">new</span> <span class="text-type">BcryptHasher</span>();
 
-</span><span class="text-var">$hashedValue </span><span class="text-kw">= </span><span class="text-var">$hasher</span><span class="text-kw">-&gt;</span><span class="text-var">make</span><span class="text-kw">(</span><span class="text-str">&#039;secret&#039;</span><span class="text-kw">);
+<span class="text-var">$hashedValue</span> = <span class="text-var">$hasher</span>-&gt;<span class="text-fn">make</span>(<span class="text-str">&#039;secret&#039;</span>);
 
-</span><span class="text-var">$hasher</span><span class="text-kw">-&gt;</span><span class="text-var">verify</span><span class="text-kw">(</span><span class="text-str">&#039;secret&#039;</span><span class="text-kw">, </span><span class="text-var">$hashedValue</span><span class="text-kw">); </span><span class="text-comment">// true
-</span><span class="text-var">$hasher</span><span class="text-kw">-&gt;</span><span class="text-var">verify</span><span class="text-kw">(</span><span class="text-str">&#039;wrong&#039;</span><span class="text-kw">, </span><span class="text-var">$hashedValue</span><span class="text-kw">);  </span><span class="text-comment">// false
-</span></code></pre>
+<span class="text-var">$hasher</span>-&gt;<span class="text-fn">verify</span>(<span class="text-str">&#039;secret&#039;</span>, <span class="text-var">$hashedValue</span>); <span class="text-comment">// true</span>
+<span class="text-var">$hasher</span>-&gt;<span class="text-fn">verify</span>(<span class="text-str">&#039;wrong&#039;</span>, <span class="text-var">$hashedValue</span>);  <span class="text-comment">// false</span>
+</code></pre>
 </div>
 
 <p>A stored value that isn't a hash — a truncated column, a legacy MD5 string — returns <code>false</code> rather than
@@ -95,17 +95,17 @@ is what makes migrating between algorithms a background job rather than a flag d
 parameters this hasher is configured for right now?</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Hashing\BcryptHasher</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Hashing\BcryptHasher</span>;
 
-</span><span class="text-var">$hasher </span><span class="text-kw">= new </span><span class="text-var">BcryptHasher</span><span class="text-kw">(</span><span class="text-var">12</span><span class="text-kw">);
+<span class="text-var">$hasher</span> = <span class="text-kw">new</span> <span class="text-type">BcryptHasher</span>(<span class="text-num">12</span>);
 
-if (</span><span class="text-var">$hasher</span><span class="text-kw">-&gt;</span><span class="text-var">verify</span><span class="text-kw">(</span><span class="text-var">$password</span><span class="text-kw">, </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">password</span><span class="text-kw">)) {
-    if (</span><span class="text-var">$hasher</span><span class="text-kw">-&gt;</span><span class="text-var">requiresRehash</span><span class="text-kw">(</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">password</span><span class="text-kw">)) {
-        </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">password </span><span class="text-kw">= </span><span class="text-var">$hasher</span><span class="text-kw">-&gt;</span><span class="text-var">make</span><span class="text-kw">(</span><span class="text-var">$password</span><span class="text-kw">);
-        </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
+<span class="text-kw">if</span> (<span class="text-var">$hasher</span>-&gt;<span class="text-fn">verify</span>(<span class="text-var">$password</span>, <span class="text-var">$user</span>-&gt;<span class="text-type">password</span>)) {
+    <span class="text-kw">if</span> (<span class="text-var">$hasher</span>-&gt;<span class="text-fn">requiresRehash</span>(<span class="text-var">$user</span>-&gt;<span class="text-type">password</span>)) {
+        <span class="text-var">$user</span>-&gt;<span class="text-type">password</span> = <span class="text-var">$hasher</span>-&gt;<span class="text-fn">make</span>(<span class="text-var">$password</span>);
+        <span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>();
     }
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Raising the cost from 10 to 12, or switching the configured hasher from bcrypt to Argon2id, both make
@@ -124,15 +124,15 @@ fails loudly rather than decrypting to garbage.</p>
 throwaway or a test:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Encryption\Encrypter</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Crypt\Encryption\SodiumEncrypter</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Encryption\Encrypter</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Encryption\SodiumEncrypter</span>;
 
-</span><span class="text-var">$aes    </span><span class="text-kw">= </span><span class="text-var">Encrypter</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;aes-256-gcm&#039;</span><span class="text-kw">);
-</span><span class="text-var">$sodium </span><span class="text-kw">= </span><span class="text-var">SodiumEncrypter</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">();
+<span class="text-var">$aes</span>    = <span class="text-type">Encrypter</span>::<span class="text-fn">create</span>(<span class="text-str">&#039;aes-256-gcm&#039;</span>);
+<span class="text-var">$sodium</span> = <span class="text-type">SodiumEncrypter</span>::<span class="text-fn">create</span>();
 
-</span><span class="text-var">$encrypted </span><span class="text-kw">= </span><span class="text-var">$aes</span><span class="text-kw">-&gt;</span><span class="text-var">encrypt</span><span class="text-kw">(</span><span class="text-str">&#039;SENSITIVE_DATA&#039;</span><span class="text-kw">);
-</span><span class="text-var">$aes</span><span class="text-kw">-&gt;</span><span class="text-var">decrypt</span><span class="text-kw">(</span><span class="text-var">$encrypted</span><span class="text-kw">); </span><span class="text-comment">// &#039;SENSITIVE_DATA&#039;
-</span></code></pre>
+<span class="text-var">$encrypted</span> = <span class="text-var">$aes</span>-&gt;<span class="text-fn">encrypt</span>(<span class="text-str">&#039;SENSITIVE_DATA&#039;</span>);
+<span class="text-var">$aes</span>-&gt;<span class="text-fn">decrypt</span>(<span class="text-var">$encrypted</span>); <span class="text-comment">// &#039;SENSITIVE_DATA&#039;</span>
+</code></pre>
 </div>
 
 <p><code>encrypt()</code> returns a base-64 string wrapping a JSON envelope of the IV, the ciphertext, and either a MAC (CBC)
@@ -142,13 +142,13 @@ overhead even for a short value.</p>
 passes it in. That's where the one piece of ceremony lives:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Encryption\Encrypter</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Encryption\Encrypter</span>;
 
-</span><span class="text-var">$key </span><span class="text-kw">= </span><span class="text-var">Encrypter</span><span class="text-kw">::</span><span class="text-var">generateKey</span><span class="text-kw">(</span><span class="text-str">&#039;aes-256-cbc&#039;</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
-</span><span class="text-comment">// &#039;zSLOwbK67/T2ZJWS7jJdzA+Lh41dhmyGnpZfkWQAXEM=&#039;
+<span class="text-var">$key</span> = <span class="text-type">Encrypter</span>::<span class="text-fn">generateKey</span>(<span class="text-str">&#039;aes-256-cbc&#039;</span>, <span class="text-num">false</span>);
+<span class="text-comment">// &#039;zSLOwbK67/T2ZJWS7jJdzA+Lh41dhmyGnpZfkWQAXEM=&#039;</span>
 
-</span><span class="text-var">$encrypter </span><span class="text-kw">= new </span><span class="text-var">Encrypter</span><span class="text-kw">(</span><span class="text-var">$key</span><span class="text-kw">, </span><span class="text-str">&#039;aes-256-cbc&#039;</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$encrypter</span> = <span class="text-kw">new</span> <span class="text-type">Encrypter</span>(<span class="text-var">$key</span>, <span class="text-str">&#039;aes-256-cbc&#039;</span>, <span class="text-num">false</span>);
+</code></pre>
 </div>
 
 <p>Every key method takes a <code>$raw</code> flag — <code>false</code> for base-64, <code>true</code> for raw bytes — so pass the one that
@@ -157,10 +157,10 @@ matches the key you hold.</p>
 <code>APP_PREVIOUS_KEYS</code> out of <code>$_ENV</code>, treating them as base-64 by default:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Encryption\Encrypter</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Encryption\Encrypter</span>;
 
-</span><span class="text-var">$encrypter </span><span class="text-kw">= </span><span class="text-var">Encrypter</span><span class="text-kw">::</span><span class="text-var">load</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$encrypter</span> = <span class="text-type">Encrypter</span>::<span class="text-fn">load</span>();
+</code></pre>
 </div>
 
 <p>A missing <code>APP_KEY</code> or <code>APP_CIPHER_METHOD</code> throws <code>Pop\Crypt\Encryption\Exception</code> with &quot;Error: The encryption
@@ -170,13 +170,13 @@ the first encrypted field.</p>
 tried first, then each previous key in turn:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Encryption\Encrypter</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Encryption\Encrypter</span>;
 
-</span><span class="text-var">$encrypter </span><span class="text-kw">= new </span><span class="text-var">Encrypter</span><span class="text-kw">(</span><span class="text-var">$currentKey</span><span class="text-kw">, </span><span class="text-str">&#039;aes-256-cbc&#039;</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
-</span><span class="text-var">$encrypter</span><span class="text-kw">-&gt;</span><span class="text-var">setPreviousKeys</span><span class="text-kw">([</span><span class="text-var">$oldKey</span><span class="text-kw">], </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-var">$encrypter</span> = <span class="text-kw">new</span> <span class="text-type">Encrypter</span>(<span class="text-var">$currentKey</span>, <span class="text-str">&#039;aes-256-cbc&#039;</span>, <span class="text-num">false</span>);
+<span class="text-var">$encrypter</span>-&gt;<span class="text-fn">setPreviousKeys</span>([<span class="text-var">$oldKey</span>], <span class="text-num">false</span>);
 
-</span><span class="text-var">$encrypter</span><span class="text-kw">-&gt;</span><span class="text-var">decrypt</span><span class="text-kw">(</span><span class="text-var">$valueEncryptedWithTheOldKey</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$encrypter</span>-&gt;<span class="text-fn">decrypt</span>(<span class="text-var">$valueEncryptedWithTheOldKey</span>);
+</code></pre>
 </div>
 
 <p>New values are always written with the current key, so rows re-encrypt themselves as they are touched. Drop the
@@ -196,14 +196,14 @@ GitHub and most other senders sign the request body and put the signature in a h
 <p>HMAC verification takes a shared secret. Both sides hold the same string:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Signature\Verifier</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Signature\Verifier</span>;
 
-</span><span class="text-var">$data      </span><span class="text-kw">= </span><span class="text-str">&#039;The quick brown fox&#039;</span><span class="text-kw">;
-</span><span class="text-var">$secret    </span><span class="text-kw">= </span><span class="text-str">&#039;my-secret-key&#039;</span><span class="text-kw">;
-</span><span class="text-var">$signature </span><span class="text-kw">= </span><span class="text-var">hash_hmac</span><span class="text-kw">(</span><span class="text-str">&#039;sha256&#039;</span><span class="text-kw">, </span><span class="text-var">$data</span><span class="text-kw">, </span><span class="text-var">$secret</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
+<span class="text-var">$data</span>      = <span class="text-str">&#039;The quick brown fox&#039;</span>;
+<span class="text-var">$secret</span>    = <span class="text-str">&#039;my-secret-key&#039;</span>;
+<span class="text-var">$signature</span> = <span class="text-fn">hash_hmac</span>(<span class="text-str">&#039;sha256&#039;</span>, <span class="text-var">$data</span>, <span class="text-var">$secret</span>, <span class="text-num">true</span>);
 
-</span><span class="text-var">Verifier</span><span class="text-kw">::</span><span class="text-var">hmac</span><span class="text-kw">(</span><span class="text-var">$data</span><span class="text-kw">, </span><span class="text-var">$signature</span><span class="text-kw">, </span><span class="text-var">$secret</span><span class="text-kw">, </span><span class="text-str">&#039;sha256&#039;</span><span class="text-kw">); </span><span class="text-comment">// true
-</span></code></pre>
+<span class="text-type">Verifier</span>::<span class="text-fn">hmac</span>(<span class="text-var">$data</span>, <span class="text-var">$signature</span>, <span class="text-var">$secret</span>, <span class="text-str">&#039;sha256&#039;</span>); <span class="text-comment">// true</span>
+</code></pre>
 </div>
 
 <p>The comparison runs through <code>hash_equals()</code>, so it's constant-time and a byte-by-byte timing attack does not
@@ -214,20 +214,20 @@ recover the expected value.</p>
 the sender must not be able to be impersonated by anyone holding the verification material:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Crypt\Signature\Verifier</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Crypt\Signature\Verifier</span>;
 
-</span><span class="text-var">$data      </span><span class="text-kw">= </span><span class="text-str">&#039;The quick brown fox&#039;</span><span class="text-kw">;
-</span><span class="text-var">$publicKey </span><span class="text-kw">= </span><span class="text-var">file_get_contents</span><span class="text-kw">(</span><span class="text-str">&#039;/path/to/public.pem&#039;</span><span class="text-kw">);
-</span><span class="text-var">$signature </span><span class="text-kw">= </span><span class="text-var">file_get_contents</span><span class="text-kw">(</span><span class="text-str">&#039;/path/to/signature.bin&#039;</span><span class="text-kw">);
+<span class="text-var">$data</span>      = <span class="text-str">&#039;The quick brown fox&#039;</span>;
+<span class="text-var">$publicKey</span> = <span class="text-fn">file_get_contents</span>(<span class="text-str">&#039;/path/to/public.pem&#039;</span>);
+<span class="text-var">$signature</span> = <span class="text-fn">file_get_contents</span>(<span class="text-str">&#039;/path/to/signature.bin&#039;</span>);
 
-try {
-    if (</span><span class="text-var">Verifier</span><span class="text-kw">::</span><span class="text-var">rsa</span><span class="text-kw">(</span><span class="text-var">$data</span><span class="text-kw">, </span><span class="text-var">$signature</span><span class="text-kw">, </span><span class="text-var">$publicKey</span><span class="text-kw">, </span><span class="text-str">&#039;sha256&#039;</span><span class="text-kw">)) {
-        </span><span class="text-comment">// the signature is genuine
-    </span><span class="text-kw">}
-} catch (</span><span class="text-var">Pop\Crypt\Exception $e</span><span class="text-kw">) {
-    </span><span class="text-comment">// the key material could not be used at all
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">try</span> {
+    <span class="text-kw">if</span> (<span class="text-type">Verifier</span>::<span class="text-fn">rsa</span>(<span class="text-var">$data</span>, <span class="text-var">$signature</span>, <span class="text-var">$publicKey</span>, <span class="text-str">&#039;sha256&#039;</span>)) {
+        <span class="text-comment">// the signature is genuine</span>
+    }
+} <span class="text-kw">catch</span> (<span class="text-type">Pop\Crypt\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-comment">// the key material could not be used at all</span>
+}
+</code></pre>
 </div>
 
 <p><code>Verifier::ec()</code> is the same call for an EC public key. The two names document intent rather than enforcing

@@ -13,31 +13,31 @@ dependency injection behind it — no constructor signature is read and nothing 
 data, so it belongs in a config file:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;services&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;session&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;call&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Session\Session::getInstance&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;notifier&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;call&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Service\Notifier&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;params&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;channel&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;services&#039;</span> =&gt; [
+        <span class="text-str">&#039;session&#039;</span> =&gt; [<span class="text-str">&#039;call&#039;</span> =&gt; <span class="text-str">&#039;Pop\Session\Session::getInstance&#039;</span>],
+        <span class="text-str">&#039;notifier&#039;</span> =&gt; [
+            <span class="text-str">&#039;call&#039;</span>   =&gt; <span class="text-str">&#039;App\Service\Notifier&#039;</span>,
+            <span class="text-str">&#039;params&#039;</span> =&gt; [<span class="text-str">&#039;channel&#039;</span> =&gt; <span class="text-str">&#039;email&#039;</span>]
         ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>setService()</code> does the same thing imperatively, and is what an application class's <code>load()</code> uses when the
 definition needs a value only the running application has:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;call&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Log\Logger&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;params&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;writer&#039; </span><span class="text-kw">=&gt; new </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app.log&#039;</span><span class="text-kw">)]
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;logger&#039;</span>, [
+    <span class="text-str">&#039;call&#039;</span>   =&gt; <span class="text-str">&#039;Pop\Log\Logger&#039;</span>,
+    <span class="text-str">&#039;params&#039;</span> =&gt; [<span class="text-str">&#039;writer&#039;</span> =&gt; <span class="text-kw">new</span> <span class="text-type">Pop\Log\Writer\File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app.log&#039;</span>)]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Both end up in the same <code>Pop\Service\Locator</code>. <a href="/basics/applications">Applications &amp; Bootstrap</a> covers where
@@ -96,17 +96,17 @@ numeric-keyed array is passed positionally. The two cannot be mixed — a named 
 positional one throws <code>Error: Cannot use positional argument after named argument</code> when the service resolves.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;session&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;call&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Session\Session::getInstance&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;cookie&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Pop\Cookie\Cookie::getInstance&#039;</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;uploads&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;call&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Http\Server\Upload&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;params&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;dir&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/uploads&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;maxSize&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1000000</span><span class="text-kw">]
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;session&#039;</span>, [<span class="text-str">&#039;call&#039;</span> =&gt; <span class="text-str">&#039;Pop\Session\Session::getInstance&#039;</span>]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;cookie&#039;</span>, <span class="text-str">&#039;Pop\Cookie\Cookie::getInstance&#039;</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;uploads&#039;</span>, [
+    <span class="text-str">&#039;call&#039;</span>   =&gt; <span class="text-str">&#039;Pop\Http\Server\Upload&#039;</span>,
+    <span class="text-str">&#039;params&#039;</span> =&gt; [<span class="text-str">&#039;dir&#039;</span> =&gt; <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/uploads&#039;</span>, <span class="text-str">&#039;maxSize&#039;</span> =&gt; <span class="text-num">1000000</span>]
 ]);
 
-echo </span><span class="text-var">get_class</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;session&#039;</span><span class="text-kw">));   </span><span class="text-comment">// Pop\Session\Session
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-fn">get_class</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;session&#039;</span>));   <span class="text-comment">// Pop\Session\Session</span>
+</code></pre>
 </div>
 
 <h2 id="lazy-construction">Lazy Construction<a class="anchor" href="#lazy-construction" aria-label="Link to this section">#</a></h2>
@@ -116,18 +116,18 @@ real or that the parameters fit — the first <code>getService()</code> for a na
 for the same name returns the object the first call produced.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;now&#039;</span><span class="text-kw">, function() { return new </span><span class="text-var">DateTime</span><span class="text-kw">(); });
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;now&#039;</span>, <span class="text-kw">function</span>() { <span class="text-kw">return</span> <span class="text-kw">new</span> <span class="text-type">DateTime</span>(); });
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">isLoaded</span><span class="text-kw">(</span><span class="text-str">&#039;now&#039;</span><span class="text-kw">));    </span><span class="text-comment">// false — registered, never built
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">isLoaded</span>(<span class="text-str">&#039;now&#039;</span>));    <span class="text-comment">// false — registered, never built</span>
 
-</span><span class="text-var">$first </span><span class="text-kw">= </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;now&#039;</span><span class="text-kw">);
+<span class="text-var">$first</span> = <span class="text-var">$app</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;now&#039;</span>);
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">isLoaded</span><span class="text-kw">(</span><span class="text-str">&#039;now&#039;</span><span class="text-kw">));    </span><span class="text-comment">// true
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;now&#039;</span><span class="text-kw">) === </span><span class="text-var">$first</span><span class="text-kw">);   </span><span class="text-comment">// true — the same object
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">reload</span><span class="text-kw">(</span><span class="text-str">&#039;now&#039;</span><span class="text-kw">) === </span><span class="text-var">$first</span><span class="text-kw">);   </span><span class="text-comment">// false — rebuilt
-</span></code></pre>
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">isLoaded</span>(<span class="text-str">&#039;now&#039;</span>));    <span class="text-comment">// true</span>
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;now&#039;</span>) <span class="text-kw">===</span> <span class="text-var">$first</span>);   <span class="text-comment">// true — the same object</span>
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">reload</span>(<span class="text-str">&#039;now&#039;</span>) <span class="text-kw">===</span> <span class="text-var">$first</span>);   <span class="text-comment">// false — rebuilt</span>
+</code></pre>
 </div>
 
 <p>Laziness is the reason a service is the right home for anything expensive: a database connection, an HTTP
@@ -137,13 +137,13 @@ method that does not exist on one, a <code>params</code> array that does not fit
 of the first <code>getService()</code>, not out of <code>setService()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;broken&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Service\Notfier&#039;</span><span class="text-kw">);   </span><span class="text-comment">// typo, accepted silently
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;broken&#039;</span>, <span class="text-str">&#039;App\Service\Notfier&#039;</span>);   <span class="text-comment">// typo, accepted silently</span>
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;broken&#039;</span><span class="text-kw">);
-</span><span class="text-comment">// Pop\Utils\Exception: Error: Unable to prepare the callable object for execution.
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;broken&#039;</span>);
+<span class="text-comment">// Pop\Utils\Exception: Error: Unable to prepare the callable object for execution.</span>
+</code></pre>
 </div>
 
 <p>A misspelled <em>method</em> is clearer — <code>'App\Service\Notifier-&gt;snd'</code> throws
@@ -156,15 +156,15 @@ the message is the detection depth, not a measure of the problem.</p>
 <p><code>getService()</code> on the application is the ordinary way in, and it throws for a name that was never registered:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;call&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Log\Logger&#039;</span><span class="text-kw">]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;logger&#039;</span>, [<span class="text-str">&#039;call&#039;</span> =&gt; <span class="text-str">&#039;Pop\Log\Logger&#039;</span>]);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;logger&#039;</span>);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;nope&#039;</span><span class="text-kw">);
-</span><span class="text-comment">// Pop\Service\NotFoundException: Error: The service &#039;nope&#039; has not been added to the service locator
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;nope&#039;</span>);
+<span class="text-comment">// Pop\Service\NotFoundException: Error: The service &#039;nope&#039; has not been added to the service locator</span>
+</code></pre>
 </div>
 
 <p><code>services()-&gt;isAvailable('nope')</code> answers the same question without throwing, and is the guard for an optional
@@ -174,16 +174,16 @@ locator's own <code>get()</code>, and the two exception types satisfy <code>Psr\
 type-hints <code>Psr\Container\ContainerInterface</code>.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;call&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Log\Logger&#039;</span><span class="text-kw">]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;logger&#039;</span>, [<span class="text-str">&#039;call&#039;</span> =&gt; <span class="text-str">&#039;Pop\Log\Logger&#039;</span>]);
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">isAvailable</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">));    </span><span class="text-comment">// true
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">has</span><span class="text-kw">(</span><span class="text-str">&#039;nope&#039;</span><span class="text-kw">));              </span><span class="text-comment">// false
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">isAvailable</span>(<span class="text-str">&#039;logger&#039;</span>));    <span class="text-comment">// true</span>
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">has</span>(<span class="text-str">&#039;nope&#039;</span>));              <span class="text-comment">// false</span>
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">removeService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">);
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">isAvailable</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">));    </span><span class="text-comment">// false
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">removeService</span>(<span class="text-str">&#039;logger&#039;</span>);
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">isAvailable</span>(<span class="text-str">&#039;logger&#039;</span>));    <span class="text-comment">// false</span>
+</code></pre>
 </div>
 
 <p>The locator supports property and array access as shorthands for the same two calls — <code>$app-&gt;services['logger']</code>
@@ -199,14 +199,14 @@ application registered during bootstrap.</p>
 to assemble in steps than to write as one array literal:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$notifier </span><span class="text-kw">= new </span><span class="text-var">Pop\Utils\CallableObject</span><span class="text-kw">(</span><span class="text-str">&#039;App\Service\Notifier&#039;</span><span class="text-kw">);
-</span><span class="text-var">$notifier</span><span class="text-kw">-&gt;</span><span class="text-var">addNamedParameter</span><span class="text-kw">(</span><span class="text-str">&#039;channel&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">);
-</span><span class="text-var">$notifier</span><span class="text-kw">-&gt;</span><span class="text-var">addNamedParameter</span><span class="text-kw">(</span><span class="text-str">&#039;from&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;noreply@example.com&#039;</span><span class="text-kw">);
+<span class="text-var">$notifier</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Utils\CallableObject</span>(<span class="text-str">&#039;App\Service\Notifier&#039;</span>);
+<span class="text-var">$notifier</span>-&gt;<span class="text-fn">addNamedParameter</span>(<span class="text-str">&#039;channel&#039;</span>, <span class="text-str">&#039;email&#039;</span>);
+<span class="text-var">$notifier</span>-&gt;<span class="text-fn">addNamedParameter</span>(<span class="text-str">&#039;from&#039;</span>, <span class="text-str">&#039;noreply@example.com&#039;</span>);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;notifier&#039;</span><span class="text-kw">, </span><span class="text-var">$notifier</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;notifier&#039;</span>, <span class="text-var">$notifier</span>);
+</code></pre>
 </div>
 
 <p>The same object is reachable afterward through <code>services()-&gt;getCallable('notifier')</code> and
@@ -214,19 +214,19 @@ to assemble in steps than to write as one array literal:</p>
 the locator edit a definition in place:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;notifier&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;call&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Service\Notifier&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;params&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;channel&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">]
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;notifier&#039;</span>, [
+    <span class="text-str">&#039;call&#039;</span>   =&gt; <span class="text-str">&#039;App\Service\Notifier&#039;</span>,
+    <span class="text-str">&#039;params&#039;</span> =&gt; [<span class="text-str">&#039;channel&#039;</span> =&gt; <span class="text-str">&#039;email&#039;</span>]
 ]);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;notifier&#039;</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;notifier&#039;</span>);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">setParameters</span><span class="text-kw">(</span><span class="text-str">&#039;notifier&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;channel&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;sms&#039;</span><span class="text-kw">]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">setParameters</span>(<span class="text-str">&#039;notifier&#039;</span>, [<span class="text-str">&#039;channel&#039;</span> =&gt; <span class="text-str">&#039;sms&#039;</span>]);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">reload</span><span class="text-kw">(</span><span class="text-str">&#039;notifier&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">reload</span>(<span class="text-str">&#039;notifier&#039;</span>);
+</code></pre>
 </div>
 
 <p>A definition edited after the service has been resolved has no effect on the resolved object — <code>reload()</code> is
@@ -236,13 +236,13 @@ itself callable is <strong>invoked</strong>, and its return value is what gets p
 runs when the service is first resolved rather than when it is registered:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;notifier&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;call&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Service\Notifier&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;params&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;logger&#039; </span><span class="text-kw">=&gt; function() { return new </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">(); }]
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;notifier&#039;</span>, [
+    <span class="text-str">&#039;call&#039;</span>   =&gt; <span class="text-str">&#039;App\Service\Notifier&#039;</span>,
+    <span class="text-str">&#039;params&#039;</span> =&gt; [<span class="text-str">&#039;logger&#039;</span> =&gt; <span class="text-kw">function</span>() { <span class="text-kw">return</span> <span class="text-kw">new</span> <span class="text-type">Pop\Log\Logger</span>(); }]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>App\Service\Notifier</code> receives a <code>Pop\Log\Logger</code>, not the closure. A parameter that genuinely is meant to
@@ -255,16 +255,16 @@ The first <code>Pop\Service\Locator</code> constructed registers itself under <c
 application built during bootstrap:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Service\Container</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Service\Container</span>;
 
-</span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">setService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;call&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Log\Logger&#039;</span><span class="text-kw">]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">setService</span>(<span class="text-str">&#039;logger&#039;</span>, [<span class="text-str">&#039;call&#039;</span> =&gt; <span class="text-str">&#039;Pop\Log\Logger&#039;</span>]);
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">Container</span><span class="text-kw">::</span><span class="text-var">has</span><span class="text-kw">(</span><span class="text-str">&#039;default&#039;</span><span class="text-kw">));
+<span class="text-fn">var_dump</span>(<span class="text-type">Container</span>::<span class="text-fn">has</span>(<span class="text-str">&#039;default&#039;</span>));
 
-echo </span><span class="text-var">get_class</span><span class="text-kw">(</span><span class="text-var">Container</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;default&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">));   </span><span class="text-comment">// Pop\Log\Logger
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-fn">get_class</span>(<span class="text-type">Container</span>::<span class="text-fn">get</span>(<span class="text-str">&#039;default&#039;</span>)-&gt;<span class="text-fn">get</span>(<span class="text-str">&#039;logger&#039;</span>));   <span class="text-comment">// Pop\Log\Logger</span>
+</code></pre>
 </div>
 
 <p><code>Container::get()</code> with no argument is the same as <code>Container::get('default')</code>, and an unknown name throws
@@ -272,12 +272,12 @@ echo </span><span class="text-var">get_class</span><span class="text-kw">(</span
 registered by name, which is how a subsystem gets a namespace of its own:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$reporting </span><span class="text-kw">= new </span><span class="text-var">Pop\Service\Locator</span><span class="text-kw">([</span><span class="text-str">&#039;clock&#039; </span><span class="text-kw">=&gt; function() { return new </span><span class="text-var">DateTime</span><span class="text-kw">(); }], </span><span class="text-var">false</span><span class="text-kw">);
+<pre><code><span class="text-var">$reporting</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Service\Locator</span>([<span class="text-str">&#039;clock&#039;</span> =&gt; <span class="text-kw">function</span>() { <span class="text-kw">return</span> <span class="text-kw">new</span> <span class="text-type">DateTime</span>(); }], <span class="text-num">false</span>);
 
-</span><span class="text-var">Pop\Service\Container</span><span class="text-kw">::</span><span class="text-var">set</span><span class="text-kw">(</span><span class="text-str">&#039;reporting&#039;</span><span class="text-kw">, </span><span class="text-var">$reporting</span><span class="text-kw">);
+<span class="text-type">Pop\Service\Container</span>::<span class="text-fn">set</span>(<span class="text-str">&#039;reporting&#039;</span>, <span class="text-var">$reporting</span>);
 
-echo </span><span class="text-var">get_class</span><span class="text-kw">(</span><span class="text-var">Pop\Service\Container</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;reporting&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;clock&#039;</span><span class="text-kw">));   </span><span class="text-comment">// DateTime
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-fn">get_class</span>(<span class="text-type">Pop\Service\Container</span>::<span class="text-fn">get</span>(<span class="text-str">&#039;reporting&#039;</span>)-&gt;<span class="text-fn">get</span>(<span class="text-str">&#039;clock&#039;</span>));   <span class="text-comment">// DateTime</span>
+</code></pre>
 </div>
 
 <p>The <code>false</code> second argument is what keeps that locator out of the <code>'default'</code> slot when nothing has claimed it

@@ -20,24 +20,24 @@ about — <code>page</code>, <code>invoice</code>, <code>user</code>. A <strong>
 three, and <code>Pop\Acl\Acl</code> holds them.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$acl </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">();
+<span class="text-var">$acl</span> = <span class="text-kw">new</span> <span class="text-type">Acl</span>();
 
-</span><span class="text-var">$admin  </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">);
-</span><span class="text-var">$editor </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">);
-</span><span class="text-var">$reader </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;reader&#039;</span><span class="text-kw">);
-</span><span class="text-var">$page   </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">);
+<span class="text-var">$admin</span>  = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;admin&#039;</span>);
+<span class="text-var">$editor</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;editor&#039;</span>);
+<span class="text-var">$reader</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;reader&#039;</span>);
+<span class="text-var">$page</span>   = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addRoles</span><span class="text-kw">([</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$editor</span><span class="text-kw">, </span><span class="text-var">$reader</span><span class="text-kw">]);
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addResource</span><span class="text-kw">(</span><span class="text-var">$page</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addRoles</span>([<span class="text-var">$admin</span>, <span class="text-var">$editor</span>, <span class="text-var">$reader</span>]);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addResource</span>(<span class="text-var">$page</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-str">&#039;reader&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;read&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">allow</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;page&#039;</span>)
+    -&gt;<span class="text-fn">allow</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>)
+    -&gt;<span class="text-fn">allow</span>(<span class="text-str">&#039;reader&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;read&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>allow()</code> with no permission means every permission on that resource. With one, it means that one; pass an
@@ -46,48 +46,48 @@ array for several. <code>deny()</code> takes the same arguments and always wins 
 sorts them by type:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$acl </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">(
-    [new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">), new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">)],
-    new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">)
+<span class="text-var">$acl</span> = <span class="text-kw">new</span> <span class="text-type">Acl</span>(
+    [<span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;admin&#039;</span>), <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;editor&#039;</span>)],
+    <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>)
 );
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Both objects double as data carriers, and that matters more than it looks: assertions and policies read those
 extra properties to answer ownership questions. Set them at construction or afterward:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$editor </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">);
-</span><span class="text-var">$editor</span><span class="text-kw">-&gt;</span><span class="text-var">user_id </span><span class="text-kw">= </span><span class="text-var">1002</span><span class="text-kw">;
+<span class="text-var">$editor</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;editor&#039;</span>);
+<span class="text-var">$editor</span>-&gt;<span class="text-type">user_id</span> = <span class="text-num">1002</span>;
 
-</span><span class="text-var">$page </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">2001</span><span class="text-kw">, </span><span class="text-str">&#039;user_id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1002</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$page</span> = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">2001</span>, <span class="text-str">&#039;user_id&#039;</span> =&gt; <span class="text-num">1002</span>]);
+</code></pre>
 </div>
 
 <p><code>'*'</code> is reserved and means &quot;any permission&quot;. It combines with a narrower <code>deny()</code>, which is how you express
 &quot;everything except one thing&quot;:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$acl   </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">();
-</span><span class="text-var">$admin </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">);
-</span><span class="text-var">$page  </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">);
+<span class="text-var">$acl</span>   = <span class="text-kw">new</span> <span class="text-type">Acl</span>();
+<span class="text-var">$admin</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;admin&#039;</span>);
+<span class="text-var">$page</span>  = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addRole</span><span class="text-kw">(</span><span class="text-var">$admin</span><span class="text-kw">)-&gt;</span><span class="text-var">addResource</span><span class="text-kw">(</span><span class="text-var">$page</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addRole</span>(<span class="text-var">$admin</span>)-&gt;<span class="text-fn">addResource</span>(<span class="text-var">$page</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;*&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">deny</span><span class="text-kw">(</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;delete&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">allow</span>(<span class="text-var">$admin</span>, <span class="text-var">$page</span>, <span class="text-str">&#039;*&#039;</span>)
+    -&gt;<span class="text-fn">deny</span>(<span class="text-var">$admin</span>, <span class="text-var">$page</span>, <span class="text-str">&#039;delete&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>removeAllowRule()</code> and <code>removeDenyRule()</code> revoke rules without unregistering the role or resource, narrowing
@@ -100,22 +100,22 @@ them.</p>
 objects or as their string names — the two forms are interchangeable.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$acl </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">();
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">setStrict</span><span class="text-kw">();
+<span class="text-var">$acl</span> = <span class="text-kw">new</span> <span class="text-type">Acl</span>();
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">setStrict</span>();
 
-</span><span class="text-var">$editor </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">);
-</span><span class="text-var">$page   </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">);
+<span class="text-var">$editor</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;editor&#039;</span>);
+<span class="text-var">$page</span>   = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addRole</span><span class="text-kw">(</span><span class="text-var">$editor</span><span class="text-kw">)-&gt;</span><span class="text-var">addResource</span><span class="text-kw">(</span><span class="text-var">$page</span><span class="text-kw">);
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-var">$editor</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addRole</span>(<span class="text-var">$editor</span>)-&gt;<span class="text-fn">addResource</span>(<span class="text-var">$page</span>);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">allow</span>(<span class="text-var">$editor</span>, <span class="text-var">$page</span>, <span class="text-str">&#039;edit&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">);   </span><span class="text-comment">// true
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;delete&#039;</span><span class="text-kw">); </span><span class="text-comment">// false
-</span></code></pre>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>);   <span class="text-comment">// true</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;delete&#039;</span>); <span class="text-comment">// false</span>
+</code></pre>
 </div>
 
 <p>That <code>setStrict()</code> is the most important line on this page.</p>
@@ -126,23 +126,23 @@ check for which no rule exists returns <code>true</code>.</p>
 <strong>any</strong> one of them allows the action:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$acl </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">();
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">setStrict</span><span class="text-kw">();
+<span class="text-var">$acl</span> = <span class="text-kw">new</span> <span class="text-type">Acl</span>();
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">setStrict</span>();
 
-</span><span class="text-var">$admin  </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">);
-</span><span class="text-var">$editor </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">);
-</span><span class="text-var">$page   </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">);
+<span class="text-var">$admin</span>  = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;admin&#039;</span>);
+<span class="text-var">$editor</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;editor&#039;</span>);
+<span class="text-var">$page</span>   = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addRoles</span><span class="text-kw">([</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$editor</span><span class="text-kw">])-&gt;</span><span class="text-var">addResource</span><span class="text-kw">(</span><span class="text-var">$page</span><span class="text-kw">);
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">)-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-var">$editor</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addRoles</span>([<span class="text-var">$admin</span>, <span class="text-var">$editor</span>])-&gt;<span class="text-fn">addResource</span>(<span class="text-var">$page</span>);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">allow</span>(<span class="text-var">$admin</span>, <span class="text-var">$page</span>)-&gt;<span class="text-fn">allow</span>(<span class="text-var">$editor</span>, <span class="text-var">$page</span>, <span class="text-str">&#039;edit&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowedMulti</span><span class="text-kw">([</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$editor</span><span class="text-kw">], </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;add&#039;</span><span class="text-kw">);       </span><span class="text-comment">// true — admin allows it
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowedMultiStrict</span><span class="text-kw">([</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$editor</span><span class="text-kw">], </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;add&#039;</span><span class="text-kw">); </span><span class="text-comment">// false — editor does not
-</span></code></pre>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowedMulti</span>([<span class="text-var">$admin</span>, <span class="text-var">$editor</span>], <span class="text-var">$page</span>, <span class="text-str">&#039;add&#039;</span>);       <span class="text-comment">// true — admin allows it</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowedMultiStrict</span>([<span class="text-var">$admin</span>, <span class="text-var">$editor</span>], <span class="text-var">$page</span>, <span class="text-str">&#039;add&#039;</span>); <span class="text-comment">// false — editor does not</span>
+</code></pre>
 </div>
 
 <p><code>isAllowedMultiStrict()</code> requires every role to allow the action. It sets the multi-strict flag and calls
@@ -159,26 +159,26 @@ multi-strict or parent-strict fallbacks.</p>
 <p>An assertion implements <code>Pop\Acl\Assertion\AssertionInterface</code> — one method:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\Assertion\AssertionInterface</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\Assertion\AssertionInterface</span>;
 
-class </span><span class="text-var">UserOwnsPage </span><span class="text-kw">implements </span><span class="text-var">AssertionInterface
-</span><span class="text-kw">{
+<span class="text-kw">class</span> <span class="text-type">UserOwnsPage</span> <span class="text-kw">implements</span> <span class="text-type">AssertionInterface</span>
+{
 
-    public function </span><span class="text-var">assert</span><span class="text-kw">(
-        </span><span class="text-var">Acl $acl</span><span class="text-kw">,
-        </span><span class="text-var">AclRole $role</span><span class="text-kw">,
-        ?</span><span class="text-var">AclResource $resource </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">,
-        </span><span class="text-var">mixed $permission </span><span class="text-kw">= </span><span class="text-var">null
-    </span><span class="text-kw">): </span><span class="text-var">bool
-    </span><span class="text-kw">{
-        return ((</span><span class="text-var">$resource </span><span class="text-kw">!== </span><span class="text-var">null</span><span class="text-kw">) &amp;&amp; (</span><span class="text-var">$resource</span><span class="text-kw">-&gt;</span><span class="text-var">user_id </span><span class="text-kw">== </span><span class="text-var">$role</span><span class="text-kw">-&gt;</span><span class="text-var">user_id</span><span class="text-kw">));
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">assert</span>(
+        <span class="text-type">Acl</span> <span class="text-var">$acl</span>,
+        <span class="text-type">AclRole</span> <span class="text-var">$role</span>,
+        ?<span class="text-type">AclResource</span> <span class="text-var">$resource</span> = <span class="text-num">null</span>,
+        <span class="text-type">mixed</span> <span class="text-var">$permission</span> = <span class="text-num">null</span>
+    ): <span class="text-type">bool</span>
+    {
+        <span class="text-kw">return</span> ((<span class="text-var">$resource</span> <span class="text-kw">!==</span> <span class="text-num">null</span>) <span class="text-kw">&amp;&amp;</span> (<span class="text-var">$resource</span>-&gt;<span class="text-type">user_id</span> <span class="text-kw">==</span> <span class="text-var">$role</span>-&gt;<span class="text-type">user_id</span>));
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>$resource</code> is nullable, so guard it. This is where those extra properties on the role and resource earn their
@@ -186,29 +186,29 @@ keep — the assertion compares them.</p>
 <p>Register it as the fourth argument to <code>allow()</code> or <code>deny()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$acl </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">();
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">setStrict</span><span class="text-kw">();
+<span class="text-var">$acl</span> = <span class="text-kw">new</span> <span class="text-type">Acl</span>();
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">setStrict</span>();
 
-</span><span class="text-var">$admin  </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">);
-</span><span class="text-var">$editor </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">);
-</span><span class="text-var">$page   </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">);
+<span class="text-var">$admin</span>  = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;admin&#039;</span>);
+<span class="text-var">$editor</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;editor&#039;</span>);
+<span class="text-var">$page</span>   = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>);
 
-</span><span class="text-var">$admin</span><span class="text-kw">-&gt;</span><span class="text-var">user_id  </span><span class="text-kw">= </span><span class="text-var">1001</span><span class="text-kw">;
-</span><span class="text-var">$editor</span><span class="text-kw">-&gt;</span><span class="text-var">user_id </span><span class="text-kw">= </span><span class="text-var">1002</span><span class="text-kw">;
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">user_id   </span><span class="text-kw">= </span><span class="text-var">1001</span><span class="text-kw">;
+<span class="text-var">$admin</span>-&gt;<span class="text-type">user_id</span>  = <span class="text-num">1001</span>;
+<span class="text-var">$editor</span>-&gt;<span class="text-type">user_id</span> = <span class="text-num">1002</span>;
+<span class="text-var">$page</span>-&gt;<span class="text-type">user_id</span>   = <span class="text-num">1001</span>;
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addRoles</span><span class="text-kw">([</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$editor</span><span class="text-kw">])-&gt;</span><span class="text-var">addResource</span><span class="text-kw">(</span><span class="text-var">$page</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addRoles</span>([<span class="text-var">$admin</span>, <span class="text-var">$editor</span>])-&gt;<span class="text-fn">addResource</span>(<span class="text-var">$page</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">, new </span><span class="text-var">UserOwnsPage</span><span class="text-kw">())
-    -&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">, new </span><span class="text-var">UserOwnsPage</span><span class="text-kw">());
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">allow</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>, <span class="text-kw">new</span> <span class="text-type">UserOwnsPage</span>())
+    -&gt;<span class="text-fn">allow</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>, <span class="text-kw">new</span> <span class="text-type">UserOwnsPage</span>());
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">);  </span><span class="text-comment">// true — 1001 owns the page
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">); </span><span class="text-comment">// false — 1002 does not
-</span></code></pre>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>);  <span class="text-comment">// true — 1001 owns the page</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>); <span class="text-comment">// false — 1002 does not</span>
+</code></pre>
 </div>
 
 <p>Both roles hold an identical rule and an identical assertion. The verdicts differ because the assertion reads
@@ -226,58 +226,58 @@ bolted onto one rule, a policy is a class answering several questions about one 
 permission it decides:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\Policy\PolicyTrait</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\Policy\PolicyTrait</span>;
 
-class </span><span class="text-var">User </span><span class="text-kw">extends </span><span class="text-var">AclRole
-</span><span class="text-kw">{
+<span class="text-kw">class</span> <span class="text-type">User</span> <span class="text-kw">extends</span> <span class="text-type">AclRole</span>
+{
 
-    use </span><span class="text-var">PolicyTrait</span><span class="text-kw">;
+    <span class="text-kw">use</span> <span class="text-type">PolicyTrait</span>;
 
-    public function </span><span class="text-var">__construct</span><span class="text-kw">(</span><span class="text-var">$name</span><span class="text-kw">, </span><span class="text-var">$id</span><span class="text-kw">, </span><span class="text-var">$isAdmin</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">__construct</span>(<span class="text-var">$name</span>, <span class="text-var">$id</span>, <span class="text-var">$isAdmin</span>)
     {
-        </span><span class="text-var">parent</span><span class="text-kw">::</span><span class="text-var">__construct</span><span class="text-kw">(</span><span class="text-var">$name</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$id</span><span class="text-kw">, </span><span class="text-str">&#039;isAdmin&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$isAdmin</span><span class="text-kw">]);
+        <span class="text-type">parent</span>::<span class="text-fn">__construct</span>(<span class="text-var">$name</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-var">$id</span>, <span class="text-str">&#039;isAdmin&#039;</span> =&gt; <span class="text-var">$isAdmin</span>]);
     }
 
-    public function </span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-var">User $user</span><span class="text-kw">, </span><span class="text-var">AclResource $page</span><span class="text-kw">): </span><span class="text-var">bool
-    </span><span class="text-kw">{
-        return ((</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">isAdmin</span><span class="text-kw">) &amp;&amp; (</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">getName</span><span class="text-kw">() == </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">));
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">create</span>(<span class="text-type">User</span> <span class="text-var">$user</span>, <span class="text-type">AclResource</span> <span class="text-var">$page</span>): <span class="text-type">bool</span>
+    {
+        <span class="text-kw">return</span> ((<span class="text-var">$user</span>-&gt;<span class="text-type">isAdmin</span>) <span class="text-kw">&amp;&amp;</span> (<span class="text-var">$page</span>-&gt;<span class="text-fn">getName</span>() <span class="text-kw">==</span> <span class="text-str">&#039;page&#039;</span>));
     }
 
-    public function </span><span class="text-var">update</span><span class="text-kw">(</span><span class="text-var">User $user</span><span class="text-kw">, </span><span class="text-var">AclResource $page</span><span class="text-kw">): </span><span class="text-var">bool
-    </span><span class="text-kw">{
-        return (</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">id </span><span class="text-kw">=== </span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">user_id</span><span class="text-kw">);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">update</span>(<span class="text-type">User</span> <span class="text-var">$user</span>, <span class="text-type">AclResource</span> <span class="text-var">$page</span>): <span class="text-type">bool</span>
+    {
+        <span class="text-kw">return</span> (<span class="text-var">$user</span>-&gt;<span class="text-type">id</span> <span class="text-kw">===</span> <span class="text-var">$page</span>-&gt;<span class="text-type">user_id</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Register each role-resource-action combination with <code>addPolicy()</code>, and the policy is consulted by the ordinary
 <code>isAllowed()</code> call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
 
-</span><span class="text-var">$page   </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">2001</span><span class="text-kw">, </span><span class="text-str">&#039;user_id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1002</span><span class="text-kw">]);
-</span><span class="text-var">$admin  </span><span class="text-kw">= new </span><span class="text-var">User</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-var">1001</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
-</span><span class="text-var">$editor </span><span class="text-kw">= new </span><span class="text-var">User</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-var">1002</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-var">$page</span>   = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">2001</span>, <span class="text-str">&#039;user_id&#039;</span> =&gt; <span class="text-num">1002</span>]);
+<span class="text-var">$admin</span>  = <span class="text-kw">new</span> <span class="text-type">User</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-num">1001</span>, <span class="text-num">true</span>);
+<span class="text-var">$editor</span> = <span class="text-kw">new</span> <span class="text-type">User</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-num">1002</span>, <span class="text-num">false</span>);
 
-</span><span class="text-var">$acl </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">();
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addRoles</span><span class="text-kw">([</span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$editor</span><span class="text-kw">])-&gt;</span><span class="text-var">addResource</span><span class="text-kw">(</span><span class="text-var">$page</span><span class="text-kw">);
+<span class="text-var">$acl</span> = <span class="text-kw">new</span> <span class="text-type">Acl</span>();
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addRoles</span>([<span class="text-var">$admin</span>, <span class="text-var">$editor</span>])-&gt;<span class="text-fn">addResource</span>(<span class="text-var">$page</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addPolicy</span><span class="text-kw">(</span><span class="text-str">&#039;create&#039;</span><span class="text-kw">, </span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">addPolicy</span><span class="text-kw">(</span><span class="text-str">&#039;create&#039;</span><span class="text-kw">, </span><span class="text-var">$editor</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">addPolicy</span><span class="text-kw">(</span><span class="text-str">&#039;update&#039;</span><span class="text-kw">, </span><span class="text-var">$admin</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">addPolicy</span><span class="text-kw">(</span><span class="text-str">&#039;update&#039;</span><span class="text-kw">, </span><span class="text-var">$editor</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addPolicy</span>(<span class="text-str">&#039;create&#039;</span>, <span class="text-var">$admin</span>, <span class="text-var">$page</span>)
+    -&gt;<span class="text-fn">addPolicy</span>(<span class="text-str">&#039;create&#039;</span>, <span class="text-var">$editor</span>, <span class="text-var">$page</span>)
+    -&gt;<span class="text-fn">addPolicy</span>(<span class="text-str">&#039;update&#039;</span>, <span class="text-var">$admin</span>, <span class="text-var">$page</span>)
+    -&gt;<span class="text-fn">addPolicy</span>(<span class="text-str">&#039;update&#039;</span>, <span class="text-var">$editor</span>, <span class="text-var">$page</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;create&#039;</span><span class="text-kw">);  </span><span class="text-comment">// true — is an admin
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;create&#039;</span><span class="text-kw">); </span><span class="text-comment">// false — is not
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;update&#039;</span><span class="text-kw">);  </span><span class="text-comment">// false — does not own the page
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;update&#039;</span><span class="text-kw">); </span><span class="text-comment">// true — does
-</span></code></pre>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;create&#039;</span>);  <span class="text-comment">// true — is an admin</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;create&#039;</span>); <span class="text-comment">// false — is not</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;update&#039;</span>);  <span class="text-comment">// false — does not own the page</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;update&#039;</span>); <span class="text-comment">// true — does</span>
+</code></pre>
 </div>
 
 <p>Nothing else about the check changes: the call site stays <code>isAllowed()</code> whether the verdict comes from a rule,
@@ -286,9 +286,9 @@ both are public, and either is useful when you want the policy's answer without 
 <p><code>can()</code> also takes a comma-separated list, evaluated in order and stopping at the first <code>false</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$admin</span><span class="text-kw">-&gt;</span><span class="text-var">can</span><span class="text-kw">(</span><span class="text-str">&#039;create,update&#039;</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">);  </span><span class="text-comment">// false — create passes, update fails
-</span><span class="text-var">$editor</span><span class="text-kw">-&gt;</span><span class="text-var">can</span><span class="text-kw">(</span><span class="text-str">&#039;create,update&#039;</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">); </span><span class="text-comment">// false — create fails, update never runs
-</span></code></pre>
+<pre><code><span class="text-var">$admin</span>-&gt;<span class="text-fn">can</span>(<span class="text-str">&#039;create,update&#039;</span>, <span class="text-var">$page</span>);  <span class="text-comment">// false — create passes, update fails</span>
+<span class="text-var">$editor</span>-&gt;<span class="text-fn">can</span>(<span class="text-str">&#039;create,update&#039;</span>, <span class="text-var">$page</span>); <span class="text-comment">// false — create fails, update never runs</span>
+</code></pre>
 </div>
 
 <p>Implement every policy method you register on the role class — a missing one raises
@@ -299,31 +299,31 @@ both are public, and either is useful when you want the policy's answer without 
 rules out twice is how the two drift apart. <code>addChild()</code> makes one role inherit another's rules:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$editor </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">);
-</span><span class="text-var">$reader </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;reader&#039;</span><span class="text-kw">);
+<span class="text-var">$editor</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;editor&#039;</span>);
+<span class="text-var">$reader</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;reader&#039;</span>);
 
-</span><span class="text-var">$editor</span><span class="text-kw">-&gt;</span><span class="text-var">addChild</span><span class="text-kw">(</span><span class="text-var">$reader</span><span class="text-kw">);
-</span><span class="text-comment">// $reader-&gt;setParent($editor); is the same relationship, stated from the other end
+<span class="text-var">$editor</span>-&gt;<span class="text-fn">addChild</span>(<span class="text-var">$reader</span>);
+<span class="text-comment">// $reader-&gt;setParent($editor); is the same relationship, stated from the other end</span>
 
-</span><span class="text-var">$acl  </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">();
-</span><span class="text-var">$page </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">);
+<span class="text-var">$acl</span>  = <span class="text-kw">new</span> <span class="text-type">Acl</span>();
+<span class="text-var">$page</span> = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addRoles</span><span class="text-kw">([</span><span class="text-var">$editor</span><span class="text-kw">, </span><span class="text-var">$reader</span><span class="text-kw">])-&gt;</span><span class="text-var">addResource</span><span class="text-kw">(</span><span class="text-var">$page</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addRoles</span>([<span class="text-var">$editor</span>, <span class="text-var">$reader</span>])-&gt;<span class="text-fn">addResource</span>(<span class="text-var">$page</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">deny</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;add&#039;</span><span class="text-kw">);
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">);
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;read&#039;</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">deny</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;add&#039;</span>);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">allow</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">allow</span>(<span class="text-str">&#039;editor&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;read&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">deny</span><span class="text-kw">(</span><span class="text-str">&#039;reader&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">deny</span>(<span class="text-str">&#039;reader&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;reader&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;read&#039;</span><span class="text-kw">); </span><span class="text-comment">// true — inherited from editor
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;reader&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">); </span><span class="text-comment">// false — the child&#039;s own deny overrides
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-str">&#039;reader&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;add&#039;</span><span class="text-kw">);  </span><span class="text-comment">// false — inherited deny
-</span></code></pre>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;reader&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;read&#039;</span>); <span class="text-comment">// true — inherited from editor</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;reader&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;edit&#039;</span>); <span class="text-comment">// false — the child&#039;s own deny overrides</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-str">&#039;reader&#039;</span>, <span class="text-str">&#039;page&#039;</span>, <span class="text-str">&#039;add&#039;</span>);  <span class="text-comment">// false — inherited deny</span>
+</code></pre>
 </div>
 
 <p>The child inherits both grants and denials, and a rule set directly on the child overrides the inherited one.
@@ -334,26 +334,26 @@ child is the narrower role, and the rules flow downhill from the parent.</p>
 satisfies a check against it. Pass <code>true</code> to <code>setStrict()</code>'s parent argument for exact matching.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Acl\Acl</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclResource</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Acl\AclRole</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Acl\Acl</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclResource</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Acl\AclRole</span>;
 
-</span><span class="text-var">$acl </span><span class="text-kw">= new </span><span class="text-var">Acl</span><span class="text-kw">();
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">setStrict</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">setParentStrict</span><span class="text-kw">();
+<span class="text-var">$acl</span> = <span class="text-kw">new</span> <span class="text-type">Acl</span>();
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">setStrict</span>()
+    -&gt;<span class="text-fn">setParentStrict</span>();
 
-</span><span class="text-var">$editor </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">);
-</span><span class="text-var">$reader </span><span class="text-kw">= new </span><span class="text-var">AclRole</span><span class="text-kw">(</span><span class="text-str">&#039;reader&#039;</span><span class="text-kw">);
-</span><span class="text-var">$editor</span><span class="text-kw">-&gt;</span><span class="text-var">addChild</span><span class="text-kw">(</span><span class="text-var">$reader</span><span class="text-kw">);
+<span class="text-var">$editor</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;editor&#039;</span>);
+<span class="text-var">$reader</span> = <span class="text-kw">new</span> <span class="text-type">AclRole</span>(<span class="text-str">&#039;reader&#039;</span>);
+<span class="text-var">$editor</span>-&gt;<span class="text-fn">addChild</span>(<span class="text-var">$reader</span>);
 
-</span><span class="text-var">$page </span><span class="text-kw">= new </span><span class="text-var">AclResource</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">);
+<span class="text-var">$page</span> = <span class="text-kw">new</span> <span class="text-type">AclResource</span>(<span class="text-str">&#039;page&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">addRoles</span><span class="text-kw">([</span><span class="text-var">$editor</span><span class="text-kw">, </span><span class="text-var">$reader</span><span class="text-kw">])-&gt;</span><span class="text-var">addResource</span><span class="text-kw">(</span><span class="text-var">$page</span><span class="text-kw">);
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">allow</span><span class="text-kw">(</span><span class="text-var">$editor</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">addRoles</span>([<span class="text-var">$editor</span>, <span class="text-var">$reader</span>])-&gt;<span class="text-fn">addResource</span>(<span class="text-var">$page</span>);
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">allow</span>(<span class="text-var">$editor</span>, <span class="text-var">$page</span>, <span class="text-str">&#039;edit&#039;</span>);
 
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-var">$reader</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">);   </span><span class="text-comment">// true
-</span><span class="text-var">$acl</span><span class="text-kw">-&gt;</span><span class="text-var">isAllowed</span><span class="text-kw">(</span><span class="text-var">$reader</span><span class="text-kw">, </span><span class="text-var">$page</span><span class="text-kw">, </span><span class="text-str">&#039;delete&#039;</span><span class="text-kw">); </span><span class="text-comment">// false
-</span></code></pre>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-var">$reader</span>, <span class="text-var">$page</span>, <span class="text-str">&#039;edit&#039;</span>);   <span class="text-comment">// true</span>
+<span class="text-var">$acl</span>-&gt;<span class="text-fn">isAllowed</span>(<span class="text-var">$reader</span>, <span class="text-var">$page</span>, <span class="text-str">&#039;delete&#039;</span>); <span class="text-comment">// false</span>
+</code></pre>
 </div>
 
 <p><code>removeRole()</code> reparents a removed role's children onto its own parent, or makes them root roles if it had

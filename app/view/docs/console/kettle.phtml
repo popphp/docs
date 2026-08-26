@@ -16,30 +16,30 @@ in one sitting:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">kettle</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>#!/usr/bin/env php
-<span class="text-var">&lt;?php
+<span class="text-kw">&lt;?php
 </span><span class="text-comment">/**
  * Pop Kettle Console Application
- */
-</span><span class="text-var">$autoloader </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/vendor/autoload.php&#039;</span><span class="text-kw">;
+ */</span>
+<span class="text-var">$autoloader</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/vendor/autoload.php&#039;</span>;
 
-</span><span class="text-var">$dotEnv </span><span class="text-kw">= </span><span class="text-var">Dotenv\Dotenv</span><span class="text-kw">::</span><span class="text-var">createImmutable</span><span class="text-kw">(</span><span class="text-var">__DIR__</span><span class="text-kw">);
-</span><span class="text-var">$dotEnv</span><span class="text-kw">-&gt;</span><span class="text-var">safeLoad</span><span class="text-kw">();
+<span class="text-var">$dotEnv</span> = <span class="text-type">Dotenv\Dotenv</span>::<span class="text-fn">createImmutable</span>(<span class="text-kw">__DIR__</span>);
+<span class="text-var">$dotEnv</span>-&gt;<span class="text-fn">safeLoad</span>();
 
-try {
-    </span><span class="text-var">$config </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/vendor/popphp/pop-kettle/config/app.console.php&#039;</span><span class="text-kw">;
+<span class="text-kw">try</span> {
+    <span class="text-var">$config</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/vendor/popphp/pop-kettle/config/app.console.php&#039;</span>;
 
-    </span><span class="text-comment">// Load any custom application command routes
-    </span><span class="text-var">$config</span><span class="text-kw">[</span><span class="text-str">&#039;routes&#039;</span><span class="text-kw">] = </span><span class="text-var">Pop\Console\CommandRegistry</span><span class="text-kw">::</span><span class="text-var">loadRoutes</span><span class="text-kw">(</span><span class="text-var">$config</span><span class="text-kw">[</span><span class="text-str">&#039;routes&#039;</span><span class="text-kw">], </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app/src/Console/Command/Kettle&#039;</span><span class="text-kw">);
+    <span class="text-comment">// Load any custom application command routes</span>
+    <span class="text-var">$config</span>[<span class="text-str">&#039;routes&#039;</span>] = <span class="text-type">Pop\Console\CommandRegistry</span>::<span class="text-fn">loadRoutes</span>(<span class="text-var">$config</span>[<span class="text-str">&#039;routes&#039;</span>], <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app/src/Console/Command/Kettle&#039;</span>);
 
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Kettle\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, </span><span class="text-var">$config</span><span class="text-kw">);
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">prepare</span><span class="text-kw">()
-        -&gt;</span><span class="text-var">load</span><span class="text-kw">()
-        -&gt;</span><span class="text-var">run</span><span class="text-kw">();
-} catch (</span><span class="text-var">\Throwable $exception</span><span class="text-kw">) {
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Kettle\Application</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">cliError</span><span class="text-kw">(</span><span class="text-var">$exception</span><span class="text-kw">);
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Kettle\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-var">$config</span>);
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">prepare</span>()
+        -&gt;<span class="text-fn">load</span>()
+        -&gt;<span class="text-fn">run</span>();
+} <span class="text-kw">catch</span> (<span class="text-type">\Throwable</span> <span class="text-var">$exception</span>) {
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Kettle\Application</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">cliError</span>(<span class="text-var">$exception</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Pop\Kettle\Application</code> extends <code>Pop\Application</code>, and its route table is a plain CLI routes config
@@ -523,25 +523,25 @@ taken from the part after the last colon. <code>send-email</code> gives you <cod
 <code>Send</code> registered under the full <code>email:send</code>. A command is one class with one <code>handle()</code> method:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Console/Command/Kettle/SendEmail.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Console\Command\Kettle</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Console\Command\Kettle</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">SendEmail</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Console\Command\AbstractCommand</span>
+{
 
-class </span><span class="text-var">SendEmail </span><span class="text-kw">extends </span><span class="text-var">\Pop\Console\Command\AbstractCommand
-</span><span class="text-kw">{
+    <span class="text-kw">public</span> ?<span class="text-type">string</span> <span class="text-var">$name</span>   = <span class="text-str">&#039;send-email&#039;</span>;
+    <span class="text-kw">public</span> ?<span class="text-type">string</span> <span class="text-var">$params</span> = <span class="text-str">&#039;&lt;to&gt; [--cc=]&#039;</span>;
+    <span class="text-kw">public</span> ?<span class="text-type">string</span> <span class="text-var">$help</span>   = <span class="text-str">&#039;Send the welcome email to an address&#039;</span>;
 
-    public ?</span><span class="text-var">string $name   </span><span class="text-kw">= </span><span class="text-str">&#039;send-email&#039;</span><span class="text-kw">;
-    public ?</span><span class="text-var">string $params </span><span class="text-kw">= </span><span class="text-str">&#039;&lt;to&gt; [--cc=]&#039;</span><span class="text-kw">;
-    public ?</span><span class="text-var">string $help   </span><span class="text-kw">= </span><span class="text-str">&#039;Send the welcome email to an address&#039;</span><span class="text-kw">;
-
-    public function </span><span class="text-var">handle</span><span class="text-kw">(</span><span class="text-var">string $to</span><span class="text-kw">, array </span><span class="text-var">$options </span><span class="text-kw">= [])
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">handle</span>(<span class="text-type">string</span> <span class="text-var">$to</span>, <span class="text-kw">array</span> <span class="text-var">$options</span> = [])
     {
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;To: &#039; </span><span class="text-kw">. </span><span class="text-var">$to</span><span class="text-kw">);
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;CC: &#039; </span><span class="text-kw">. (</span><span class="text-var">$options</span><span class="text-kw">[</span><span class="text-str">&#039;cc&#039;</span><span class="text-kw">] ?? </span><span class="text-str">&#039;none&#039;</span><span class="text-kw">));
+        <span class="text-var">$this</span>-&gt;<span class="text-type">console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;To: &#039;</span> . <span class="text-var">$to</span>);
+        <span class="text-var">$this</span>-&gt;<span class="text-type">console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;CC: &#039;</span> . (<span class="text-var">$options</span>[<span class="text-str">&#039;cc&#039;</span>] <span class="text-kw">??</span> <span class="text-str">&#039;none&#039;</span>));
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>$params</code> uses the same CLI route syntax as any other console route — <code>&lt;required&gt;</code>, <code>[&lt;optional&gt;]</code>,
@@ -568,26 +568,26 @@ grouping related commands under one class:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">script/app</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>#!/usr/bin/env php
-<span class="text-var">&lt;?php
+<span class="text-kw">&lt;?php
+</span>
+<span class="text-var">$autoloader</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../vendor/autoload.php&#039;</span>;
 
-$autoloader </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../vendor/autoload.php&#039;</span><span class="text-kw">;
+<span class="text-var">$dotEnv</span> = <span class="text-type">Dotenv\Dotenv</span>::<span class="text-fn">createImmutable</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../&#039;</span>);
+<span class="text-var">$dotEnv</span>-&gt;<span class="text-fn">safeLoad</span>();
 
-</span><span class="text-var">$dotEnv </span><span class="text-kw">= </span><span class="text-var">Dotenv\Dotenv</span><span class="text-kw">::</span><span class="text-var">createImmutable</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../&#039;</span><span class="text-kw">);
-</span><span class="text-var">$dotEnv</span><span class="text-kw">-&gt;</span><span class="text-var">safeLoad</span><span class="text-kw">();
+<span class="text-kw">try</span> {
+    <span class="text-comment">// Load any custom application command routes</span>
+    <span class="text-var">$config</span>           = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/config/app.console.php&#039;</span>;
+    <span class="text-var">$config</span>[<span class="text-str">&#039;routes&#039;</span>] = <span class="text-type">Pop\Console\CommandRegistry</span>::<span class="text-fn">loadRoutes</span>(<span class="text-var">$config</span>[<span class="text-str">&#039;routes&#039;</span>], <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/src/Console/Command&#039;</span>);
 
-try {
-    </span><span class="text-comment">// Load any custom application command routes
-    </span><span class="text-var">$config           </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/config/app.console.php&#039;</span><span class="text-kw">;
-    </span><span class="text-var">$config</span><span class="text-kw">[</span><span class="text-str">&#039;routes&#039;</span><span class="text-kw">] = </span><span class="text-var">Pop\Console\CommandRegistry</span><span class="text-kw">::</span><span class="text-var">loadRoutes</span><span class="text-kw">(</span><span class="text-var">$config</span><span class="text-kw">[</span><span class="text-str">&#039;routes&#039;</span><span class="text-kw">], </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/src/Console/Command&#039;</span><span class="text-kw">);
-
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, </span><span class="text-var">$config</span><span class="text-kw">);
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">load</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-} catch (</span><span class="text-var">\Throwable $exception</span><span class="text-kw">) {
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">cliError</span><span class="text-kw">(</span><span class="text-var">$exception</span><span class="text-kw">);
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-var">$config</span>);
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">load</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+} <span class="text-kw">catch</span> (<span class="text-type">\Throwable</span> <span class="text-var">$exception</span>) {
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">cliError</span>(<span class="text-var">$exception</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>It's the same shape as the <code>kettle</code> script, pointed at your own <code>Application</code> class and your own route
@@ -623,25 +623,25 @@ Environment: staging
 services, event listeners, config — is registered by the time <code>handle()</code> runs.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Console/Command/Kettle/Sync.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Console\Command\Kettle</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Console\Command\Kettle</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Sync</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Console\Command\AbstractCommand</span>
+{
 
-class </span><span class="text-var">Sync </span><span class="text-kw">extends </span><span class="text-var">\Pop\Console\Command\AbstractCommand
-</span><span class="text-kw">{
+    <span class="text-kw">public</span> ?<span class="text-type">string</span> <span class="text-var">$name</span> = <span class="text-str">&#039;widget:sync&#039;</span>;
+    <span class="text-kw">public</span> ?<span class="text-type">string</span> <span class="text-var">$help</span> = <span class="text-str">&#039;Sync widgets from the upstream feed&#039;</span>;
 
-    public ?</span><span class="text-var">string $name </span><span class="text-kw">= </span><span class="text-str">&#039;widget:sync&#039;</span><span class="text-kw">;
-    public ?</span><span class="text-var">string $help </span><span class="text-kw">= </span><span class="text-str">&#039;Sync widgets from the upstream feed&#039;</span><span class="text-kw">;
-
-    public function </span><span class="text-var">handle</span><span class="text-kw">()
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">handle</span>()
     {
-        </span><span class="text-var">$feed </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">application</span><span class="text-kw">()-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;feed&#039;</span><span class="text-kw">);
+        <span class="text-var">$feed</span> = <span class="text-var">$this</span>-&gt;<span class="text-fn">application</span>()-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;feed&#039;</span>);
 
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">console</span><span class="text-kw">-&gt;</span><span class="text-var">write</span><span class="text-kw">(</span><span class="text-str">&#039;Syncing from &#039; </span><span class="text-kw">. </span><span class="text-var">\Pop\App</span><span class="text-kw">::</span><span class="text-var">env</span><span class="text-kw">(</span><span class="text-str">&#039;FEED_URL&#039;</span><span class="text-kw">));
+        <span class="text-var">$this</span>-&gt;<span class="text-type">console</span>-&gt;<span class="text-fn">write</span>(<span class="text-str">&#039;Syncing from &#039;</span> . <span class="text-type">\Pop\App</span>::<span class="text-fn">env</span>(<span class="text-str">&#039;FEED_URL&#039;</span>));
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Pop\App</code> is the static accessor for the same application — <code>App::environment()</code>, <code>App::isProduction()</code>,

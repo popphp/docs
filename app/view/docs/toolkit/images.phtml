@@ -18,14 +18,14 @@ everything after that is the same calls: resize, crop, rotate, adjust, filter, d
 adapter object, and every editing method returns it back for chaining:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">$image </span><span class="text-kw">= </span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">loadGd</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span><span class="text-kw">);
+<span class="text-var">$image</span> = <span class="text-type">Image</span>::<span class="text-fn">loadGd</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">getWidth</span><span class="text-kw">();   </span><span class="text-comment">// 400
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">getHeight</span><span class="text-kw">();  </span><span class="text-comment">// 300
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">getFormat</span><span class="text-kw">();  </span><span class="text-comment">// &#039;jpg&#039;
-</span></code></pre>
+<span class="text-var">$image</span>-&gt;<span class="text-fn">getWidth</span>();   <span class="text-comment">// 400</span>
+<span class="text-var">$image</span>-&gt;<span class="text-fn">getHeight</span>();  <span class="text-comment">// 300</span>
+<span class="text-var">$image</span>-&gt;<span class="text-fn">getFormat</span>();  <span class="text-comment">// &#039;jpg&#039;</span>
+</code></pre>
 </div>
 
 <p><code>Image::loadImagick()</code> is the same call against the other backend. <code>loadGdFromString()</code> and
@@ -34,10 +34,10 @@ out of a database. <code>createGd()</code> and <code>createImagick()</code> make
 <code>createGdIndex()</code>/<code>createImagickIndex()</code> make a palette-based one for GIF:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">$image </span><span class="text-kw">= </span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">createGd</span><span class="text-kw">(</span><span class="text-var">400</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">, </span><span class="text-str">&#039;banner.jpg&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$image</span> = <span class="text-type">Image</span>::<span class="text-fn">createGd</span>(<span class="text-num">400</span>, <span class="text-num">300</span>, <span class="text-str">&#039;banner.jpg&#039;</span>);
+</code></pre>
 </div>
 
 <p>Beyond the dimensions and format, a loaded image reports <code>getName()</code>, <code>getQuality()</code>,
@@ -86,13 +86,13 @@ exist, so a bad path fails at the call.</p>
 </table>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">loadGd</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">resize</span><span class="text-kw">(</span><span class="text-var">100</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setQuality</span><span class="text-kw">(</span><span class="text-var">60</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo-thumb.jpg&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Image</span>::<span class="text-fn">loadGd</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span>)
+    -&gt;<span class="text-fn">resize</span>(<span class="text-num">100</span>)
+    -&gt;<span class="text-fn">setQuality</span>(<span class="text-num">60</span>)
+    -&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo-thumb.jpg&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>crop()</code>'s last two arguments are the offset of the crop window within the source, defaulting to the
@@ -103,14 +103,14 @@ the one to reach for when generating avatars and thumbnails from arbitrary uploa
 further alpha argument from 0 to 127. <code>flip()</code> mirrors over the x-axis, <code>flop()</code> over the y-axis:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color\Rgb</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color\Rgb</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">loadGd</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">rotate</span><span class="text-kw">(</span><span class="text-var">90</span><span class="text-kw">, new </span><span class="text-var">Rgb</span><span class="text-kw">(</span><span class="text-var">255</span><span class="text-kw">, </span><span class="text-var">255</span><span class="text-kw">, </span><span class="text-var">255</span><span class="text-kw">))
-    -&gt;</span><span class="text-var">flop</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo-rotated.jpg&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Image</span>::<span class="text-fn">loadGd</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span>)
+    -&gt;<span class="text-fn">rotate</span>(<span class="text-num">90</span>, <span class="text-kw">new</span> <span class="text-type">Rgb</span>(<span class="text-num">255</span>, <span class="text-num">255</span>, <span class="text-num">255</span>))
+    -&gt;<span class="text-fn">flop</span>()
+    -&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo-rotated.jpg&#039;</span>);
+</code></pre>
 </div>
 
 <p>Rotating by 90 swaps the dimensions, so a 400 by 300 image comes out 300 by 400.</p>
@@ -128,16 +128,16 @@ the same call.</p>
 Imagick adds <code>hue()</code>, <code>saturation()</code>, <code>hsb()</code> and <code>level()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">$image </span><span class="text-kw">= </span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">loadGd</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span><span class="text-kw">);
+<span class="text-var">$image</span> = <span class="text-type">Image</span>::<span class="text-fn">loadGd</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">adjust</span><span class="text-kw">()-&gt;</span><span class="text-var">brightness</span><span class="text-kw">(</span><span class="text-var">20</span><span class="text-kw">)
-                -&gt;</span><span class="text-var">contrast</span><span class="text-kw">(</span><span class="text-var">10</span><span class="text-kw">)
-                -&gt;</span><span class="text-var">desaturate</span><span class="text-kw">();
+<span class="text-var">$image</span>-&gt;<span class="text-fn">adjust</span>()-&gt;<span class="text-fn">brightness</span>(<span class="text-num">20</span>)
+                -&gt;<span class="text-fn">contrast</span>(<span class="text-num">10</span>)
+                -&gt;<span class="text-fn">desaturate</span>();
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo-flat.jpg&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$image</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo-flat.jpg&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>filter()</code> is where the two backends diverge most. GD wraps a handful of PHP's built-in <code>imagefilter()</code>
@@ -147,15 +147,15 @@ exposes far more of ImageMagick: <code>adaptiveBlur()</code>, <code>gaussianBlur
 radius and sigma rather than a single amount.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">$image </span><span class="text-kw">= </span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">loadImagick</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span><span class="text-kw">);
+<span class="text-var">$image</span> = <span class="text-type">Image</span>::<span class="text-fn">loadImagick</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">filter</span><span class="text-kw">()-&gt;</span><span class="text-var">swirl</span><span class="text-kw">(</span><span class="text-var">30</span><span class="text-kw">);
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">adjust</span><span class="text-kw">()-&gt;</span><span class="text-var">hue</span><span class="text-kw">(</span><span class="text-var">30</span><span class="text-kw">);
+<span class="text-var">$image</span>-&gt;<span class="text-fn">filter</span>()-&gt;<span class="text-fn">swirl</span>(<span class="text-num">30</span>);
+<span class="text-var">$image</span>-&gt;<span class="text-fn">adjust</span>()-&gt;<span class="text-fn">hue</span>(<span class="text-num">30</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo-swirled.jpg&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$image</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo-swirled.jpg&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>effect()</code> fills the whole canvas: <code>fill()</code>, <code>border()</code>, <code>radialGradient()</code>, <code>verticalGradient()</code>,
@@ -170,23 +170,23 @@ GD class.</p>
 <code>setStrokeWidth()</code> and <code>setOpacity()</code> — and every shape afterward uses whatever is currently set:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color\Rgb</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color\Rgb</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">$image </span><span class="text-kw">= </span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">createGd</span><span class="text-kw">(</span><span class="text-var">400</span><span class="text-kw">, </span><span class="text-var">200</span><span class="text-kw">, </span><span class="text-str">&#039;card.png&#039;</span><span class="text-kw">);
+<span class="text-var">$image</span> = <span class="text-type">Image</span>::<span class="text-fn">createGd</span>(<span class="text-num">400</span>, <span class="text-num">200</span>, <span class="text-str">&#039;card.png&#039;</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">effect</span><span class="text-kw">()-&gt;</span><span class="text-var">fill</span><span class="text-kw">(new </span><span class="text-var">Rgb</span><span class="text-kw">(</span><span class="text-var">245</span><span class="text-kw">, </span><span class="text-var">245</span><span class="text-kw">, </span><span class="text-var">245</span><span class="text-kw">));
+<span class="text-var">$image</span>-&gt;<span class="text-fn">effect</span>()-&gt;<span class="text-fn">fill</span>(<span class="text-kw">new</span> <span class="text-type">Rgb</span>(<span class="text-num">245</span>, <span class="text-num">245</span>, <span class="text-num">245</span>));
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">draw</span><span class="text-kw">()-&gt;</span><span class="text-var">setFillColor</span><span class="text-kw">(new </span><span class="text-var">Rgb</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">, </span><span class="text-var">120</span><span class="text-kw">, </span><span class="text-var">215</span><span class="text-kw">))
-              -&gt;</span><span class="text-var">setStrokeColor</span><span class="text-kw">(new </span><span class="text-var">Rgb</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">))
-              -&gt;</span><span class="text-var">setStrokeWidth</span><span class="text-kw">(</span><span class="text-var">2</span><span class="text-kw">)
-              -&gt;</span><span class="text-var">rectangle</span><span class="text-kw">(</span><span class="text-var">20</span><span class="text-kw">, </span><span class="text-var">20</span><span class="text-kw">, </span><span class="text-var">160</span><span class="text-kw">, </span><span class="text-var">80</span><span class="text-kw">);
+<span class="text-var">$image</span>-&gt;<span class="text-fn">draw</span>()-&gt;<span class="text-fn">setFillColor</span>(<span class="text-kw">new</span> <span class="text-type">Rgb</span>(<span class="text-num">0</span>, <span class="text-num">120</span>, <span class="text-num">215</span>))
+              -&gt;<span class="text-fn">setStrokeColor</span>(<span class="text-kw">new</span> <span class="text-type">Rgb</span>(<span class="text-num">0</span>, <span class="text-num">0</span>, <span class="text-num">0</span>))
+              -&gt;<span class="text-fn">setStrokeWidth</span>(<span class="text-num">2</span>)
+              -&gt;<span class="text-fn">rectangle</span>(<span class="text-num">20</span>, <span class="text-num">20</span>, <span class="text-num">160</span>, <span class="text-num">80</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">draw</span><span class="text-kw">()-&gt;</span><span class="text-var">setFillColor</span><span class="text-kw">(new </span><span class="text-var">Rgb</span><span class="text-kw">(</span><span class="text-var">220</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">))
-              -&gt;</span><span class="text-var">circle</span><span class="text-kw">(</span><span class="text-var">300</span><span class="text-kw">, </span><span class="text-var">60</span><span class="text-kw">, </span><span class="text-var">40</span><span class="text-kw">);
+<span class="text-var">$image</span>-&gt;<span class="text-fn">draw</span>()-&gt;<span class="text-fn">setFillColor</span>(<span class="text-kw">new</span> <span class="text-type">Rgb</span>(<span class="text-num">220</span>, <span class="text-num">50</span>, <span class="text-num">50</span>))
+              -&gt;<span class="text-fn">circle</span>(<span class="text-num">300</span>, <span class="text-num">60</span>, <span class="text-num">40</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/img/card.png&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$image</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/img/card.png&#039;</span>);
+</code></pre>
 </div>
 
 <p>Both backends have <code>line()</code>, <code>rectangle()</code>, <code>square()</code>, <code>ellipse()</code>, <code>circle()</code>, <code>arc()</code>, <code>chord()</code>,
@@ -199,21 +199,21 @@ circle. GD accepts floats for coordinates and sizes; Imagick takes integers only
 <code>y()</code>, <code>xy()</code> and <code>rotate()</code>. <code>text()</code> renders the string using whatever is set at that moment:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color\Rgb</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color\Rgb</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">$image </span><span class="text-kw">= </span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">createGd</span><span class="text-kw">(</span><span class="text-var">300</span><span class="text-kw">, </span><span class="text-var">100</span><span class="text-kw">, </span><span class="text-str">&#039;label.png&#039;</span><span class="text-kw">);
+<span class="text-var">$image</span> = <span class="text-type">Image</span>::<span class="text-fn">createGd</span>(<span class="text-num">300</span>, <span class="text-num">100</span>, <span class="text-str">&#039;label.png&#039;</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">effect</span><span class="text-kw">()-&gt;</span><span class="text-var">fill</span><span class="text-kw">(new </span><span class="text-var">Rgb</span><span class="text-kw">(</span><span class="text-var">255</span><span class="text-kw">, </span><span class="text-var">255</span><span class="text-kw">, </span><span class="text-var">255</span><span class="text-kw">));
+<span class="text-var">$image</span>-&gt;<span class="text-fn">effect</span>()-&gt;<span class="text-fn">fill</span>(<span class="text-kw">new</span> <span class="text-type">Rgb</span>(<span class="text-num">255</span>, <span class="text-num">255</span>, <span class="text-num">255</span>));
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">type</span><span class="text-kw">()-&gt;</span><span class="text-var">font</span><span class="text-kw">(</span><span class="text-str">&#039;/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf&#039;</span><span class="text-kw">)
-              -&gt;</span><span class="text-var">size</span><span class="text-kw">(</span><span class="text-var">24</span><span class="text-kw">)
-              -&gt;</span><span class="text-var">setFillColor</span><span class="text-kw">(new </span><span class="text-var">Rgb</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">))
-              -&gt;</span><span class="text-var">xy</span><span class="text-kw">(</span><span class="text-var">20</span><span class="text-kw">, </span><span class="text-var">60</span><span class="text-kw">)
-              -&gt;</span><span class="text-var">text</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">);
+<span class="text-var">$image</span>-&gt;<span class="text-fn">type</span>()-&gt;<span class="text-fn">font</span>(<span class="text-str">&#039;/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf&#039;</span>)
+              -&gt;<span class="text-fn">size</span>(<span class="text-num">24</span>)
+              -&gt;<span class="text-fn">setFillColor</span>(<span class="text-kw">new</span> <span class="text-type">Rgb</span>(<span class="text-num">0</span>, <span class="text-num">0</span>, <span class="text-num">0</span>))
+              -&gt;<span class="text-fn">xy</span>(<span class="text-num">20</span>, <span class="text-num">60</span>)
+              -&gt;<span class="text-fn">text</span>(<span class="text-str">&#039;Hello World&#039;</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/img/label.png&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$image</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/img/label.png&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>font()</code> wants a path to a TrueType file. Without one, GD falls back to a built-in bitmap font where
@@ -228,13 +228,13 @@ supports, and <code>pop-image</code> requires GD outright — Imagick is optiona
 one name:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">getAvailableAdapters</span><span class="text-kw">();   </span><span class="text-comment">// [&#039;gd&#039; =&gt; true, &#039;imagick&#039; =&gt; true]
+<span class="text-type">Image</span>::<span class="text-fn">getAvailableAdapters</span>();   <span class="text-comment">// [&#039;gd&#039; =&gt; true, &#039;imagick&#039; =&gt; true]</span>
 
-</span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">isAvailable</span><span class="text-kw">(</span><span class="text-str">&#039;imagick&#039;</span><span class="text-kw">);   </span><span class="text-comment">// true
-</span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">isAvailable</span><span class="text-kw">(</span><span class="text-str">&#039;bogus&#039;</span><span class="text-kw">);     </span><span class="text-comment">// false
-</span></code></pre>
+<span class="text-type">Image</span>::<span class="text-fn">isAvailable</span>(<span class="text-str">&#039;imagick&#039;</span>);   <span class="text-comment">// true</span>
+<span class="text-type">Image</span>::<span class="text-fn">isAvailable</span>(<span class="text-str">&#039;bogus&#039;</span>);     <span class="text-comment">// false</span>
+</code></pre>
 </div>
 
 <p>Both are checked cheaply — <code>function_exists('gd_info')</code> and <code>class_exists('Imagick')</code> — and
@@ -292,12 +292,12 @@ format the extension supports; on the GD adapter, anything outside its three thr
 <code>Pop\Image\Adapter\Exception</code> (&quot;Error: The image type must be a GIF, PNG or JPG&quot;):</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">loadImagick</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">convert</span><span class="text-kw">(</span><span class="text-str">&#039;tiff&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.tif&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Image</span>::<span class="text-fn">loadImagick</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span>)
+    -&gt;<span class="text-fn">convert</span>(<span class="text-str">&#039;tiff&#039;</span>)
+    -&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.tif&#039;</span>);
+</code></pre>
 </div>
 
 <p>Loading has the same limit and reports it the same way: <code>(new Pop\Image\Adapter\Gd())-&gt;load($tiff)</code>
@@ -312,13 +312,13 @@ there for.</p>
 streams the image to the client:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">$image </span><span class="text-kw">= </span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">loadGd</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span><span class="text-kw">);
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">resize</span><span class="text-kw">(</span><span class="text-var">800</span><span class="text-kw">);
+<span class="text-var">$image</span> = <span class="text-type">Image</span>::<span class="text-fn">loadGd</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span>);
+<span class="text-var">$image</span>-&gt;<span class="text-fn">resize</span>(<span class="text-num">800</span>);
 
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo-large.jpg&#039;</span><span class="text-kw">, </span><span class="text-var">85</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$image</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo-large.jpg&#039;</span>, <span class="text-num">85</span>);
+</code></pre>
 </div>
 
 <p><code>outputToHttp(?int $quality, ?string $to, bool $download, bool $sendHeaders, array $headers)</code> sends the
@@ -329,12 +329,12 @@ right <code>Content-Type</code> for the image's format and a <code>Content-Dispo
 returns it for chaining, so the write that follows produces the new format:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Image\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Image\Image</span>;
 
-</span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">loadGd</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">convert</span><span class="text-kw">(</span><span class="text-str">&#039;png&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/uploads/photo.png&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Image</span>::<span class="text-fn">loadGd</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.jpg&#039;</span>)
+    -&gt;<span class="text-fn">convert</span>(<span class="text-str">&#039;png&#039;</span>)
+    -&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/uploads/photo.png&#039;</span>);
+</code></pre>
 </div>
 
 <p>Match the filename extension to what you converted to. Nothing cross-checks them, and <code>load()</code> dispatches on

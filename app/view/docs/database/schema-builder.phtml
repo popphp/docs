@@ -12,20 +12,20 @@ stands up on MySQL, PostgreSQL and SQLite alike.</p>
 <code>create()</code> names the table, the type methods add columns to it, and <code>execute()</code> sends the result:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">int</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">16</span><span class="text-kw">)-&gt;</span><span class="text-var">increment</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">varchar</span><span class="text-kw">(</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">, </span><span class="text-var">255</span><span class="text-kw">)-&gt;</span><span class="text-var">notNullable</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">decimal</span><span class="text-kw">(</span><span class="text-str">&#039;price&#039;</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">datetime</span><span class="text-kw">(</span><span class="text-str">&#039;created_at&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">primary</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">);
+<span class="text-var">$schema</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSchema</span>();
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">create</span>(<span class="text-str">&#039;widgets&#039;</span>)
+    -&gt;<span class="text-fn">int</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-num">16</span>)-&gt;<span class="text-fn">increment</span>()
+    -&gt;<span class="text-fn">varchar</span>(<span class="text-str">&#039;name&#039;</span>, <span class="text-num">255</span>)-&gt;<span class="text-fn">notNullable</span>()
+    -&gt;<span class="text-fn">decimal</span>(<span class="text-str">&#039;price&#039;</span>, <span class="text-num">10</span>, <span class="text-num">2</span>)
+    -&gt;<span class="text-fn">datetime</span>(<span class="text-str">&#039;created_at&#039;</span>)
+    -&gt;<span class="text-fn">primary</span>(<span class="text-str">&#039;id&#039;</span>);
 
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
+</code></pre>
 </div>
 
 <p>Each type method takes the column name first, then whatever that type needs.</p>
@@ -83,20 +83,20 @@ value, <code>1</code> by default.</p>
 array for a composite one, or no argument to fall back to the last column added:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;widget_tags&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">int</span><span class="text-kw">(</span><span class="text-str">&#039;widget_id&#039;</span><span class="text-kw">, </span><span class="text-var">16</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">varchar</span><span class="text-kw">(</span><span class="text-str">&#039;tag&#039;</span><span class="text-kw">, </span><span class="text-var">64</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">bigInt</span><span class="text-kw">(</span><span class="text-str">&#039;hits&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">unsigned</span><span class="text-kw">()-&gt;</span><span class="text-var">defaultIs</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">primary</span><span class="text-kw">([</span><span class="text-str">&#039;widget_id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;tag&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">index</span><span class="text-kw">(</span><span class="text-str">&#039;tag&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;idx_tag&#039;</span><span class="text-kw">);
+<span class="text-var">$schema</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSchema</span>();
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">create</span>(<span class="text-str">&#039;widget_tags&#039;</span>)
+    -&gt;<span class="text-fn">int</span>(<span class="text-str">&#039;widget_id&#039;</span>, <span class="text-num">16</span>)
+    -&gt;<span class="text-fn">varchar</span>(<span class="text-str">&#039;tag&#039;</span>, <span class="text-num">64</span>)
+    -&gt;<span class="text-fn">bigInt</span>(<span class="text-str">&#039;hits&#039;</span>)-&gt;<span class="text-fn">unsigned</span>()-&gt;<span class="text-fn">defaultIs</span>(<span class="text-num">0</span>)
+    -&gt;<span class="text-fn">primary</span>([<span class="text-str">&#039;widget_id&#039;</span>, <span class="text-str">&#039;tag&#039;</span>])
+    -&gt;<span class="text-fn">index</span>(<span class="text-str">&#039;tag&#039;</span>, <span class="text-str">&#039;idx_tag&#039;</span>);
 
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
+</code></pre>
 </div>
 
 <p>An index is named for the columns it covers — <code>index_tag</code>, or <code>index_widget_id_tag</code> for a composite —
@@ -109,20 +109,20 @@ renders as a <code>UNIQUE</code> constraint, and an <code>increment()</code> col
 constraint between them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;widget_notes&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">int</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">16</span><span class="text-kw">)-&gt;</span><span class="text-var">increment</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">int</span><span class="text-kw">(</span><span class="text-str">&#039;widget_id&#039;</span><span class="text-kw">, </span><span class="text-var">16</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">text</span><span class="text-kw">(</span><span class="text-str">&#039;note&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">primary</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">foreignKey</span><span class="text-kw">(</span><span class="text-str">&#039;widget_id&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">references</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">onDelete</span><span class="text-kw">(</span><span class="text-str">&#039;CASCADE&#039;</span><span class="text-kw">);
+<span class="text-var">$schema</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSchema</span>();
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">create</span>(<span class="text-str">&#039;widget_notes&#039;</span>)
+    -&gt;<span class="text-fn">int</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-num">16</span>)-&gt;<span class="text-fn">increment</span>()
+    -&gt;<span class="text-fn">int</span>(<span class="text-str">&#039;widget_id&#039;</span>, <span class="text-num">16</span>)
+    -&gt;<span class="text-fn">text</span>(<span class="text-str">&#039;note&#039;</span>)
+    -&gt;<span class="text-fn">primary</span>(<span class="text-str">&#039;id&#039;</span>)
+    -&gt;<span class="text-fn">foreignKey</span>(<span class="text-str">&#039;widget_id&#039;</span>)-&gt;<span class="text-fn">references</span>(<span class="text-str">&#039;widgets&#039;</span>)-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;id&#039;</span>)-&gt;<span class="text-fn">onDelete</span>(<span class="text-str">&#039;CASCADE&#039;</span>);
 
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
+</code></pre>
 </div>
 
 <p>MySQL and PostgreSQL take the constraint as a trailing <code>ALTER TABLE ... ADD CONSTRAINT</code> that the same
@@ -137,18 +137,18 @@ a connection that should reject a row pointing at a parent that is not there.</p
 <p>The other four verbs return their own objects from the same builder, and all four execute the same way:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">alter</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">varchar</span><span class="text-kw">(</span><span class="text-str">&#039;sku&#039;</span><span class="text-kw">, </span><span class="text-var">64</span><span class="text-kw">)-&gt;</span><span class="text-var">after</span><span class="text-kw">(</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">);
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
+<span class="text-var">$schema</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSchema</span>();
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">alter</span>(<span class="text-str">&#039;widgets&#039;</span>)-&gt;<span class="text-fn">varchar</span>(<span class="text-str">&#039;sku&#039;</span>, <span class="text-num">64</span>)-&gt;<span class="text-fn">after</span>(<span class="text-str">&#039;name&#039;</span>);
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
 
-</span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">alter</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">dropColumn</span><span class="text-kw">(</span><span class="text-str">&#039;created_at&#039;</span><span class="text-kw">);
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$schema</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSchema</span>();
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">alter</span>(<span class="text-str">&#039;widgets&#039;</span>)-&gt;<span class="text-fn">dropColumn</span>(<span class="text-str">&#039;created_at&#039;</span>);
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
+</code></pre>
 </div>
 
 <table>
@@ -193,18 +193,18 @@ the same object renders identically again and still executes afterward — which
 migration before running it a one-liner:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">dropIfExists</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">);
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">int</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">16</span><span class="text-kw">)-&gt;</span><span class="text-var">increment</span><span class="text-kw">()-&gt;</span><span class="text-var">primary</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">);
+<span class="text-var">$schema</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSchema</span>();
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">dropIfExists</span>(<span class="text-str">&#039;widgets&#039;</span>);
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">create</span>(<span class="text-str">&#039;widgets&#039;</span>)-&gt;<span class="text-fn">int</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-num">16</span>)-&gt;<span class="text-fn">increment</span>()-&gt;<span class="text-fn">primary</span>(<span class="text-str">&#039;id&#039;</span>);
 
-echo </span><span class="text-var">$schema</span><span class="text-kw">;
+<span class="text-kw">echo</span> <span class="text-var">$schema</span>;
 
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
+</code></pre>
 </div>
 
 <p>One schema object holds as many statements as you give it, and it renders them grouped by verb rather
@@ -218,18 +218,18 @@ tables in any order.</p>
 default:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
+<span class="text-var">$schema</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSchema</span>();
 
-</span><span class="text-var">$create </span><span class="text-kw">= </span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">);
-</span><span class="text-var">$create</span><span class="text-kw">-&gt;</span><span class="text-var">int</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">16</span><span class="text-kw">)-&gt;</span><span class="text-var">increment</span><span class="text-kw">()-&gt;</span><span class="text-var">primary</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">);
-</span><span class="text-var">$create</span><span class="text-kw">-&gt;</span><span class="text-var">setEngine</span><span class="text-kw">(</span><span class="text-str">&#039;MyISAM&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">setCharset</span><span class="text-kw">(</span><span class="text-str">&#039;utf8mb4&#039;</span><span class="text-kw">);
+<span class="text-var">$create</span> = <span class="text-var">$schema</span>-&gt;<span class="text-fn">create</span>(<span class="text-str">&#039;widgets&#039;</span>);
+<span class="text-var">$create</span>-&gt;<span class="text-fn">int</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-num">16</span>)-&gt;<span class="text-fn">increment</span>()-&gt;<span class="text-fn">primary</span>(<span class="text-str">&#039;id&#039;</span>);
+<span class="text-var">$create</span>-&gt;<span class="text-fn">setEngine</span>(<span class="text-str">&#039;MyISAM&#039;</span>)-&gt;<span class="text-fn">setCharset</span>(<span class="text-str">&#039;utf8mb4&#039;</span>);
 
-</span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
+</code></pre>
 </div>
 
 <h2 id="see-also">See Also<a class="anchor" href="#see-also" aria-label="Link to this section">#</a></h2>

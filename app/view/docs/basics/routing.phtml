@@ -13,38 +13,38 @@ object, or both — they all land in the same router.</p>
 each value is the target the router dispatches to.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;[/]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;/users[/]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;/users/:id&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;name&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;users.edit&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;*&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;error&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;[/]&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+        ],
+        <span class="text-str">&#039;/users[/]&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+        ],
+        <span class="text-str">&#039;/users/:id&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;edit&#039;</span>,
+            <span class="text-str">&#039;name&#039;</span>       =&gt; <span class="text-str">&#039;users.edit&#039;</span>
+        ],
+        <span class="text-str">&#039;*&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;error&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The front controller includes that file and hands it to the application, which parses the <code>routes</code> key
 during bootstrap and registers every entry with the router.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">public/index.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/config/app.http.php&#039;</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(<span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/config/app.http.php&#039;</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p>A request for <code>/users/1001</code> now dispatches <code>App\Http\Controller\UsersController::edit('1001')</code>. The <code>[/]</code> in
@@ -58,14 +58,14 @@ specificity, so <code>/users/new</code> and <code>/users/:id</code> can be liste
 <p>Route keys nest, which keeps a long table readable. A nested key is concatenated onto its parent:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">addRoutes</span><span class="text-kw">([
-    </span><span class="text-str">&#039;/system&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;/add&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Handler-&gt;add&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;/edit&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Handler-&gt;edit&#039;</span><span class="text-kw">,
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
+<span class="text-var">$app</span>-&gt;<span class="text-fn">addRoutes</span>([
+    <span class="text-str">&#039;/system&#039;</span> =&gt; [
+        <span class="text-str">&#039;/add&#039;</span>  =&gt; <span class="text-str">&#039;App\Handler-&gt;add&#039;</span>,
+        <span class="text-str">&#039;/edit&#039;</span> =&gt; <span class="text-str">&#039;App\Handler-&gt;edit&#039;</span>,
     ],
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>That registers <code>/system/add</code> and <code>/system/edit</code>.</p>
@@ -74,16 +74,16 @@ specificity, so <code>/users/new</code> and <code>/users/:id</code> can be liste
 <p>The application object also exposes one method per HTTP verb, each returning the application so calls chain.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">public/index.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Application</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Application</span>;
 
-</span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Application</span><span class="text-kw">();
+<span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;/users&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">post</span><span class="text-kw">(</span><span class="text-str">&#039;/users&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;create&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;/users/:id&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;edit&#039;</span><span class="text-kw">]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">get</span>(<span class="text-str">&#039;/users&#039;</span>, [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;index&#039;</span>])
+    -&gt;<span class="text-fn">post</span>(<span class="text-str">&#039;/users&#039;</span>, [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;create&#039;</span>])
+    -&gt;<span class="text-fn">get</span>(<span class="text-str">&#039;/users/:id&#039;</span>, [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;edit&#039;</span>]);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p><code>get</code>, <code>head</code>, <code>post</code>, <code>put</code>, <code>delete</code>, <code>trace</code>, <code>options</code>, <code>connect</code> and <code>patch</code> are all available this way,
@@ -95,18 +95,18 @@ the table declarative and greppable, which is most of the time. The verb methods
 <code>Pop\Router\Route</code> is the static accessor your views and controllers use afterward:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Router\Route</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Router\Router</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Router\Match\Http</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Router\Route</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Router\Router</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Router\Match\Http</span>;
 
-</span><span class="text-var">$router </span><span class="text-kw">= new </span><span class="text-var">Router</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, new </span><span class="text-var">Http</span><span class="text-kw">());
-</span><span class="text-var">$router</span><span class="text-kw">-&gt;</span><span class="text-var">addRoute</span><span class="text-kw">(</span><span class="text-str">&#039;/user/:id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Handler-&gt;show&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">name</span><span class="text-kw">(</span><span class="text-str">&#039;user&#039;</span><span class="text-kw">);
+<span class="text-var">$router</span> = <span class="text-kw">new</span> <span class="text-type">Router</span>(<span class="text-num">null</span>, <span class="text-kw">new</span> <span class="text-type">Http</span>());
+<span class="text-var">$router</span>-&gt;<span class="text-fn">addRoute</span>(<span class="text-str">&#039;/user/:id&#039;</span>, <span class="text-str">&#039;App\Handler-&gt;show&#039;</span>)-&gt;<span class="text-fn">name</span>(<span class="text-str">&#039;user&#039;</span>);
 
-</span><span class="text-var">Route</span><span class="text-kw">::</span><span class="text-var">setRouter</span><span class="text-kw">(</span><span class="text-var">$router</span><span class="text-kw">);
+<span class="text-type">Route</span>::<span class="text-fn">setRouter</span>(<span class="text-var">$router</span>);
 
-echo </span><span class="text-var">Route</span><span class="text-kw">::</span><span class="text-var">url</span><span class="text-kw">(</span><span class="text-str">&#039;user&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1001</span><span class="text-kw">]);       </span><span class="text-comment">// /user/1001
-</span><span class="text-kw">echo </span><span class="text-var">Route</span><span class="text-kw">::</span><span class="text-var">url</span><span class="text-kw">(</span><span class="text-str">&#039;user&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1001</span><span class="text-kw">], </span><span class="text-var">true</span><span class="text-kw">); </span><span class="text-comment">// http://www.example.com/user/1001
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-type">Route</span>::<span class="text-fn">url</span>(<span class="text-str">&#039;user&#039;</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1001</span>]);       <span class="text-comment">// /user/1001</span>
+<span class="text-kw">echo</span> <span class="text-type">Route</span>::<span class="text-fn">url</span>(<span class="text-str">&#039;user&#039;</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1001</span>], <span class="text-num">true</span>); <span class="text-comment">// http://www.example.com/user/1001</span>
+</code></pre>
 </div>
 
 <p>Passing <code>true</code> as the third argument returns a fully qualified URL built from the current host.</p>
@@ -164,22 +164,22 @@ interchangeable.</p>
 live in the route table:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;/hello&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; function() {
-                echo </span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">;
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;/hello&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-kw">function</span>() {
+                <span class="text-kw">echo</span> <span class="text-str">&#039;Hello World&#039;</span>;
             }
         ],
-        </span><span class="text-str">&#039;/hello/:name&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; function(</span><span class="text-var">$name</span><span class="text-kw">) {
-                echo </span><span class="text-str">&#039;Hello &#039; </span><span class="text-kw">. </span><span class="text-var">$name</span><span class="text-kw">;
+        <span class="text-str">&#039;/hello/:name&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-kw">function</span>(<span class="text-var">$name</span>) {
+                <span class="text-kw">echo</span> <span class="text-str">&#039;Hello &#039;</span> . <span class="text-var">$name</span>;
             }
         ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>For anything with structure you want a controller class, named by the <code>controller</code>/<code>action</code> pair. Declare
@@ -187,30 +187,30 @@ live in the route table:</p>
 constructs it with the application, giving you <code>application()</code>, <code>request()</code> and <code>response()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Controller\AbstractController</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Dispatch\HttpTrait</span>;
 
-use </span><span class="text-var">Pop\Controller\AbstractController</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Dispatch\HttpTrait</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">UsersController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">UsersController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
+    <span class="text-kw">use</span> <span class="text-type">HttpTrait</span>;
 
-    use </span><span class="text-var">HttpTrait</span><span class="text-kw">;
-
-    public function </span><span class="text-var">index</span><span class="text-kw">()
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">index</span>()
     {
-        </span><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">application</span><span class="text-kw">()-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">);
+        <span class="text-var">$users</span> = <span class="text-var">$this</span>-&gt;<span class="text-fn">application</span>()-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;users&#039;</span>);
     }
 
-    public function </span><span class="text-var">edit</span><span class="text-kw">(</span><span class="text-var">$id</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">edit</span>(<span class="text-var">$id</span>)
     {
-        </span><span class="text-comment">// $this-&gt;request and $this-&gt;response are available here too
-    </span><span class="text-kw">}
+        <span class="text-comment">// $this-&gt;request and $this-&gt;response are available here too</span>
+    }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Declaring the trait once on a shared base controller wires everything extending it — see
@@ -237,35 +237,35 @@ handling. Controller structure and dispatch precedence are covered in <a href="/
 comma-separated string, or an array.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;/users&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;method&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;get&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;/users/:id&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;update&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;method&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;put,patch&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;/users&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>,
+            <span class="text-str">&#039;method&#039;</span>     =&gt; <span class="text-str">&#039;get&#039;</span>
+        ],
+        <span class="text-str">&#039;/users/:id&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;update&#039;</span>,
+            <span class="text-str">&#039;method&#039;</span>     =&gt; <span class="text-str">&#039;put,patch&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>PHP array keys are unique, so the same path cannot appear twice in one <code>routes</code> array. To serve
 <code>GET /users</code> and <code>POST /users</code> from different actions, register the pair fluently:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Application</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Application</span>;
 
-</span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Application</span><span class="text-kw">();
+<span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;/users&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">post</span><span class="text-kw">(</span><span class="text-str">&#039;/users&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;create&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">get</span>(<span class="text-str">&#039;/users&#039;</span>, [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;index&#039;</span>])
+    -&gt;<span class="text-fn">post</span>(<span class="text-str">&#039;/users&#039;</span>, [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;create&#039;</span>]);
+</code></pre>
 </div>
 
 <p>Or group the routes by method in config, in the Popcorn style — the shape a <code>popphp/popcorn</code> routes config
@@ -274,23 +274,23 @@ methods — never a real path, which always starts with <code>/</code>, is <code
 method list to every route nested beneath it, at any depth:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;get,options&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;/users&#039; </span><span class="text-kw">=&gt; [
-                </span><span class="text-str">&#039;[/]&#039;    </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;</span><span class="text-kw">],
-                </span><span class="text-str">&#039;/count&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;count&#039;</span><span class="text-kw">],
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;get,options&#039;</span> =&gt; [
+            <span class="text-str">&#039;/users&#039;</span> =&gt; [
+                <span class="text-str">&#039;[/]&#039;</span>    =&gt; [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;index&#039;</span>],
+                <span class="text-str">&#039;/count&#039;</span> =&gt; [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;count&#039;</span>],
             ],
         ],
-        </span><span class="text-str">&#039;post,options&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;/users&#039; </span><span class="text-kw">=&gt; [
-                </span><span class="text-str">&#039;/create&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;create&#039;</span><span class="text-kw">],
+        <span class="text-str">&#039;post,options&#039;</span> =&gt; [
+            <span class="text-str">&#039;/users&#039;</span> =&gt; [
+                <span class="text-str">&#039;/create&#039;</span> =&gt; [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\UsersController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;create&#039;</span>],
             ],
         ],
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>This expands internally into per-route <code>method</code> keys, and the two forms mix freely in one config. If a
@@ -302,10 +302,10 @@ listing the methods that path does accept.</p>
 <p>Custom methods — WebDAV verbs, for instance — have to be whitelisted before they can be used as a verb call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">addCustomMethod</span><span class="text-kw">(</span><span class="text-str">&#039;propfind&#039;</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">propfind</span><span class="text-kw">(</span><span class="text-str">&#039;/dav&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\DavController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
+<span class="text-var">$app</span>-&gt;<span class="text-fn">addCustomMethod</span>(<span class="text-str">&#039;propfind&#039;</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">propfind</span>(<span class="text-str">&#039;/dav&#039;</span>, [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\DavController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;index&#039;</span>]);
+</code></pre>
 </div>
 
 <h2 id="cli-routes">CLI Routes<a class="anchor" href="#cli-routes" aria-label="Link to this section">#</a></h2>
@@ -314,37 +314,37 @@ listing the methods that path does accept.</p>
 signature in place of a URL path.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.cli.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;help&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;help&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;users list [--limit=]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\UsersController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;users edit &lt;id&gt; [-f|--force]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\UsersController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;edit&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;*&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;error&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;help&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;help&#039;</span>
+        ],
+        <span class="text-str">&#039;users list [--limit=]&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\UsersController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+        ],
+        <span class="text-str">&#039;users edit &lt;id&gt; [-f|--force]&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\UsersController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;edit&#039;</span>
+        ],
+        <span class="text-str">&#039;*&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\ConsoleController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;error&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>#!/usr/bin/env php
-<span class="text-var">&lt;?php
-$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app/config/app.cli.php&#039;</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">&lt;?php
+</span><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(<span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app/config/app.cli.php&#039;</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p>Bare words are literal commands, and everything else mirrors the HTTP side with angle brackets in place of
@@ -411,26 +411,26 @@ command <code>users new</code>.</p>
 <p>Parameters are passed positionally and options arrive together in one trailing array parameter:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Console/Controller/UsersController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Console\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Console\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Controller\AbstractController</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Dispatch\ConsoleTrait</span>;
 
-use </span><span class="text-var">Pop\Controller\AbstractController</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Dispatch\ConsoleTrait</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">UsersController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">UsersController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
+    <span class="text-kw">use</span> <span class="text-type">ConsoleTrait</span>;
 
-    use </span><span class="text-var">ConsoleTrait</span><span class="text-kw">;
-
-    public function </span><span class="text-var">edit</span><span class="text-kw">(</span><span class="text-var">$id</span><span class="text-kw">, array </span><span class="text-var">$options </span><span class="text-kw">= [])
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">edit</span>(<span class="text-var">$id</span>, <span class="text-kw">array</span> <span class="text-var">$options</span> = [])
     {
-        </span><span class="text-var">$force </span><span class="text-kw">= !empty(</span><span class="text-var">$options</span><span class="text-kw">[</span><span class="text-str">&#039;force&#039;</span><span class="text-kw">]);
-        </span><span class="text-comment">// Edit user $id, skipping confirmation when --force was passed
-    </span><span class="text-kw">}
+        <span class="text-var">$force</span> = !<span class="text-kw">empty</span>(<span class="text-var">$options</span>[<span class="text-str">&#039;force&#039;</span>]);
+        <span class="text-comment">// Edit user $id, skipping confirmation when --force was passed</span>
+    }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -448,30 +448,30 @@ Wiring a console application up with input parsing, colored output and help text
 are turned into a class name and a method name, with a <code>prefix</code> supplying the namespace.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;/:controller/:action[/:param]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;prefix&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\\&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;/:controller/:action[/:param]&#039;</span> =&gt; [
+            <span class="text-str">&#039;prefix&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\\&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A request for <code>/users/edit/1001</code> resolves to <code>App\Http\Controller\UsersController::edit('1001')</code>. The CLI form
 uses angle brackets:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.cli.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;&lt;controller&gt; &lt;action&gt; [&lt;param&gt;]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;prefix&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Console\Controller\\&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;&lt;controller&gt; &lt;action&gt; [&lt;param&gt;]&#039;</span> =&gt; [
+            <span class="text-str">&#039;prefix&#039;</span> =&gt; <span class="text-str">&#039;App\Console\Controller\\&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -494,21 +494,21 @@ route you want as the second argument to <code>run()</code> and the router match
 application from exiting after dispatch, so the worker survives to handle the next job.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app/config/app.cli.php&#039;</span><span class="text-kw">);
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(<span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app/config/app.cli.php&#039;</span>);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">(</span><span class="text-var">false</span><span class="text-kw">, </span><span class="text-str">&#039;send:email --quiet 1001&#039;</span><span class="text-kw">);          </span><span class="text-comment">// string form
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">(</span><span class="text-var">false</span><span class="text-kw">, [</span><span class="text-str">&#039;send:email&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;-q&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;John Smith&#039;</span><span class="text-kw">]); </span><span class="text-comment">// array form
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>(<span class="text-num">false</span>, <span class="text-str">&#039;send:email --quiet 1001&#039;</span>);          <span class="text-comment">// string form</span>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>(<span class="text-num">false</span>, [<span class="text-str">&#039;send:email&#039;</span>, <span class="text-str">&#039;-q&#039;</span>, <span class="text-str">&#039;John Smith&#039;</span>]); <span class="text-comment">// array form</span>
+</code></pre>
 </div>
 
 <p>A forced route carries its own parameters and options exactly as a real request does — the command is parsed
 for its <code>&lt;param&gt;</code>s and <code>[--option]</code>s, and a forced HTTP path is parsed for its <code>:param</code>s.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/app/config/app.http.php&#039;</span><span class="text-kw">);
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(<span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/app/config/app.http.php&#039;</span>);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">(</span><span class="text-var">false</span><span class="text-kw">, </span><span class="text-str">&#039;/user/42&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>(<span class="text-num">false</span>, <span class="text-str">&#039;/user/42&#039;</span>);
+</code></pre>
 </div>
 
 <p>The string form is split on whitespace and has no quoting support, so a value containing spaces has to go

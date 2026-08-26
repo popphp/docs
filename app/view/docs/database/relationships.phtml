@@ -14,32 +14,32 @@ column. The <code>$options</code> and <code>$eager</code> arguments are declared
 which matters more than it looks — the section on eager loading below is the reason.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Authors.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Authors</span> <span class="text-kw">extends</span> <span class="text-type">Record</span>
+{
 
-class </span><span class="text-var">Authors </span><span class="text-kw">extends </span><span class="text-var">Record
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">role</span><span class="text-kw">(?array </span><span class="text-var">$options </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">bool $eager </span><span class="text-kw">= </span><span class="text-var">false</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">role</span>(?<span class="text-kw">array</span> <span class="text-var">$options</span> = <span class="text-num">null</span>, <span class="text-type">bool</span> <span class="text-var">$eager</span> = <span class="text-num">false</span>)
     {
-        return </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">hasOneOf</span><span class="text-kw">(</span><span class="text-str">&#039;App\Table\Roles&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;role_id&#039;</span><span class="text-kw">, </span><span class="text-var">$options</span><span class="text-kw">, </span><span class="text-var">$eager</span><span class="text-kw">);
+        <span class="text-kw">return</span> <span class="text-var">$this</span>-&gt;<span class="text-fn">hasOneOf</span>(<span class="text-str">&#039;App\Table\Roles&#039;</span>, <span class="text-str">&#039;role_id&#039;</span>, <span class="text-var">$options</span>, <span class="text-var">$eager</span>);
     }
 
-    public function </span><span class="text-var">profile</span><span class="text-kw">(?array </span><span class="text-var">$options </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">bool $eager </span><span class="text-kw">= </span><span class="text-var">false</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">profile</span>(?<span class="text-kw">array</span> <span class="text-var">$options</span> = <span class="text-num">null</span>, <span class="text-type">bool</span> <span class="text-var">$eager</span> = <span class="text-num">false</span>)
     {
-        return </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">hasOne</span><span class="text-kw">(</span><span class="text-str">&#039;App\Table\Profiles&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;author_id&#039;</span><span class="text-kw">, </span><span class="text-var">$options</span><span class="text-kw">, </span><span class="text-var">$eager</span><span class="text-kw">);
+        <span class="text-kw">return</span> <span class="text-var">$this</span>-&gt;<span class="text-fn">hasOne</span>(<span class="text-str">&#039;App\Table\Profiles&#039;</span>, <span class="text-str">&#039;author_id&#039;</span>, <span class="text-var">$options</span>, <span class="text-var">$eager</span>);
     }
 
-    public function </span><span class="text-var">posts</span><span class="text-kw">(?array </span><span class="text-var">$options </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">bool $eager </span><span class="text-kw">= </span><span class="text-var">false</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">posts</span>(?<span class="text-kw">array</span> <span class="text-var">$options</span> = <span class="text-num">null</span>, <span class="text-type">bool</span> <span class="text-var">$eager</span> = <span class="text-num">false</span>)
     {
-        return </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">hasMany</span><span class="text-kw">(</span><span class="text-str">&#039;App\Table\Posts&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;author_id&#039;</span><span class="text-kw">, </span><span class="text-var">$options</span><span class="text-kw">, </span><span class="text-var">$eager</span><span class="text-kw">);
+        <span class="text-kw">return</span> <span class="text-var">$this</span>-&gt;<span class="text-fn">hasMany</span>(<span class="text-str">&#039;App\Table\Posts&#039;</span>, <span class="text-str">&#039;author_id&#039;</span>, <span class="text-var">$options</span>, <span class="text-var">$eager</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>An <code>authors</code> row has one role, one profile and many posts. Which of the four you reach for is decided
@@ -90,55 +90,55 @@ loading can reach it.</p>
 <p>The child side of a <code>hasOne()</code> names the same column and points back:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Profiles.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Profiles</span> <span class="text-kw">extends</span> <span class="text-type">Record</span>
+{
 
-class </span><span class="text-var">Profiles </span><span class="text-kw">extends </span><span class="text-var">Record
-</span><span class="text-kw">{
+    <span class="text-kw">protected</span> <span class="text-kw">array</span> <span class="text-var">$primaryKeys</span> = [<span class="text-str">&#039;author_id&#039;</span>];
 
-    protected array </span><span class="text-var">$primaryKeys </span><span class="text-kw">= [</span><span class="text-str">&#039;author_id&#039;</span><span class="text-kw">];
-
-    public function </span><span class="text-var">author</span><span class="text-kw">(?array </span><span class="text-var">$options </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">bool $eager </span><span class="text-kw">= </span><span class="text-var">false</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">author</span>(?<span class="text-kw">array</span> <span class="text-var">$options</span> = <span class="text-num">null</span>, <span class="text-type">bool</span> <span class="text-var">$eager</span> = <span class="text-num">false</span>)
     {
-        return </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">belongsTo</span><span class="text-kw">(</span><span class="text-str">&#039;App\Table\Authors&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;author_id&#039;</span><span class="text-kw">, </span><span class="text-var">$options</span><span class="text-kw">, </span><span class="text-var">$eager</span><span class="text-kw">);
+        <span class="text-kw">return</span> <span class="text-var">$this</span>-&gt;<span class="text-fn">belongsTo</span>(<span class="text-str">&#039;App\Table\Authors&#039;</span>, <span class="text-str">&#039;author_id&#039;</span>, <span class="text-var">$options</span>, <span class="text-var">$eager</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Calling either side runs one query and returns one record:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Authors</span><span class="text-kw">;
-use </span><span class="text-var">App\Table\Profiles</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Authors</span>;
+<span class="text-kw">use</span> <span class="text-type">App\Table\Profiles</span>;
 
-</span><span class="text-var">$author </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
+<span class="text-var">$author</span> = <span class="text-type">Authors</span>::<span class="text-fn">findById</span>(<span class="text-num">1</span>);
 
-echo </span><span class="text-var">$author</span><span class="text-kw">-&gt;</span><span class="text-var">profile</span><span class="text-kw">()-&gt;</span><span class="text-var">bio</span><span class="text-kw">;
-echo </span><span class="text-var">$author</span><span class="text-kw">-&gt;</span><span class="text-var">role</span><span class="text-kw">()-&gt;</span><span class="text-var">role</span><span class="text-kw">;
+<span class="text-kw">echo</span> <span class="text-var">$author</span>-&gt;<span class="text-fn">profile</span>()-&gt;<span class="text-type">bio</span>;
+<span class="text-kw">echo</span> <span class="text-var">$author</span>-&gt;<span class="text-fn">role</span>()-&gt;<span class="text-type">role</span>;
 
-</span><span class="text-var">$profile </span><span class="text-kw">= </span><span class="text-var">Profiles</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
+<span class="text-var">$profile</span> = <span class="text-type">Profiles</span>::<span class="text-fn">findById</span>(<span class="text-num">1</span>);
 
-echo </span><span class="text-var">$profile</span><span class="text-kw">-&gt;</span><span class="text-var">author</span><span class="text-kw">()-&gt;</span><span class="text-var">username</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$profile</span>-&gt;<span class="text-fn">author</span>()-&gt;<span class="text-type">username</span>;
+</code></pre>
 </div>
 
 <p>A relationship with nothing on the other side comes back as an empty record of that class, exactly the
 way an unmatched <code>findById()</code> does — not <code>null</code>. Test it the same way, by checking a column:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Authors</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Authors</span>;
 
-</span><span class="text-var">$profile </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">3</span><span class="text-kw">)-&gt;</span><span class="text-var">profile</span><span class="text-kw">();
+<span class="text-var">$profile</span> = <span class="text-type">Authors</span>::<span class="text-fn">findById</span>(<span class="text-num">3</span>)-&gt;<span class="text-fn">profile</span>();
 
-if (!isset(</span><span class="text-var">$profile</span><span class="text-kw">-&gt;</span><span class="text-var">author_id</span><span class="text-kw">)) {
-    </span><span class="text-comment">// This author has no profile row
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (!<span class="text-kw">isset</span>(<span class="text-var">$profile</span>-&gt;<span class="text-type">author_id</span>)) {
+    <span class="text-comment">// This author has no profile row</span>
+}
+</code></pre>
 </div>
 
 <h2 id="one-to-many">One-to-Many<a class="anchor" href="#one-to-many" aria-label="Link to this section">#</a></h2>
@@ -148,31 +148,31 @@ live record you can modify and save. An author with no posts gives an empty coll
 nothing to loop over:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Authors</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Authors</span>;
 
-</span><span class="text-var">$author </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
+<span class="text-var">$author</span> = <span class="text-type">Authors</span>::<span class="text-fn">findById</span>(<span class="text-num">1</span>);
 
-foreach (</span><span class="text-var">$author</span><span class="text-kw">-&gt;</span><span class="text-var">posts</span><span class="text-kw">() as </span><span class="text-var">$post</span><span class="text-kw">) {
-    echo </span><span class="text-var">$post</span><span class="text-kw">-&gt;</span><span class="text-var">title</span><span class="text-kw">;
+<span class="text-kw">foreach</span> (<span class="text-var">$author</span>-&gt;<span class="text-fn">posts</span>() <span class="text-kw">as</span> <span class="text-var">$post</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$post</span>-&gt;<span class="text-type">title</span>;
 }
 
-echo </span><span class="text-var">count</span><span class="text-kw">(</span><span class="text-var">$author</span><span class="text-kw">-&gt;</span><span class="text-var">posts</span><span class="text-kw">());
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-fn">count</span>(<span class="text-var">$author</span>-&gt;<span class="text-fn">posts</span>());
+</code></pre>
 </div>
 
 <p>Two helpers collapse a <code>hasMany()</code> down to a single row. <code>latest()</code> and <code>oldest()</code> are called on the
 parent record, before the relationship, and take the column to sort by — <code>id</code> unless you say otherwise:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Authors</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Authors</span>;
 
-</span><span class="text-var">$author </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
+<span class="text-var">$author</span> = <span class="text-type">Authors</span>::<span class="text-fn">findById</span>(<span class="text-num">1</span>);
 
-</span><span class="text-var">$newest </span><span class="text-kw">= </span><span class="text-var">$author</span><span class="text-kw">-&gt;</span><span class="text-var">latest</span><span class="text-kw">()-&gt;</span><span class="text-var">posts</span><span class="text-kw">();               </span><span class="text-comment">// highest id
-</span><span class="text-var">$first  </span><span class="text-kw">= </span><span class="text-var">$author</span><span class="text-kw">-&gt;</span><span class="text-var">oldest</span><span class="text-kw">(</span><span class="text-str">&#039;created_at&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">posts</span><span class="text-kw">();   </span><span class="text-comment">// earliest created_at
+<span class="text-var">$newest</span> = <span class="text-var">$author</span>-&gt;<span class="text-fn">latest</span>()-&gt;<span class="text-fn">posts</span>();               <span class="text-comment">// highest id</span>
+<span class="text-var">$first</span>  = <span class="text-var">$author</span>-&gt;<span class="text-fn">oldest</span>(<span class="text-str">&#039;created_at&#039;</span>)-&gt;<span class="text-fn">posts</span>();   <span class="text-comment">// earliest created_at</span>
 
-</span><span class="text-kw">echo </span><span class="text-var">$newest</span><span class="text-kw">-&gt;</span><span class="text-var">title</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$newest</span>-&gt;<span class="text-type">title</span>;
+</code></pre>
 </div>
 
 <p>Underneath, both set <code>order</code> and <code>limit</code> on the relationship and unwrap the one-row collection, so what
@@ -186,40 +186,40 @@ for an unlimited <code>hasMany()</code> afterward.</p>
 <code>tag_id</code>; the relationship selects from <code>tags</code>, joins <code>post_tags</code> onto it, and matches on <code>post_id</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Posts.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Posts</span> <span class="text-kw">extends</span> <span class="text-type">Record</span>
+{
 
-class </span><span class="text-var">Posts </span><span class="text-kw">extends </span><span class="text-var">Record
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">author</span><span class="text-kw">(?array </span><span class="text-var">$options </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">bool $eager </span><span class="text-kw">= </span><span class="text-var">false</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">author</span>(?<span class="text-kw">array</span> <span class="text-var">$options</span> = <span class="text-num">null</span>, <span class="text-type">bool</span> <span class="text-var">$eager</span> = <span class="text-num">false</span>)
     {
-        return </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">belongsTo</span><span class="text-kw">(</span><span class="text-str">&#039;App\Table\Authors&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;author_id&#039;</span><span class="text-kw">, </span><span class="text-var">$options</span><span class="text-kw">, </span><span class="text-var">$eager</span><span class="text-kw">);
+        <span class="text-kw">return</span> <span class="text-var">$this</span>-&gt;<span class="text-fn">belongsTo</span>(<span class="text-str">&#039;App\Table\Authors&#039;</span>, <span class="text-str">&#039;author_id&#039;</span>, <span class="text-var">$options</span>, <span class="text-var">$eager</span>);
     }
 
-    public function </span><span class="text-var">tags</span><span class="text-kw">(?array </span><span class="text-var">$options </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">bool $eager </span><span class="text-kw">= </span><span class="text-var">false</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">tags</span>(?<span class="text-kw">array</span> <span class="text-var">$options</span> = <span class="text-num">null</span>, <span class="text-type">bool</span> <span class="text-var">$eager</span> = <span class="text-num">false</span>)
     {
-        return </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">hasMany</span><span class="text-kw">(</span><span class="text-str">&#039;App\Table\Tags&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;post_id&#039;</span><span class="text-kw">, [
-            </span><span class="text-str">&#039;select&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;tags.id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;tags.tag&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;post_tags.post_id&#039;</span><span class="text-kw">],
-            </span><span class="text-str">&#039;join&#039;   </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;table&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;post_tags&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;columns&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;post_tags.tag_id&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;tags.id&#039;</span><span class="text-kw">]]
-        ], </span><span class="text-var">$eager</span><span class="text-kw">);
+        <span class="text-kw">return</span> <span class="text-var">$this</span>-&gt;<span class="text-fn">hasMany</span>(<span class="text-str">&#039;App\Table\Tags&#039;</span>, <span class="text-str">&#039;post_id&#039;</span>, [
+            <span class="text-str">&#039;select&#039;</span> =&gt; [<span class="text-str">&#039;tags.id&#039;</span>, <span class="text-str">&#039;tags.tag&#039;</span>, <span class="text-str">&#039;post_tags.post_id&#039;</span>],
+            <span class="text-str">&#039;join&#039;</span>   =&gt; [<span class="text-str">&#039;table&#039;</span> =&gt; <span class="text-str">&#039;post_tags&#039;</span>, <span class="text-str">&#039;columns&#039;</span> =&gt; [<span class="text-str">&#039;post_tags.tag_id&#039;</span> =&gt; <span class="text-str">&#039;tags.id&#039;</span>]]
+        ], <span class="text-var">$eager</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Posts</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Posts</span>;
 
-foreach (</span><span class="text-var">Posts</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">)-&gt;</span><span class="text-var">tags</span><span class="text-kw">() as </span><span class="text-var">$tag</span><span class="text-kw">) {
-    echo </span><span class="text-var">$tag</span><span class="text-kw">-&gt;</span><span class="text-var">tag</span><span class="text-kw">;
+<span class="text-kw">foreach</span> (<span class="text-type">Posts</span>::<span class="text-fn">findById</span>(<span class="text-num">1</span>)-&gt;<span class="text-fn">tags</span>() <span class="text-kw">as</span> <span class="text-var">$tag</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$tag</span>-&gt;<span class="text-type">tag</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>That returns <code>Tags</code> records, one query, on MySQL, PostgreSQL and SQLite alike. The joining column is
@@ -230,24 +230,24 @@ instead and treat it as a one-to-many with a <code>hasOneOf()</code> hanging off
 columns declares both, the same way any composite key does:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/PostTags.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">PostTags</span> <span class="text-kw">extends</span> <span class="text-type">Record</span>
+{
 
-class </span><span class="text-var">PostTags </span><span class="text-kw">extends </span><span class="text-var">Record
-</span><span class="text-kw">{
+    <span class="text-kw">protected</span> <span class="text-kw">array</span> <span class="text-var">$primaryKeys</span> = [<span class="text-str">&#039;post_id&#039;</span>, <span class="text-str">&#039;tag_id&#039;</span>];
 
-    protected array </span><span class="text-var">$primaryKeys </span><span class="text-kw">= [</span><span class="text-str">&#039;post_id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;tag_id&#039;</span><span class="text-kw">];
-
-    public function </span><span class="text-var">tag</span><span class="text-kw">(?array </span><span class="text-var">$options </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">bool $eager </span><span class="text-kw">= </span><span class="text-var">false</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">tag</span>(?<span class="text-kw">array</span> <span class="text-var">$options</span> = <span class="text-num">null</span>, <span class="text-type">bool</span> <span class="text-var">$eager</span> = <span class="text-num">false</span>)
     {
-        return </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">hasOneOf</span><span class="text-kw">(</span><span class="text-str">&#039;App\Table\Tags&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;tag_id&#039;</span><span class="text-kw">, </span><span class="text-var">$options</span><span class="text-kw">, </span><span class="text-var">$eager</span><span class="text-kw">);
+        <span class="text-kw">return</span> <span class="text-var">$this</span>-&gt;<span class="text-fn">hasOneOf</span>(<span class="text-str">&#039;App\Table\Tags&#039;</span>, <span class="text-str">&#039;tag_id&#039;</span>, <span class="text-var">$options</span>, <span class="text-var">$eager</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Posts</code> then carries an ordinary <code>hasMany('App\Table\PostTags', 'post_id')</code> beside the <code>tags()</code> above.
@@ -261,14 +261,14 @@ relationships up front so they are fetched with the parent instead, and it's a s
 replaces the finder's <code>find</code> prefix with <code>get</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Authors</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Authors</span>;
 
-</span><span class="text-var">$author </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">with</span><span class="text-kw">(</span><span class="text-str">&#039;posts&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">getById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
+<span class="text-var">$author</span> = <span class="text-type">Authors</span>::<span class="text-fn">with</span>(<span class="text-str">&#039;posts&#039;</span>)-&gt;<span class="text-fn">getById</span>(<span class="text-num">1</span>);
 
-foreach (</span><span class="text-var">$author</span><span class="text-kw">-&gt;</span><span class="text-var">posts </span><span class="text-kw">as </span><span class="text-var">$post</span><span class="text-kw">) {
-    echo </span><span class="text-var">$post</span><span class="text-kw">-&gt;</span><span class="text-var">title</span><span class="text-kw">;
+<span class="text-kw">foreach</span> (<span class="text-var">$author</span>-&gt;<span class="text-type">posts</span> <span class="text-kw">as</span> <span class="text-var">$post</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$post</span>-&gt;<span class="text-type">title</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The result is a property rather than a method call. <code>with()</code> accepts an array for more than one, and a
@@ -276,11 +276,11 @@ dotted name walks a relationship on the loaded records — <code>posts.tags</cod
 each of those posts' tags:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Authors</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Authors</span>;
 
-</span><span class="text-var">$author </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">with</span><span class="text-kw">([</span><span class="text-str">&#039;role&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;profile&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;posts&#039;</span><span class="text-kw">])-&gt;</span><span class="text-var">getById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
-</span><span class="text-var">$author </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">with</span><span class="text-kw">(</span><span class="text-str">&#039;posts.tags&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">getById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$author</span> = <span class="text-type">Authors</span>::<span class="text-fn">with</span>([<span class="text-str">&#039;role&#039;</span>, <span class="text-str">&#039;profile&#039;</span>, <span class="text-str">&#039;posts&#039;</span>])-&gt;<span class="text-fn">getById</span>(<span class="text-num">1</span>);
+<span class="text-var">$author</span> = <span class="text-type">Authors</span>::<span class="text-fn">with</span>(<span class="text-str">&#039;posts.tags&#039;</span>)-&gt;<span class="text-fn">getById</span>(<span class="text-num">1</span>);
+</code></pre>
 </div>
 
 <p>Write the property form in a view: <code>$author-&gt;posts</code> returns the eager-loaded collection when <code>with()</code> asked
@@ -295,13 +295,13 @@ with the placeholder form the adapter uses.</p>
 applies it to the related rows:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Authors</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Authors</span>;
 
-</span><span class="text-var">$recent </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">)-&gt;</span><span class="text-var">posts</span><span class="text-kw">([
-    </span><span class="text-str">&#039;order&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;created_at DESC&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;limit&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">5
-</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$recent</span> = <span class="text-type">Authors</span>::<span class="text-fn">findById</span>(<span class="text-num">1</span>)-&gt;<span class="text-fn">posts</span>([
+    <span class="text-str">&#039;order&#039;</span> =&gt; <span class="text-str">&#039;created_at DESC&#039;</span>,
+    <span class="text-str">&#039;limit&#039;</span> =&gt; <span class="text-num">5</span>
+]);
+</code></pre>
 </div>
 
 <p>There's a seventh key that only a relationship reads. <code>columns</code> takes a predicate array in the same
@@ -309,12 +309,12 @@ shorthand a <code>findBy()</code> takes and adds it as a further condition on th
 ask for <em>some</em> of them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Authors</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Authors</span>;
 
-</span><span class="text-var">$published </span><span class="text-kw">= </span><span class="text-var">Authors</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">)-&gt;</span><span class="text-var">posts</span><span class="text-kw">([
-    </span><span class="text-str">&#039;columns&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;published&#039;</span><span class="text-kw">]
+<span class="text-var">$published</span> = <span class="text-type">Authors</span>::<span class="text-fn">findById</span>(<span class="text-num">1</span>)-&gt;<span class="text-fn">posts</span>([
+    <span class="text-str">&#039;columns&#039;</span> =&gt; [<span class="text-str">&#039;status&#039;</span> =&gt; <span class="text-str">&#039;published&#039;</span>]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>findBy()</code>, <code>findAll()</code> and the other direct finders never read <code>columns</code> — it does nothing at all

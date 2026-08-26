@@ -19,32 +19,32 @@ queries actually ran.</p>
 <p>Three pieces: a <code>Pop\Debug\Debugger</code>, at least one handler, and a storage object.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\MessageHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\MessageHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">();
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(new </span><span class="text-var">MessageHandler</span><span class="text-kw">());
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">setStorage</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>();
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-kw">new</span> <span class="text-type">MessageHandler</span>());
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">setStorage</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>));
 
-</span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;message&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">addMessage</span><span class="text-kw">(</span><span class="text-str">&#039;Hey! Something happened!&#039;</span><span class="text-kw">);
+<span class="text-var">$debugger</span>[<span class="text-str">&#039;message&#039;</span>]-&gt;<span class="text-fn">addMessage</span>(<span class="text-str">&#039;Hey! Something happened!&#039;</span>);
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <p>Handlers and storage can go into the constructor instead, individually or as one array:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\MessageHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\TimeHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\MessageHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\TimeHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">(new </span><span class="text-var">MessageHandler</span><span class="text-kw">(), new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>(<span class="text-kw">new</span> <span class="text-type">MessageHandler</span>(), <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>));
 
-</span><span class="text-var">$other </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">([new </span><span class="text-var">TimeHandler</span><span class="text-kw">(), new </span><span class="text-var">MessageHandler</span><span class="text-kw">(), new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">)]);
-</span></code></pre>
+<span class="text-var">$other</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>([<span class="text-kw">new</span> <span class="text-type">TimeHandler</span>(), <span class="text-kw">new</span> <span class="text-type">MessageHandler</span>(), <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>)]);
+</code></pre>
 </div>
 
 <p>A handler is reachable on the debugger by array offset. The key is the class name, lowercased with
@@ -52,16 +52,16 @@ use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text
 constructor to register more than one of a type, and that name is prefixed onto the key:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\MessageHandler</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\MessageHandler</span>;
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">();
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(new </span><span class="text-var">MessageHandler</span><span class="text-kw">(</span><span class="text-str">&#039;requests&#039;</span><span class="text-kw">));
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(new </span><span class="text-var">MessageHandler</span><span class="text-kw">(</span><span class="text-str">&#039;background-jobs&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>();
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-kw">new</span> <span class="text-type">MessageHandler</span>(<span class="text-str">&#039;requests&#039;</span>));
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-kw">new</span> <span class="text-type">MessageHandler</span>(<span class="text-str">&#039;background-jobs&#039;</span>));
 
-</span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;requests-message&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">addMessage</span><span class="text-kw">(</span><span class="text-str">&#039;Handled an inbound request&#039;</span><span class="text-kw">);
-</span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;background-jobs-message&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">addMessage</span><span class="text-kw">(</span><span class="text-str">&#039;Ran a queued job&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$debugger</span>[<span class="text-str">&#039;requests-message&#039;</span>]-&gt;<span class="text-fn">addMessage</span>(<span class="text-str">&#039;Handled an inbound request&#039;</span>);
+<span class="text-var">$debugger</span>[<span class="text-str">&#039;background-jobs-message&#039;</span>]-&gt;<span class="text-fn">addMessage</span>(<span class="text-str">&#039;Ran a queued job&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>save()</code> writes every handler's output and returns the debugger's <strong>request ID</strong> — a hex string shared by
@@ -121,66 +121,66 @@ for one of your own.</p>
 debugger saves. <code>MemoryHandler</code> samples on demand, so you call it at the points worth comparing:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\MemoryHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\TimeHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\MemoryHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\TimeHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">();
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(new </span><span class="text-var">TimeHandler</span><span class="text-kw">());
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(new </span><span class="text-var">MemoryHandler</span><span class="text-kw">());
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">setStorage</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>();
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-kw">new</span> <span class="text-type">TimeHandler</span>());
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-kw">new</span> <span class="text-type">MemoryHandler</span>());
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">setStorage</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>));
 
-</span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;memory&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">updateMemoryUsage</span><span class="text-kw">();
-</span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;memory&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">updatePeakMemoryUsage</span><span class="text-kw">();
+<span class="text-var">$debugger</span>[<span class="text-str">&#039;memory&#039;</span>]-&gt;<span class="text-fn">updateMemoryUsage</span>();
+<span class="text-var">$debugger</span>[<span class="text-str">&#039;memory&#039;</span>]-&gt;<span class="text-fn">updatePeakMemoryUsage</span>();
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <p><code>ExceptionHandler</code> takes exceptions you catch and hand it, rather than installing itself as a global
 handler:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\ExceptionHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\ExceptionHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">(new </span><span class="text-var">ExceptionHandler</span><span class="text-kw">(), new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>(<span class="text-kw">new</span> <span class="text-type">ExceptionHandler</span>(), <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>));
 
-try {
-    throw new </span><span class="text-var">\Exception</span><span class="text-kw">(</span><span class="text-str">&#039;Error: This is a test exception&#039;</span><span class="text-kw">);
-} catch (</span><span class="text-var">\Exception $e</span><span class="text-kw">) {
-    </span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;exception&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">addException</span><span class="text-kw">(</span><span class="text-var">$e</span><span class="text-kw">);
-    </span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
+<span class="text-kw">try</span> {
+    <span class="text-kw">throw</span> <span class="text-kw">new</span> <span class="text-type">\Exception</span>(<span class="text-str">&#039;Error: This is a test exception&#039;</span>);
+} <span class="text-kw">catch</span> (<span class="text-type">\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-var">$debugger</span>[<span class="text-str">&#039;exception&#039;</span>]-&gt;<span class="text-fn">addException</span>(<span class="text-var">$e</span>);
+    <span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>QueryHandler</code> is the one that ties into another component. <code>pop-db</code>'s adapters accept a listener, and
 handing <code>listen()</code> the handler's class name gives you back a configured instance to register:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\QueryHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\QueryHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
 
-class </span><span class="text-var">DebugUser </span><span class="text-kw">extends </span><span class="text-var">Record </span><span class="text-kw">{}
+<span class="text-kw">class</span> <span class="text-type">DebugUser</span> <span class="text-kw">extends</span> <span class="text-type">Record</span> {}
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">connect</span><span class="text-kw">(</span><span class="text-str">&#039;sqlite&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/app.sqlite&#039;</span><span class="text-kw">]);
-</span><span class="text-var">DebugUser</span><span class="text-kw">::</span><span class="text-var">setDb</span><span class="text-kw">(</span><span class="text-var">$db</span><span class="text-kw">);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">connect</span>(<span class="text-str">&#039;sqlite&#039;</span>, [<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/app.sqlite&#039;</span>]);
+<span class="text-type">DebugUser</span>::<span class="text-fn">setDb</span>(<span class="text-var">$db</span>);
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">();
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">listen</span><span class="text-kw">(</span><span class="text-var">QueryHandler</span><span class="text-kw">::class));
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">setStorage</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;ndjson&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>();
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-var">$db</span>-&gt;<span class="text-fn">listen</span>(<span class="text-type">QueryHandler</span>::<span class="text-kw">class</span>));
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">setStorage</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>, <span class="text-str">&#039;ndjson&#039;</span>));
 
-</span><span class="text-var">$user </span><span class="text-kw">= new </span><span class="text-var">DebugUser</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
+<span class="text-var">$user</span> = <span class="text-kw">new</span> <span class="text-type">DebugUser</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;admin&#039;</span>]);
+<span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>();
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <p>Each query is recorded with its SQL, its elapsed time and its bound parameters.</p>
@@ -189,14 +189,14 @@ you record.</p>
 <p><code>RequestHandler</code>'s redaction is per instance and adjustable in three ways:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Handler\RequestHandler</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\RequestHandler</span>;
 
-</span><span class="text-var">$requestHandler </span><span class="text-kw">= new </span><span class="text-var">RequestHandler</span><span class="text-kw">();
+<span class="text-var">$requestHandler</span> = <span class="text-kw">new</span> <span class="text-type">RequestHandler</span>();
 
-</span><span class="text-var">$requestHandler</span><span class="text-kw">-&gt;</span><span class="text-var">setRedactSensitiveData</span><span class="text-kw">(</span><span class="text-var">false</span><span class="text-kw">);        </span><span class="text-comment">// off — captures raw values
-</span><span class="text-var">$requestHandler</span><span class="text-kw">-&gt;</span><span class="text-var">setRedactedKeys</span><span class="text-kw">([</span><span class="text-str">&#039;password&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;pin&#039;</span><span class="text-kw">]); </span><span class="text-comment">// replaces the default key list
-</span><span class="text-var">$requestHandler</span><span class="text-kw">-&gt;</span><span class="text-var">addRedactedKey</span><span class="text-kw">(</span><span class="text-str">&#039;x-internal-id&#039;</span><span class="text-kw">);      </span><span class="text-comment">// adds to the current list
-</span></code></pre>
+<span class="text-var">$requestHandler</span>-&gt;<span class="text-fn">setRedactSensitiveData</span>(<span class="text-num">false</span>);        <span class="text-comment">// off — captures raw values</span>
+<span class="text-var">$requestHandler</span>-&gt;<span class="text-fn">setRedactedKeys</span>([<span class="text-str">&#039;password&#039;</span>, <span class="text-str">&#039;pin&#039;</span>]); <span class="text-comment">// replaces the default key list</span>
+<span class="text-var">$requestHandler</span>-&gt;<span class="text-fn">addRedactedKey</span>(<span class="text-str">&#039;x-internal-id&#039;</span>);      <span class="text-comment">// adds to the current list</span>
+</code></pre>
 </div>
 
 <h2 id="storage">Storage<a class="anchor" href="#storage" aria-label="Link to this section">#</a></h2>
@@ -208,16 +208,16 @@ whatever else a debugger can be wired to.</p>
 the default; TSV and NDJSON are the alternatives, chosen with the second constructor argument:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\MessageHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\MessageHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">(new </span><span class="text-var">MessageHandler</span><span class="text-kw">(), new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;ndjson&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>(<span class="text-kw">new</span> <span class="text-type">MessageHandler</span>(), <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>, <span class="text-str">&#039;ndjson&#039;</span>));
 
-</span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;message&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">addMessage</span><span class="text-kw">(</span><span class="text-str">&#039;Hey! Something happened!&#039;</span><span class="text-kw">);
+<span class="text-var">$debugger</span>[<span class="text-str">&#039;message&#039;</span>]-&gt;<span class="text-fn">addMessage</span>(<span class="text-str">&#039;Hey! Something happened!&#039;</span>);
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <p>The CSV output is one flat row per event:</p>
@@ -238,19 +238,19 @@ path fails at wiring time.</p>
 table with its indexes on construction if it is not already there:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\MessageHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\Database</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\MessageHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\Database</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">connect</span><span class="text-kw">(</span><span class="text-str">&#039;sqlite&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug.sqlite&#039;</span><span class="text-kw">]);
+<span class="text-var">$db</span> = <span class="text-type">Db</span>::<span class="text-fn">connect</span>(<span class="text-str">&#039;sqlite&#039;</span>, [<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug.sqlite&#039;</span>]);
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">(new </span><span class="text-var">MessageHandler</span><span class="text-kw">(), new </span><span class="text-var">Database</span><span class="text-kw">(</span><span class="text-var">$db</span><span class="text-kw">, </span><span class="text-str">&#039;my_debug_table&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>(<span class="text-kw">new</span> <span class="text-type">MessageHandler</span>(), <span class="text-kw">new</span> <span class="text-type">Database</span>(<span class="text-var">$db</span>, <span class="text-str">&#039;my_debug_table&#039;</span>));
 
-</span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;message&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">addMessage</span><span class="text-kw">(</span><span class="text-str">&#039;to the database&#039;</span><span class="text-kw">);
+<span class="text-var">$debugger</span>[<span class="text-str">&#039;message&#039;</span>]-&gt;<span class="text-fn">addMessage</span>(<span class="text-str">&#039;to the database&#039;</span>);
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <p>The columns are <code>id</code>, <code>key</code>, <code>handler</code>, <code>start</code>, <code>end</code>, <code>elapsed</code>, <code>type</code>, <code>message</code> and <code>context</code> —
@@ -264,28 +264,28 @@ PSR-3 logger as they happen, and it runs alongside whatever storage is set — o
 it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\ExceptionHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File </span><span class="text-kw">as </span><span class="text-var">LogFile</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\ExceptionHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span> <span class="text-kw">as</span> <span class="text-type">LogFile</span>;
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">();
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(new </span><span class="text-var">ExceptionHandler</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">));
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">setStorage</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>();
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-kw">new</span> <span class="text-type">ExceptionHandler</span>(<span class="text-num">true</span>));
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">setStorage</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>));
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addLogger</span><span class="text-kw">(new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">LogFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/log/debug.log&#039;</span><span class="text-kw">)), [
-    </span><span class="text-str">&#039;level&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">Logger</span><span class="text-kw">::</span><span class="text-var">ERROR</span><span class="text-kw">,
-    </span><span class="text-str">&#039;context&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;json&#039;</span><span class="text-kw">,
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addLogger</span>(<span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">LogFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/log/debug.log&#039;</span>)), [
+    <span class="text-str">&#039;level&#039;</span>   =&gt; <span class="text-type">Logger</span>::<span class="text-num">ERROR</span>,
+    <span class="text-str">&#039;context&#039;</span> =&gt; <span class="text-str">&#039;json&#039;</span>,
 ]);
 
-try {
-    throw new </span><span class="text-var">\Pop\Debug\Exception</span><span class="text-kw">(</span><span class="text-str">&#039;This is a test debug exception&#039;</span><span class="text-kw">);
-} catch (</span><span class="text-var">\Exception $e</span><span class="text-kw">) {
-    </span><span class="text-var">$debugger</span><span class="text-kw">[</span><span class="text-str">&#039;exception&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">addException</span><span class="text-kw">(</span><span class="text-var">$e</span><span class="text-kw">);
-    </span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
+<span class="text-kw">try</span> {
+    <span class="text-kw">throw</span> <span class="text-kw">new</span> <span class="text-type">\Pop\Debug\Exception</span>(<span class="text-str">&#039;This is a test debug exception&#039;</span>);
+} <span class="text-kw">catch</span> (<span class="text-type">\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-var">$debugger</span>[<span class="text-str">&#039;exception&#039;</span>]-&gt;<span class="text-fn">addException</span>(<span class="text-var">$e</span>);
+    <span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The second argument is the logging parameters. <code>level</code> is the only one every handler requires — the PSR-3
@@ -297,23 +297,23 @@ it rather than emitting JSON.</p>
 request and time handlers, <code>limit</code> is a number of seconds, logged only when the operation took longer:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Debug\Debugger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Handler\TimeHandler</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Debug\Storage\File</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File </span><span class="text-kw">as </span><span class="text-var">LogFile</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Debug\Debugger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Handler\TimeHandler</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Debug\Storage\File</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span> <span class="text-kw">as</span> <span class="text-type">LogFile</span>;
 
-</span><span class="text-var">$debugger </span><span class="text-kw">= new </span><span class="text-var">Debugger</span><span class="text-kw">();
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addHandler</span><span class="text-kw">(new </span><span class="text-var">TimeHandler</span><span class="text-kw">());
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">setStorage</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/debug&#039;</span><span class="text-kw">));
+<span class="text-var">$debugger</span> = <span class="text-kw">new</span> <span class="text-type">Debugger</span>();
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addHandler</span>(<span class="text-kw">new</span> <span class="text-type">TimeHandler</span>());
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">setStorage</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/debug&#039;</span>));
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">addLogger</span><span class="text-kw">(new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">LogFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/log/slow.log&#039;</span><span class="text-kw">)), [
-    </span><span class="text-str">&#039;level&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">Logger</span><span class="text-kw">::</span><span class="text-var">WARNING</span><span class="text-kw">,
-    </span><span class="text-str">&#039;limit&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">,
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">addLogger</span>(<span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">LogFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/log/slow.log&#039;</span>)), [
+    <span class="text-str">&#039;level&#039;</span> =&gt; <span class="text-type">Logger</span>::<span class="text-num">WARNING</span>,
+    <span class="text-str">&#039;limit&#039;</span> =&gt; <span class="text-num">1</span>,
 ]);
 
-</span><span class="text-var">$debugger</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$debugger</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <p>A request that runs past a second logs a line naming the limit and the actual elapsed time; one that does

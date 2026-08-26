@@ -19,14 +19,14 @@ for a container's stdout is a change at construction and nowhere else.</p>
 <p>A logger takes a writer. The file writer takes a path, and that's the whole setup.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.log&#039;</span><span class="text-kw">));
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.log&#039;</span>));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;Just a info message&#039;</span><span class="text-kw">);
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">alert</span><span class="text-kw">(</span><span class="text-str">&#039;Look Out! Something serious happened!&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;Just a info message&#039;</span>);
+<span class="text-var">$log</span>-&gt;<span class="text-fn">alert</span>(<span class="text-str">&#039;Look Out! Something serious happened!&#039;</span>);
+</code></pre>
 </div>
 
 <p>Each call appends a tab-delimited line: timestamp, level, uppercase level name, message, then serialized
@@ -48,26 +48,26 @@ Three keys are reserved and are consumed rather than serialized: <code>name</cod
 text <code>key=value;</code> pairs by default).</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.log&#039;</span><span class="text-kw">));
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.log&#039;</span>));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">warning</span><span class="text-kw">(</span><span class="text-str">&#039;Disk nearly full&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;free&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;2%&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;mount&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;/var&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">warning</span>(<span class="text-str">&#039;Disk nearly full&#039;</span>, [<span class="text-str">&#039;free&#039;</span> =&gt; <span class="text-str">&#039;2%&#039;</span>, <span class="text-str">&#039;mount&#039;</span> =&gt; <span class="text-str">&#039;/var&#039;</span>]);
+</code></pre>
 </div>
 
 <p>Messages interpolate <code>{placeholder}</code> tokens out of that same array, per PSR-3, and a value consumed by a
 placeholder is not repeated in the trailing context blob:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.log&#039;</span><span class="text-kw">));
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.log&#039;</span>));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;User {user} logged in from {ip}&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;user&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;nick&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;ip&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;1.2.3.4&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;User {user} logged in from {ip}&#039;</span>, [<span class="text-str">&#039;user&#039;</span> =&gt; <span class="text-str">&#039;nick&#039;</span>, <span class="text-str">&#039;ip&#039;</span> =&gt; <span class="text-str">&#039;1.2.3.4&#039;</span>]);
+</code></pre>
 </div>
 
 <p>Rather than thread a context key through every call site, register a processor. A processor is a
@@ -75,18 +75,18 @@ use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw
 available as a placeholder:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.log&#039;</span><span class="text-kw">));
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.log&#039;</span>));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">addProcessor</span><span class="text-kw">(function (array </span><span class="text-var">$context</span><span class="text-kw">): array {
-    </span><span class="text-var">$context</span><span class="text-kw">[</span><span class="text-str">&#039;request_id&#039;</span><span class="text-kw">] = </span><span class="text-var">bin2hex</span><span class="text-kw">(</span><span class="text-var">random_bytes</span><span class="text-kw">(</span><span class="text-var">8</span><span class="text-kw">));
-    return </span><span class="text-var">$context</span><span class="text-kw">;
+<span class="text-var">$log</span>-&gt;<span class="text-fn">addProcessor</span>(<span class="text-kw">function</span> (<span class="text-kw">array</span> <span class="text-var">$context</span>): <span class="text-kw">array</span> {
+    <span class="text-var">$context</span>[<span class="text-str">&#039;request_id&#039;</span>] = <span class="text-fn">bin2hex</span>(<span class="text-fn">random_bytes</span>(<span class="text-num">8</span>));
+    <span class="text-kw">return</span> <span class="text-var">$context</span>;
 });
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;Handling request {request_id}&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;Handling request {request_id}&#039;</span>);
+</code></pre>
 </div>
 
 <p>Processors run in registration order and each sees what the ones before it added. A processor that
@@ -143,14 +143,14 @@ whole-file-rewrite path, and everything else gets the tab-delimited line shown a
 the second argument to override that:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Formatter</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Formatter</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.log&#039;</span><span class="text-kw">, new </span><span class="text-var">Formatter\NdJson</span><span class="text-kw">()));
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.log&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Formatter\NdJson</span>()));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">warning</span><span class="text-kw">(</span><span class="text-str">&#039;Disk nearly full&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;free&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;2%&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">warning</span>(<span class="text-str">&#039;Disk nearly full&#039;</span>, [<span class="text-str">&#039;free&#039;</span> =&gt; <span class="text-str">&#039;2%&#039;</span>]);
+</code></pre>
 </div>
 
 <p>which writes one JSON object per line:</p>
@@ -166,13 +166,13 @@ yours and is never closed by the writer; a stream URL string it opens itself is 
 destroyed.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\Stream</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\Stream</span>;
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(</span><span class="text-var">Stream</span><span class="text-kw">::</span><span class="text-var">stdout</span><span class="text-kw">());
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-type">Stream</span>::<span class="text-fn">stdout</span>());
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;Just a info message&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;Just a info message&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>Syslog</code> sends a real RFC-3164 packet over UDP to a daemon or collector, which makes it the one writer
@@ -180,14 +180,14 @@ that leaves the machine without an HTTP dependency. <code>Pop\Log\Facility</code
 facilities and defaults to <code>Facility::USER</code>.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Facility</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\Syslog</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Facility</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\Syslog</span>;
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">Syslog</span><span class="text-kw">(</span><span class="text-var">Facility</span><span class="text-kw">::</span><span class="text-var">LOCAL0</span><span class="text-kw">, </span><span class="text-str">&#039;127.0.0.1&#039;</span><span class="text-kw">, </span><span class="text-var">514</span><span class="text-kw">, </span><span class="text-str">&#039;my-app&#039;</span><span class="text-kw">));
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">Syslog</span>(<span class="text-type">Facility</span>::<span class="text-num">LOCAL0</span>, <span class="text-str">&#039;127.0.0.1&#039;</span>, <span class="text-num">514</span>, <span class="text-str">&#039;my-app&#039;</span>));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;Just a info message&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;Just a info message&#039;</span>);
+</code></pre>
 </div>
 
 <p>The packet on the wire is <code>&lt;PRI&gt;HEADER TAG[pid]: MSG</code>, capped at 1024 bytes and truncated past it:</p>
@@ -202,15 +202,15 @@ table from its constructor if it is not there, with columns <code>id</code>, <co
 and <code>context</code>.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\Database</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\Database</span>;
 
-</span><span class="text-var">$db  </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">connect</span><span class="text-kw">(</span><span class="text-str">&#039;sqlite&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.sqlite&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">Database</span><span class="text-kw">(</span><span class="text-var">$db</span><span class="text-kw">, </span><span class="text-str">&#039;system_logs&#039;</span><span class="text-kw">));
+<span class="text-var">$db</span>  = <span class="text-type">Db</span>::<span class="text-fn">connect</span>(<span class="text-str">&#039;sqlite&#039;</span>, [<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.sqlite&#039;</span>]);
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">Database</span>(<span class="text-var">$db</span>, <span class="text-str">&#039;system_logs&#039;</span>));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">alert</span><span class="text-kw">(</span><span class="text-str">&#039;Look Out! Something serious happened!&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;host&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;web-1&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">alert</span>(<span class="text-str">&#039;Look Out! Something serious happened!&#039;</span>, [<span class="text-str">&#039;host&#039;</span> =&gt; <span class="text-str">&#039;web-1&#039;</span>]);
+</code></pre>
 </div>
 
 <p><code>Mail</code> takes a <code>Pop\Mail\Mailer</code>, one or more addresses, and an options array carrying a subject prefix
@@ -218,21 +218,21 @@ and extra headers. Each entry becomes its own message to each address, so a chat
 is a mail flood — pair it with a limit.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\Mail</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Sendmail</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\Mail</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Sendmail</span>;
 
-</span><span class="text-var">$mailer </span><span class="text-kw">= new </span><span class="text-var">Mailer</span><span class="text-kw">(new </span><span class="text-var">Sendmail</span><span class="text-kw">(), </span><span class="text-str">&#039;noreply@domain.com&#039;</span><span class="text-kw">);
+<span class="text-var">$mailer</span> = <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-kw">new</span> <span class="text-type">Sendmail</span>(), <span class="text-str">&#039;noreply@domain.com&#039;</span>);
 
-</span><span class="text-var">$writer </span><span class="text-kw">= new </span><span class="text-var">Mail</span><span class="text-kw">(</span><span class="text-var">$mailer</span><span class="text-kw">, [</span><span class="text-str">&#039;sysadmin@mydomain.com&#039;</span><span class="text-kw">], [
-    </span><span class="text-str">&#039;subject&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Custom Log Entry:&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;headers&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;cc&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;another@mydomain.com&#039;</span><span class="text-kw">],
+<span class="text-var">$writer</span> = <span class="text-kw">new</span> <span class="text-type">Mail</span>(<span class="text-var">$mailer</span>, [<span class="text-str">&#039;sysadmin@mydomain.com&#039;</span>], [
+    <span class="text-str">&#039;subject&#039;</span> =&gt; <span class="text-str">&#039;Custom Log Entry:&#039;</span>,
+    <span class="text-str">&#039;headers&#039;</span> =&gt; [<span class="text-str">&#039;cc&#039;</span> =&gt; <span class="text-str">&#039;another@mydomain.com&#039;</span>],
 ]);
-</span><span class="text-var">$writer</span><span class="text-kw">-&gt;</span><span class="text-var">setLogLimit</span><span class="text-kw">(</span><span class="text-var">Logger</span><span class="text-kw">::</span><span class="text-var">ERROR</span><span class="text-kw">);
+<span class="text-var">$writer</span>-&gt;<span class="text-fn">setLogLimit</span>(<span class="text-type">Logger</span>::<span class="text-num">ERROR</span>);
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(</span><span class="text-var">$writer</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-var">$writer</span>);
+</code></pre>
 </div>
 
 <p>The subject becomes <code>Custom Log Entry: ERROR (error)</code> — the prefix, the display name, then the level in
@@ -241,17 +241,17 @@ parentheses.</p>
 transport options are all set on the client rather than on the writer.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Auth</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\Http</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Auth</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\Http</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://logs.mydomain.com/&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;method&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;POST&#039;</span><span class="text-kw">], </span><span class="text-var">Auth</span><span class="text-kw">::</span><span class="text-var">createKey</span><span class="text-kw">(</span><span class="text-str">&#039;LOG_API_KEY&#039;</span><span class="text-kw">));
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://logs.mydomain.com/&#039;</span>, [<span class="text-str">&#039;method&#039;</span> =&gt; <span class="text-str">&#039;POST&#039;</span>], <span class="text-type">Auth</span>::<span class="text-fn">createKey</span>(<span class="text-str">&#039;LOG_API_KEY&#039;</span>));
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">Http</span><span class="text-kw">(</span><span class="text-var">$client</span><span class="text-kw">));
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">Http</span>(<span class="text-var">$client</span>));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;Just a info message&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;Just a info message&#039;</span>);
+</code></pre>
 </div>
 
 <p>The fields sent are <code>timestamp</code>, <code>level</code>, <code>name</code>, <code>message</code> and <code>context</code>; <code>context</code> is omitted from the
@@ -261,20 +261,20 @@ empty value.</p>
 writers with different limits:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
 
-</span><span class="text-var">$prodLog </span><span class="text-kw">= new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app_prod.log&#039;</span><span class="text-kw">);
-</span><span class="text-var">$devLog  </span><span class="text-kw">= new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app_dev.log&#039;</span><span class="text-kw">);
+<span class="text-var">$prodLog</span> = <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app_prod.log&#039;</span>);
+<span class="text-var">$devLog</span>  = <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app_dev.log&#039;</span>);
 
-</span><span class="text-var">$prodLog</span><span class="text-kw">-&gt;</span><span class="text-var">setLogLimit</span><span class="text-kw">(</span><span class="text-var">Logger</span><span class="text-kw">::</span><span class="text-var">ERROR</span><span class="text-kw">);
-</span><span class="text-var">$devLog</span><span class="text-kw">-&gt;</span><span class="text-var">setLogLimit</span><span class="text-kw">(</span><span class="text-var">Logger</span><span class="text-kw">::</span><span class="text-var">INFO</span><span class="text-kw">);
+<span class="text-var">$prodLog</span>-&gt;<span class="text-fn">setLogLimit</span>(<span class="text-type">Logger</span>::<span class="text-num">ERROR</span>);
+<span class="text-var">$devLog</span>-&gt;<span class="text-fn">setLogLimit</span>(<span class="text-type">Logger</span>::<span class="text-num">INFO</span>);
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">([</span><span class="text-var">$prodLog</span><span class="text-kw">, </span><span class="text-var">$devLog</span><span class="text-kw">]);
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>([<span class="text-var">$prodLog</span>, <span class="text-var">$devLog</span>]);
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">alert</span><span class="text-kw">(</span><span class="text-str">&#039;Look Out! Something serious happened!&#039;</span><span class="text-kw">); </span><span class="text-comment">// both files
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;Just a info message&#039;</span><span class="text-kw">);                    </span><span class="text-comment">// app_dev.log only
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">alert</span>(<span class="text-str">&#039;Look Out! Something serious happened!&#039;</span>); <span class="text-comment">// both files</span>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;Just a info message&#039;</span>);                    <span class="text-comment">// app_dev.log only</span>
+</code></pre>
 </div>
 
 <p>Calling <code>setLogLimit()</code> on the <code>Logger</code> instead applies one limit across every writer it holds.</p>
@@ -286,17 +286,17 @@ and database writers report at write time.</p>
 one directly — nothing wraps it, nothing adapts it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
-use </span><span class="text-var">Psr\Log\LoggerInterface</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
+<span class="text-kw">use</span> <span class="text-type">Psr\Log\LoggerInterface</span>;
 
-function </span><span class="text-var">warnOnce</span><span class="text-kw">(</span><span class="text-var">LoggerInterface $log</span><span class="text-kw">): </span><span class="text-var">void
-</span><span class="text-kw">{
-    </span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">warning</span><span class="text-kw">(</span><span class="text-str">&#039;Disk nearly full&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;free&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;2%&#039;</span><span class="text-kw">]);
+<span class="text-kw">function</span> <span class="text-fn">warnOnce</span>(<span class="text-type">LoggerInterface</span> <span class="text-var">$log</span>): <span class="text-type">void</span>
+{
+    <span class="text-var">$log</span>-&gt;<span class="text-fn">warning</span>(<span class="text-str">&#039;Disk nearly full&#039;</span>, [<span class="text-str">&#039;free&#039;</span> =&gt; <span class="text-str">&#039;2%&#039;</span>]);
 }
 
-</span><span class="text-var">warnOnce</span><span class="text-kw">(new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.log&#039;</span><span class="text-kw">)));
-</span></code></pre>
+<span class="text-fn">warnOnce</span>(<span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.log&#039;</span>)));
+</code></pre>
 </div>
 
 <p>Levels come in two forms and both are accepted anywhere a level is passed. <code>Logger::EMERGENCY</code> through
@@ -360,14 +360,14 @@ internally, so <code>setLogLimit(3)</code> and <code>setLogLimit(Logger::ERROR)<
 static <code>Logger::getLogLevel()</code> both return the uppercase name:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
 
-</span><span class="text-var">$log </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.log&#039;</span><span class="text-kw">));
+<span class="text-var">$log</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.log&#039;</span>));
 
-</span><span class="text-var">$log</span><span class="text-kw">-&gt;</span><span class="text-var">getLevel</span><span class="text-kw">(</span><span class="text-var">Logger</span><span class="text-kw">::</span><span class="text-var">ERROR</span><span class="text-kw">); </span><span class="text-comment">// &#039;ERROR&#039;
-</span><span class="text-var">Logger</span><span class="text-kw">::</span><span class="text-var">getLogLevel</span><span class="text-kw">(</span><span class="text-var">3</span><span class="text-kw">);        </span><span class="text-comment">// &#039;ERROR&#039;
-</span></code></pre>
+<span class="text-var">$log</span>-&gt;<span class="text-fn">getLevel</span>(<span class="text-type">Logger</span>::<span class="text-num">ERROR</span>); <span class="text-comment">// &#039;ERROR&#039;</span>
+<span class="text-type">Logger</span>::<span class="text-fn">getLogLevel</span>(<span class="text-num">3</span>);        <span class="text-comment">// &#039;ERROR&#039;</span>
+</code></pre>
 </div>
 
 <p>A level that is neither a recognized PSR-3 string nor an int in 0-7 throws

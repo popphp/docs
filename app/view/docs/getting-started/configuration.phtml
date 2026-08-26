@@ -11,17 +11,17 @@ turns that data into wiring. Values in one, behavior in the other.</p>
 <p>The front controller reads one config file and hands the array to the constructor:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">public/index.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-var">$autoloader</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../vendor/autoload.php&#039;</span>;
 
-$autoloader </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../vendor/autoload.php&#039;</span><span class="text-kw">;
+<span class="text-var">$dotEnv</span> = <span class="text-type">Dotenv\Dotenv</span>::<span class="text-fn">createImmutable</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../&#039;</span>);
+<span class="text-var">$dotEnv</span>-&gt;<span class="text-fn">safeLoad</span>();
 
-</span><span class="text-var">$dotEnv </span><span class="text-kw">= </span><span class="text-var">Dotenv\Dotenv</span><span class="text-kw">::</span><span class="text-var">createImmutable</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../&#039;</span><span class="text-kw">);
-</span><span class="text-var">$dotEnv</span><span class="text-kw">-&gt;</span><span class="text-var">safeLoad</span><span class="text-kw">();
-
-</span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/config/app.http.php&#039;</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">load</span><span class="text-kw">();
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/config/app.http.php&#039;</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">load</span>();
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p>Bootstrap runs in the constructor and picks up a fixed set of top-level keys:</p>
@@ -66,24 +66,24 @@ $autoloader </span><span class="text-kw">= include </span><span class="text-var"
 <p>So a config array can wire an application on its own:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039;   </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;[/]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;*&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;error&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span>   =&gt; [
+        <span class="text-str">&#039;[/]&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+        ],
+        <span class="text-str">&#039;*&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;error&#039;</span>
+        ]
     ],
-    </span><span class="text-str">&#039;services&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;session&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;call&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Session\Session::getInstance&#039;</span><span class="text-kw">]
+    <span class="text-str">&#039;services&#039;</span> =&gt; [
+        <span class="text-str">&#039;session&#039;</span> =&gt; [<span class="text-str">&#039;call&#039;</span> =&gt; <span class="text-str">&#039;Pop\Session\Session::getInstance&#039;</span>]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Every other key is yours to use. <code>pop:init</code> adds <code>http_options_headers</code> for CORS and, with a database
@@ -95,32 +95,32 @@ configured, a <code>database</code> key. Reach them with <code>$app-&gt;config['
 application class. Call it before <code>run()</code> — the generated front controller does:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Application.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Application</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Application</span>
+{
 
-class </span><span class="text-var">Application </span><span class="text-kw">extends </span><span class="text-var">\Pop\Application
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">load</span><span class="text-kw">(): </span><span class="text-var">Application
-    </span><span class="text-kw">{
-        if (isset(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">config</span><span class="text-kw">[</span><span class="text-str">&#039;database&#039;</span><span class="text-kw">])) {
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">initDb</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">config</span><span class="text-kw">[</span><span class="text-str">&#039;database&#039;</span><span class="text-kw">]);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">load</span>(): <span class="text-type">Application</span>
+    {
+        <span class="text-kw">if</span> (<span class="text-kw">isset</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">config</span>[<span class="text-str">&#039;database&#039;</span>])) {
+            <span class="text-var">$this</span>-&gt;<span class="text-fn">initDb</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">config</span>[<span class="text-str">&#039;database&#039;</span>]);
         }
 
-        if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">() !== </span><span class="text-var">null</span><span class="text-kw">) {
-            if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">isHttp</span><span class="text-kw">()) {
-                </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Http\Event\Options::send&#039;</span><span class="text-kw">, </span><span class="text-var">1</span><span class="text-kw">);
-            } else if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">isCli</span><span class="text-kw">()) {
-                </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.post&#039;</span><span class="text-kw">, function() { echo </span><span class="text-var">PHP_EOL</span><span class="text-kw">; });
+        <span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>() <span class="text-kw">!==</span> <span class="text-num">null</span>) {
+            <span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">isHttp</span>()) {
+                <span class="text-var">$this</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.pre&#039;</span>, <span class="text-str">&#039;App\Http\Event\Options::send&#039;</span>, <span class="text-num">1</span>);
+            } <span class="text-kw">else</span> <span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">isCli</span>()) {
+                <span class="text-var">$this</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.post&#039;</span>, <span class="text-kw">function</span>() { <span class="text-kw">echo</span> <span class="text-num">PHP_EOL</span>; });
             }
         }
 
-        return </span><span class="text-var">$this</span><span class="text-kw">;
+        <span class="text-kw">return</span> <span class="text-var">$this</span>;
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>initDb()</code> is an app-level convention that <code>pop:init</code> scaffolds, shown in full in
@@ -175,12 +175,12 @@ it, and <code>.env.example</code> is the copy you commit.</p>
 <code>(true)</code> come back as <code>true</code>, <code>false</code> as <code>false</code>, <code>null</code> as <code>null</code>, <code>empty</code> as <code>''</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\App</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\App</span>;
 
-</span><span class="text-var">$name </span><span class="text-kw">= </span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">env</span><span class="text-kw">(</span><span class="text-str">&#039;APP_NAME&#039;</span><span class="text-kw">);
-</span><span class="text-var">$mode </span><span class="text-kw">= </span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">env</span><span class="text-kw">(</span><span class="text-str">&#039;MAINTENANCE_MODE&#039;</span><span class="text-kw">);       </span><span class="text-comment">// bool, not the string &#039;true&#039;
-</span><span class="text-var">$tz   </span><span class="text-kw">= </span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">env</span><span class="text-kw">(</span><span class="text-str">&#039;APP_TIMEZONE&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;UTC&#039;</span><span class="text-kw">);    </span><span class="text-comment">// second argument is the default
-</span></code></pre>
+<span class="text-var">$name</span> = <span class="text-type">App</span>::<span class="text-fn">env</span>(<span class="text-str">&#039;APP_NAME&#039;</span>);
+<span class="text-var">$mode</span> = <span class="text-type">App</span>::<span class="text-fn">env</span>(<span class="text-str">&#039;MAINTENANCE_MODE&#039;</span>);       <span class="text-comment">// bool, not the string &#039;true&#039;</span>
+<span class="text-var">$tz</span>   = <span class="text-type">App</span>::<span class="text-fn">env</span>(<span class="text-str">&#039;APP_TIMEZONE&#039;</span>, <span class="text-str">&#039;UTC&#039;</span>);    <span class="text-comment">// second argument is the default</span>
+</code></pre>
 </div>
 
 <p>The default applies when the key is absent. A key written with no value — <code>DB_HOST=</code> on its own line —
@@ -190,14 +190,14 @@ is an empty string, so remove the line entirely for the default to take effect.<
 <p>One config array per runtime, with the environment as a value you branch on:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\App</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\App</span>;
 
-if (</span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">isLocal</span><span class="text-kw">()) {
-    </span><span class="text-comment">// verbose errors, no cache
-</span><span class="text-kw">} else if (</span><span class="text-var">App</span><span class="text-kw">::</span><span class="text-var">isProduction</span><span class="text-kw">()) {
-    </span><span class="text-comment">// real mail transport, real payment gateway
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-type">App</span>::<span class="text-fn">isLocal</span>()) {
+    <span class="text-comment">// verbose errors, no cache</span>
+} <span class="text-kw">else</span> <span class="text-kw">if</span> (<span class="text-type">App</span>::<span class="text-fn">isProduction</span>()) {
+    <span class="text-comment">// real mail transport, real payment gateway</span>
+}
+</code></pre>
 </div>
 
 <p><code>isProduction()</code> matches any <code>APP_ENV</code> starting with <code>prod</code>, and
@@ -213,13 +213,13 @@ clears it. Gate on <code>App::isDown()</code>, and <code>App::isSecretRequest()<
 and immutability:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Config\Config</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Config\Config</span>;
 
-</span><span class="text-var">$config </span><span class="text-kw">= new </span><span class="text-var">Config</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;host&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;localhost&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;port&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">5432</span><span class="text-kw">]]);
+<span class="text-var">$config</span> = <span class="text-kw">new</span> <span class="text-type">Config</span>([<span class="text-str">&#039;database&#039;</span> =&gt; [<span class="text-str">&#039;host&#039;</span> =&gt; <span class="text-str">&#039;localhost&#039;</span>, <span class="text-str">&#039;port&#039;</span> =&gt; <span class="text-num">5432</span>]]);
 
-</span><span class="text-var">$host </span><span class="text-kw">= </span><span class="text-var">$config</span><span class="text-kw">[</span><span class="text-str">&#039;database.host&#039;</span><span class="text-kw">];   </span><span class="text-comment">// &#039;localhost&#039;
-</span><span class="text-var">$config</span><span class="text-kw">-&gt;</span><span class="text-var">changesAllowed</span><span class="text-kw">();          </span><span class="text-comment">// false
-</span></code></pre>
+<span class="text-var">$host</span> = <span class="text-var">$config</span>[<span class="text-str">&#039;database.host&#039;</span>];   <span class="text-comment">// &#039;localhost&#039;</span>
+<span class="text-var">$config</span>-&gt;<span class="text-fn">changesAllowed</span>();          <span class="text-comment">// false</span>
+</code></pre>
 </div>
 
 <p>Pass <code>true</code> as the second constructor argument for a writable one. <code>Config::createFromData()</code> also reads

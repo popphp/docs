@@ -14,31 +14,31 @@ This page is about that pair: what you can ask the request, and how to assemble 
 constructor, so any controller with the trait anywhere in its ancestry has them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Controller/ArticlesController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Controller\AbstractController</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Dispatch\HttpTrait</span>;
 
-use </span><span class="text-var">Pop\Controller\AbstractController</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Dispatch\HttpTrait</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">ArticlesController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">ArticlesController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
+    <span class="text-kw">use</span> <span class="text-type">HttpTrait</span>;
 
-    use </span><span class="text-var">HttpTrait</span><span class="text-kw">;
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">index</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-var">$page</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getQuery</span>(<span class="text-str">&#039;page&#039;</span>) <span class="text-kw">??</span> <span class="text-str">&#039;1&#039;</span>;
 
-    public function </span><span class="text-var">index</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$page </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getQuery</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">) ?? </span><span class="text-str">&#039;1&#039;</span><span class="text-kw">;
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setCode</span>(<span class="text-num">200</span>)
+            -&gt;<span class="text-fn">addHeader</span>(<span class="text-str">&#039;Content-Type&#039;</span>, <span class="text-str">&#039;application/json&#039;</span>)
+            -&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;page&#039;</span> =&gt; <span class="text-kw">(int)</span><span class="text-var">$page</span>], <span class="text-num">JSON_PRETTY_PRINT</span>));
 
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setCode</span><span class="text-kw">(</span><span class="text-var">200</span><span class="text-kw">)
-            -&gt;</span><span class="text-var">addHeader</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">)
-            -&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;page&#039; </span><span class="text-kw">=&gt; (int)</span><span class="text-var">$page</span><span class="text-kw">], </span><span class="text-var">JSON_PRETTY_PRINT</span><span class="text-kw">));
-
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>();
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>$this-&gt;request()</code> and <code>$this-&gt;response()</code> are accessor aliases for the same two objects, so either form
@@ -92,14 +92,14 @@ single value when given a key:</p>
 <p>A missing key returns <code>null</code>, so <code>??</code> supplies the default:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$page  </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getQuery</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">) ?? </span><span class="text-str">&#039;1&#039;</span><span class="text-kw">;
-</span><span class="text-var">$sort  </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getQuery</span><span class="text-kw">(</span><span class="text-str">&#039;sort&#039;</span><span class="text-kw">) ?? </span><span class="text-str">&#039;id&#039;</span><span class="text-kw">;
-</span><span class="text-var">$title </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getPost</span><span class="text-kw">(</span><span class="text-str">&#039;title&#039;</span><span class="text-kw">);
+<pre><code><span class="text-var">$page</span>  = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getQuery</span>(<span class="text-str">&#039;page&#039;</span>) <span class="text-kw">??</span> <span class="text-str">&#039;1&#039;</span>;
+<span class="text-var">$sort</span>  = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getQuery</span>(<span class="text-str">&#039;sort&#039;</span>) <span class="text-kw">??</span> <span class="text-str">&#039;id&#039;</span>;
+<span class="text-var">$title</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getPost</span>(<span class="text-str">&#039;title&#039;</span>);
 
-if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">isPost</span><span class="text-kw">() &amp;&amp; (</span><span class="text-var">$title </span><span class="text-kw">!== </span><span class="text-var">null</span><span class="text-kw">)) {
-    </span><span class="text-comment">// create the article
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">isPost</span>() <span class="text-kw">&amp;&amp;</span> (<span class="text-var">$title</span> <span class="text-kw">!==</span> <span class="text-num">null</span>)) {
+    <span class="text-comment">// create the article</span>
+}
+</code></pre>
 </div>
 
 <p><code>isGet()</code>, <code>isPost()</code>, <code>isPut()</code>, <code>isPatch()</code>, <code>isDelete()</code>, <code>isOptions()</code> and <code>isHead()</code> test the method, and
@@ -112,11 +112,11 @@ several methods.</p>
 and <code>multipart/form-data</code>, so <strong>a JSON POST leaves <code>getPost()</code> empty</strong>. The parsed body is in <code>getParsedData()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$data </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getParsedData</span><span class="text-kw">();
+<pre><code><span class="text-var">$data</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getParsedData</span>();
 
-</span><span class="text-var">$username </span><span class="text-kw">= </span><span class="text-var">$data</span><span class="text-kw">[</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">] ?? </span><span class="text-var">null</span><span class="text-kw">;
-</span><span class="text-var">$email    </span><span class="text-kw">= </span><span class="text-var">$data</span><span class="text-kw">[</span><span class="text-str">&#039;email&#039;</span><span class="text-kw">] ?? </span><span class="text-var">null</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-var">$username</span> = <span class="text-var">$data</span>[<span class="text-str">&#039;username&#039;</span>] <span class="text-kw">??</span> <span class="text-num">null</span>;
+<span class="text-var">$email</span>    = <span class="text-var">$data</span>[<span class="text-str">&#039;email&#039;</span>] <span class="text-kw">??</span> <span class="text-num">null</span>;
+</code></pre>
 </div>
 
 <p>The request parses the body according to its <code>Content-Type</code> header, and where the result lands depends on the
@@ -135,36 +135,36 @@ mirrors <code>getQuery()</code> and <code>getRawData()</code> returns <code>page
 the query, post and parsed-data arrays as they are read.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$request </span><span class="text-kw">= new </span><span class="text-var">Pop\Http\Server\Request</span><span class="text-kw">(new </span><span class="text-var">Pop\Http\Uri</span><span class="text-kw">(), [</span><span class="text-str">&#039;strip_tags&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<pre><code><span class="text-var">$request</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Http\Server\Request</span>(<span class="text-kw">new</span> <span class="text-type">Pop\Http\Uri</span>(), [<span class="text-str">&#039;strip_tags&#039;</span>]);
+</code></pre>
 </div>
 
 <p>A controller does not construct its own request, so hand the filtered one to the router in <code>load()</code>. The
 <code>'*'</code> wildcard applies it to every dispatchable:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Application.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Request</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Response</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Uri</span>;
 
-use </span><span class="text-var">Pop\Http\Server\Request</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Uri</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Application</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Application</span>
+{
 
-class </span><span class="text-var">Application </span><span class="text-kw">extends </span><span class="text-var">\Pop\Application
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">load</span><span class="text-kw">(): </span><span class="text-var">Application
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">addDispatchableParams</span><span class="text-kw">(
-            </span><span class="text-str">&#039;*&#039;</span><span class="text-kw">, [</span><span class="text-var">$this</span><span class="text-kw">, new </span><span class="text-var">Request</span><span class="text-kw">(new </span><span class="text-var">Uri</span><span class="text-kw">(), [</span><span class="text-str">&#039;strip_tags&#039;</span><span class="text-kw">]), new </span><span class="text-var">Response</span><span class="text-kw">()]
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">load</span>(): <span class="text-type">Application</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">addDispatchableParams</span>(
+            <span class="text-str">&#039;*&#039;</span>, [<span class="text-var">$this</span>, <span class="text-kw">new</span> <span class="text-type">Request</span>(<span class="text-kw">new</span> <span class="text-type">Uri</span>(), [<span class="text-str">&#039;strip_tags&#039;</span>]), <span class="text-kw">new</span> <span class="text-type">Response</span>()]
         );
 
-        return </span><span class="text-var">$this</span><span class="text-kw">;
+        <span class="text-kw">return</span> <span class="text-var">$this</span>;
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A <code>POST</code> of <code>bio=&lt;script&gt;bad&lt;/script&gt;hi</code> then reads back as <code>badhi</code> from both <code>getPost('bio')</code> and
@@ -176,27 +176,27 @@ applied to everything — treat them as a backstop, not as validation. <a href="
 <p>Headers come back as strings by default, matching PSR-7, with the object form available separately:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">hasHeader</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">)) {
-    </span><span class="text-var">$type </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getHeaderValueAsString</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">);   </span><span class="text-comment">// &#039;application/json&#039;
-</span><span class="text-kw">}
+<pre><code><span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">hasHeader</span>(<span class="text-str">&#039;Content-Type&#039;</span>)) {
+    <span class="text-var">$type</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getHeaderValueAsString</span>(<span class="text-str">&#039;Content-Type&#039;</span>);   <span class="text-comment">// &#039;application/json&#039;</span>
+}
 
-</span><span class="text-var">$accept </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getHeaderLine</span><span class="text-kw">(</span><span class="text-str">&#039;Accept&#039;</span><span class="text-kw">);                    </span><span class="text-comment">// one comma-joined string
-</span><span class="text-var">$values </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getHeader</span><span class="text-kw">(</span><span class="text-str">&#039;Accept&#039;</span><span class="text-kw">);                        </span><span class="text-comment">// array of values
-</span><span class="text-var">$header </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getHeaderObject</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">);            </span><span class="text-comment">// Pop\Mime\Part\Header
-</span></code></pre>
+<span class="text-var">$accept</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getHeaderLine</span>(<span class="text-str">&#039;Accept&#039;</span>);                    <span class="text-comment">// one comma-joined string</span>
+<span class="text-var">$values</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getHeader</span>(<span class="text-str">&#039;Accept&#039;</span>);                        <span class="text-comment">// array of values</span>
+<span class="text-var">$header</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getHeaderObject</span>(<span class="text-str">&#039;Content-Type&#039;</span>);            <span class="text-comment">// Pop\Mime\Part\Header</span>
+</code></pre>
 </div>
 
 <p>An <code>Authorization</code> header is parsed for you during construction, so a bearer token needs no string handling:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">hasAuth</span><span class="text-kw">()) {
-    </span><span class="text-var">$auth </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getAuth</span><span class="text-kw">();
+<pre><code><span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">hasAuth</span>()) {
+    <span class="text-var">$auth</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getAuth</span>();
 
-    if (</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">isBearer</span><span class="text-kw">()) {
-        </span><span class="text-var">$token </span><span class="text-kw">= </span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">getToken</span><span class="text-kw">();
+    <span class="text-kw">if</span> (<span class="text-var">$auth</span>-&gt;<span class="text-fn">isBearer</span>()) {
+        <span class="text-var">$token</span> = <span class="text-var">$auth</span>-&gt;<span class="text-fn">getToken</span>();
     }
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The rest of the request's metadata is one call each: <code>getMethod()</code>, <code>getScheme()</code>, <code>getHost()</code>,
@@ -210,23 +210,23 @@ applies a 10MB limit and the built-in allowed and disallowed extension lists. Th
 directory is the writable scratch space to point it at, four levels up from a controller:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$file </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getFiles</span><span class="text-kw">(</span><span class="text-str">&#039;document&#039;</span><span class="text-kw">);
+<pre><code><span class="text-var">$file</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getFiles</span>(<span class="text-str">&#039;document&#039;</span>);
 
-if (</span><span class="text-var">$file </span><span class="text-kw">=== </span><span class="text-var">null</span><span class="text-kw">) {
-    return;
+<span class="text-kw">if</span> (<span class="text-var">$file</span> <span class="text-kw">===</span> <span class="text-num">null</span>) {
+    <span class="text-kw">return</span>;
 }
 
-</span><span class="text-var">$upload </span><span class="text-kw">= new </span><span class="text-var">Pop\Http\Server\Upload</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../../../../data/uploads&#039;</span><span class="text-kw">);
-</span><span class="text-var">$upload</span><span class="text-kw">-&gt;</span><span class="text-var">setDefaults</span><span class="text-kw">();
+<span class="text-var">$upload</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Http\Server\Upload</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../../../../data/uploads&#039;</span>);
+<span class="text-var">$upload</span>-&gt;<span class="text-fn">setDefaults</span>();
 
-</span><span class="text-var">$filename </span><span class="text-kw">= </span><span class="text-var">$upload</span><span class="text-kw">-&gt;</span><span class="text-var">upload</span><span class="text-kw">(</span><span class="text-var">$file</span><span class="text-kw">);
+<span class="text-var">$filename</span> = <span class="text-var">$upload</span>-&gt;<span class="text-fn">upload</span>(<span class="text-var">$file</span>);
 
-if (</span><span class="text-var">$filename </span><span class="text-kw">!== </span><span class="text-var">false</span><span class="text-kw">) {
-    </span><span class="text-var">$fullPath </span><span class="text-kw">= </span><span class="text-var">$upload</span><span class="text-kw">-&gt;</span><span class="text-var">getUploadedFullPath</span><span class="text-kw">();
-} else {
-    </span><span class="text-var">$message </span><span class="text-kw">= </span><span class="text-var">$upload</span><span class="text-kw">-&gt;</span><span class="text-var">getErrorMessage</span><span class="text-kw">();
+<span class="text-kw">if</span> (<span class="text-var">$filename</span> <span class="text-kw">!==</span> <span class="text-num">false</span>) {
+    <span class="text-var">$fullPath</span> = <span class="text-var">$upload</span>-&gt;<span class="text-fn">getUploadedFullPath</span>();
+} <span class="text-kw">else</span> {
+    <span class="text-var">$message</span> = <span class="text-var">$upload</span>-&gt;<span class="text-fn">getErrorMessage</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>upload()</code> returns the stored filename on success and <code>false</code> on failure — the failure is a return value
@@ -251,26 +251,26 @@ the outcome.</p>
 <p>A response is assembled and then sent. The setters chain; <code>send()</code> does not.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$response </span><span class="text-kw">= new </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">();
+<pre><code><span class="text-var">$response</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Http\Server\Response</span>();
 
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">setCode</span><span class="text-kw">(</span><span class="text-var">201</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">addHeader</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">addHeader</span><span class="text-kw">(</span><span class="text-str">&#039;X-Request-Id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;abc123&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1001</span><span class="text-kw">], </span><span class="text-var">JSON_PRETTY_PRINT</span><span class="text-kw">));
+<span class="text-var">$response</span>-&gt;<span class="text-fn">setCode</span>(<span class="text-num">201</span>)
+    -&gt;<span class="text-fn">addHeader</span>(<span class="text-str">&#039;Content-Type&#039;</span>, <span class="text-str">&#039;application/json&#039;</span>)
+    -&gt;<span class="text-fn">addHeader</span>(<span class="text-str">&#039;X-Request-Id&#039;</span>, <span class="text-str">&#039;abc123&#039;</span>)
+    -&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1001</span>], <span class="text-num">JSON_PRETTY_PRINT</span>));
 
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <p><code>send()</code> also takes the code and headers directly, which collapses the common case to one call, and a third
 argument that adds a <code>Content-Length</code> header computed from the body:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$response </span><span class="text-kw">= new </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">();
+<pre><code><span class="text-var">$response</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Http\Server\Response</span>();
 
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;plain&#039;</span><span class="text-kw">);
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">200</span><span class="text-kw">, [</span><span class="text-str">&#039;Content-Type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;text/plain&#039;</span><span class="text-kw">], </span><span class="text-var">true</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;plain&#039;</span>);
+<span class="text-var">$response</span>-&gt;<span class="text-fn">send</span>(<span class="text-num">200</span>, [<span class="text-str">&#039;Content-Type&#039;</span> =&gt; <span class="text-str">&#039;text/plain&#039;</span>], <span class="text-num">true</span>);
+</code></pre>
 </div>
 
 <p>The constructor accepts the same three as a config array — <code>new Response(['code' =&gt; 404, 'message' =&gt; 'Nope', 'headers' =&gt; ['X-A' =&gt; 'b']])</code> — which is occasionally tidier than three setters. <code>addHeaders()</code> takes several
@@ -288,37 +288,37 @@ body here
 <p>Put together, a create endpoint reads the parsed body, writes, and answers with a <code>201</code> and a <code>Location</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Controller/CommentsController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Controller\AbstractController</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Dispatch\HttpTrait</span>;
 
-use </span><span class="text-var">Pop\Controller\AbstractController</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Dispatch\HttpTrait</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">CommentsController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">CommentsController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
+    <span class="text-kw">use</span> <span class="text-type">HttpTrait</span>;
 
-    use </span><span class="text-var">HttpTrait</span><span class="text-kw">;
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">create</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-var">$data</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getParsedData</span>();
 
-    public function </span><span class="text-var">create</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$data </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getParsedData</span><span class="text-kw">();
-
-        if (empty(</span><span class="text-var">$data</span><span class="text-kw">[</span><span class="text-str">&#039;body&#039;</span><span class="text-kw">])) {
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;error&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;body is required&#039;</span><span class="text-kw">]));
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">422</span><span class="text-kw">, [</span><span class="text-str">&#039;Content-Type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">]);
-            return;
+        <span class="text-kw">if</span> (<span class="text-kw">empty</span>(<span class="text-var">$data</span>[<span class="text-str">&#039;body&#039;</span>])) {
+            <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;error&#039;</span> =&gt; <span class="text-str">&#039;body is required&#039;</span>]));
+            <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>(<span class="text-num">422</span>, [<span class="text-str">&#039;Content-Type&#039;</span> =&gt; <span class="text-str">&#039;application/json&#039;</span>]);
+            <span class="text-kw">return</span>;
         }
 
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1001</span><span class="text-kw">, </span><span class="text-str">&#039;body&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$data</span><span class="text-kw">[</span><span class="text-str">&#039;body&#039;</span><span class="text-kw">]]));
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">201</span><span class="text-kw">, [
-            </span><span class="text-str">&#039;Content-Type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;Location&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;/comments/1001&#039;
-        </span><span class="text-kw">]);
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1001</span>, <span class="text-str">&#039;body&#039;</span> =&gt; <span class="text-var">$data</span>[<span class="text-str">&#039;body&#039;</span>]]));
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>(<span class="text-num">201</span>, [
+            <span class="text-str">&#039;Content-Type&#039;</span> =&gt; <span class="text-str">&#039;application/json&#039;</span>,
+            <span class="text-str">&#039;Location&#039;</span>     =&gt; <span class="text-str">&#039;/comments/1001&#039;</span>
+        ]);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>getParsedData()</code> rather than <code>getPost()</code> is what makes that action accept a JSON body and a form post
@@ -338,9 +338,9 @@ as <code>isNotFound()</code>, <code>isUnauthorized()</code>, <code>isForbidden()
 <p>Redirects are static, because they send headers and nothing else:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">::</span><span class="text-var">redirect</span><span class="text-kw">(</span><span class="text-str">&#039;/articles&#039;</span><span class="text-kw">, </span><span class="text-var">302</span><span class="text-kw">);
-exit();
-</span></code></pre>
+<pre><code><span class="text-type">Pop\Http\Server\Response</span>::<span class="text-fn">redirect</span>(<span class="text-str">&#039;/articles&#039;</span>, <span class="text-num">302</span>);
+<span class="text-kw">exit</span>();
+</code></pre>
 </div>
 
 <p><code>redirectAndExit()</code> does both in one call, and is what a controller almost always wants — a redirect that
@@ -353,16 +353,16 @@ which is the short path for a proxy endpoint. See <a href="/toolkit/http-client"
 <p>The request parses the <code>Accept</code> header and can tell you what the caller actually wants:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">acceptsHtml</span><span class="text-kw">()) {
-    </span><span class="text-var">$view </span><span class="text-kw">= new </span><span class="text-var">View</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../../../view/articles.phtml&#039;</span><span class="text-kw">);
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">$view</span><span class="text-kw">-&gt;</span><span class="text-var">render</span><span class="text-kw">());
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-} else {
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">addHeader</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">);
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;articles&#039; </span><span class="text-kw">=&gt; []]));
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
+<pre><code><span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">acceptsHtml</span>()) {
+    <span class="text-var">$view</span> = <span class="text-kw">new</span> <span class="text-type">View</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../../../view/articles.phtml&#039;</span>);
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-var">$view</span>-&gt;<span class="text-fn">render</span>());
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>();
+} <span class="text-kw">else</span> {
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">addHeader</span>(<span class="text-str">&#039;Content-Type&#039;</span>, <span class="text-str">&#039;application/json&#039;</span>);
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;articles&#039;</span> =&gt; []]));
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>That branch is what makes one action serve both a browser and an API client, and it's what the scaffolded
@@ -407,21 +407,21 @@ is the point. Pass <code>AcceptSpecificity::Any</code> to opt back into the perm
 <code>AcceptSpecificity::Exact</code> to require a literal <code>type/subtype</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Server\AcceptSpecificity</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\AcceptSpecificity</span>;
 
-</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">acceptsHtml</span><span class="text-kw">(</span><span class="text-var">AcceptSpecificity</span><span class="text-kw">::</span><span class="text-var">Any</span><span class="text-kw">);    </span><span class="text-comment">// true even for a bare */*
-</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">acceptsHtml</span><span class="text-kw">(</span><span class="text-var">AcceptSpecificity</span><span class="text-kw">::</span><span class="text-var">Exact</span><span class="text-kw">);  </span><span class="text-comment">// true only if text/html was listed
-</span></code></pre>
+<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">acceptsHtml</span>(<span class="text-type">AcceptSpecificity</span>::<span class="text-type">Any</span>);    <span class="text-comment">// true even for a bare */*</span>
+<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">acceptsHtml</span>(<span class="text-type">AcceptSpecificity</span>::<span class="text-type">Exact</span>);  <span class="text-comment">// true only if text/html was listed</span>
+</code></pre>
 </div>
 
 <p><code>accepts()</code> and <code>getPreferredType()</code> are the general forms, and they default to <code>AcceptSpecificity::Any</code>
 instead — they are negotiation primitives and leave the policy to the caller:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">accepts</span><span class="text-kw">(</span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">);
-</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">accepts</span><span class="text-kw">([</span><span class="text-str">&#039;application/xml&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;text/xml&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">getPreferredType</span><span class="text-kw">([</span><span class="text-str">&#039;text/html&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<pre><code><span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">accepts</span>(<span class="text-str">&#039;application/json&#039;</span>);
+<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">accepts</span>([<span class="text-str">&#039;application/xml&#039;</span>, <span class="text-str">&#039;text/xml&#039;</span>]);
+<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getPreferredType</span>([<span class="text-str">&#039;text/html&#039;</span>, <span class="text-str">&#039;application/json&#039;</span>]);
+</code></pre>
 </div>
 
 <p><code>getPreferredType()</code> returns the best match among the types you can produce, or <code>null</code> if none is acceptable.

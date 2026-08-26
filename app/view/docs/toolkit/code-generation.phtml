@@ -20,53 +20,53 @@ models this way.</p>
 <p><code>ClassGenerator</code> is the container. Give it a namespace, properties and methods, and render it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$class </span><span class="text-kw">= new </span><span class="text-var">Generator\ClassGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Widget&#039;</span><span class="text-kw">);
-</span><span class="text-var">$class</span><span class="text-kw">-&gt;</span><span class="text-var">setNamespace</span><span class="text-kw">(new </span><span class="text-var">Generator\NamespaceGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;App\Model&#039;</span><span class="text-kw">));
+<span class="text-var">$class</span> = <span class="text-kw">new</span> <span class="text-type">Generator\ClassGenerator</span>(<span class="text-str">&#039;Widget&#039;</span>);
+<span class="text-var">$class</span>-&gt;<span class="text-fn">setNamespace</span>(<span class="text-kw">new</span> <span class="text-type">Generator\NamespaceGenerator</span>(<span class="text-str">&#039;App\Model&#039;</span>));
 
-</span><span class="text-var">$class</span><span class="text-kw">-&gt;</span><span class="text-var">addProperty</span><span class="text-kw">(new </span><span class="text-var">Generator\PropertyGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;string&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-str">&#039;protected&#039;</span><span class="text-kw">));
+<span class="text-var">$class</span>-&gt;<span class="text-fn">addProperty</span>(<span class="text-kw">new</span> <span class="text-type">Generator\PropertyGenerator</span>(<span class="text-str">&#039;name&#039;</span>, <span class="text-str">&#039;string&#039;</span>, <span class="text-num">null</span>, <span class="text-str">&#039;protected&#039;</span>));
 
-</span><span class="text-var">$setName </span><span class="text-kw">= new </span><span class="text-var">Generator\MethodGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;setName&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;public&#039;</span><span class="text-kw">);
-</span><span class="text-var">$setName</span><span class="text-kw">-&gt;</span><span class="text-var">addArgument</span><span class="text-kw">(</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-str">&#039;string&#039;</span><span class="text-kw">)
-        -&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;$this-&gt;name = $name;&#039;</span><span class="text-kw">)
-        -&gt;</span><span class="text-var">addReturnType</span><span class="text-kw">(</span><span class="text-str">&#039;void&#039;</span><span class="text-kw">)
-        -&gt;</span><span class="text-var">setDesc</span><span class="text-kw">(</span><span class="text-str">&#039;Set the widget name.&#039;</span><span class="text-kw">);
+<span class="text-var">$setName</span> = <span class="text-kw">new</span> <span class="text-type">Generator\MethodGenerator</span>(<span class="text-str">&#039;setName&#039;</span>, <span class="text-str">&#039;public&#039;</span>);
+<span class="text-var">$setName</span>-&gt;<span class="text-fn">addArgument</span>(<span class="text-str">&#039;name&#039;</span>, <span class="text-num">null</span>, <span class="text-str">&#039;string&#039;</span>)
+        -&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;$this-&gt;name = $name;&#039;</span>)
+        -&gt;<span class="text-fn">addReturnType</span>(<span class="text-str">&#039;void&#039;</span>)
+        -&gt;<span class="text-fn">setDesc</span>(<span class="text-str">&#039;Set the widget name.&#039;</span>);
 
-</span><span class="text-var">$class</span><span class="text-kw">-&gt;</span><span class="text-var">addMethod</span><span class="text-kw">(</span><span class="text-var">$setName</span><span class="text-kw">);
+<span class="text-var">$class</span>-&gt;<span class="text-fn">addMethod</span>(<span class="text-var">$setName</span>);
 
-echo </span><span class="text-var">$class</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$class</span>;
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-comment">/**
  * @namespace 
- */
-</span><span class="text-kw">namespace </span><span class="text-var">App\Model</span><span class="text-kw">;
+ */</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Model</span>;
 
-class </span><span class="text-var">Widget
-</span><span class="text-kw">{
+<span class="text-kw">class</span> <span class="text-type">Widget</span>
+{
 
-    </span><span class="text-comment">/**
+    <span class="text-comment">/**
      * @var   string
-     */
-    </span><span class="text-kw">protected </span><span class="text-var">string</span><span class="text-kw">|</span><span class="text-var">null $name </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">;
+     */</span>
+    <span class="text-kw">protected</span> <span class="text-type">string</span>|<span class="text-num">null</span> <span class="text-var">$name</span> = <span class="text-num">null</span>;
 
-    </span><span class="text-comment">/**
+    <span class="text-comment">/**
      * Set the widget name.
      * 
      * @param  string|null  $name
      * @return void
-     */
-    </span><span class="text-kw">public function </span><span class="text-var">setName</span><span class="text-kw">(</span><span class="text-var">string</span><span class="text-kw">|</span><span class="text-var">null $name </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">name </span><span class="text-kw">= </span><span class="text-var">$name</span><span class="text-kw">;
+     */</span>
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">setName</span>(<span class="text-type">string</span>|<span class="text-num">null</span> <span class="text-var">$name</span> = <span class="text-num">null</span>): <span class="text-type">void</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-type">name</span> = <span class="text-var">$name</span>;
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>InterfaceGenerator</code>, <code>TraitGenerator</code> and <code>EnumGenerator</code> are the same shape. An interface's methods
@@ -74,27 +74,27 @@ render as semicolon-terminated signatures with no body, and its parents come fro
 argument taking an array or a comma-separated string:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$interface </span><span class="text-kw">= new </span><span class="text-var">Generator\InterfaceGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Arrayable&#039;</span><span class="text-kw">);
-</span><span class="text-var">$interface</span><span class="text-kw">-&gt;</span><span class="text-var">addMethod</span><span class="text-kw">((new </span><span class="text-var">Generator\MethodGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;toArray&#039;</span><span class="text-kw">))-&gt;</span><span class="text-var">addReturnType</span><span class="text-kw">(</span><span class="text-str">&#039;array&#039;</span><span class="text-kw">));
+<span class="text-var">$interface</span> = <span class="text-kw">new</span> <span class="text-type">Generator\InterfaceGenerator</span>(<span class="text-str">&#039;Arrayable&#039;</span>);
+<span class="text-var">$interface</span>-&gt;<span class="text-fn">addMethod</span>((<span class="text-kw">new</span> <span class="text-type">Generator\MethodGenerator</span>(<span class="text-str">&#039;toArray&#039;</span>))-&gt;<span class="text-fn">addReturnType</span>(<span class="text-str">&#039;array&#039;</span>));
 
-echo </span><span class="text-var">$interface</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$interface</span>;
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">interface </span><span class="text-var">Arrayable
-</span><span class="text-kw">{
+<pre><code><span class="text-kw">interface</span> <span class="text-type">Arrayable</span>
+{
 
-    </span><span class="text-comment">/**
+    <span class="text-comment">/**
      * @return array
-     */
-    </span><span class="text-kw">public function </span><span class="text-var">toArray</span><span class="text-kw">(): array;
+     */</span>
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">toArray</span>(): <span class="text-kw">array</span>;
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A trait takes properties and methods but has no <code>extends</code>, <code>implements</code>, abstract, final or readonly
@@ -102,27 +102,27 @@ flag. An enum takes a backing type and <code>EnumCaseGenerator</code> cases, and
 implemented interfaces exactly as a class does. Leave the backing type off for a pure enum:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$enum </span><span class="text-kw">= new </span><span class="text-var">Generator\EnumGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Status&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;string&#039;</span><span class="text-kw">);
-</span><span class="text-var">$enum</span><span class="text-kw">-&gt;</span><span class="text-var">addCase</span><span class="text-kw">(new </span><span class="text-var">Generator\EnumCaseGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Active&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">));
-</span><span class="text-var">$enum</span><span class="text-kw">-&gt;</span><span class="text-var">addCase</span><span class="text-kw">(new </span><span class="text-var">Generator\EnumCaseGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Inactive&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;inactive&#039;</span><span class="text-kw">));
+<span class="text-var">$enum</span> = <span class="text-kw">new</span> <span class="text-type">Generator\EnumGenerator</span>(<span class="text-str">&#039;Status&#039;</span>, <span class="text-str">&#039;string&#039;</span>);
+<span class="text-var">$enum</span>-&gt;<span class="text-fn">addCase</span>(<span class="text-kw">new</span> <span class="text-type">Generator\EnumCaseGenerator</span>(<span class="text-str">&#039;Active&#039;</span>, <span class="text-str">&#039;active&#039;</span>));
+<span class="text-var">$enum</span>-&gt;<span class="text-fn">addCase</span>(<span class="text-kw">new</span> <span class="text-type">Generator\EnumCaseGenerator</span>(<span class="text-str">&#039;Inactive&#039;</span>, <span class="text-str">&#039;inactive&#039;</span>));
 
-echo </span><span class="text-var">$enum</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$enum</span>;
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">enum </span><span class="text-var">Status</span><span class="text-kw">: </span><span class="text-var">string
-</span><span class="text-kw">{
+<pre><code><span class="text-kw">enum</span> <span class="text-type">Status</span>: <span class="text-type">string</span>
+{
 
-    case </span><span class="text-var">Active </span><span class="text-kw">= </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">;
+    <span class="text-kw">case</span> <span class="text-type">Active</span> = <span class="text-str">&#039;active&#039;</span>;
 
-    case </span><span class="text-var">Inactive </span><span class="text-kw">= </span><span class="text-str">&#039;inactive&#039;</span><span class="text-kw">;
+    <span class="text-kw">case</span> <span class="text-type">Inactive</span> = <span class="text-str">&#039;inactive&#039;</span>;
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>FunctionGenerator</code> covers plain functions and, with <code>closure: true</code>, anonymous ones — a closure with a
@@ -144,15 +144,15 @@ parameter with no default at all, and <code>Generator\Literal</code> is a raw ex
 than quoted:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$sum </span><span class="text-kw">= new </span><span class="text-var">Generator\FunctionGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;sum&#039;</span><span class="text-kw">);
-</span><span class="text-var">$sum</span><span class="text-kw">-&gt;</span><span class="text-var">addArgument</span><span class="text-kw">(</span><span class="text-str">&#039;numbers&#039;</span><span class="text-kw">, new </span><span class="text-var">Generator\NoValue</span><span class="text-kw">(), </span><span class="text-str">&#039;int&#039;</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;return array_sum($numbers);&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">addReturnType</span><span class="text-kw">(</span><span class="text-str">&#039;int&#039;</span><span class="text-kw">);
+<span class="text-var">$sum</span> = <span class="text-kw">new</span> <span class="text-type">Generator\FunctionGenerator</span>(<span class="text-str">&#039;sum&#039;</span>);
+<span class="text-var">$sum</span>-&gt;<span class="text-fn">addArgument</span>(<span class="text-str">&#039;numbers&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Generator\NoValue</span>(), <span class="text-str">&#039;int&#039;</span>, <span class="text-num">true</span>)
+    -&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;return array_sum($numbers);&#039;</span>)
+    -&gt;<span class="text-fn">addReturnType</span>(<span class="text-str">&#039;int&#039;</span>);
 
-echo </span><span class="text-var">$sum</span><span class="text-kw">;  </span><span class="text-comment">// function sum(int ...$numbers): int
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$sum</span>;  <span class="text-comment">// function sum(int ...$numbers): int</span>
+</code></pre>
 </div>
 
 <p>The fourth and fifth arguments are the variadic and by-reference flags — <code>addArgument('counter', new Generator\NoValue(), 'int', false, true)</code> renders <code>int &amp;$counter</code>. Any type position accepts a union
@@ -163,37 +163,37 @@ wrapped in parentheses to satisfy PHP's DNF grammar.</p>
 <p>Promoted constructor properties come from <code>addPromotedArgument($name, $visibility, $value, $type, $readonly)</code>, valid only on a method named <code>__construct</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$class </span><span class="text-kw">= new </span><span class="text-var">Generator\ClassGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Point&#039;</span><span class="text-kw">);
+<span class="text-var">$class</span> = <span class="text-kw">new</span> <span class="text-type">Generator\ClassGenerator</span>(<span class="text-str">&#039;Point&#039;</span>);
 
-</span><span class="text-var">$constructor </span><span class="text-kw">= new </span><span class="text-var">Generator\MethodGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;__construct&#039;</span><span class="text-kw">);
-</span><span class="text-var">$constructor</span><span class="text-kw">-&gt;</span><span class="text-var">addPromotedArgument</span><span class="text-kw">(</span><span class="text-str">&#039;x&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;public&#039;</span><span class="text-kw">, new </span><span class="text-var">Generator\NoValue</span><span class="text-kw">(), </span><span class="text-str">&#039;int&#039;</span><span class="text-kw">)
-            -&gt;</span><span class="text-var">addPromotedArgument</span><span class="text-kw">(</span><span class="text-str">&#039;y&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;public&#039;</span><span class="text-kw">, new </span><span class="text-var">Generator\NoValue</span><span class="text-kw">(), </span><span class="text-str">&#039;int&#039;</span><span class="text-kw">)
-            -&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;&#039;</span><span class="text-kw">);
+<span class="text-var">$constructor</span> = <span class="text-kw">new</span> <span class="text-type">Generator\MethodGenerator</span>(<span class="text-str">&#039;__construct&#039;</span>);
+<span class="text-var">$constructor</span>-&gt;<span class="text-fn">addPromotedArgument</span>(<span class="text-str">&#039;x&#039;</span>, <span class="text-str">&#039;public&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Generator\NoValue</span>(), <span class="text-str">&#039;int&#039;</span>)
+            -&gt;<span class="text-fn">addPromotedArgument</span>(<span class="text-str">&#039;y&#039;</span>, <span class="text-str">&#039;public&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Generator\NoValue</span>(), <span class="text-str">&#039;int&#039;</span>)
+            -&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;&#039;</span>);
 
-</span><span class="text-var">$class</span><span class="text-kw">-&gt;</span><span class="text-var">addMethod</span><span class="text-kw">(</span><span class="text-var">$constructor</span><span class="text-kw">);
+<span class="text-var">$class</span>-&gt;<span class="text-fn">addMethod</span>(<span class="text-var">$constructor</span>);
 
-echo </span><span class="text-var">$class</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$class</span>;
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">class </span><span class="text-var">Point
-</span><span class="text-kw">{
+<pre><code><span class="text-kw">class</span> <span class="text-type">Point</span>
+{
 
-    </span><span class="text-comment">/**
+    <span class="text-comment">/**
      * @param int  $x
      * @param int  $y
-     */
-    </span><span class="text-kw">public function </span><span class="text-var">__construct</span><span class="text-kw">(public </span><span class="text-var">int $x</span><span class="text-kw">, public </span><span class="text-var">int $y</span><span class="text-kw">)
+     */</span>
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">__construct</span>(<span class="text-kw">public</span> <span class="text-type">int</span> <span class="text-var">$x</span>, <span class="text-kw">public</span> <span class="text-type">int</span> <span class="text-var">$y</span>)
     {
         
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Call <code>setBody('')</code> for a concrete method with an empty body. <code>MethodGenerator</code> renders a
@@ -203,14 +203,14 @@ semicolon-terminated signature for a body that was never set.</p>
 <code>@param</code> and <code>@return</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$docblock </span><span class="text-kw">= new </span><span class="text-var">Generator\DocblockGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Adds two numbers together.&#039;</span><span class="text-kw">);
-</span><span class="text-var">$docblock</span><span class="text-kw">-&gt;</span><span class="text-var">addParam</span><span class="text-kw">(</span><span class="text-str">&#039;int&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;$a&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;The first number&#039;</span><span class="text-kw">);
-</span><span class="text-var">$docblock</span><span class="text-kw">-&gt;</span><span class="text-var">setReturn</span><span class="text-kw">(</span><span class="text-str">&#039;int&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;The sum&#039;</span><span class="text-kw">);
-</span><span class="text-var">$docblock</span><span class="text-kw">-&gt;</span><span class="text-var">setThrows</span><span class="text-kw">(</span><span class="text-str">&#039;\InvalidArgumentException&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;If either number is negative&#039;</span><span class="text-kw">);
-</span><span class="text-var">$docblock</span><span class="text-kw">-&gt;</span><span class="text-var">addTag</span><span class="text-kw">(</span><span class="text-str">&#039;since&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;7.0.0&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$docblock</span> = <span class="text-kw">new</span> <span class="text-type">Generator\DocblockGenerator</span>(<span class="text-str">&#039;Adds two numbers together.&#039;</span>);
+<span class="text-var">$docblock</span>-&gt;<span class="text-fn">addParam</span>(<span class="text-str">&#039;int&#039;</span>, <span class="text-str">&#039;$a&#039;</span>, <span class="text-str">&#039;The first number&#039;</span>);
+<span class="text-var">$docblock</span>-&gt;<span class="text-fn">setReturn</span>(<span class="text-str">&#039;int&#039;</span>, <span class="text-str">&#039;The sum&#039;</span>);
+<span class="text-var">$docblock</span>-&gt;<span class="text-fn">setThrows</span>(<span class="text-str">&#039;\InvalidArgumentException&#039;</span>, <span class="text-str">&#039;If either number is negative&#039;</span>);
+<span class="text-var">$docblock</span>-&gt;<span class="text-fn">addTag</span>(<span class="text-str">&#039;since&#039;</span>, <span class="text-str">&#039;7.0.0&#039;</span>);
+</code></pre>
 </div>
 
 <p>Attributes are <code>AttributeGenerator</code> objects, addable to a class, member, or individual parameter.
@@ -218,16 +218,16 @@ semicolon-terminated signature for a body that was never set.</p>
 one-argument call and a named one passes the name second:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$table </span><span class="text-kw">= new </span><span class="text-var">Generator\AttributeGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Table&#039;</span><span class="text-kw">);
-</span><span class="text-var">$table</span><span class="text-kw">-&gt;</span><span class="text-var">addArgument</span><span class="text-kw">(</span><span class="text-str">&#039;products&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;name&#039;</span><span class="text-kw">);
+<span class="text-var">$table</span> = <span class="text-kw">new</span> <span class="text-type">Generator\AttributeGenerator</span>(<span class="text-str">&#039;Table&#039;</span>);
+<span class="text-var">$table</span>-&gt;<span class="text-fn">addArgument</span>(<span class="text-str">&#039;products&#039;</span>, <span class="text-str">&#039;name&#039;</span>);
 
-</span><span class="text-var">$class </span><span class="text-kw">= new </span><span class="text-var">Generator\ClassGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Product&#039;</span><span class="text-kw">);
-</span><span class="text-var">$class</span><span class="text-kw">-&gt;</span><span class="text-var">addAttribute</span><span class="text-kw">(</span><span class="text-var">$table</span><span class="text-kw">);
+<span class="text-var">$class</span> = <span class="text-kw">new</span> <span class="text-type">Generator\ClassGenerator</span>(<span class="text-str">&#039;Product&#039;</span>);
+<span class="text-var">$class</span>-&gt;<span class="text-fn">addAttribute</span>(<span class="text-var">$table</span>);
 
-echo </span><span class="text-var">$class</span><span class="text-kw">;  </span><span class="text-comment">// #[Table(name: &#039;products&#039;)] above the class declaration
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$class</span>;  <span class="text-comment">// #[Table(name: &#039;products&#039;)] above the class declaration</span>
+</code></pre>
 </div>
 
 <h2 id="generating-files">Generating Files<a class="anchor" href="#generating-files" aria-label="Link to this section">#</a></h2>
@@ -236,30 +236,30 @@ echo </span><span class="text-var">$class</span><span class="text-kw">;  </span>
 and either renders the whole file or writes it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$class </span><span class="text-kw">= new </span><span class="text-var">Generator\ClassGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Widget&#039;</span><span class="text-kw">);
-</span><span class="text-var">$class</span><span class="text-kw">-&gt;</span><span class="text-var">setNamespace</span><span class="text-kw">(new </span><span class="text-var">Generator\NamespaceGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;App\Model&#039;</span><span class="text-kw">));
+<span class="text-var">$class</span> = <span class="text-kw">new</span> <span class="text-type">Generator\ClassGenerator</span>(<span class="text-str">&#039;Widget&#039;</span>);
+<span class="text-var">$class</span>-&gt;<span class="text-fn">setNamespace</span>(<span class="text-kw">new</span> <span class="text-type">Generator\NamespaceGenerator</span>(<span class="text-str">&#039;App\Model&#039;</span>));
 
-</span><span class="text-var">$code </span><span class="text-kw">= new </span><span class="text-var">Generator</span><span class="text-kw">(</span><span class="text-var">$class</span><span class="text-kw">);
+<span class="text-var">$code</span> = <span class="text-kw">new</span> <span class="text-type">Generator</span>(<span class="text-var">$class</span>);
 
-echo </span><span class="text-var">$code</span><span class="text-kw">-&gt;</span><span class="text-var">render</span><span class="text-kw">();
-</span><span class="text-var">$code</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/src/Model/Widget.php&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$code</span>-&gt;<span class="text-fn">render</span>();
+<span class="text-var">$code</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/src/Model/Widget.php&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>addCodeObjects()</code> takes an array, which is how you put several functions in one file. Keyed by
 namespace, it produces a multi-namespace file with each in its own braced block:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$code </span><span class="text-kw">= new </span><span class="text-var">Generator</span><span class="text-kw">();
-</span><span class="text-var">$code</span><span class="text-kw">-&gt;</span><span class="text-var">addCodeObjects</span><span class="text-kw">([
-    </span><span class="text-str">&#039;App\One&#039; </span><span class="text-kw">=&gt; new </span><span class="text-var">Generator\ClassGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Foo&#039;</span><span class="text-kw">),
-    </span><span class="text-str">&#039;App\Two&#039; </span><span class="text-kw">=&gt; new </span><span class="text-var">Generator\ClassGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;Bar&#039;</span><span class="text-kw">),
+<span class="text-var">$code</span> = <span class="text-kw">new</span> <span class="text-type">Generator</span>();
+<span class="text-var">$code</span>-&gt;<span class="text-fn">addCodeObjects</span>([
+    <span class="text-str">&#039;App\One&#039;</span> =&gt; <span class="text-kw">new</span> <span class="text-type">Generator\ClassGenerator</span>(<span class="text-str">&#039;Foo&#039;</span>),
+    <span class="text-str">&#039;App\Two&#039;</span> =&gt; <span class="text-kw">new</span> <span class="text-type">Generator\ClassGenerator</span>(<span class="text-str">&#039;Bar&#039;</span>),
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>BodyGenerator</code> renders statements with no class or function around them, for a file that is nothing
@@ -267,41 +267,41 @@ but executable code. Its <code>createReturnConfig()</code> turns an array into a
 is exactly the shape of a Pop config file:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$body </span><span class="text-kw">= new </span><span class="text-var">Generator\BodyGenerator</span><span class="text-kw">();
-</span><span class="text-var">$body</span><span class="text-kw">-&gt;</span><span class="text-var">createReturnConfig</span><span class="text-kw">([
-    </span><span class="text-str">&#039;debug&#039;  </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;home&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;/&#039;</span><span class="text-kw">],
+<span class="text-var">$body</span> = <span class="text-kw">new</span> <span class="text-type">Generator\BodyGenerator</span>();
+<span class="text-var">$body</span>-&gt;<span class="text-fn">createReturnConfig</span>([
+    <span class="text-str">&#039;debug&#039;</span>  =&gt; <span class="text-num">true</span>,
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [<span class="text-str">&#039;home&#039;</span> =&gt; <span class="text-str">&#039;/&#039;</span>],
 ]);
 
-echo new </span><span class="text-var">Generator</span><span class="text-kw">(</span><span class="text-var">$body</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-kw">new</span> <span class="text-type">Generator</span>(<span class="text-var">$body</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-    </span><span class="text-kw">return [
-        </span><span class="text-str">&#039;debug&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-        </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;home&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;/&#039;</span><span class="text-kw">,
+<pre><code><span class="text-kw">&lt;?php
+</span>
+    <span class="text-kw">return</span> [
+        <span class="text-str">&#039;debug&#039;</span> =&gt; <span class="text-num">true</span>,
+        <span class="text-str">&#039;routes&#039;</span> =&gt; [
+            <span class="text-str">&#039;home&#039;</span> =&gt; <span class="text-str">&#039;/&#039;</span>,
         ],
     ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>NamespaceGenerator::addUse()</code> adds the imports at the top of the file, and is the one <code>addUse()</code> that
 honors an alias:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
 
-</span><span class="text-var">$namespace </span><span class="text-kw">= new </span><span class="text-var">Generator\NamespaceGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;App\Model&#039;</span><span class="text-kw">);
-</span><span class="text-var">$namespace</span><span class="text-kw">-&gt;</span><span class="text-var">addUse</span><span class="text-kw">(</span><span class="text-str">&#039;Pop\Db\Record&#039;</span><span class="text-kw">);
-</span><span class="text-var">$namespace</span><span class="text-kw">-&gt;</span><span class="text-var">addUse</span><span class="text-kw">(</span><span class="text-str">&#039;App\Service\Mailer&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;AppMailer&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$namespace</span> = <span class="text-kw">new</span> <span class="text-type">Generator\NamespaceGenerator</span>(<span class="text-str">&#039;App\Model&#039;</span>);
+<span class="text-var">$namespace</span>-&gt;<span class="text-fn">addUse</span>(<span class="text-str">&#039;Pop\Db\Record&#039;</span>);
+<span class="text-var">$namespace</span>-&gt;<span class="text-fn">addUse</span>(<span class="text-str">&#039;App\Service\Mailer&#039;</span>, <span class="text-str">&#039;AppMailer&#039;</span>);
+</code></pre>
 </div>
 
 <p>Nothing validates the code before it is written — <code>setBody()</code> takes a string and emits it as given, so
@@ -313,20 +313,20 @@ run <code>php -l</code> over what it wrote before trusting it.</p>
 it. That closes the loop: you can add to a class you did not write and render the whole thing again.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Code\Generator</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Code\Reflection</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Code\Generator</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Code\Reflection</span>;
 
-</span><span class="text-var">$class </span><span class="text-kw">= </span><span class="text-var">Reflection</span><span class="text-kw">::</span><span class="text-var">createClass</span><span class="text-kw">(</span><span class="text-str">&#039;App\Model\Widget&#039;</span><span class="text-kw">);
+<span class="text-var">$class</span> = <span class="text-type">Reflection</span>::<span class="text-fn">createClass</span>(<span class="text-str">&#039;App\Model\Widget&#039;</span>);
 
-</span><span class="text-var">$hasName </span><span class="text-kw">= new </span><span class="text-var">Generator\MethodGenerator</span><span class="text-kw">(</span><span class="text-str">&#039;hasName&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;public&#039;</span><span class="text-kw">);
-</span><span class="text-var">$hasName</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;return ($this-&gt;name !== null);&#039;</span><span class="text-kw">)
-        -&gt;</span><span class="text-var">addReturnType</span><span class="text-kw">(</span><span class="text-str">&#039;bool&#039;</span><span class="text-kw">)
-        -&gt;</span><span class="text-var">setDesc</span><span class="text-kw">(</span><span class="text-str">&#039;Whether the name is set.&#039;</span><span class="text-kw">);
+<span class="text-var">$hasName</span> = <span class="text-kw">new</span> <span class="text-type">Generator\MethodGenerator</span>(<span class="text-str">&#039;hasName&#039;</span>, <span class="text-str">&#039;public&#039;</span>);
+<span class="text-var">$hasName</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;return ($this-&gt;name !== null);&#039;</span>)
+        -&gt;<span class="text-fn">addReturnType</span>(<span class="text-str">&#039;bool&#039;</span>)
+        -&gt;<span class="text-fn">setDesc</span>(<span class="text-str">&#039;Whether the name is set.&#039;</span>);
 
-</span><span class="text-var">$class</span><span class="text-kw">-&gt;</span><span class="text-var">addMethod</span><span class="text-kw">(</span><span class="text-var">$hasName</span><span class="text-kw">);
+<span class="text-var">$class</span>-&gt;<span class="text-fn">addMethod</span>(<span class="text-var">$hasName</span>);
 
-(new </span><span class="text-var">Generator</span><span class="text-kw">(</span><span class="text-var">$class</span><span class="text-kw">))-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/src/Model/Widget.php&#039;</span><span class="text-kw">);
-</span></code></pre>
+(<span class="text-kw">new</span> <span class="text-type">Generator</span>(<span class="text-var">$class</span>))-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/src/Model/Widget.php&#039;</span>);
+</code></pre>
 </div>
 
 <p>The file that comes back has the original namespace, property and method intact, with <code>hasName()</code>

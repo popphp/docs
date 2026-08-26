@@ -1,22 +1,43 @@
 <?php
 /**
- * Document head. Expects $title, $description, $attr.
+ * Document head. Expects $title, $description, $slug, $attr.
  *
- * og:image is deliberately unset: the marketing site points it at a screenshot of its own
- * homepage, which says nothing about a documentation page. A per-page card belongs here once
- * there is one to render.
+ * The social card is a screenshot of this site rather than the marketing site's — regenerate it
+ * with `php tools/build-og-image.php` in the new-docs folder after a design change.
  */
+$siteUrl     = 'https://docs.popphp.org';
+$socialImage = $siteUrl . '/img/og-image.png';
+
+// The status pages (404, 500, 503) have no slug: they are not a place, so they get no canonical
+// URL and no social card, and they ask not to be indexed.
+$slug        = $slug ?? null;
+$description = $description ?? 'Documentation for the Pop PHP Framework.';
+$canonical   = ($slug === null) ? null : $siteUrl . (($slug === '/') ? '/' : $slug);
 ?>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?=$attr($title) ?> — Pop PHP Framework</title>
 <meta name="description" content="<?=$attr($description) ?>">
+<?php if ($canonical !== null): ?>
+<link rel="canonical" href="<?=$attr($canonical) ?>">
 
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Pop PHP Framework">
 <meta property="og:title" content="<?=$attr($title) ?>">
 <meta property="og:description" content="<?=$attr($description) ?>">
+<meta property="og:url" content="<?=$attr($canonical) ?>">
+<meta property="og:image" content="<?=$attr($socialImage) ?>">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="The Pop PHP Framework documentation, showing the Overview page and its section navigation.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?=$attr($title) ?>">
+<meta name="twitter:description" content="<?=$attr($description) ?>">
+<meta name="twitter:image" content="<?=$attr($socialImage) ?>">
+<?php else: ?>
+<meta name="robots" content="noindex">
+<?php endif; ?>
 
 <link rel="shortcut icon" type="image/png" href="https://media.popphp.org/img/pop-php-icon.png">
 

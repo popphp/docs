@@ -15,18 +15,18 @@ table class is bound to — the short way to get at one opened at bootstrap.
 <a href="/database/connecting">Connecting &amp; Adapters</a> covers opening and registering it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM `users`&#039;</span><span class="text-kw">);
+<span class="text-var">$users</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;SELECT * FROM `users`&#039;</span>);
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">insert</span><span class="text-kw">(</span><span class="text-str">&quot;INSERT INTO `users` (`username`, `email`) VALUES (&#039;testuser&#039;, &#039;testuser@test.com&#039;)&quot;</span><span class="text-kw">);
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">update</span><span class="text-kw">(</span><span class="text-str">&quot;UPDATE `users` SET `logins` = 3 WHERE `username` = &#039;testuser&#039;&quot;</span><span class="text-kw">);
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">delete</span><span class="text-kw">(</span><span class="text-str">&quot;DELETE FROM `users` WHERE `username` = &#039;testuser&#039;&quot;</span><span class="text-kw">);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">insert</span>(<span class="text-str">&quot;INSERT INTO `users` (`username`, `email`) VALUES (&#039;testuser&#039;, &#039;testuser@test.com&#039;)&quot;</span>);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">update</span>(<span class="text-str">&quot;UPDATE `users` SET `logins` = 3 WHERE `username` = &#039;testuser&#039;&quot;</span>);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">delete</span>(<span class="text-str">&quot;DELETE FROM `users` WHERE `username` = &#039;testuser&#039;&quot;</span>);
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getLastId</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getLastId</span>();
+</code></pre>
 </div>
 
 <p>Each of the four checks the statement's first keyword and refuses anything else, so a <code>DELETE</code> handed to
@@ -36,16 +36,16 @@ method, not against a malicious string.</p>
 rows, and leaves the result on the adapter for you to fetch:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM users&#039;</span><span class="text-kw">);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&#039;SELECT * FROM users&#039;</span>);
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getNumberOfRows</span><span class="text-kw">();
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getNumberOfRows</span>();
 
-</span><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">fetchAll</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$users</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">fetchAll</span>();
+</code></pre>
 </div>
 
 <p><code>query()</code> also covers statements with no result set — <code>CREATE TABLE</code>, <code>SET</code>, <code>VACUUM</code>.
@@ -55,12 +55,12 @@ generated.</p>
 driver wants:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">escape</span><span class="text-kw">(</span><span class="text-str">&quot;O&#039;Brien&quot;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">escape</span>(<span class="text-str">&quot;O&#039;Brien&quot;</span>);
+</code></pre>
 </div>
 
 <p>That comes back <code>O\'Brien</code> on MySQL and <code>O''Brien</code> on both PostgreSQL and SQLite — each adapter defers to
@@ -73,17 +73,17 @@ prepared path when it isn't, returning the adapter either way.</p>
 are bound by the driver and never interpolated into the SQL:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM `users` WHERE `id` &lt; ?&#039;</span><span class="text-kw">, [</span><span class="text-var">10</span><span class="text-kw">]);
+<span class="text-var">$users</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;SELECT * FROM `users` WHERE `id` &lt; ?&#039;</span>, [<span class="text-num">10</span>]);
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">insert</span><span class="text-kw">(
-    </span><span class="text-str">&#039;INSERT INTO `users` (`username`, `email`) VALUES (?, ?)&#039;</span><span class="text-kw">,
-    [</span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]
+<span class="text-var">$db</span>-&gt;<span class="text-fn">insert</span>(
+    <span class="text-str">&#039;INSERT INTO `users` (`username`, `email`) VALUES (?, ?)&#039;</span>,
+    [<span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;testuser@test.com&#039;</span>]
 );
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Those two use MySQL's positional <code>?</code> — each driver has its own placeholder form, covered below.</p>
@@ -91,16 +91,16 @@ are bound by the driver and never interpolated into the SQL:</p>
 statement runs more than once:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">prepare</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM `users` WHERE `id` = ?&#039;</span><span class="text-kw">)
-   -&gt;</span><span class="text-var">bindParams</span><span class="text-kw">([</span><span class="text-var">1</span><span class="text-kw">])
-   -&gt;</span><span class="text-var">execute</span><span class="text-kw">();
+<span class="text-var">$db</span>-&gt;<span class="text-fn">prepare</span>(<span class="text-str">&#039;SELECT * FROM `users` WHERE `id` = ?&#039;</span>)
+   -&gt;<span class="text-fn">bindParams</span>([<span class="text-num">1</span>])
+   -&gt;<span class="text-fn">execute</span>();
 
-</span><span class="text-var">$user </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">fetch</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$user</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">fetch</span>();
+</code></pre>
 </div>
 
 <p>Placeholders in a handwritten SQL string are the driver's own: MySQL takes positional <code>?</code>, PostgreSQL
@@ -116,16 +116,16 @@ rather than from the return value.</p>
 time, which is what you want for a result set too large to hold in memory:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM users&#039;</span><span class="text-kw">);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&#039;SELECT * FROM users&#039;</span>);
 
-while (</span><span class="text-var">$row </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">fetch</span><span class="text-kw">()) {
-    echo </span><span class="text-var">$row</span><span class="text-kw">[</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">] . </span><span class="text-str">&quot;\n&quot;</span><span class="text-kw">;
+<span class="text-kw">while</span> (<span class="text-var">$row</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">fetch</span>()) {
+    <span class="text-kw">echo</span> <span class="text-var">$row</span>[<span class="text-str">&#039;username&#039;</span>] . <span class="text-str">&quot;\n&quot;</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The two share a cursor. A <code>fetch()</code> followed by <code>fetchAll()</code> on the same result returns the remaining
@@ -169,63 +169,63 @@ anything from it.</p>
 <code>transaction()</code> for the common case where all three-fold into one call.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-try {
-    </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">beginTransaction</span><span class="text-kw">();
-    </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;testuser&#039;, &#039;testuser@test.com&#039;)&quot;</span><span class="text-kw">);
-    </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&quot;INSERT INTO user_info (user_id, city) VALUES (1, &#039;Austin&#039;)&quot;</span><span class="text-kw">);
-    </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">commit</span><span class="text-kw">();
-} catch (</span><span class="text-var">\Exception $e</span><span class="text-kw">) {
-    </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">rollback</span><span class="text-kw">();
-    echo </span><span class="text-var">$e</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">();
+<span class="text-kw">try</span> {
+    <span class="text-var">$db</span>-&gt;<span class="text-fn">beginTransaction</span>();
+    <span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;testuser&#039;, &#039;testuser@test.com&#039;)&quot;</span>);
+    <span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&quot;INSERT INTO user_info (user_id, city) VALUES (1, &#039;Austin&#039;)&quot;</span>);
+    <span class="text-var">$db</span>-&gt;<span class="text-fn">commit</span>();
+} <span class="text-kw">catch</span> (<span class="text-type">\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-var">$db</span>-&gt;<span class="text-fn">rollback</span>();
+    <span class="text-kw">echo</span> <span class="text-var">$e</span>-&gt;<span class="text-fn">getMessage</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>transaction()</code> takes a callable and writes that <code>try</code>/<code>catch</code> for you. It begins, calls, and commits;
 if the callable throws, it rolls back and rethrows, so the exception still reaches your handler:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-try {
-    </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">transaction</span><span class="text-kw">(function () use (</span><span class="text-var">$db</span><span class="text-kw">) {
-        </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;testuser&#039;, &#039;testuser@test.com&#039;)&quot;</span><span class="text-kw">);
+<span class="text-kw">try</span> {
+    <span class="text-var">$db</span>-&gt;<span class="text-fn">transaction</span>(<span class="text-kw">function</span> () <span class="text-kw">use</span> (<span class="text-var">$db</span>) {
+        <span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;testuser&#039;, &#039;testuser@test.com&#039;)&quot;</span>);
     });
-} catch (</span><span class="text-var">\Exception $e</span><span class="text-kw">) {
-    echo </span><span class="text-var">$e</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">();
+} <span class="text-kw">catch</span> (<span class="text-type">\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$e</span>-&gt;<span class="text-fn">getMessage</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Nesting is genuinely supported. The outermost <code>beginTransaction()</code> issues a real <code>BEGIN</code> and every one
 inside it a <code>SAVEPOINT</code>; a commit at depth 2 releases that savepoint and a rollback returns to it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">transaction</span><span class="text-kw">(function () use (</span><span class="text-var">$db</span><span class="text-kw">) {
-    </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;outer&#039;, &#039;outer@test.com&#039;)&quot;</span><span class="text-kw">);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">transaction</span>(<span class="text-kw">function</span> () <span class="text-kw">use</span> (<span class="text-var">$db</span>) {
+    <span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;outer&#039;, &#039;outer@test.com&#039;)&quot;</span>);
 
-    try {
-        </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">transaction</span><span class="text-kw">(function () use (</span><span class="text-var">$db</span><span class="text-kw">) {
-            </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;inner&#039;, &#039;inner@test.com&#039;)&quot;</span><span class="text-kw">);
-            throw new </span><span class="text-var">\RuntimeException</span><span class="text-kw">(</span><span class="text-str">&#039;inner failed&#039;</span><span class="text-kw">);
+    <span class="text-kw">try</span> {
+        <span class="text-var">$db</span>-&gt;<span class="text-fn">transaction</span>(<span class="text-kw">function</span> () <span class="text-kw">use</span> (<span class="text-var">$db</span>) {
+            <span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;inner&#039;, &#039;inner@test.com&#039;)&quot;</span>);
+            <span class="text-kw">throw</span> <span class="text-kw">new</span> <span class="text-type">\RuntimeException</span>(<span class="text-str">&#039;inner failed&#039;</span>);
         });
-    } catch (</span><span class="text-var">\RuntimeException $e</span><span class="text-kw">) {
-        </span><span class="text-comment">// the inner rows are gone; the outer transaction is still open
-    </span><span class="text-kw">}
+    } <span class="text-kw">catch</span> (<span class="text-type">\RuntimeException</span> <span class="text-var">$e</span>) {
+        <span class="text-comment">// the inner rows are gone; the outer transaction is still open</span>
+    }
 
-    </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;outer2&#039;, &#039;outer2@test.com&#039;)&quot;</span><span class="text-kw">);
+    <span class="text-var">$db</span>-&gt;<span class="text-fn">query</span>(<span class="text-str">&quot;INSERT INTO users (username, email) VALUES (&#039;outer2&#039;, &#039;outer2@test.com&#039;)&quot;</span>);
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Run that and <code>outer</code> and <code>outer2</code> are committed while <code>inner</code> is not, on MySQL, PostgreSQL and SQLite
@@ -233,22 +233,22 @@ alike — the savepoint hooks are implemented on all four native adapters and on
 reports whether one is open and <code>getTransactionDepth()</code> returns the current depth:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getTransactionDepth</span><span class="text-kw">();   </span><span class="text-comment">// 0
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getTransactionDepth</span>();   <span class="text-comment">// 0</span>
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">beginTransaction</span><span class="text-kw">();
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">beginTransaction</span><span class="text-kw">();
+<span class="text-var">$db</span>-&gt;<span class="text-fn">beginTransaction</span>();
+<span class="text-var">$db</span>-&gt;<span class="text-fn">beginTransaction</span>();
 
-echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getTransactionDepth</span><span class="text-kw">();   </span><span class="text-comment">// 2
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getTransactionDepth</span>();   <span class="text-comment">// 2</span>
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">rollback</span><span class="text-kw">();                   </span><span class="text-comment">// back to the savepoint
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">rollback</span><span class="text-kw">();                   </span><span class="text-comment">// the real ROLLBACK
+<span class="text-var">$db</span>-&gt;<span class="text-fn">rollback</span>();                   <span class="text-comment">// back to the savepoint</span>
+<span class="text-var">$db</span>-&gt;<span class="text-fn">rollback</span>();                   <span class="text-comment">// the real ROLLBACK</span>
 
-</span><span class="text-kw">echo </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">getTransactionDepth</span><span class="text-kw">();   </span><span class="text-comment">// 0
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$db</span>-&gt;<span class="text-fn">getTransactionDepth</span>();   <span class="text-comment">// 0</span>
+</code></pre>
 </div>
 
 <p>The depth is <code>0</code> outside any transaction and back to <code>0</code> after the outermost commit or rollback, which

@@ -15,15 +15,15 @@ want for a query no <code>findBy()</code> shorthand expresses.</p>
 statement and <code>from()</code> names the table:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">(</span><span class="text-str">&#039;id = :id&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>([<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;username&#039;</span>])
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-fn">where</span>(<span class="text-str">&#039;id = :id&#039;</span>);
+</code></pre>
 </div>
 
 <p>On the three adapters that renders as:</p>
@@ -44,17 +44,17 @@ statement and <code>from()</code> names the table:</p>
 builder to the adapter runs it, with the parameter array keyed by the name you wrote:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">(</span><span class="text-str">&#039;id = :id&#039;</span><span class="text-kw">);
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>([<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;username&#039;</span>])
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-fn">where</span>(<span class="text-str">&#039;id = :id&#039;</span>);
 
-</span><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-var">$sql</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$users</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">select</span>(<span class="text-var">$sql</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1</span>]);
+</code></pre>
 </div>
 
 <p>Called with no argument, <code>select()</code> selects everything. An array of column names selects those columns; a
@@ -62,15 +62,15 @@ string key in that array is an alias, and a value the builder recognizes as a SQ
 unquoted:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;user&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;total&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;COUNT(*)&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">distinct</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>([<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;user&#039;</span> =&gt; <span class="text-str">&#039;username&#039;</span>, <span class="text-str">&#039;total&#039;</span> =&gt; <span class="text-str">&#039;COUNT(*)&#039;</span>])
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-fn">distinct</span>();
+</code></pre>
 </div>
 
 <p>On MySQL that renders:</p>
@@ -86,18 +86,18 @@ unquoted:</p>
 building the string, and <code>echo $sql;</code> calls it through <code>__toString()</code>.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql    </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$select </span><span class="text-kw">= </span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039;</span><span class="text-kw">])-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">where</span><span class="text-kw">(</span><span class="text-str">&#039;id = :id&#039;</span><span class="text-kw">);
+<span class="text-var">$sql</span>    = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$select</span> = <span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>([<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;username&#039;</span>])-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-fn">where</span>(<span class="text-str">&#039;id = :id&#039;</span>);
 
-echo </span><span class="text-var">$select</span><span class="text-kw">;                            </span><span class="text-comment">// safe to read
-</span><span class="text-kw">echo </span><span class="text-var">$select</span><span class="text-kw">;                            </span><span class="text-comment">// and to read again
+<span class="text-kw">echo</span> <span class="text-var">$select</span>;                            <span class="text-comment">// safe to read</span>
+<span class="text-kw">echo</span> <span class="text-var">$select</span>;                            <span class="text-comment">// and to read again</span>
 
-</span><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-var">$sql</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">]); </span><span class="text-comment">// still runnable
-</span></code></pre>
+<span class="text-var">$users</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">select</span>(<span class="text-var">$sql</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1</span>]); <span class="text-comment">// still runnable</span>
+</code></pre>
 </div>
 
 <h2 id="insert-update-and-delete">Insert, Update and Delete<a class="anchor" href="#insert-update-and-delete" aria-label="Link to this section">#</a></h2>
@@ -106,37 +106,37 @@ echo </span><span class="text-var">$select</span><span class="text-kw">;        
 <code>column =&gt; value</code> map, and a value written as <code>:name</code> becomes a bound parameter:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">insert</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">values</span><span class="text-kw">([
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;:username&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;email&#039;    </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;:email&#039;
-</span><span class="text-kw">]);
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">insert</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-fn">values</span>([
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;:username&#039;</span>,
+    <span class="text-str">&#039;email&#039;</span>    =&gt; <span class="text-str">&#039;:email&#039;</span>
+]);
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">insert</span><span class="text-kw">(</span><span class="text-var">$sql</span><span class="text-kw">, [</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$db</span>-&gt;<span class="text-fn">insert</span>(<span class="text-var">$sql</span>, [<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]);
+</code></pre>
 </div>
 
 <p><code>update()</code> takes the same map plus a predicate, and <code>delete()</code> takes a predicate alone:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">update</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">values</span><span class="text-kw">([</span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;:email&#039;</span><span class="text-kw">])-&gt;</span><span class="text-var">where</span><span class="text-kw">(</span><span class="text-str">&#039;id = :id&#039;</span><span class="text-kw">);
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">update</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-fn">values</span>([<span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;:email&#039;</span>])-&gt;<span class="text-fn">where</span>(<span class="text-str">&#039;id = :id&#039;</span>);
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">update</span><span class="text-kw">(</span><span class="text-var">$sql</span><span class="text-kw">, [</span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;new@test.com&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">]);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">update</span>(<span class="text-var">$sql</span>, [<span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;new@test.com&#039;</span>, <span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1</span>]);
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">delete</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">where</span><span class="text-kw">(</span><span class="text-str">&#039;id = :id&#039;</span><span class="text-kw">);
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">delete</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-fn">where</span>(<span class="text-str">&#039;id = :id&#039;</span>);
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">delete</span><span class="text-kw">(</span><span class="text-var">$sql</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$db</span>-&gt;<span class="text-fn">delete</span>(<span class="text-var">$sql</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1</span>]);
+</code></pre>
 </div>
 
 <p>On MySQL those render as <code>UPDATE ... SET ... = ? WHERE (... = ?)</code> and <code>DELETE FROM ... WHERE (... = ?)</code>,
@@ -146,17 +146,17 @@ adapter; the positional forms are the builder's problem, not yours.</p>
 exists, plus the column the conflict is detected on:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">insert</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">values</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;:id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;:username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;:email&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">onConflict</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">], </span><span class="text-str">&#039;id&#039;</span><span class="text-kw">);
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">insert</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-fn">values</span>([<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-str">&#039;:id&#039;</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;:username&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;:email&#039;</span>])
+    -&gt;<span class="text-fn">onConflict</span>([<span class="text-str">&#039;username&#039;</span>, <span class="text-str">&#039;email&#039;</span>], <span class="text-str">&#039;id&#039;</span>);
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">insert</span><span class="text-kw">(</span><span class="text-var">$sql</span><span class="text-kw">, [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$db</span>-&gt;<span class="text-fn">insert</span>(<span class="text-var">$sql</span>, [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]);
+</code></pre>
 </div>
 
 <p>That renders <code>ON DUPLICATE KEY UPDATE</code> on MySQL and <code>ON CONFLICT (&quot;id&quot;) DO UPDATE SET</code> on PostgreSQL and
@@ -170,16 +170,16 @@ the missing column makes rendering fail with
 <p>The join methods take the foreign table and an array mapping the two columns being matched:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">([</span><span class="text-str">&#039;users.username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;user_info.city&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">leftJoin</span><span class="text-kw">(</span><span class="text-str">&#039;user_info&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;user_info.user_id&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;users.id&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">(</span><span class="text-str">&#039;users.id &lt; :id&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>([<span class="text-str">&#039;users.username&#039;</span>, <span class="text-str">&#039;user_info.city&#039;</span>])
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-fn">leftJoin</span>(<span class="text-str">&#039;user_info&#039;</span>, [<span class="text-str">&#039;user_info.user_id&#039;</span> =&gt; <span class="text-str">&#039;users.id&#039;</span>])
+    -&gt;<span class="text-fn">where</span>(<span class="text-str">&#039;users.id &lt; :id&#039;</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -227,20 +227,20 @@ Spell the type the way the table does, or call the named method.</p>
 <p>The foreign &quot;table&quot; can be a select of its own, which is how you join against an aggregate:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$totals </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">()-&gt;</span><span class="text-var">select</span><span class="text-kw">([</span><span class="text-str">&#039;user_id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;order_total&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;SUM(total)&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;orders&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">groupBy</span><span class="text-kw">(</span><span class="text-str">&#039;user_id&#039;</span><span class="text-kw">);
-</span><span class="text-var">$totals</span><span class="text-kw">-&gt;</span><span class="text-var">setAlias</span><span class="text-kw">(</span><span class="text-str">&#039;totals&#039;</span><span class="text-kw">);
+<span class="text-var">$totals</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>()-&gt;<span class="text-fn">select</span>([<span class="text-str">&#039;user_id&#039;</span>, <span class="text-str">&#039;order_total&#039;</span> =&gt; <span class="text-str">&#039;SUM(total)&#039;</span>])
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;orders&#039;</span>)
+    -&gt;<span class="text-fn">groupBy</span>(<span class="text-str">&#039;user_id&#039;</span>);
+<span class="text-var">$totals</span>-&gt;<span class="text-fn">setAlias</span>(<span class="text-str">&#039;totals&#039;</span>);
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">([</span><span class="text-str">&#039;users.username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;totals.order_total&#039;</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">leftJoin</span><span class="text-kw">(</span><span class="text-var">$totals</span><span class="text-kw">, [</span><span class="text-str">&#039;totals.user_id&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;users.id&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>([<span class="text-str">&#039;users.username&#039;</span>, <span class="text-str">&#039;totals.order_total&#039;</span>])
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-fn">leftJoin</span>(<span class="text-var">$totals</span>, [<span class="text-str">&#039;totals.user_id&#039;</span> =&gt; <span class="text-str">&#039;users.id&#039;</span>]);
+</code></pre>
 </div>
 
 <p>The alias is required, and forgetting it is not caught. A joined subquery with no alias renders as
@@ -253,29 +253,29 @@ giving <code>SELECT * FROM (SELECT ...) AS &quot;totals&quot;</code>.</p>
 string are split on <code>AND</code> and <code>OR</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">where</span><span class="text-kw">(</span><span class="text-str">&#039;id &gt; :id AND logins &gt; :logins&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-fn">where</span>(<span class="text-str">&#039;id &gt; :id AND logins &gt; :logins&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>andWhere()</code> and <code>orWhere()</code> add to an existing predicate with an explicit conjunction, and both take a
 string or an array of them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">(</span><span class="text-str">&#039;id &gt; :id&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">orWhere</span><span class="text-kw">(</span><span class="text-str">&#039;email LIKE :email&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-fn">where</span>(<span class="text-str">&#039;id &gt; :id&#039;</span>)
+    -&gt;<span class="text-fn">orWhere</span>(<span class="text-str">&#039;email LIKE :email&#039;</span>);
+</code></pre>
 </div>
 
 <p>That gives <code>WHERE ((`id` &gt; ?) OR (`email` LIKE ?))</code> on MySQL. Underneath the string form there is a typed API,
@@ -283,15 +283,15 @@ reached through the <code>where</code> property rather than the method, and it's
 is not a placeholder:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">greaterThan</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">1</span><span class="text-kw">)-&gt;</span><span class="text-var">and</span><span class="text-kw">()-&gt;</span><span class="text-var">lessThan</span><span class="text-kw">(</span><span class="text-str">&#039;logins&#039;</span><span class="text-kw">, </span><span class="text-var">5</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">greaterThan</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-num">1</span>)-&gt;<span class="text-fn">and</span>()-&gt;<span class="text-fn">lessThan</span>(<span class="text-str">&#039;logins&#039;</span>, <span class="text-num">5</span>);
+</code></pre>
 </div>
 
 <p>Each method takes the column and the value; <code>and()</code> and <code>or()</code> set the conjunction for whatever comes
@@ -301,19 +301,19 @@ next. The full set is <code>equalTo()</code>, <code>notEqualTo()</code>, <code>g
 sections below cover.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">between</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">);
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">between</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-num">1</span>, <span class="text-num">10</span>);
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">in</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, [</span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">, </span><span class="text-var">3</span><span class="text-kw">]);
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">in</span>(<span class="text-str">&#039;id&#039;</span>, [<span class="text-num">1</span>, <span class="text-num">2</span>, <span class="text-num">3</span>]);
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">isNotNull</span><span class="text-kw">(</span><span class="text-str">&#039;email&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">isNotNull</span>(<span class="text-str">&#039;email&#039;</span>);
+</code></pre>
 </div>
 
 <p>Those render <code>BETWEEN 1 AND 10</code>, <code>IN (1, 2, 3)</code> and <code>IS NOT NULL</code>. A literal value goes through the
@@ -329,17 +329,17 @@ in the same way <code>where</code> is. <code>groupBy()</code> takes a column, a 
 together:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">greaterThan</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;:id&#039;</span><span class="text-kw">)
-        -&gt;</span><span class="text-var">nest</span><span class="text-kw">()-&gt;</span><span class="text-var">greaterThan</span><span class="text-kw">(</span><span class="text-str">&#039;logins&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;:logins&#039;</span><span class="text-kw">)
-            -&gt;</span><span class="text-var">or</span><span class="text-kw">()-&gt;</span><span class="text-var">lessThanOrEqualTo</span><span class="text-kw">(</span><span class="text-str">&#039;failed&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;:failed&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">greaterThan</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;:id&#039;</span>)
+        -&gt;<span class="text-fn">nest</span>()-&gt;<span class="text-fn">greaterThan</span>(<span class="text-str">&#039;logins&#039;</span>, <span class="text-str">&#039;:logins&#039;</span>)
+            -&gt;<span class="text-fn">or</span>()-&gt;<span class="text-fn">lessThanOrEqualTo</span>(<span class="text-str">&#039;failed&#039;</span>, <span class="text-str">&#039;:failed&#039;</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -364,18 +364,18 @@ they would otherwise take an array or a value. The subquery renders inline, in t
 adapter:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$subquery </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">()-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;user_id&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;orders&#039;</span><span class="text-kw">);
-</span><span class="text-var">$subquery</span><span class="text-kw">-&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">greaterThanOrEqualTo</span><span class="text-kw">(</span><span class="text-str">&#039;total&#039;</span><span class="text-kw">, </span><span class="text-var">100</span><span class="text-kw">);
+<span class="text-var">$subquery</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>()-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;user_id&#039;</span>)-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;orders&#039;</span>);
+<span class="text-var">$subquery</span>-&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">greaterThanOrEqualTo</span>(<span class="text-str">&#039;total&#039;</span>, <span class="text-num">100</span>);
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">in</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">$subquery</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">in</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-var">$subquery</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -390,33 +390,33 @@ adapter:</p>
 producing <code>col = (SELECT ...)</code>, so the subquery has to return a single value:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$subquery </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">()-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;MAX(user_id)&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;orders&#039;</span><span class="text-kw">);
+<span class="text-var">$subquery</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>()-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;MAX(user_id)&#039;</span>)-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;orders&#039;</span>);
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">equalTo</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">$subquery</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">equalTo</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-var">$subquery</span>);
+</code></pre>
 </div>
 
 <p>The shorthand array syntax a record class takes accepts the same objects, so a subquery reaches
 <code>findBy()</code> without dropping to the builder for the outer query:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$subquery </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">()-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;user_id&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;orders&#039;</span><span class="text-kw">);
-</span><span class="text-var">$subquery</span><span class="text-kw">-&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">greaterThanOrEqualTo</span><span class="text-kw">(</span><span class="text-str">&#039;total&#039;</span><span class="text-kw">, </span><span class="text-var">100</span><span class="text-kw">);
+<span class="text-var">$subquery</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>()-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;user_id&#039;</span>)-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;orders&#039;</span>);
+<span class="text-var">$subquery</span>-&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">greaterThanOrEqualTo</span>(<span class="text-str">&#039;total&#039;</span>, <span class="text-num">100</span>);
 
-</span><span class="text-var">$buyers </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;IN&#039;</span><span class="text-kw">, </span><span class="text-var">$subquery</span><span class="text-kw">]]);
-</span></code></pre>
+<span class="text-var">$buyers</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;id&#039;</span> =&gt; [<span class="text-str">&#039;IN&#039;</span>, <span class="text-var">$subquery</span>]]);
+</code></pre>
 </div>
 
 <p>Two constraints decide whether a subquery is usable at all, and both were confirmed by running them.</p>
@@ -441,16 +441,16 @@ is valid only in a <code>FROM</code> or <code>JOIN</code>. The alias is what sep
 the <code>Select</code> and nothing else — there's no column argument, because <code>EXISTS</code> compares nothing:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$subquery </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">()-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;orders&#039;</span><span class="text-kw">);
-</span><span class="text-var">$subquery</span><span class="text-kw">-&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">greaterThanOrEqualTo</span><span class="text-kw">(</span><span class="text-str">&#039;total&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">);
+<span class="text-var">$subquery</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>()-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;id&#039;</span>)-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;orders&#039;</span>);
+<span class="text-var">$subquery</span>-&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">greaterThanOrEqualTo</span>(<span class="text-str">&#039;total&#039;</span>, <span class="text-num">300</span>);
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">exists</span><span class="text-kw">(</span><span class="text-var">$subquery</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)-&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">exists</span>(<span class="text-var">$subquery</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -466,17 +466,17 @@ the <code>Select</code> and nothing else — there's no column argument, because
 <code>AND</code>. The value is the <code>Select</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$subquery </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">()-&gt;</span><span class="text-var">select</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;orders&#039;</span><span class="text-kw">);
-</span><span class="text-var">$subquery</span><span class="text-kw">-&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">greaterThanOrEqualTo</span><span class="text-kw">(</span><span class="text-str">&#039;total&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">);
+<span class="text-var">$subquery</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>()-&gt;<span class="text-fn">select</span>(<span class="text-str">&#039;id&#039;</span>)-&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;orders&#039;</span>);
+<span class="text-var">$subquery</span>-&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">greaterThanOrEqualTo</span>(<span class="text-str">&#039;total&#039;</span>, <span class="text-num">300</span>);
 
-</span><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;EXISTS&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$subquery</span><span class="text-kw">]);
-</span><span class="text-var">$none  </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;NOT EXISTS&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$subquery</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$users</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;EXISTS&#039;</span> =&gt; <span class="text-var">$subquery</span>]);
+<span class="text-var">$none</span>  = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;NOT EXISTS&#039;</span> =&gt; <span class="text-var">$subquery</span>]);
+</code></pre>
 </div>
 
 <p>Because <code>'EXISTS'</code> and <code>'NOT EXISTS'</code> are reserved keys, a column genuinely named <code>EXISTS</code> cannot be
@@ -489,14 +489,14 @@ a join, or as a hand-written statement.</p>
 object rather than a string. That object can be a select column, an <code>orderBy()</code> or a <code>groupBy()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">([</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;extracted_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">jsonExtract</span><span class="text-kw">(</span><span class="text-str">&#039;data&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;$.name&#039;</span><span class="text-kw">)])
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>([<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;extracted_name&#039;</span> =&gt; <span class="text-var">$sql</span>-&gt;<span class="text-fn">jsonExtract</span>(<span class="text-str">&#039;data&#039;</span>, <span class="text-str">&#039;$.name&#039;</span>)])
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>);
+</code></pre>
 </div>
 
 <p>The path is always written in MySQL's JSONPath spelling — <code>'$.name'</code>, <code>'$.address.city'</code>, <code>'$.tags[0]'</code> —
@@ -519,15 +519,15 @@ and each adapter renders its own equivalent:</p>
 <p>Filtering is <code>jsonEqualTo()</code> and <code>jsonNotEqualTo()</code>, which take the column, the path and a scalar:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">jsonEqualTo</span><span class="text-kw">(</span><span class="text-str">&#039;data&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;$.role&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">jsonEqualTo</span>(<span class="text-str">&#039;data&#039;</span>, <span class="text-str">&#039;$.role&#039;</span>, <span class="text-str">&#039;admin&#039;</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -547,15 +547,15 @@ and each adapter renders its own equivalent:</p>
 MySQL and the <code>#&gt;</code> / <code>@&gt;</code> jsonb operators on PostgreSQL:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">where</span><span class="text-kw">-&gt;</span><span class="text-var">jsonContains</span><span class="text-kw">(</span><span class="text-str">&#039;data&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;$.roles&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-type">where</span>-&gt;<span class="text-fn">jsonContains</span>(<span class="text-str">&#039;data&#039;</span>, <span class="text-str">&#039;$.roles&#039;</span>, <span class="text-str">&#039;admin&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>jsonContains()</code> is MySQL and PostgreSQL only; neither SQLite nor SQL Server has a native JSON
@@ -564,12 +564,12 @@ containment operator.</p>
 <code>=</code>, <code>!=</code> and <code>CONTAINS</code> as the operators:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">$admins  </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;data-&gt;$.role&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$others  </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;data-&gt;$.role&#039;  </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;!=&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">]]);
-</span><span class="text-var">$editors </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;data-&gt;$.roles&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;CONTAINS&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">]]);
-</span></code></pre>
+<span class="text-var">$admins</span>  = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;data-&gt;$.role&#039;</span>  =&gt; <span class="text-str">&#039;admin&#039;</span>]);
+<span class="text-var">$others</span>  = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;data-&gt;$.role&#039;</span>  =&gt; [<span class="text-str">&#039;!=&#039;</span>, <span class="text-str">&#039;admin&#039;</span>]]);
+<span class="text-var">$editors</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;data-&gt;$.roles&#039;</span> =&gt; [<span class="text-str">&#039;CONTAINS&#039;</span>, <span class="text-str">&#039;editor&#039;</span>]]);
+</code></pre>
 </div>
 
 <p>A bare value with no operator is an equality match, the same as any other shorthand column.</p>
@@ -583,17 +583,17 @@ rather than binding it.</p>
 integers:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$sql </span><span class="text-kw">= </span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">createSql</span><span class="text-kw">();
-</span><span class="text-var">$sql</span><span class="text-kw">-&gt;</span><span class="text-var">select</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">from</span><span class="text-kw">(</span><span class="text-str">&#039;users&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">orderBy</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;DESC&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">limit</span><span class="text-kw">(</span><span class="text-var">10</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">offset</span><span class="text-kw">(</span><span class="text-var">20</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$sql</span> = <span class="text-var">$db</span>-&gt;<span class="text-fn">createSql</span>();
+<span class="text-var">$sql</span>-&gt;<span class="text-fn">select</span>()
+    -&gt;<span class="text-fn">from</span>(<span class="text-str">&#039;users&#039;</span>)
+    -&gt;<span class="text-fn">orderBy</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;DESC&#039;</span>)
+    -&gt;<span class="text-fn">limit</span>(<span class="text-num">10</span>)
+    -&gt;<span class="text-fn">offset</span>(<span class="text-num">20</span>);
+</code></pre>
 </div>
 
 <p>That renders <code>ORDER BY `id` DESC LIMIT 10 OFFSET 20</code> on MySQL, and the same with double quotes on

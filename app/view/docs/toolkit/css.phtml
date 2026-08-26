@@ -20,26 +20,26 @@ and <code>pop-pdf</code> as well.</p>
 CSS selector string and a set of properties:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Css</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Css\Selector</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
 
-</span><span class="text-var">$css </span><span class="text-kw">= new </span><span class="text-var">Css</span><span class="text-kw">();
+<span class="text-var">$css</span> = <span class="text-kw">new</span> <span class="text-type">Css</span>();
 
-</span><span class="text-var">$html </span><span class="text-kw">= new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;html&#039;</span><span class="text-kw">);
-</span><span class="text-var">$html</span><span class="text-kw">-&gt;</span><span class="text-var">setProperties</span><span class="text-kw">([
-    </span><span class="text-str">&#039;margin&#039;           </span><span class="text-kw">=&gt; </span><span class="text-var">0</span><span class="text-kw">,
-    </span><span class="text-str">&#039;padding&#039;          </span><span class="text-kw">=&gt; </span><span class="text-var">0</span><span class="text-kw">,
-    </span><span class="text-str">&#039;background-color&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;#fff&#039;</span><span class="text-kw">,
+<span class="text-var">$html</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;html&#039;</span>);
+<span class="text-var">$html</span>-&gt;<span class="text-fn">setProperties</span>([
+    <span class="text-str">&#039;margin&#039;</span>           =&gt; <span class="text-num">0</span>,
+    <span class="text-str">&#039;padding&#039;</span>          =&gt; <span class="text-num">0</span>,
+    <span class="text-str">&#039;background-color&#039;</span> =&gt; <span class="text-str">&#039;#fff&#039;</span>,
 ]);
 
-</span><span class="text-var">$login </span><span class="text-kw">= new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;#login&#039;</span><span class="text-kw">);
-</span><span class="text-var">$login</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;margin&#039;</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">)
-      -&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;padding&#039;</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">);
+<span class="text-var">$login</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;#login&#039;</span>);
+<span class="text-var">$login</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;margin&#039;</span>, <span class="text-num">0</span>)
+      -&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;padding&#039;</span>, <span class="text-num">0</span>);
 
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">addSelectors</span><span class="text-kw">([</span><span class="text-var">$html</span><span class="text-kw">, </span><span class="text-var">$login</span><span class="text-kw">]);
+<span class="text-var">$css</span>-&gt;<span class="text-fn">addSelectors</span>([<span class="text-var">$html</span>, <span class="text-var">$login</span>]);
 
-echo </span><span class="text-var">$css</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$css</span>;
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -63,17 +63,17 @@ echo </span><span class="text-var">$css</span><span class="text-kw">;
 and array access. <code>hasProperty()</code>, <code>getProperties()</code> and <code>removeProperty()</code> read and clear them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Selector</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
 
-</span><span class="text-var">$box </span><span class="text-kw">= new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;.box&#039;</span><span class="text-kw">);
+<span class="text-var">$box</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;.box&#039;</span>);
 
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;color&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;#333&#039;</span><span class="text-kw">);
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">padding </span><span class="text-kw">= </span><span class="text-str">&#039;10px&#039;</span><span class="text-kw">;
-</span><span class="text-var">$box</span><span class="text-kw">[</span><span class="text-str">&#039;margin&#039;</span><span class="text-kw">] = </span><span class="text-var">0</span><span class="text-kw">;
+<span class="text-var">$box</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;color&#039;</span>, <span class="text-str">&#039;#333&#039;</span>);
+<span class="text-var">$box</span>-&gt;<span class="text-type">padding</span> = <span class="text-str">&#039;10px&#039;</span>;
+<span class="text-var">$box</span>[<span class="text-str">&#039;margin&#039;</span>] = <span class="text-num">0</span>;
 
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">hasProperty</span><span class="text-kw">(</span><span class="text-str">&#039;color&#039;</span><span class="text-kw">);   </span><span class="text-comment">// true
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">removeProperty</span><span class="text-kw">(</span><span class="text-str">&#039;color&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$box</span>-&gt;<span class="text-fn">hasProperty</span>(<span class="text-str">&#039;color&#039;</span>);   <span class="text-comment">// true</span>
+<span class="text-var">$box</span>-&gt;<span class="text-fn">removeProperty</span>(<span class="text-str">&#039;color&#039;</span>);
+</code></pre>
 </div>
 
 <p>A <code>margin</code> or <code>padding</code> shorthand can be read back as longhand without ever having been set that way —
@@ -81,36 +81,36 @@ the value is split by CSS's own one-to-four-value rules, and an explicit longhan
 synthesized one:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Selector</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
 
-</span><span class="text-var">$box </span><span class="text-kw">= new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;.box&#039;</span><span class="text-kw">);
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;margin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;10px 20px 30px 40px&#039;</span><span class="text-kw">);
+<span class="text-var">$box</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;.box&#039;</span>);
+<span class="text-var">$box</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;margin&#039;</span>, <span class="text-str">&#039;10px 20px 30px 40px&#039;</span>);
 
-</span><span class="text-var">$box</span><span class="text-kw">[</span><span class="text-str">&#039;margin-top&#039;</span><span class="text-kw">];     </span><span class="text-comment">// &#039;10px&#039;
-</span><span class="text-var">$box</span><span class="text-kw">[</span><span class="text-str">&#039;margin-right&#039;</span><span class="text-kw">];   </span><span class="text-comment">// &#039;20px&#039;
-</span><span class="text-var">$box</span><span class="text-kw">[</span><span class="text-str">&#039;margin-bottom&#039;</span><span class="text-kw">];  </span><span class="text-comment">// &#039;30px&#039;
-</span><span class="text-var">$box</span><span class="text-kw">[</span><span class="text-str">&#039;margin-left&#039;</span><span class="text-kw">];    </span><span class="text-comment">// &#039;40px&#039;
-</span></code></pre>
+<span class="text-var">$box</span>[<span class="text-str">&#039;margin-top&#039;</span>];     <span class="text-comment">// &#039;10px&#039;</span>
+<span class="text-var">$box</span>[<span class="text-str">&#039;margin-right&#039;</span>];   <span class="text-comment">// &#039;20px&#039;</span>
+<span class="text-var">$box</span>[<span class="text-str">&#039;margin-bottom&#039;</span>];  <span class="text-comment">// &#039;30px&#039;</span>
+<span class="text-var">$box</span>[<span class="text-str">&#039;margin-left&#039;</span>];    <span class="text-comment">// &#039;40px&#039;</span>
+</code></pre>
 </div>
 
 <p>Media queries are their own object, holding their own selectors, added to the stylesheet alongside the
 top-level ones:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Css</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Css\Media</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Css\Selector</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Media</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
 
-</span><span class="text-var">$login </span><span class="text-kw">= new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;#login&#039;</span><span class="text-kw">);
-</span><span class="text-var">$login</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;width&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;50%&#039;</span><span class="text-kw">);
+<span class="text-var">$login</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;#login&#039;</span>);
+<span class="text-var">$login</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;width&#039;</span>, <span class="text-str">&#039;50%&#039;</span>);
 
-</span><span class="text-var">$media </span><span class="text-kw">= new </span><span class="text-var">Media</span><span class="text-kw">(</span><span class="text-str">&#039;screen&#039;</span><span class="text-kw">);
-</span><span class="text-var">$media</span><span class="text-kw">-&gt;</span><span class="text-var">setFeature</span><span class="text-kw">(</span><span class="text-str">&#039;max-width&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;480px&#039;</span><span class="text-kw">);
-</span><span class="text-var">$media</span><span class="text-kw">[</span><span class="text-str">&#039;#login&#039;</span><span class="text-kw">] = new </span><span class="text-var">Selector</span><span class="text-kw">();
-</span><span class="text-var">$media</span><span class="text-kw">[</span><span class="text-str">&#039;#login&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;width&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;75%&#039;</span><span class="text-kw">);
+<span class="text-var">$media</span> = <span class="text-kw">new</span> <span class="text-type">Media</span>(<span class="text-str">&#039;screen&#039;</span>);
+<span class="text-var">$media</span>-&gt;<span class="text-fn">setFeature</span>(<span class="text-str">&#039;max-width&#039;</span>, <span class="text-str">&#039;480px&#039;</span>);
+<span class="text-var">$media</span>[<span class="text-str">&#039;#login&#039;</span>] = <span class="text-kw">new</span> <span class="text-type">Selector</span>();
+<span class="text-var">$media</span>[<span class="text-str">&#039;#login&#039;</span>]-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;width&#039;</span>, <span class="text-str">&#039;75%&#039;</span>);
 
-echo (new </span><span class="text-var">Css</span><span class="text-kw">())-&gt;</span><span class="text-var">addSelector</span><span class="text-kw">(</span><span class="text-var">$login</span><span class="text-kw">)-&gt;</span><span class="text-var">addMedia</span><span class="text-kw">(</span><span class="text-var">$media</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-kw">echo</span> (<span class="text-kw">new</span> <span class="text-type">Css</span>())-&gt;<span class="text-fn">addSelector</span>(<span class="text-var">$login</span>)-&gt;<span class="text-fn">addMedia</span>(<span class="text-var">$media</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -135,21 +135,21 @@ stylesheet editable rather than write-once. The <code>Css</code> object is count
 access, and assigning into a key adds the selector under that name:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Css</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Css\Selector</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
 
-</span><span class="text-var">$css </span><span class="text-kw">= new </span><span class="text-var">Css</span><span class="text-kw">();
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">addSelector</span><span class="text-kw">(new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;html&#039;</span><span class="text-kw">));
+<span class="text-var">$css</span> = <span class="text-kw">new</span> <span class="text-type">Css</span>();
+<span class="text-var">$css</span>-&gt;<span class="text-fn">addSelector</span>(<span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;html&#039;</span>));
 
-</span><span class="text-var">$css</span><span class="text-kw">[</span><span class="text-str">&#039;#login&#039;</span><span class="text-kw">] = new </span><span class="text-var">Selector</span><span class="text-kw">();
-</span><span class="text-var">$css</span><span class="text-kw">[</span><span class="text-str">&#039;#login&#039;</span><span class="text-kw">]-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;width&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;50%&#039;</span><span class="text-kw">);
+<span class="text-var">$css</span>[<span class="text-str">&#039;#login&#039;</span>] = <span class="text-kw">new</span> <span class="text-type">Selector</span>();
+<span class="text-var">$css</span>[<span class="text-str">&#039;#login&#039;</span>]-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;width&#039;</span>, <span class="text-str">&#039;50%&#039;</span>);
 
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">hasSelector</span><span class="text-kw">(</span><span class="text-str">&#039;html&#039;</span><span class="text-kw">);   </span><span class="text-comment">// true
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">getSelector</span><span class="text-kw">(</span><span class="text-str">&#039;html&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;margin&#039;</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">);
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">removeSelector</span><span class="text-kw">(</span><span class="text-str">&#039;html&#039;</span><span class="text-kw">);
+<span class="text-var">$css</span>-&gt;<span class="text-fn">hasSelector</span>(<span class="text-str">&#039;html&#039;</span>);   <span class="text-comment">// true</span>
+<span class="text-var">$css</span>-&gt;<span class="text-fn">getSelector</span>(<span class="text-str">&#039;html&#039;</span>)-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;margin&#039;</span>, <span class="text-num">0</span>);
+<span class="text-var">$css</span>-&gt;<span class="text-fn">removeSelector</span>(<span class="text-str">&#039;html&#039;</span>);
 
-</span><span class="text-var">count</span><span class="text-kw">(</span><span class="text-var">$css</span><span class="text-kw">);                 </span><span class="text-comment">// 1
-</span></code></pre>
+<span class="text-fn">count</span>(<span class="text-var">$css</span>);                 <span class="text-comment">// 1</span>
+</code></pre>
 </div>
 
 <p>Media queries are held in their own indexed list rather than by name: <code>getAllMedia()</code> returns them all,
@@ -161,15 +161,15 @@ added to. Its second and third arguments are a wrap width and a trailing-newline
 forces a single-line comment:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Css</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Css\Selector</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
 
-</span><span class="text-var">$p </span><span class="text-kw">= new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;p&#039;</span><span class="text-kw">);
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;width&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;50%&#039;</span><span class="text-kw">);
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">addComment</span><span class="text-kw">(</span><span class="text-str">&#039;Body copy&#039;</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-var">$p</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;p&#039;</span>);
+<span class="text-var">$p</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;width&#039;</span>, <span class="text-str">&#039;50%&#039;</span>);
+<span class="text-var">$p</span>-&gt;<span class="text-fn">addComment</span>(<span class="text-str">&#039;Body copy&#039;</span>, <span class="text-num">0</span>, <span class="text-num">false</span>);
 
-echo new </span><span class="text-var">Css</span><span class="text-kw">(</span><span class="text-var">$p</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-kw">new</span> <span class="text-type">Css</span>(<span class="text-var">$p</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -187,14 +187,14 @@ p {
 edited and written out again:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Css</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
 
-</span><span class="text-var">$css </span><span class="text-kw">= </span><span class="text-var">Css</span><span class="text-kw">::</span><span class="text-var">parseFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/css/styles.css&#039;</span><span class="text-kw">);
+<span class="text-var">$css</span> = <span class="text-type">Css</span>::<span class="text-fn">parseFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/css/styles.css&#039;</span>);
 
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">getSelector</span><span class="text-kw">(</span><span class="text-str">&#039;html&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;background-color&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;#111&#039;</span><span class="text-kw">);
+<span class="text-var">$css</span>-&gt;<span class="text-fn">getSelector</span>(<span class="text-str">&#039;html&#039;</span>)-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;background-color&#039;</span>, <span class="text-str">&#039;#111&#039;</span>);
 
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/css/styles.dark.css&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$css</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/css/styles.dark.css&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>Css::parseString()</code> takes CSS as a string and <code>Css::parseUri()</code> fetches it over HTTP. Each has an
@@ -204,17 +204,17 @@ you already hold rather than returning a new one. <code>parseFile()</code> on a 
 <p>A parsed stylesheet is countable and iterable, and selectors are addressed by name:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Css</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
 
-</span><span class="text-var">$css </span><span class="text-kw">= </span><span class="text-var">Css</span><span class="text-kw">::</span><span class="text-var">parseString</span><span class="text-kw">(</span><span class="text-str">&#039;html { margin: 0; } #login, #signup { width: 50%; }&#039;</span><span class="text-kw">);
+<span class="text-var">$css</span> = <span class="text-type">Css</span>::<span class="text-fn">parseString</span>(<span class="text-str">&#039;html { margin: 0; } #login, #signup { width: 50%; }&#039;</span>);
 
-</span><span class="text-var">count</span><span class="text-kw">(</span><span class="text-var">$css</span><span class="text-kw">);                 </span><span class="text-comment">// 2
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">hasSelector</span><span class="text-kw">(</span><span class="text-str">&#039;html&#039;</span><span class="text-kw">);   </span><span class="text-comment">// true
+<span class="text-fn">count</span>(<span class="text-var">$css</span>);                 <span class="text-comment">// 2</span>
+<span class="text-var">$css</span>-&gt;<span class="text-fn">hasSelector</span>(<span class="text-str">&#039;html&#039;</span>);   <span class="text-comment">// true</span>
 
-</span><span class="text-kw">foreach (</span><span class="text-var">$css </span><span class="text-kw">as </span><span class="text-var">$name </span><span class="text-kw">=&gt; </span><span class="text-var">$selector</span><span class="text-kw">) {
-    </span><span class="text-var">$selector</span><span class="text-kw">-&gt;</span><span class="text-var">getProperties</span><span class="text-kw">();
+<span class="text-kw">foreach</span> (<span class="text-var">$css</span> <span class="text-kw">as</span> <span class="text-var">$name</span> =&gt; <span class="text-var">$selector</span>) {
+    <span class="text-var">$selector</span>-&gt;<span class="text-fn">getProperties</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A grouped selector stays grouped: <code>#login, #signup</code> comes back as one <code>Selector</code> whose name is the
@@ -228,13 +228,13 @@ index, and removed with <code>removeMedia(0)</code> or <code>removeAllMedia()</c
 <p><code>minify(true)</code> is a flag on the <code>Css</code> object, not a separate call — set it, then render:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Css\Css</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
 
-</span><span class="text-var">$css </span><span class="text-kw">= </span><span class="text-var">Css</span><span class="text-kw">::</span><span class="text-var">parseFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/css/styles.css&#039;</span><span class="text-kw">);
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">minify</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">);
+<span class="text-var">$css</span> = <span class="text-type">Css</span>::<span class="text-fn">parseFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/css/styles.css&#039;</span>);
+<span class="text-var">$css</span>-&gt;<span class="text-fn">minify</span>(<span class="text-num">true</span>);
 
-</span><span class="text-var">$css</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../public/css/styles.min.css&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$css</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../public/css/styles.min.css&#039;</span>);
+</code></pre>
 </div>
 
 <p>It strips comments, newlines and the space around <code>:</code> and <code>;</code>. What it does not do is rewrite values,
@@ -254,17 +254,17 @@ dedicated minifier when you need the last few percent.</p>
 class. A selector property takes a color object anywhere it takes a string:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Css\Css</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Css\Selector</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
 
-</span><span class="text-var">$box </span><span class="text-kw">= new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;.box&#039;</span><span class="text-kw">);
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;color&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">rgb</span><span class="text-kw">(</span><span class="text-var">255</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">));
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;background-color&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">cmyk</span><span class="text-kw">(</span><span class="text-var">30</span><span class="text-kw">, </span><span class="text-var">20</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">5</span><span class="text-kw">));
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;border-color&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">oklch</span><span class="text-kw">(</span><span class="text-var">0.7</span><span class="text-kw">, </span><span class="text-var">0.15</span><span class="text-kw">, </span><span class="text-var">30</span><span class="text-kw">));
+<span class="text-var">$box</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;.box&#039;</span>);
+<span class="text-var">$box</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;color&#039;</span>, <span class="text-type">Color</span>::<span class="text-fn">rgb</span>(<span class="text-num">255</span>, <span class="text-num">0</span>, <span class="text-num">0</span>));
+<span class="text-var">$box</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;background-color&#039;</span>, <span class="text-type">Color</span>::<span class="text-fn">cmyk</span>(<span class="text-num">30</span>, <span class="text-num">20</span>, <span class="text-num">10</span>, <span class="text-num">5</span>));
+<span class="text-var">$box</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;border-color&#039;</span>, <span class="text-type">Color</span>::<span class="text-fn">oklch</span>(<span class="text-num">0.7</span>, <span class="text-num">0.15</span>, <span class="text-num">30</span>));
 
-echo new </span><span class="text-var">Css</span><span class="text-kw">(</span><span class="text-var">$box</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-kw">new</span> <span class="text-type">Css</span>(<span class="text-var">$box</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -283,29 +283,29 @@ RGB on the way in; OKLCH is CSS Color 4 syntax and passes through as written.</p
 returns every channel including alpha:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color</span>;
 
-</span><span class="text-var">$rgb </span><span class="text-kw">= </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">rgb</span><span class="text-kw">(</span><span class="text-var">120</span><span class="text-kw">, </span><span class="text-var">60</span><span class="text-kw">, </span><span class="text-var">30</span><span class="text-kw">, </span><span class="text-var">0.5</span><span class="text-kw">);
+<span class="text-var">$rgb</span> = <span class="text-type">Color</span>::<span class="text-fn">rgb</span>(<span class="text-num">120</span>, <span class="text-num">60</span>, <span class="text-num">30</span>, <span class="text-num">0.5</span>);
 
-</span><span class="text-var">$rgb</span><span class="text-kw">-&gt;</span><span class="text-var">getR</span><span class="text-kw">();   </span><span class="text-comment">// 120
-</span><span class="text-var">$rgb</span><span class="text-kw">[</span><span class="text-str">&#039;g&#039;</span><span class="text-kw">];      </span><span class="text-comment">// 60
-</span><span class="text-var">$rgb</span><span class="text-kw">-&gt;</span><span class="text-var">b</span><span class="text-kw">;        </span><span class="text-comment">// 30
-</span><span class="text-var">$rgb</span><span class="text-kw">-&gt;</span><span class="text-var">getA</span><span class="text-kw">();   </span><span class="text-comment">// 0.5
-</span><span class="text-var">$rgb</span><span class="text-kw">-&gt;</span><span class="text-var">toArray</span><span class="text-kw">();  </span><span class="text-comment">// [&#039;r&#039; =&gt; 120, &#039;g&#039; =&gt; 60, &#039;b&#039; =&gt; 30, &#039;a&#039; =&gt; 0.5]
-</span></code></pre>
+<span class="text-var">$rgb</span>-&gt;<span class="text-fn">getR</span>();   <span class="text-comment">// 120</span>
+<span class="text-var">$rgb</span>[<span class="text-str">&#039;g&#039;</span>];      <span class="text-comment">// 60</span>
+<span class="text-var">$rgb</span>-&gt;<span class="text-type">b</span>;        <span class="text-comment">// 30</span>
+<span class="text-var">$rgb</span>-&gt;<span class="text-fn">getA</span>();   <span class="text-comment">// 0.5</span>
+<span class="text-var">$rgb</span>-&gt;<span class="text-fn">toArray</span>();  <span class="text-comment">// [&#039;r&#039; =&gt; 120, &#039;g&#039; =&gt; 60, &#039;b&#039; =&gt; 30, &#039;a&#039; =&gt; 0.5]</span>
+</code></pre>
 </div>
 
 <p>Hex handles alpha in both CSS forms, four-digit <code>#RGBA</code> and eight-digit <code>#RRGGBBAA</code>, alongside the
 three- and six-digit ones, and exposes it as the same 0-to-1 float the other classes use:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color</span>;
 
-</span><span class="text-var">$hex </span><span class="text-kw">= </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">hex</span><span class="text-kw">(</span><span class="text-str">&#039;#ff880080&#039;</span><span class="text-kw">);
+<span class="text-var">$hex</span> = <span class="text-type">Color</span>::<span class="text-fn">hex</span>(<span class="text-str">&#039;#ff880080&#039;</span>);
 
-echo </span><span class="text-var">$hex</span><span class="text-kw">;          </span><span class="text-comment">// #ff880080
-</span><span class="text-kw">echo </span><span class="text-var">$hex</span><span class="text-kw">-&gt;</span><span class="text-var">getA</span><span class="text-kw">();  </span><span class="text-comment">// 0.502
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$hex</span>;          <span class="text-comment">// #ff880080</span>
+<span class="text-kw">echo</span> <span class="text-var">$hex</span>-&gt;<span class="text-fn">getA</span>();  <span class="text-comment">// 0.502</span>
+</code></pre>
 </div>
 
 <p><code>Color::parse()</code> builds a color from a string, dispatching on the string's shape rather than needing a
@@ -314,13 +314,13 @@ format hint. It recognizes <code>rgb()</code>/<code>rgba()</code>, <code>hsl()</
 number as grayscale:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color</span>;
 
-</span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">parse</span><span class="text-kw">(</span><span class="text-str">&#039;rgba(120, 60, 30, 0.5)&#039;</span><span class="text-kw">);   </span><span class="text-comment">// Pop\Color\Color\Rgb
-</span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">parse</span><span class="text-kw">(</span><span class="text-str">&#039;#783c1e&#039;</span><span class="text-kw">);                  </span><span class="text-comment">// Pop\Color\Color\Hex
-</span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">parse</span><span class="text-kw">(</span><span class="text-str">&#039;hwb(210 20% 10% / 0.5)&#039;</span><span class="text-kw">);   </span><span class="text-comment">// Pop\Color\Color\Hwb
-</span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">parse</span><span class="text-kw">(</span><span class="text-str">&#039;oklch(0.628 0.2577 29)&#039;</span><span class="text-kw">);   </span><span class="text-comment">// Pop\Color\Color\Oklch
-</span></code></pre>
+<span class="text-type">Color</span>::<span class="text-fn">parse</span>(<span class="text-str">&#039;rgba(120, 60, 30, 0.5)&#039;</span>);   <span class="text-comment">// Pop\Color\Color\Rgb</span>
+<span class="text-type">Color</span>::<span class="text-fn">parse</span>(<span class="text-str">&#039;#783c1e&#039;</span>);                  <span class="text-comment">// Pop\Color\Color\Hex</span>
+<span class="text-type">Color</span>::<span class="text-fn">parse</span>(<span class="text-str">&#039;hwb(210 20% 10% / 0.5)&#039;</span>);   <span class="text-comment">// Pop\Color\Color\Hwb</span>
+<span class="text-type">Color</span>::<span class="text-fn">parse</span>(<span class="text-str">&#039;oklch(0.628 0.2577 29)&#039;</span>);   <span class="text-comment">// Pop\Color\Color\Oklch</span>
+</code></pre>
 </div>
 
 <p>A string it cannot place throws <code>Pop\Color\Color\Exception</code> (&quot;Error: The string was not in the
@@ -330,14 +330,14 @@ setter — <code>Color::rgb(300, 0, 0)</code> gives &quot;Error: The value of $r
 after parsing someone else's stylesheet:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Css\Selector</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
 
-</span><span class="text-var">$box </span><span class="text-kw">= new </span><span class="text-var">Selector</span><span class="text-kw">(</span><span class="text-str">&#039;.box&#039;</span><span class="text-kw">);
-</span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">setProperty</span><span class="text-kw">(</span><span class="text-str">&#039;color&#039;</span><span class="text-kw">, </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">rgb</span><span class="text-kw">(</span><span class="text-var">255</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">));
+<span class="text-var">$box</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;.box&#039;</span>);
+<span class="text-var">$box</span>-&gt;<span class="text-fn">setProperty</span>(<span class="text-str">&#039;color&#039;</span>, <span class="text-type">Color</span>::<span class="text-fn">rgb</span>(<span class="text-num">255</span>, <span class="text-num">0</span>, <span class="text-num">0</span>));
 
-echo </span><span class="text-var">$box</span><span class="text-kw">-&gt;</span><span class="text-var">getColorProperty</span><span class="text-kw">(</span><span class="text-str">&#039;color&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">toHex</span><span class="text-kw">();  </span><span class="text-comment">// #ff0000
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$box</span>-&gt;<span class="text-fn">getColorProperty</span>(<span class="text-str">&#039;color&#039;</span>)-&gt;<span class="text-fn">toHex</span>();  <span class="text-comment">// #ff0000</span>
+</code></pre>
 </div>
 
 <p>What comes back is whichever class matches the stored string, so the methods available depend on the value.
@@ -439,13 +439,13 @@ format <code>pop-pdf</code> wants, and HSV and HSB have no CSS syntax of their o
 <code>toCss()</code> is on every class and always returns something a browser accepts:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color</span>;
 
-</span><span class="text-var">$cmyk </span><span class="text-kw">= </span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">cmyk</span><span class="text-kw">(</span><span class="text-var">30</span><span class="text-kw">, </span><span class="text-var">20</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">5</span><span class="text-kw">);
+<span class="text-var">$cmyk</span> = <span class="text-type">Color</span>::<span class="text-fn">cmyk</span>(<span class="text-num">30</span>, <span class="text-num">20</span>, <span class="text-num">10</span>, <span class="text-num">5</span>);
 
-echo </span><span class="text-var">$cmyk</span><span class="text-kw">;           </span><span class="text-comment">// 0.3 0.2 0.1 0.05
-</span><span class="text-kw">echo </span><span class="text-var">$cmyk</span><span class="text-kw">-&gt;</span><span class="text-var">toCss</span><span class="text-kw">();  </span><span class="text-comment">// rgb(170, 194, 218)
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$cmyk</span>;           <span class="text-comment">// 0.3 0.2 0.1 0.05</span>
+<span class="text-kw">echo</span> <span class="text-var">$cmyk</span>-&gt;<span class="text-fn">toCss</span>();  <span class="text-comment">// rgb(170, 194, 218)</span>
+</code></pre>
 </div>
 
 <p>Alpha is a float from 0 to 1 and rides along through conversions, but it's not named the same

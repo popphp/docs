@@ -62,28 +62,28 @@ nothing. <code>app.dispatch.pre</code> is the useful one: the router has matched
 handled yet. That's where the scaffolded CORS preflight listener lives.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Event/Audit.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Event</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Event</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Application</span>;
 
-use </span><span class="text-var">Pop\Application</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Audit</span>
+{
 
-class </span><span class="text-var">Audit
-</span><span class="text-kw">{
-
-    public static function </span><span class="text-var">record</span><span class="text-kw">(</span><span class="text-var">Application $application</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        if (!</span><span class="text-var">$application</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">hasDispatchable</span><span class="text-kw">()) {
-            return;
+    <span class="text-kw">public</span> <span class="text-kw">static</span> <span class="text-kw">function</span> <span class="text-fn">record</span>(<span class="text-type">Application</span> <span class="text-var">$application</span>): <span class="text-type">void</span>
+    {
+        <span class="text-kw">if</span> (!<span class="text-var">$application</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">hasDispatchable</span>()) {
+            <span class="text-kw">return</span>;
         }
 
-        </span><span class="text-var">$application</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">info</span><span class="text-kw">(
-            </span><span class="text-var">$application</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">getDispatchableClass</span><span class="text-kw">() . </span><span class="text-str">&#039;::&#039; </span><span class="text-kw">. </span><span class="text-var">$application</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">getAction</span><span class="text-kw">()
+        <span class="text-var">$application</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;logger&#039;</span>)-&gt;<span class="text-fn">info</span>(
+            <span class="text-var">$application</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">getDispatchableClass</span>() . <span class="text-str">&#039;::&#039;</span> . <span class="text-var">$application</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">getAction</span>()
         );
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>app.dispatch.pre</code> fires whether or not a route matched, which is why the listener above checks
@@ -97,12 +97,12 @@ dispatch, a listener that aborted, or a <code>Throwable</code> on its way out. I
 either way: flushing a buffered log, closing a handle, recording a request's duration.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.shutdown&#039;</span><span class="text-kw">, function(</span><span class="text-var">Pop\Application $application</span><span class="text-kw">) {
-    </span><span class="text-var">$application</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">info</span><span class="text-kw">(</span><span class="text-str">&#039;request complete&#039;</span><span class="text-kw">, [
-        </span><span class="text-str">&#039;route&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$application</span><span class="text-kw">-&gt;</span><span class="text-var">router</span><span class="text-kw">()-&gt;</span><span class="text-var">getRouteMatch</span><span class="text-kw">()?-&gt;</span><span class="text-var">getOriginalRoute</span><span class="text-kw">()
+<pre><code><span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.shutdown&#039;</span>, <span class="text-kw">function</span>(<span class="text-type">Pop\Application</span> <span class="text-var">$application</span>) {
+    <span class="text-var">$application</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;logger&#039;</span>)-&gt;<span class="text-fn">info</span>(<span class="text-str">&#039;request complete&#039;</span>, [
+        <span class="text-str">&#039;route&#039;</span> =&gt; <span class="text-var">$application</span>-&gt;<span class="text-fn">router</span>()-&gt;<span class="text-fn">getRouteMatch</span>()?-&gt;<span class="text-fn">getOriginalRoute</span>()
     ]);
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>On the error path it fires after <code>app.error</code>, so a listener there sees whatever the error listener already
@@ -118,12 +118,12 @@ manager. An action is anything <code>Pop\Utils\CallableObject</code> accepts, wh
 <a href="/basics/services">service locator</a> takes:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span><span class="text-kw">, </span><span class="text-var">100</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">, function(</span><span class="text-var">Pop\Application $application</span><span class="text-kw">) { </span><span class="text-comment">/* ... */ </span><span class="text-kw">});
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.post&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;App\Http\Event\Audit&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;record&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.pre&#039;</span>, <span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span>, <span class="text-num">100</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.pre&#039;</span>, <span class="text-kw">function</span>(<span class="text-type">Pop\Application</span> <span class="text-var">$application</span>) { <span class="text-comment">/* ... */</span> });
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.post&#039;</span>, [<span class="text-str">&#039;App\Http\Event\Audit&#039;</span>, <span class="text-str">&#039;record&#039;</span>]);
+</code></pre>
 </div>
 
 <p>A <code>'App\Http\Event\Audit-&gt;record'</code> string constructs the class and calls the method on the new instance,
@@ -133,22 +133,22 @@ methods are the common choice because a listener rarely has state worth keeping.
 not a map, so two listeners for the same event are two entries:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;events&#039; </span><span class="text-kw">=&gt; [
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;events&#039;</span> =&gt; [
         [
-            </span><span class="text-str">&#039;name&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;priority&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">100
-        </span><span class="text-kw">],
+            <span class="text-str">&#039;name&#039;</span>     =&gt; <span class="text-str">&#039;app.dispatch.pre&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>   =&gt; <span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span>,
+            <span class="text-str">&#039;priority&#039;</span> =&gt; <span class="text-num">100</span>
+        ],
         [
-            </span><span class="text-str">&#039;name&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;app.dispatch.post&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Event\Audit::flush&#039;
-        </span><span class="text-kw">]
+            <span class="text-str">&#039;name&#039;</span>   =&gt; <span class="text-str">&#039;app.dispatch.post&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Event\Audit::flush&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>An entry missing either <code>name</code> or <code>action</code> is skipped silently. Prefer <code>on()</code> inside <code>load()</code> for anything
@@ -159,14 +159,14 @@ application forward to it unchanged, and <code>events()-&gt;has('app.error')</co
 for a name at all:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">events</span><span class="text-kw">()-&gt;</span><span class="text-var">has</span><span class="text-kw">(</span><span class="text-str">&#039;app.error&#039;</span><span class="text-kw">));   </span><span class="text-comment">// false
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">events</span>()-&gt;<span class="text-fn">has</span>(<span class="text-str">&#039;app.error&#039;</span>));   <span class="text-comment">// false</span>
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.error&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.error&#039;</span>, <span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span>);
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">events</span><span class="text-kw">()-&gt;</span><span class="text-var">has</span><span class="text-kw">(</span><span class="text-str">&#039;app.error&#039;</span><span class="text-kw">));   </span><span class="text-comment">// true
-</span></code></pre>
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">events</span>()-&gt;<span class="text-fn">has</span>(<span class="text-str">&#039;app.error&#039;</span>));   <span class="text-comment">// true</span>
+</code></pre>
 </div>
 
 <h2 id="priorities">Priorities<a class="anchor" href="#priorities" aria-label="Link to this section">#</a></h2>
@@ -175,12 +175,12 @@ for a name at all:</p>
 so a listener given <code>1</code> runs before an unprioritized one and a listener given <code>-1</code> runs after.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Http\Event\Audit::authenticate&#039;</span><span class="text-kw">, </span><span class="text-var">100</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Http\Event\Audit::authorize&#039;</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.pre&#039;</span>, <span class="text-str">&#039;App\Http\Event\Audit::authenticate&#039;</span>, <span class="text-num">100</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.pre&#039;</span>, <span class="text-str">&#039;App\Http\Event\Audit::authorize&#039;</span>, <span class="text-num">50</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.pre&#039;</span>, <span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span>);
+</code></pre>
 </div>
 
 <p>Give any two listeners whose order matters distinct priorities — including one you add and one a module
@@ -193,16 +193,16 @@ priorities unspecified.</p>
 you need and stop:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.route.pre&#039;</span><span class="text-kw">, function(</span><span class="text-var">Pop\Application $application</span><span class="text-kw">, </span><span class="text-var">mixed $result</span><span class="text-kw">, </span><span class="text-var">Pop\Event\AbstractEvent $event</span><span class="text-kw">) {
-    </span><span class="text-comment">// $result is the value returned by the previous app.route.pre listener
-</span><span class="text-kw">});
-
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.error&#039;</span><span class="text-kw">, function(</span><span class="text-var">\Throwable $exception</span><span class="text-kw">, </span><span class="text-var">Pop\Application $application</span><span class="text-kw">, </span><span class="text-var">mixed $result</span><span class="text-kw">) {
-    </span><span class="text-var">error_log</span><span class="text-kw">(</span><span class="text-var">$exception</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">());
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.route.pre&#039;</span>, <span class="text-kw">function</span>(<span class="text-type">Pop\Application</span> <span class="text-var">$application</span>, <span class="text-type">mixed</span> <span class="text-var">$result</span>, <span class="text-type">Pop\Event\AbstractEvent</span> <span class="text-var">$event</span>) {
+    <span class="text-comment">// $result is the value returned by the previous app.route.pre listener</span>
 });
-</span></code></pre>
+
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.error&#039;</span>, <span class="text-kw">function</span>(<span class="text-type">\Throwable</span> <span class="text-var">$exception</span>, <span class="text-type">Pop\Application</span> <span class="text-var">$application</span>, <span class="text-type">mixed</span> <span class="text-var">$result</span>) {
+    <span class="text-fn">error_log</span>(<span class="text-var">$exception</span>-&gt;<span class="text-fn">getMessage</span>());
+});
+</code></pre>
 </div>
 
 <p><code>app.error</code> carries two values of its own, so <code>$result</code> is its third parameter and <code>$event</code> its fourth. Every
@@ -213,15 +213,15 @@ previous results. Test for the value you expect rather than for emptiness.</p>
 listeners ran:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, function() { return </span><span class="text-str">&#039;first&#039;</span><span class="text-kw">; }, </span><span class="text-var">10</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, function() { return </span><span class="text-str">&#039;second&#039;</span><span class="text-kw">; });
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;order.placed&#039;</span>, <span class="text-kw">function</span>() { <span class="text-kw">return</span> <span class="text-str">&#039;first&#039;</span>; }, <span class="text-num">10</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;order.placed&#039;</span>, <span class="text-kw">function</span>() { <span class="text-kw">return</span> <span class="text-str">&#039;second&#039;</span>; });
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">trigger</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">trigger</span>(<span class="text-str">&#039;order.placed&#039;</span>);
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">events</span><span class="text-kw">()-&gt;</span><span class="text-var">getResults</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">));   </span><span class="text-comment">// [&#039;first&#039;, &#039;second&#039;]
-</span></code></pre>
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">events</span>()-&gt;<span class="text-fn">getResults</span>(<span class="text-str">&#039;order.placed&#039;</span>));   <span class="text-comment">// [&#039;first&#039;, &#039;second&#039;]</span>
+</code></pre>
 </div>
 
 <h2 id="stopping-and-aborting">Stopping and Aborting<a class="anchor" href="#stopping-and-aborting" aria-label="Link to this section">#</a></h2>
@@ -231,12 +231,12 @@ listeners ran:</p>
 normally.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.dispatch.pre&#039;</span><span class="text-kw">, function(</span><span class="text-var">Pop\Application $application</span><span class="text-kw">, </span><span class="text-var">mixed $result</span><span class="text-kw">, </span><span class="text-var">Pop\Event\AbstractEvent $event</span><span class="text-kw">) {
-    </span><span class="text-var">$event</span><span class="text-kw">-&gt;</span><span class="text-var">stopPropagation</span><span class="text-kw">();
-}, </span><span class="text-var">100</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.dispatch.pre&#039;</span>, <span class="text-kw">function</span>(<span class="text-type">Pop\Application</span> <span class="text-var">$application</span>, <span class="text-type">mixed</span> <span class="text-var">$result</span>, <span class="text-type">Pop\Event\AbstractEvent</span> <span class="text-var">$event</span>) {
+    <span class="text-var">$event</span>-&gt;<span class="text-fn">stopPropagation</span>();
+}, <span class="text-num">100</span>);
+</code></pre>
 </div>
 
 <p>Stopping the whole request is a different call. <code>Pop\Event\AbortException</code> thrown from any listener makes
@@ -244,14 +244,14 @@ normally.</p>
 caught by name and swallowed on purpose — and <code>app.shutdown</code> still fires.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.route.pre&#039;</span><span class="text-kw">, function(</span><span class="text-var">Pop\Application $application</span><span class="text-kw">) {
-    if (</span><span class="text-var">$application</span><span class="text-kw">-&gt;</span><span class="text-var">isDown</span><span class="text-kw">()) {
-        throw new </span><span class="text-var">Pop\Event\AbortException</span><span class="text-kw">(</span><span class="text-str">&#039;Application is in maintenance mode.&#039;</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.route.pre&#039;</span>, <span class="text-kw">function</span>(<span class="text-type">Pop\Application</span> <span class="text-var">$application</span>) {
+    <span class="text-kw">if</span> (<span class="text-var">$application</span>-&gt;<span class="text-fn">isDown</span>()) {
+        <span class="text-kw">throw</span> <span class="text-kw">new</span> <span class="text-type">Pop\Event\AbortException</span>(<span class="text-str">&#039;Application is in maintenance mode.&#039;</span>);
     }
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Because nothing is dispatched, a listener aborting a request is responsible for the response itself — send it
@@ -265,14 +265,14 @@ are the five the framework happens to fire. Your own events use the same manager
 same result chaining:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, function(</span><span class="text-var">int $orderId</span><span class="text-kw">, </span><span class="text-var">float $total</span><span class="text-kw">, </span><span class="text-var">Pop\Application $application</span><span class="text-kw">) {
-    </span><span class="text-comment">// ...
-</span><span class="text-kw">});
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;order.placed&#039;</span>, <span class="text-kw">function</span>(<span class="text-type">int</span> <span class="text-var">$orderId</span>, <span class="text-type">float</span> <span class="text-var">$total</span>, <span class="text-type">Pop\Application</span> <span class="text-var">$application</span>) {
+    <span class="text-comment">// ...</span>
+});
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">trigger</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;orderId&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1024</span><span class="text-kw">, </span><span class="text-str">&#039;total&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">39.95</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">trigger</span>(<span class="text-str">&#039;order.placed&#039;</span>, [<span class="text-str">&#039;orderId&#039;</span> =&gt; <span class="text-num">1024</span>, <span class="text-str">&#039;total&#039;</span> =&gt; <span class="text-num">39.95</span>]);
+</code></pre>
 </div>
 
 <p>The array keys are documentation, not binding: parameters arrive positionally in array order, and
@@ -283,8 +283,8 @@ the way to reach one — including the case where there is no application at all
 call covers:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">Pop\App</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">()?-&gt;</span><span class="text-var">trigger</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;orderId&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1024</span><span class="text-kw">, </span><span class="text-str">&#039;total&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">39.95</span><span class="text-kw">]);
-</span></code></pre>
+<pre><code><span class="text-type">Pop\App</span>::<span class="text-fn">get</span>()?-&gt;<span class="text-fn">trigger</span>(<span class="text-str">&#039;order.placed&#039;</span>, [<span class="text-str">&#039;orderId&#039;</span> =&gt; <span class="text-num">1024</span>, <span class="text-str">&#039;total&#039;</span> =&gt; <span class="text-num">39.95</span>]);
+</code></pre>
 </div>
 
 <p>That keeps the class usable in a test or a worker that never built an application, and it keeps the listeners
@@ -295,17 +295,17 @@ out of the model. <a href="/basics/models">Models</a> covers where that boundary
 wrapper never gets in the way:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$audit </span><span class="text-kw">= function(</span><span class="text-var">int $orderId</span><span class="text-kw">) { </span><span class="text-comment">/* ... */ </span><span class="text-kw">};
+<span class="text-var">$audit</span> = <span class="text-kw">function</span>(<span class="text-type">int</span> <span class="text-var">$orderId</span>) { <span class="text-comment">/* ... */</span> };
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, </span><span class="text-var">$audit</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;order.placed&#039;</span>, <span class="text-var">$audit</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;order.placed&#039;</span>, <span class="text-str">&#039;App\Http\Event\Audit::record&#039;</span>);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">off</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, </span><span class="text-var">$audit</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">off</span>(<span class="text-str">&#039;order.placed&#039;</span>, <span class="text-var">$audit</span>);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">trigger</span><span class="text-kw">(</span><span class="text-str">&#039;order.placed&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;orderId&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1024</span><span class="text-kw">]);   </span><span class="text-comment">// only Audit::record runs
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">trigger</span>(<span class="text-str">&#039;order.placed&#039;</span>, [<span class="text-str">&#039;orderId&#039;</span> =&gt; <span class="text-num">1024</span>]);   <span class="text-comment">// only Audit::record runs</span>
+</code></pre>
 </div>
 
 <p>The comparison is on the callable itself and is strict, so it matches on identity. Two closures with the
@@ -323,16 +323,16 @@ lifecycle hooks each have an event class: <code>Pop\Event\InitEvent</code>, <cod
 listener receives the event object as its only argument:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">events</span><span class="text-kw">()-&gt;</span><span class="text-var">listen</span><span class="text-kw">(</span><span class="text-var">Pop\Event\DispatchPreEvent</span><span class="text-kw">::class, function(</span><span class="text-var">Pop\Event\DispatchPreEvent $event</span><span class="text-kw">) {
-    </span><span class="text-var">$application </span><span class="text-kw">= </span><span class="text-var">$event</span><span class="text-kw">-&gt;</span><span class="text-var">application</span><span class="text-kw">();
+<span class="text-var">$app</span>-&gt;<span class="text-fn">events</span>()-&gt;<span class="text-fn">listen</span>(<span class="text-type">Pop\Event\DispatchPreEvent</span>::<span class="text-kw">class</span>, <span class="text-kw">function</span>(<span class="text-type">Pop\Event\DispatchPreEvent</span> <span class="text-var">$event</span>) {
+    <span class="text-var">$application</span> = <span class="text-var">$event</span>-&gt;<span class="text-fn">application</span>();
 });
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">events</span><span class="text-kw">()-&gt;</span><span class="text-var">listen</span><span class="text-kw">(</span><span class="text-var">Pop\Event\ErrorEvent</span><span class="text-kw">::class, function(</span><span class="text-var">Pop\Event\ErrorEvent $event</span><span class="text-kw">) {
-    </span><span class="text-var">error_log</span><span class="text-kw">(</span><span class="text-var">$event</span><span class="text-kw">-&gt;</span><span class="text-var">exception</span><span class="text-kw">()-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">());
+<span class="text-var">$app</span>-&gt;<span class="text-fn">events</span>()-&gt;<span class="text-fn">listen</span>(<span class="text-type">Pop\Event\ErrorEvent</span>::<span class="text-kw">class</span>, <span class="text-kw">function</span>(<span class="text-type">Pop\Event\ErrorEvent</span> <span class="text-var">$event</span>) {
+    <span class="text-fn">error_log</span>(<span class="text-var">$event</span>-&gt;<span class="text-fn">exception</span>()-&gt;<span class="text-fn">getMessage</span>());
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Both styles reach the same <code>dispatch()</code> call, so registering either way works for the five lifecycle events —

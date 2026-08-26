@@ -64,20 +64,20 @@ the adapter can't perform the check at all — a missing access file, unusable k
 exception rather than treating every non-<code>1</code> result the same way:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Auth\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Auth\File</span>;
 
-try {
-    </span><span class="text-var">$auth </span><span class="text-kw">= new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-str">&#039;/path/to/.htmyauth&#039;</span><span class="text-kw">);
+<span class="text-kw">try</span> {
+    <span class="text-var">$auth</span> = <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-str">&#039;/path/to/.htmyauth&#039;</span>);
 
-    if (</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">)) {
-        </span><span class="text-comment">// authenticated
-    </span><span class="text-kw">} else {
-        </span><span class="text-comment">// the credentials did not match
-    </span><span class="text-kw">}
-} catch (</span><span class="text-var">Pop\Auth\Exception $e</span><span class="text-kw">) {
-    </span><span class="text-comment">// the check could not be performed at all
-</span><span class="text-kw">}
-</span></code></pre>
+    <span class="text-kw">if</span> (<span class="text-var">$auth</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;password&#039;</span>)) {
+        <span class="text-comment">// authenticated</span>
+    } <span class="text-kw">else</span> {
+        <span class="text-comment">// the credentials did not match</span>
+    }
+} <span class="text-kw">catch</span> (<span class="text-type">Pop\Auth\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-comment">// the check could not be performed at all</span>
+}
+</code></pre>
 </div>
 
 <h2 id="database-backed-auth">Database-Backed Auth<a class="anchor" href="#database-backed-auth" aria-label="Link to this section">#</a></h2>
@@ -86,14 +86,14 @@ try {
 extends it, and the login is one call on an instance:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">$user </span><span class="text-kw">= new </span><span class="text-var">Users</span><span class="text-kw">();
+<span class="text-var">$user</span> = <span class="text-kw">new</span> <span class="text-type">Users</span>();
 
-if (</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-var">$username</span><span class="text-kw">, </span><span class="text-var">$attemptedPassword</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">)) {
-    </span><span class="text-comment">// $user is now loaded with the matched row
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-var">$user</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$username</span>, <span class="text-var">$attemptedPassword</span>, <span class="text-num">false</span>)) {
+    <span class="text-comment">// $user is now loaded with the matched row</span>
+}
+</code></pre>
 </div>
 
 <p>That third <code>false</code> turns off multi-factor. Left at its default, a correct password returns the loaded record
@@ -104,17 +104,17 @@ request; a browser sends the next request with no memory of it, so something has
 That something is the session:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Session\Session</span>;
 
-</span><span class="text-var">$user </span><span class="text-kw">= new </span><span class="text-var">Users</span><span class="text-kw">();
+<span class="text-var">$user</span> = <span class="text-kw">new</span> <span class="text-type">Users</span>();
 
-if (</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-var">$username</span><span class="text-kw">, </span><span class="text-var">$attemptedPassword</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">)) {
-    </span><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
-    </span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">user_id  </span><span class="text-kw">= </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">id</span><span class="text-kw">;
-    </span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">username </span><span class="text-kw">= </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">username</span><span class="text-kw">;
+<span class="text-kw">if</span> (<span class="text-var">$user</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$username</span>, <span class="text-var">$attemptedPassword</span>, <span class="text-num">false</span>)) {
+    <span class="text-var">$session</span> = <span class="text-type">Session</span>::<span class="text-fn">getInstance</span>();
+    <span class="text-var">$session</span>-&gt;<span class="text-type">user_id</span>  = <span class="text-var">$user</span>-&gt;<span class="text-type">id</span>;
+    <span class="text-var">$session</span>-&gt;<span class="text-type">username</span> = <span class="text-var">$user</span>-&gt;<span class="text-type">username</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Store the identifier, not the record. A serialized record goes stale the moment the row changes, and a
@@ -140,14 +140,14 @@ deploy:$2y$12$E2u2EOsGVKdMQfxnRPkzaevEZGAORhW2UtrhbPaejRswrwcUx9p5u
 <p>Point the adapter at the file and authenticate:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Auth\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Auth\File</span>;
 
-</span><span class="text-var">$auth </span><span class="text-kw">= new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-str">&#039;/path/to/.htmyauth&#039;</span><span class="text-kw">);
+<span class="text-var">$auth</span> = <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-str">&#039;/path/to/.htmyauth&#039;</span>);
 
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">); </span><span class="text-comment">// 1
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">isAuthenticated</span><span class="text-kw">();                 </span><span class="text-comment">// true
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">getUsername</span><span class="text-kw">();                     </span><span class="text-comment">// &#039;admin&#039;
-</span></code></pre>
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;password&#039;</span>); <span class="text-comment">// 1</span>
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">isAuthenticated</span>();                 <span class="text-comment">// true</span>
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">getUsername</span>();                     <span class="text-comment">// &#039;admin&#039;</span>
+</code></pre>
 </div>
 
 <p>The file is read on every <code>authenticate()</code> call, so edits take effect without a restart. The constructor
@@ -159,12 +159,12 @@ first authentication attempt.</p>
 <p>A third field per line scopes an entry to a realm, and the adapter matches it only when you configure one:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Auth\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Auth\File</span>;
 
-</span><span class="text-var">$auth </span><span class="text-kw">= new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-str">&#039;/path/to/.htmyauth&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;example.com&#039;</span><span class="text-kw">);
+<span class="text-var">$auth</span> = <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-str">&#039;/path/to/.htmyauth&#039;</span>, <span class="text-str">&#039;example.com&#039;</span>);
 
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">); </span><span class="text-comment">// 1 for a line reading admin:example.com:&lt;hash&gt;
-</span></code></pre>
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;password&#039;</span>); <span class="text-comment">// 1 for a line reading admin:example.com:&lt;hash&gt;</span>
+</code></pre>
 </div>
 
 <p>Configure the realm on every adapter reading a file that has one. A realm-configured adapter still
@@ -175,16 +175,16 @@ returns <code>true</code> both for a hash made at an outdated cost and for an en
 adapter still accepts. Acting on it means rewriting the file yourself:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Auth\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Auth\File</span>;
 
-</span><span class="text-var">$auth </span><span class="text-kw">= new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-str">&#039;/path/to/.htmyauth&#039;</span><span class="text-kw">);
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">);
+<span class="text-var">$auth</span> = <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-str">&#039;/path/to/.htmyauth&#039;</span>);
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;password&#039;</span>);
 
-if (</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">isAuthenticated</span><span class="text-kw">() &amp;&amp; </span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">needsRehash</span><span class="text-kw">()) {
-    </span><span class="text-var">$newHash </span><span class="text-kw">= </span><span class="text-var">password_hash</span><span class="text-kw">(</span><span class="text-str">&#039;password&#039;</span><span class="text-kw">, </span><span class="text-var">PASSWORD_DEFAULT</span><span class="text-kw">);
-    </span><span class="text-comment">// rewrite the line yourself — pop-auth never writes to storage
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-var">$auth</span>-&gt;<span class="text-fn">isAuthenticated</span>() <span class="text-kw">&amp;&amp;</span> <span class="text-var">$auth</span>-&gt;<span class="text-fn">needsRehash</span>()) {
+    <span class="text-var">$newHash</span> = <span class="text-fn">password_hash</span>(<span class="text-str">&#039;password&#039;</span>, <span class="text-num">PASSWORD_DEFAULT</span>);
+    <span class="text-comment">// rewrite the line yourself — pop-auth never writes to storage</span>
+}
+</code></pre>
 </div>
 
 <p>The flag is per-attempt, not sticky: a later failed <code>authenticate()</code> on the same object resets both
@@ -198,16 +198,16 @@ an API accepting tokens minted somewhere else.</p>
 that.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Auth\Jwt</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Auth\Jwt</span>;
 
-</span><span class="text-var">$auth </span><span class="text-kw">= new </span><span class="text-var">Jwt</span><span class="text-kw">(</span><span class="text-str">&#039;HS256&#039;</span><span class="text-kw">, </span><span class="text-var">$secret</span><span class="text-kw">);
+<span class="text-var">$auth</span> = <span class="text-kw">new</span> <span class="text-type">Jwt</span>(<span class="text-str">&#039;HS256&#039;</span>, <span class="text-var">$secret</span>);
 
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-var">$token</span><span class="text-kw">); </span><span class="text-comment">// 1
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$token</span>); <span class="text-comment">// 1</span>
 
-</span><span class="text-kw">if (</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">isAuthenticated</span><span class="text-kw">()) {
-    </span><span class="text-var">$claims </span><span class="text-kw">= </span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">getUser</span><span class="text-kw">(); </span><span class="text-comment">// [&#039;sub&#039; =&gt; &#039;admin&#039;, &#039;exp&#039; =&gt; 1787584364, ...]
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-var">$auth</span>-&gt;<span class="text-fn">isAuthenticated</span>()) {
+    <span class="text-var">$claims</span> = <span class="text-var">$auth</span>-&gt;<span class="text-fn">getUser</span>(); <span class="text-comment">// [&#039;sub&#039; =&gt; &#039;admin&#039;, &#039;exp&#039; =&gt; 1787584364, ...]</span>
+}
+</code></pre>
 </div>
 
 <p>Three algorithms are supported. <code>HS256</code> takes a shared secret, which means anyone who can verify a token can
@@ -215,12 +215,12 @@ also forge one — acceptable when the issuer and the verifier are the same appl
 a PEM-encoded <strong>public</strong> key, so the verifier holds nothing that can mint a token:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Auth\Jwt</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Auth\Jwt</span>;
 
-</span><span class="text-var">$auth </span><span class="text-kw">= new </span><span class="text-var">Jwt</span><span class="text-kw">(</span><span class="text-str">&#039;RS256&#039;</span><span class="text-kw">, </span><span class="text-var">$publicKeyPem</span><span class="text-kw">);
+<span class="text-var">$auth</span> = <span class="text-kw">new</span> <span class="text-type">Jwt</span>(<span class="text-str">&#039;RS256&#039;</span>, <span class="text-var">$publicKeyPem</span>);
 
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-var">$token</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$token</span>);
+</code></pre>
 </div>
 
 <p>The algorithm is fixed at construction rather than read from the token, which is what keeps an attacker
@@ -230,16 +230,16 @@ configure them, which is a decision worth making deliberately: a token issued fo
 different provider, verifies perfectly well against a shared key unless you say what you expect.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Auth\Jwt</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Auth\Jwt</span>;
 
-</span><span class="text-var">$auth </span><span class="text-kw">= new </span><span class="text-var">Jwt</span><span class="text-kw">(</span><span class="text-str">&#039;HS256&#039;</span><span class="text-kw">, </span><span class="text-var">$secret</span><span class="text-kw">);
+<span class="text-var">$auth</span> = <span class="text-kw">new</span> <span class="text-type">Jwt</span>(<span class="text-str">&#039;HS256&#039;</span>, <span class="text-var">$secret</span>);
 
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">setAudience</span><span class="text-kw">(</span><span class="text-str">&#039;my-api&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setIssuer</span><span class="text-kw">(</span><span class="text-str">&#039;https://auth.example.com&#039;</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setLeeway</span><span class="text-kw">(</span><span class="text-var">30</span><span class="text-kw">);
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">setAudience</span>(<span class="text-str">&#039;my-api&#039;</span>)
+    -&gt;<span class="text-fn">setIssuer</span>(<span class="text-str">&#039;https://auth.example.com&#039;</span>)
+    -&gt;<span class="text-fn">setLeeway</span>(<span class="text-num">30</span>);
 
-</span><span class="text-var">$auth</span><span class="text-kw">-&gt;</span><span class="text-var">authenticate</span><span class="text-kw">(</span><span class="text-var">$token</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$auth</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$token</span>);
+</code></pre>
 </div>
 
 <p><code>setLeeway()</code> takes seconds and absorbs clock skew between the issuer and you, in both directions — a token

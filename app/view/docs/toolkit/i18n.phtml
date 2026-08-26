@@ -66,23 +66,23 @@ Each <code>locale</code> adds <code>region</code>, its own <code>name</code>/<co
 <p>When you have the translations as data rather than as files, the <code>Format</code> classes assemble them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\I18n\Format</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\I18n\Format</span>;
 
-</span><span class="text-var">$language </span><span class="text-kw">= [</span><span class="text-str">&#039;src&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;en&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;output&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;de&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;German&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;native&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Deutsch&#039;</span><span class="text-kw">];
+<span class="text-var">$language</span> = [<span class="text-str">&#039;src&#039;</span> =&gt; <span class="text-str">&#039;en&#039;</span>, <span class="text-str">&#039;output&#039;</span> =&gt; <span class="text-str">&#039;de&#039;</span>, <span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;German&#039;</span>, <span class="text-str">&#039;native&#039;</span> =&gt; <span class="text-str">&#039;Deutsch&#039;</span>];
 
-</span><span class="text-var">$locales </span><span class="text-kw">= [[
-    </span><span class="text-str">&#039;region&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;DE&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;name&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Germany&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;native&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Deutschland&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;text&#039;   </span><span class="text-kw">=&gt; [
-        [</span><span class="text-str">&#039;source&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;This field is required.&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;output&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Dieses Feld ist erforderlich.&#039;</span><span class="text-kw">],
-        [</span><span class="text-str">&#039;source&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Please enter your name.&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;output&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Bitte geben Sie Ihren Namen ein.&#039;</span><span class="text-kw">],
+<span class="text-var">$locales</span> = [[
+    <span class="text-str">&#039;region&#039;</span> =&gt; <span class="text-str">&#039;DE&#039;</span>,
+    <span class="text-str">&#039;name&#039;</span>   =&gt; <span class="text-str">&#039;Germany&#039;</span>,
+    <span class="text-str">&#039;native&#039;</span> =&gt; <span class="text-str">&#039;Deutschland&#039;</span>,
+    <span class="text-str">&#039;text&#039;</span>   =&gt; [
+        [<span class="text-str">&#039;source&#039;</span> =&gt; <span class="text-str">&#039;This field is required.&#039;</span>, <span class="text-str">&#039;output&#039;</span> =&gt; <span class="text-str">&#039;Dieses Feld ist erforderlich.&#039;</span>],
+        [<span class="text-str">&#039;source&#039;</span> =&gt; <span class="text-str">&#039;Please enter your name.&#039;</span>, <span class="text-str">&#039;output&#039;</span> =&gt; <span class="text-str">&#039;Bitte geben Sie Ihren Namen ein.&#039;</span>],
     ],
 ]];
 
-</span><span class="text-var">Format\Xml</span><span class="text-kw">::</span><span class="text-var">createFile</span><span class="text-kw">(</span><span class="text-var">$language</span><span class="text-kw">, </span><span class="text-var">$locales</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language/de.xml&#039;</span><span class="text-kw">);
-</span><span class="text-var">Format\Json</span><span class="text-kw">::</span><span class="text-var">createFile</span><span class="text-kw">(</span><span class="text-var">$language</span><span class="text-kw">, </span><span class="text-var">$locales</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language/de.json&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Format\Xml</span>::<span class="text-fn">createFile</span>(<span class="text-var">$language</span>, <span class="text-var">$locales</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language/de.xml&#039;</span>);
+<span class="text-type">Format\Json</span>::<span class="text-fn">createFile</span>(<span class="text-var">$language</span>, <span class="text-var">$locales</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language/de.json&#039;</span>);
+</code></pre>
 </div>
 
 <p>Both write a complete, loadable file. Data missing a required key throws
@@ -95,15 +95,15 @@ parameter must have at least the 'src' and 'output' keys defined.&quot;</p>
 parameters, and an optional variation name:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\I18n\I18n</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\I18n\I18n</span>;
 
-</span><span class="text-var">$lang </span><span class="text-kw">= new </span><span class="text-var">I18n</span><span class="text-kw">(</span><span class="text-str">&#039;fr_FR&#039;</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language&#039;</span><span class="text-kw">);
+<span class="text-var">$lang</span> = <span class="text-kw">new</span> <span class="text-type">I18n</span>(<span class="text-str">&#039;fr_FR&#039;</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language&#039;</span>);
 
-echo </span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">__</span><span class="text-kw">(</span><span class="text-str">&#039;Hello, my name is %1. I love to program %2.&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;Nick&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;PHP&#039;</span><span class="text-kw">]);
-</span><span class="text-comment">// Bonjour, mon nom est Nick. J&#039;aime programmer PHP.
+<span class="text-kw">echo</span> <span class="text-var">$lang</span>-&gt;<span class="text-fn">__</span>(<span class="text-str">&#039;Hello, my name is %1. I love to program %2.&#039;</span>, [<span class="text-str">&#039;Nick&#039;</span>, <span class="text-str">&#039;PHP&#039;</span>]);
+<span class="text-comment">// Bonjour, mon nom est Nick. J&#039;aime programmer PHP.</span>
 
-</span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">_e</span><span class="text-kw">(</span><span class="text-str">&#039;Hello, my name is %1. I love to program %2.&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;Nick&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;PHP&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$lang</span>-&gt;<span class="text-fn">_e</span>(<span class="text-str">&#039;Hello, my name is %1. I love to program %2.&#039;</span>, [<span class="text-str">&#039;Nick&#039;</span>, <span class="text-str">&#039;PHP&#039;</span>]);
+</code></pre>
 </div>
 
 <p>Parameters substitute positionally: the first array element replaces <code>%1</code>, the second <code>%2</code>. A single
@@ -114,12 +114,12 @@ parameter is left in the output literally — passing <code>'Nick'</code> alone 
 file matched at all. Nothing throws and nothing is logged:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\I18n\I18n</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\I18n\I18n</span>;
 
-</span><span class="text-var">$lang </span><span class="text-kw">= new </span><span class="text-var">I18n</span><span class="text-kw">(</span><span class="text-str">&#039;fr_FR&#039;</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language&#039;</span><span class="text-kw">);
+<span class="text-var">$lang</span> = <span class="text-kw">new</span> <span class="text-type">I18n</span>(<span class="text-str">&#039;fr_FR&#039;</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language&#039;</span>);
 
-echo </span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">__</span><span class="text-kw">(</span><span class="text-str">&#039;Not in the catalog&#039;</span><span class="text-kw">);  </span><span class="text-comment">// &#039;Not in the catalog&#039;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$lang</span>-&gt;<span class="text-fn">__</span>(<span class="text-str">&#039;Not in the catalog&#039;</span>);  <span class="text-comment">// &#039;Not in the catalog&#039;</span>
+</code></pre>
 </div>
 
 <p>That's what makes it safe to wrap strings before the translations exist — but it also means a typo in
@@ -143,14 +143,14 @@ one line stayed English.</p>
 way, the third argument to <code>__()</code>/<code>_e()</code> picks one:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\I18n\I18n</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\I18n\I18n</span>;
 
-</span><span class="text-var">$lang </span><span class="text-kw">= new </span><span class="text-var">I18n</span><span class="text-kw">(</span><span class="text-str">&#039;fr_FR&#039;</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language&#039;</span><span class="text-kw">);
+<span class="text-var">$lang</span> = <span class="text-kw">new</span> <span class="text-type">I18n</span>(<span class="text-str">&#039;fr_FR&#039;</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language&#039;</span>);
 
-echo </span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">__</span><span class="text-kw">(</span><span class="text-str">&#039;Hello, how are you?&#039;</span><span class="text-kw">);                    </span><span class="text-comment">// Bonjour, comment allez-vous?
-</span><span class="text-kw">echo </span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">__</span><span class="text-kw">(</span><span class="text-str">&#039;Hello, how are you?&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-str">&#039;informal&#039;</span><span class="text-kw">);  </span><span class="text-comment">// Salut, ça va?
-</span><span class="text-kw">echo </span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">__</span><span class="text-kw">(</span><span class="text-str">&#039;Hello, how are you?&#039;</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-str">&#039;nonsense&#039;</span><span class="text-kw">);  </span><span class="text-comment">// Bonjour, comment allez-vous?
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$lang</span>-&gt;<span class="text-fn">__</span>(<span class="text-str">&#039;Hello, how are you?&#039;</span>);                    <span class="text-comment">// Bonjour, comment allez-vous?</span>
+<span class="text-kw">echo</span> <span class="text-var">$lang</span>-&gt;<span class="text-fn">__</span>(<span class="text-str">&#039;Hello, how are you?&#039;</span>, <span class="text-num">null</span>, <span class="text-str">&#039;informal&#039;</span>);  <span class="text-comment">// Salut, ça va?</span>
+<span class="text-kw">echo</span> <span class="text-var">$lang</span>-&gt;<span class="text-fn">__</span>(<span class="text-str">&#039;Hello, how are you?&#039;</span>, <span class="text-num">null</span>, <span class="text-str">&#039;nonsense&#039;</span>);  <span class="text-comment">// Bonjour, comment allez-vous?</span>
+</code></pre>
 </div>
 
 <p>The first defined output is the default, used both when you pass no variation and when the variation
@@ -162,13 +162,13 @@ selected by numeric position instead — <code>0</code>, <code>1</code>, <code>2
 language and a locale, and loads <code>fr.xml</code> or <code>fr.json</code> from <code>$dir</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\I18n\I18n</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\I18n\I18n</span>;
 
-</span><span class="text-var">$lang </span><span class="text-kw">= new </span><span class="text-var">I18n</span><span class="text-kw">(</span><span class="text-str">&#039;fr_CA&#039;</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language&#039;</span><span class="text-kw">);
+<span class="text-var">$lang</span> = <span class="text-kw">new</span> <span class="text-type">I18n</span>(<span class="text-str">&#039;fr_CA&#039;</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language&#039;</span>);
 
-</span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">getLanguage</span><span class="text-kw">();  </span><span class="text-comment">// &#039;fr&#039;
-</span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">getLocale</span><span class="text-kw">();    </span><span class="text-comment">// &#039;CA&#039;
-</span></code></pre>
+<span class="text-var">$lang</span>-&gt;<span class="text-fn">getLanguage</span>();  <span class="text-comment">// &#039;fr&#039;</span>
+<span class="text-var">$lang</span>-&gt;<span class="text-fn">getLocale</span>();    <span class="text-comment">// &#039;CA&#039;</span>
+</code></pre>
 </div>
 
 <p>A string with no underscore uses the language uppercased as the locale, so <code>new I18n('fr')</code> resolves
@@ -176,25 +176,25 @@ to <code>fr_FR</code>. Pass <code>null</code> and the constructor reads the <cod
 falling back to <code>en_US</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\I18n\I18n</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\I18n\I18n</span>;
 
-</span><span class="text-var">define</span><span class="text-kw">(</span><span class="text-str">&#039;POP_LANG&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;fr_CA&#039;</span><span class="text-kw">);
+<span class="text-fn">define</span>(<span class="text-str">&#039;POP_LANG&#039;</span>, <span class="text-str">&#039;fr_CA&#039;</span>);
 
-</span><span class="text-var">$lang </span><span class="text-kw">= new </span><span class="text-var">I18n</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language&#039;</span><span class="text-kw">);
+<span class="text-var">$lang</span> = <span class="text-kw">new</span> <span class="text-type">I18n</span>(<span class="text-num">null</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language&#039;</span>);
 
-</span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">getLocale</span><span class="text-kw">();  </span><span class="text-comment">// &#039;CA&#039;
-</span></code></pre>
+<span class="text-var">$lang</span>-&gt;<span class="text-fn">getLocale</span>();  <span class="text-comment">// &#039;CA&#039;</span>
+</code></pre>
 </div>
 
 <p><code>loadFile()</code> bypasses the directory scan and reads one named file, which is what you want when the
 files do not follow the naming convention:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\I18n\I18n</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\I18n\I18n</span>;
 
-</span><span class="text-var">$lang </span><span class="text-kw">= new </span><span class="text-var">I18n</span><span class="text-kw">(</span><span class="text-str">&#039;fr_FR&#039;</span><span class="text-kw">);
-</span><span class="text-var">$lang</span><span class="text-kw">-&gt;</span><span class="text-var">loadFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language/fr.json&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$lang</span> = <span class="text-kw">new</span> <span class="text-type">I18n</span>(<span class="text-str">&#039;fr_FR&#039;</span>);
+<span class="text-var">$lang</span>-&gt;<span class="text-fn">loadFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language/fr.json&#039;</span>);
+</code></pre>
 </div>
 
 <p>A path that does not exist, or one that is neither <code>.xml</code> nor <code>.json</code>, throws <code>Pop\I18n\Exception</code>
@@ -208,15 +208,15 @@ folder, which holds empty templates.</p>
 and returns every locale it can actually serve, sorted, keyed by locale with a display label:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\I18n\I18n</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\I18n\I18n</span>;
 
-</span><span class="text-var">$languages </span><span class="text-kw">= </span><span class="text-var">I18n</span><span class="text-kw">::</span><span class="text-var">getLanguages</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../language&#039;</span><span class="text-kw">);
+<span class="text-var">$languages</span> = <span class="text-type">I18n</span>::<span class="text-fn">getLanguages</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../language&#039;</span>);
 
-</span><span class="text-comment">// [
-//     &#039;fr_CA&#039; =&gt; &#039;Français, Canada (French, Canada)&#039;,
-//     &#039;fr_FR&#039; =&gt; &#039;Français, France (French, France)&#039;,
-// ]
-</span></code></pre>
+<span class="text-comment">// [</span>
+<span class="text-comment">//     &#039;fr_CA&#039; =&gt; &#039;Français, Canada (French, Canada)&#039;,</span>
+<span class="text-comment">//     &#039;fr_FR&#039; =&gt; &#039;Français, France (French, France)&#039;,</span>
+<span class="text-comment">// ]</span>
+</code></pre>
 </div>
 
 <p>It's static, needs no instance, and reads both formats. Both regions above come from the one

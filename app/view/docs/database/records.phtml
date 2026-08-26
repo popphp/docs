@@ -16,79 +16,79 @@ controller.</p>
 application class rather than in a config file. The config file holds the credentials as data:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/database.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;default&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_DATABASE&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;adapter&#039;  </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_ADAPTER&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_USERNAME&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_PASSWORD&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_HOST&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;type&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;DB_TYPE&#039;</span><span class="text-kw">],
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;default&#039;</span> =&gt; [
+        <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_DATABASE&#039;</span>],
+        <span class="text-str">&#039;adapter&#039;</span>  =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_ADAPTER&#039;</span>],
+        <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_USERNAME&#039;</span>],
+        <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_PASSWORD&#039;</span>],
+        <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_HOST&#039;</span>],
+        <span class="text-str">&#039;type&#039;</span>     =&gt; <span class="text-var">$_ENV</span>[<span class="text-str">&#039;DB_TYPE&#039;</span>],
     ],
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The application's <code>load()</code> consumes it. <code>initDb()</code> walks the configured connections, refuses to start
 on one it cannot reach, registers each as a service, and binds the <code>default</code> one to <code>Pop\Db\Record</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Application.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Application</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Application</span>
+{
 
-class </span><span class="text-var">Application </span><span class="text-kw">extends </span><span class="text-var">\Pop\Application
-</span><span class="text-kw">{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">load</span>(): <span class="text-type">Application</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">initDb</span>(<span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../config/database.php&#039;</span>);
 
-    public function </span><span class="text-var">load</span><span class="text-kw">(): </span><span class="text-var">Application
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">initDb</span><span class="text-kw">(include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../config/database.php&#039;</span><span class="text-kw">);
-
-        return </span><span class="text-var">$this</span><span class="text-kw">;
+        <span class="text-kw">return</span> <span class="text-var">$this</span>;
     }
 
-    protected function </span><span class="text-var">initDb</span><span class="text-kw">(array </span><span class="text-var">$database</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        foreach (</span><span class="text-var">$database </span><span class="text-kw">as </span><span class="text-var">$name </span><span class="text-kw">=&gt; </span><span class="text-var">$dbConfig</span><span class="text-kw">) {
-            if (empty(</span><span class="text-var">$dbConfig</span><span class="text-kw">[</span><span class="text-str">&#039;adapter&#039;</span><span class="text-kw">]) || empty(</span><span class="text-var">$dbConfig</span><span class="text-kw">[</span><span class="text-str">&#039;database&#039;</span><span class="text-kw">])) {
-                continue;
+    <span class="text-kw">protected</span> <span class="text-kw">function</span> <span class="text-fn">initDb</span>(<span class="text-kw">array</span> <span class="text-var">$database</span>): <span class="text-type">void</span>
+    {
+        <span class="text-kw">foreach</span> (<span class="text-var">$database</span> <span class="text-kw">as</span> <span class="text-var">$name</span> =&gt; <span class="text-var">$dbConfig</span>) {
+            <span class="text-kw">if</span> (<span class="text-kw">empty</span>(<span class="text-var">$dbConfig</span>[<span class="text-str">&#039;adapter&#039;</span>]) <span class="text-kw">||</span> <span class="text-kw">empty</span>(<span class="text-var">$dbConfig</span>[<span class="text-str">&#039;database&#039;</span>])) {
+                <span class="text-kw">continue</span>;
             }
 
-            </span><span class="text-var">$adapter </span><span class="text-kw">= </span><span class="text-var">$dbConfig</span><span class="text-kw">[</span><span class="text-str">&#039;adapter&#039;</span><span class="text-kw">];
-            </span><span class="text-var">$options </span><span class="text-kw">= [
-                </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$dbConfig</span><span class="text-kw">[</span><span class="text-str">&#039;database&#039;</span><span class="text-kw">],
-                </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$dbConfig</span><span class="text-kw">[</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">] ?? </span><span class="text-var">null</span><span class="text-kw">,
-                </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$dbConfig</span><span class="text-kw">[</span><span class="text-str">&#039;password&#039;</span><span class="text-kw">] ?? </span><span class="text-var">null</span><span class="text-kw">,
-                </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">$dbConfig</span><span class="text-kw">[</span><span class="text-str">&#039;host&#039;</span><span class="text-kw">] ?? </span><span class="text-var">null</span><span class="text-kw">,
-                </span><span class="text-str">&#039;type&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">$dbConfig</span><span class="text-kw">[</span><span class="text-str">&#039;type&#039;</span><span class="text-kw">] ?? </span><span class="text-var">null
-            </span><span class="text-kw">];
+            <span class="text-var">$adapter</span> = <span class="text-var">$dbConfig</span>[<span class="text-str">&#039;adapter&#039;</span>];
+            <span class="text-var">$options</span> = [
+                <span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-var">$dbConfig</span>[<span class="text-str">&#039;database&#039;</span>],
+                <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$dbConfig</span>[<span class="text-str">&#039;username&#039;</span>] <span class="text-kw">??</span> <span class="text-num">null</span>,
+                <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-var">$dbConfig</span>[<span class="text-str">&#039;password&#039;</span>] <span class="text-kw">??</span> <span class="text-num">null</span>,
+                <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-var">$dbConfig</span>[<span class="text-str">&#039;host&#039;</span>] <span class="text-kw">??</span> <span class="text-num">null</span>,
+                <span class="text-str">&#039;type&#039;</span>     =&gt; <span class="text-var">$dbConfig</span>[<span class="text-str">&#039;type&#039;</span>] <span class="text-kw">??</span> <span class="text-num">null</span>
+            ];
 
-            </span><span class="text-var">$check </span><span class="text-kw">= </span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">check</span><span class="text-kw">(</span><span class="text-var">$adapter</span><span class="text-kw">, </span><span class="text-var">$options</span><span class="text-kw">);
+            <span class="text-var">$check</span> = <span class="text-type">Db</span>::<span class="text-fn">check</span>(<span class="text-var">$adapter</span>, <span class="text-var">$options</span>);
 
-            if (</span><span class="text-var">$check </span><span class="text-kw">!== </span><span class="text-var">true</span><span class="text-kw">) {
-                throw new </span><span class="text-var">\Pop\Db\Adapter\Exception</span><span class="text-kw">(</span><span class="text-str">&#039;Error: &#039; </span><span class="text-kw">. </span><span class="text-var">$check</span><span class="text-kw">);
+            <span class="text-kw">if</span> (<span class="text-var">$check</span> <span class="text-kw">!==</span> <span class="text-num">true</span>) {
+                <span class="text-kw">throw</span> <span class="text-kw">new</span> <span class="text-type">\Pop\Db\Adapter\Exception</span>(<span class="text-str">&#039;Error: &#039;</span> . <span class="text-var">$check</span>);
             }
 
-            </span><span class="text-var">$service </span><span class="text-kw">= (</span><span class="text-var">$name </span><span class="text-kw">== </span><span class="text-str">&#039;default&#039;</span><span class="text-kw">) ? </span><span class="text-str">&#039;database&#039; </span><span class="text-kw">: </span><span class="text-str">&#039;database_&#039; </span><span class="text-kw">. </span><span class="text-var">$name</span><span class="text-kw">;
+            <span class="text-var">$service</span> = (<span class="text-var">$name</span> <span class="text-kw">==</span> <span class="text-str">&#039;default&#039;</span>) ? <span class="text-str">&#039;database&#039;</span> : <span class="text-str">&#039;database_&#039;</span> . <span class="text-var">$name</span>;
 
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">()-&gt;</span><span class="text-var">set</span><span class="text-kw">(</span><span class="text-var">$service</span><span class="text-kw">, [
-                </span><span class="text-str">&#039;call&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Pop\Db\Db::connect&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;params&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;adapter&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$adapter</span><span class="text-kw">, </span><span class="text-str">&#039;options&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$options</span><span class="text-kw">]
+            <span class="text-var">$this</span>-&gt;<span class="text-fn">services</span>()-&gt;<span class="text-fn">set</span>(<span class="text-var">$service</span>, [
+                <span class="text-str">&#039;call&#039;</span>   =&gt; <span class="text-str">&#039;Pop\Db\Db::connect&#039;</span>,
+                <span class="text-str">&#039;params&#039;</span> =&gt; [<span class="text-str">&#039;adapter&#039;</span> =&gt; <span class="text-var">$adapter</span>, <span class="text-str">&#039;options&#039;</span> =&gt; <span class="text-var">$options</span>]
             ]);
 
-            if (</span><span class="text-var">$name </span><span class="text-kw">== </span><span class="text-str">&#039;default&#039;</span><span class="text-kw">) {
-                </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">setDb</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">services</span><span class="text-kw">[</span><span class="text-str">&#039;database&#039;</span><span class="text-kw">]);
+            <span class="text-kw">if</span> (<span class="text-var">$name</span> <span class="text-kw">==</span> <span class="text-str">&#039;default&#039;</span>) {
+                <span class="text-type">Record</span>::<span class="text-fn">setDb</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">services</span>[<span class="text-str">&#039;database&#039;</span>]);
             }
         }
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Pop\Application</code> declares no <code>initDb()</code> — this is an app-level convention, and the one
@@ -97,14 +97,14 @@ service and is left unbound, so <code>Record</code> keeps resolving to <code>def
 <a href="/basics/applications">Applications &amp; Bootstrap</a> covers <code>load()</code>, services and events in full.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Users.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-
-class </span><span class="text-var">Users </span><span class="text-kw">extends </span><span class="text-var">Record </span><span class="text-kw">{}
-</span></code></pre>
+<span class="text-kw">class</span> <span class="text-type">Users</span> <span class="text-kw">extends</span> <span class="text-type">Record</span> {}
+</code></pre>
 </div>
 
 <p><code>Users::table()</code> now returns <code>users</code>. The class name is parsed, not guessed at runtime: it's
@@ -112,38 +112,38 @@ lower-cased and split on camel-case boundaries, so <code>UserLogins</code> maps 
 defaults to <code>id</code> and there's no table prefix. Three protected properties override each of those:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Users.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Users</span> <span class="text-kw">extends</span> <span class="text-type">Record</span>
+{
 
-class </span><span class="text-var">Users </span><span class="text-kw">extends </span><span class="text-var">Record
-</span><span class="text-kw">{
-
-    protected ?</span><span class="text-var">string $table       </span><span class="text-kw">= </span><span class="text-str">&#039;app_users&#039;</span><span class="text-kw">;
-    protected ?</span><span class="text-var">string $prefix      </span><span class="text-kw">= </span><span class="text-str">&#039;my_app_&#039;</span><span class="text-kw">;
-    protected array   </span><span class="text-var">$primaryKeys </span><span class="text-kw">= [</span><span class="text-str">&#039;user_id&#039;</span><span class="text-kw">];
+    <span class="text-kw">protected</span> ?<span class="text-type">string</span> <span class="text-var">$table</span>       = <span class="text-str">&#039;app_users&#039;</span>;
+    <span class="text-kw">protected</span> ?<span class="text-type">string</span> <span class="text-var">$prefix</span>      = <span class="text-str">&#039;my_app_&#039;</span>;
+    <span class="text-kw">protected</span> <span class="text-kw">array</span>   <span class="text-var">$primaryKeys</span> = [<span class="text-str">&#039;user_id&#039;</span>];
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>$primaryKeys</code> is an array because a composite key is a list. A table keyed on two columns declares both,
 and <code>findById()</code> then takes an array of values in the same order.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-class </span><span class="text-var">Memberships </span><span class="text-kw">extends </span><span class="text-var">Record
-</span><span class="text-kw">{
+<span class="text-kw">class</span> <span class="text-type">Memberships</span> <span class="text-kw">extends</span> <span class="text-type">Record</span>
+{
 
-    protected array </span><span class="text-var">$primaryKeys </span><span class="text-kw">= [</span><span class="text-str">&#039;user_id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;group_id&#039;</span><span class="text-kw">];
+    <span class="text-kw">protected</span> <span class="text-kw">array</span> <span class="text-var">$primaryKeys</span> = [<span class="text-str">&#039;user_id&#039;</span>, <span class="text-str">&#039;group_id&#039;</span>];
 
 }
 
-</span><span class="text-var">$membership </span><span class="text-kw">= </span><span class="text-var">Memberships</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">([</span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$membership</span> = <span class="text-type">Memberships</span>::<span class="text-fn">findById</span>([<span class="text-num">1</span>, <span class="text-num">2</span>]);
+</code></pre>
 </div>
 
 <p>A table class accepts any array of column values in its constructor, which is what makes
@@ -151,19 +151,19 @@ class </span><span class="text-var">Memberships </span><span class="text-kw">ext
 <code>$fillable</code> to allowlist the mass-assignable columns, or <code>$guarded</code> to denylist them.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Users.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Users</span> <span class="text-kw">extends</span> <span class="text-type">Record</span>
+{
 
-class </span><span class="text-var">Users </span><span class="text-kw">extends </span><span class="text-var">Record
-</span><span class="text-kw">{
-
-    protected array </span><span class="text-var">$fillable </span><span class="text-kw">= [</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">];
+    <span class="text-kw">protected</span> <span class="text-kw">array</span> <span class="text-var">$fillable</span> = [<span class="text-str">&#039;username&#039;</span>, <span class="text-str">&#039;email&#039;</span>];
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A non-empty <code>$fillable</code> wins outright and <code>$guarded</code> is ignored; declare neither and mass assignment is
@@ -178,16 +178,16 @@ of its own alongside it. That is how a single application reads its users from o
 logs to another:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Db</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-use </span><span class="text-var">App\Table\Logs</span><span class="text-kw">;
-use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Db</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
+<span class="text-kw">use</span> <span class="text-type">App\Table\Logs</span>;
+<span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">setDb</span><span class="text-kw">(</span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">mysqlConnect</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popdb&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;db_password&#039;</span><span class="text-kw">]));
+<span class="text-type">Record</span>::<span class="text-fn">setDb</span>(<span class="text-type">Db</span>::<span class="text-fn">mysqlConnect</span>([<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;popdb&#039;</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;popuser&#039;</span>, <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;db_password&#039;</span>]));
 
-</span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">setDb</span><span class="text-kw">(</span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">mysqlConnect</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;accounts&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;popuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;db_password&#039;</span><span class="text-kw">]));
-</span><span class="text-var">Logs</span><span class="text-kw">::</span><span class="text-var">setDb</span><span class="text-kw">(</span><span class="text-var">Db</span><span class="text-kw">::</span><span class="text-var">sqliteConnect</span><span class="text-kw">([</span><span class="text-str">&#039;database&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs.sqlite&#039;</span><span class="text-kw">]));
-</span></code></pre>
+<span class="text-type">Users</span>::<span class="text-fn">setDb</span>(<span class="text-type">Db</span>::<span class="text-fn">mysqlConnect</span>([<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-str">&#039;accounts&#039;</span>, <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;popuser&#039;</span>, <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;db_password&#039;</span>]));
+<span class="text-type">Logs</span>::<span class="text-fn">setDb</span>(<span class="text-type">Db</span>::<span class="text-fn">sqliteConnect</span>([<span class="text-str">&#039;database&#039;</span> =&gt; <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs.sqlite&#039;</span>]));
+</code></pre>
 </div>
 
 <p><code>Users</code> and <code>Logs</code> each resolve to their own adapter, and every other table class resolves to the one
@@ -218,10 +218,10 @@ use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
 group of tables shares a connection:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Report\Sales</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Report\Sales</span>;
 
-</span><span class="text-var">Sales</span><span class="text-kw">::</span><span class="text-var">setDb</span><span class="text-kw">(</span><span class="text-var">$reportsDb</span><span class="text-kw">, </span><span class="text-str">&#039;App\Report&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Sales</span>::<span class="text-fn">setDb</span>(<span class="text-var">$reportsDb</span>, <span class="text-str">&#039;App\Report&#039;</span>);
+</code></pre>
 </div>
 
 <p>Every <code>App\Report\*</code> table class now resolves to <code>$reportsDb</code> without binding each one. A class with its
@@ -244,46 +244,46 @@ binds it to <code>Users</code> and registers it as the fallback for everything e
 <code>Pop\Db\Record\Collection</code> of them.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">$user   </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
-</span><span class="text-var">$user   </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findOne</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$user   </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findLatest</span><span class="text-kw">();
+<span class="text-var">$user</span>   = <span class="text-type">Users</span>::<span class="text-fn">findById</span>(<span class="text-num">1</span>);
+<span class="text-var">$user</span>   = <span class="text-type">Users</span>::<span class="text-fn">findOne</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>]);
+<span class="text-var">$user</span>   = <span class="text-type">Users</span>::<span class="text-fn">findLatest</span>();
 
-</span><span class="text-var">$active </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$all    </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findAll</span><span class="text-kw">();
-</span><span class="text-var">$count  </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">getTotal</span><span class="text-kw">([</span><span class="text-str">&#039;status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$active</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;status&#039;</span> =&gt; <span class="text-str">&#039;active&#039;</span>]);
+<span class="text-var">$all</span>    = <span class="text-type">Users</span>::<span class="text-fn">findAll</span>();
+<span class="text-var">$count</span>  = <span class="text-type">Users</span>::<span class="text-fn">getTotal</span>([<span class="text-str">&#039;status&#039;</span> =&gt; <span class="text-str">&#039;active&#039;</span>]);
+</code></pre>
 </div>
 
 <p>A record that was not found is still a record object, not <code>null</code> — the class hands back an empty
 instance of itself with no columns set. Test for it by checking the primary key rather than the object:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$user </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findById</span><span class="text-kw">(</span><span class="text-var">999</span><span class="text-kw">);
+<pre><code><span class="text-var">$user</span> = <span class="text-type">Users</span>::<span class="text-fn">findById</span>(<span class="text-num">999</span>);
 
-if (!isset(</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">id</span><span class="text-kw">)) {
-    </span><span class="text-comment">// No such row
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (!<span class="text-kw">isset</span>(<span class="text-var">$user</span>-&gt;<span class="text-type">id</span>)) {
+    <span class="text-comment">// No such row</span>
+}
+</code></pre>
 </div>
 
 <p>The collection is countable and iterable, and every element is a live record, so a loop can modify and
 save each one. <code>first()</code>, <code>isEmpty()</code>, <code>column()</code> and <code>toArray()</code> cover the rest of the common cases.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">]);
+<pre><code><span class="text-var">$users</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;status&#039;</span> =&gt; <span class="text-str">&#039;active&#039;</span>]);
 
-if (!</span><span class="text-var">$users</span><span class="text-kw">-&gt;</span><span class="text-var">isEmpty</span><span class="text-kw">()) {
-    echo </span><span class="text-var">$users</span><span class="text-kw">-&gt;</span><span class="text-var">first</span><span class="text-kw">()-&gt;</span><span class="text-var">username</span><span class="text-kw">;
-    </span><span class="text-var">print_r</span><span class="text-kw">(</span><span class="text-var">$users</span><span class="text-kw">-&gt;</span><span class="text-var">column</span><span class="text-kw">(</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">toArray</span><span class="text-kw">());
+<span class="text-kw">if</span> (!<span class="text-var">$users</span>-&gt;<span class="text-fn">isEmpty</span>()) {
+    <span class="text-kw">echo</span> <span class="text-var">$users</span>-&gt;<span class="text-fn">first</span>()-&gt;<span class="text-type">username</span>;
+    <span class="text-fn">print_r</span>(<span class="text-var">$users</span>-&gt;<span class="text-fn">column</span>(<span class="text-str">&#039;username&#039;</span>)-&gt;<span class="text-fn">toArray</span>());
 }
 
-foreach (</span><span class="text-var">$users </span><span class="text-kw">as </span><span class="text-var">$user</span><span class="text-kw">) {
-    </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">logins </span><span class="text-kw">= </span><span class="text-var">0</span><span class="text-kw">;
-    </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
+<span class="text-kw">foreach</span> (<span class="text-var">$users</span> <span class="text-kw">as</span> <span class="text-var">$user</span>) {
+    <span class="text-var">$user</span>-&gt;<span class="text-type">logins</span> = <span class="text-num">0</span>;
+    <span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Passing <code>true</code> as the last argument to any find method returns plain arrays instead of objects, which is
@@ -291,21 +291,21 @@ what you want when the rows are headed straight into a view or a JSON response a
 call <code>save()</code> on them.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$rows </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">], </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
-</span></code></pre>
+<pre><code><span class="text-var">$rows</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;status&#039;</span> =&gt; <span class="text-str">&#039;active&#039;</span>], <span class="text-num">null</span>, <span class="text-num">true</span>);
+</code></pre>
 </div>
 
 <p>Every read method also takes an <code>$options</code> array that shapes the query around the predicate. Seven keys,
 combined however you like:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">], [
-    </span><span class="text-str">&#039;select&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;order&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;id DESC&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;offset&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">10</span><span class="text-kw">,
-    </span><span class="text-str">&#039;limit&#039;  </span><span class="text-kw">=&gt; </span><span class="text-var">25
-</span><span class="text-kw">]);
-</span></code></pre>
+<pre><code><span class="text-var">$users</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;status&#039;</span> =&gt; <span class="text-str">&#039;active&#039;</span>], [
+    <span class="text-str">&#039;select&#039;</span> =&gt; [<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;username&#039;</span>],
+    <span class="text-str">&#039;order&#039;</span>  =&gt; <span class="text-str">&#039;id DESC&#039;</span>,
+    <span class="text-str">&#039;offset&#039;</span> =&gt; <span class="text-num">10</span>,
+    <span class="text-str">&#039;limit&#039;</span>  =&gt; <span class="text-num">25</span>
+]);
+</code></pre>
 </div>
 
 <table>
@@ -360,11 +360,11 @@ combined however you like:</p>
 <code>select</code> and the predicate both need qualified column names:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([</span><span class="text-str">&#039;users.status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">], [
-    </span><span class="text-str">&#039;select&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;users.username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;roles.role&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;join&#039;   </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;table&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;roles&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;columns&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;roles.id&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;users.role_id&#039;</span><span class="text-kw">]]
+<pre><code><span class="text-var">$users</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([<span class="text-str">&#039;users.status&#039;</span> =&gt; <span class="text-str">&#039;active&#039;</span>], [
+    <span class="text-str">&#039;select&#039;</span> =&gt; [<span class="text-str">&#039;users.username&#039;</span>, <span class="text-str">&#039;roles.role&#039;</span>],
+    <span class="text-str">&#039;join&#039;</span>   =&gt; [<span class="text-str">&#039;table&#039;</span> =&gt; <span class="text-str">&#039;roles&#039;</span>, <span class="text-str">&#039;columns&#039;</span> =&gt; [<span class="text-str">&#039;roles.id&#039;</span> =&gt; <span class="text-str">&#039;users.role_id&#039;</span>]]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The join type defaults to <code>LEFT JOIN</code>. A <code>type</code> key naming a join method on the query builder —
@@ -382,39 +382,39 @@ left off.</p>
 up the generated primary key; a record that was fetched updates.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$user </span><span class="text-kw">= new </span><span class="text-var">Users</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
+<pre><code><span class="text-var">$user</span> = <span class="text-kw">new</span> <span class="text-type">Users</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]);
+<span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>();
 
-echo </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">id</span><span class="text-kw">;    </span><span class="text-comment">// the id the database assigned
+<span class="text-kw">echo</span> <span class="text-var">$user</span>-&gt;<span class="text-type">id</span>;    <span class="text-comment">// the id the database assigned</span>
 
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">email </span><span class="text-kw">= </span><span class="text-str">&#039;new@test.com&#039;</span><span class="text-kw">;
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();     </span><span class="text-comment">// UPDATE, because this record now has an id
+<span class="text-var">$user</span>-&gt;<span class="text-type">email</span> = <span class="text-str">&#039;new@test.com&#039;</span>;
+<span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>();     <span class="text-comment">// UPDATE, because this record now has an id</span>
 
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">delete</span><span class="text-kw">();
-echo </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">id</span><span class="text-kw">;    </span><span class="text-comment">// null — delete() clears the in-memory state too
-</span></code></pre>
+<span class="text-var">$user</span>-&gt;<span class="text-fn">delete</span>();
+<span class="text-kw">echo</span> <span class="text-var">$user</span>-&gt;<span class="text-type">id</span>;    <span class="text-comment">// null — delete() clears the in-memory state too</span>
+</code></pre>
 </div>
 
 <p>Between the change and the <code>save()</code>, the record knows what moved. <code>isDirty()</code> and <code>getDirty()</code> return the
 old and new values, which is what an audit trail reads.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">username </span><span class="text-kw">= </span><span class="text-str">&#039;renamed&#039;</span><span class="text-kw">;
+<pre><code><span class="text-var">$user</span>-&gt;<span class="text-type">username</span> = <span class="text-str">&#039;renamed&#039;</span>;
 
-if (</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">isDirty</span><span class="text-kw">()) {
-    </span><span class="text-var">print_r</span><span class="text-kw">(</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">getDirty</span><span class="text-kw">());   </span><span class="text-comment">// [&#039;old&#039; =&gt; [...], &#039;new&#039; =&gt; [...]]
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-var">$user</span>-&gt;<span class="text-fn">isDirty</span>()) {
+    <span class="text-fn">print_r</span>(<span class="text-var">$user</span>-&gt;<span class="text-fn">getDirty</span>());   <span class="text-comment">// [&#039;old&#039; =&gt; [...], &#039;new&#039; =&gt; [...]]</span>
+}
+</code></pre>
 </div>
 
 <p>Four helpers write a single column and save in one call, which avoids the read-modify-write dance:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">increment</span><span class="text-kw">(</span><span class="text-str">&#039;logins&#039;</span><span class="text-kw">);       </span><span class="text-comment">// + 1
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">decrement</span><span class="text-kw">(</span><span class="text-str">&#039;credits&#039;</span><span class="text-kw">, </span><span class="text-var">5</span><span class="text-kw">);   </span><span class="text-comment">// - 5
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">reset</span><span class="text-kw">(</span><span class="text-str">&#039;logins&#039;</span><span class="text-kw">, </span><span class="text-var">0</span><span class="text-kw">);        </span><span class="text-comment">// set to a given value
-</span><span class="text-var">$copy </span><span class="text-kw">= </span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">copy</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser-copy&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<pre><code><span class="text-var">$user</span>-&gt;<span class="text-fn">increment</span>(<span class="text-str">&#039;logins&#039;</span>);       <span class="text-comment">// + 1</span>
+<span class="text-var">$user</span>-&gt;<span class="text-fn">decrement</span>(<span class="text-str">&#039;credits&#039;</span>, <span class="text-num">5</span>);   <span class="text-comment">// - 5</span>
+<span class="text-var">$user</span>-&gt;<span class="text-fn">reset</span>(<span class="text-str">&#039;logins&#039;</span>, <span class="text-num">0</span>);        <span class="text-comment">// set to a given value</span>
+<span class="text-var">$copy</span> = <span class="text-var">$user</span>-&gt;<span class="text-fn">copy</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser-copy&#039;</span>]);
+</code></pre>
 </div>
 
 <p><code>reset()</code> assigns a value rather than an offset, and its second argument defaults to <code>null</code>, so
@@ -423,29 +423,29 @@ if (</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span>
 insert, and <code>delete()</code> given a criteria array does a bulk delete:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$users </span><span class="text-kw">= new </span><span class="text-var">Users</span><span class="text-kw">();
+<pre><code><span class="text-var">$users</span> = <span class="text-kw">new</span> <span class="text-type">Users</span>();
 
-</span><span class="text-var">$users</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">([
-    [</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;u1&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;u1@test.com&#039;</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;u2&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;u2@test.com&#039;</span><span class="text-kw">],
+<span class="text-var">$users</span>-&gt;<span class="text-fn">save</span>([
+    [<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;u1&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;u1@test.com&#039;</span>],
+    [<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;u2&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;u2@test.com&#039;</span>],
 ]);
 
-</span><span class="text-var">$users</span><span class="text-kw">-&gt;</span><span class="text-var">delete</span><span class="text-kw">([</span><span class="text-str">&#039;status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;archived&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$users</span>-&gt;<span class="text-fn">delete</span>([<span class="text-str">&#039;status&#039;</span> =&gt; <span class="text-str">&#039;archived&#039;</span>]);
+</code></pre>
 </div>
 
 <p>Neither builds a record object at any point. When even those are not enough, <code>query()</code> runs raw SQL and
 <code>execute()</code> runs a prepared statement, both against the table class's own connection:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$rows </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">query</span><span class="text-kw">(</span><span class="text-str">&#039;SELECT * FROM users&#039;</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
+<pre><code><span class="text-var">$rows</span> = <span class="text-type">Users</span>::<span class="text-fn">query</span>(<span class="text-str">&#039;SELECT * FROM users&#039;</span>, <span class="text-num">true</span>);
 
-</span><span class="text-var">$rows </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">execute</span><span class="text-kw">(
-    </span><span class="text-str">&#039;SELECT * FROM users WHERE username = :username&#039;</span><span class="text-kw">,
-    [</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">],
-    </span><span class="text-var">true
-</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$rows</span> = <span class="text-type">Users</span>::<span class="text-fn">execute</span>(
+    <span class="text-str">&#039;SELECT * FROM users WHERE username = :username&#039;</span>,
+    [<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>],
+    <span class="text-num">true</span>
+);
+</code></pre>
 </div>
 
 <p>A table class can hook the write path. Override any of <code>beforeSave()</code>, <code>afterSave()</code>, <code>beforeInsert()</code>,
@@ -453,22 +453,22 @@ insert, and <code>delete()</code> given a criteria array does a bulk delete:</p>
 method — they are empty by default, so declaring none changes nothing.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Users.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Table</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">Users</span> <span class="text-kw">extends</span> <span class="text-type">Record</span>
+{
 
-class </span><span class="text-var">Users </span><span class="text-kw">extends </span><span class="text-var">Record
-</span><span class="text-kw">{
-
-    protected function </span><span class="text-var">beforeSave</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">updated_at </span><span class="text-kw">= </span><span class="text-var">date</span><span class="text-kw">(</span><span class="text-str">&#039;Y-m-d H:i:s&#039;</span><span class="text-kw">);
+    <span class="text-kw">protected</span> <span class="text-kw">function</span> <span class="text-fn">beforeSave</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-type">updated_at</span> = <span class="text-fn">date</span>(<span class="text-str">&#039;Y-m-d H:i:s&#039;</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>On <code>save()</code> the order is <code>beforeSave()</code>, then <code>beforeInsert()</code> or <code>beforeUpdate()</code>, then the statement,
@@ -482,15 +482,15 @@ the exception propagates to the caller.</p>
 a range, a <code>LIKE</code>, a set — is written as a two-or-more element array whose first element is the operator.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([
-    </span><span class="text-str">&#039;age&#039;        </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;&gt;=&#039;</span><span class="text-kw">, </span><span class="text-var">18</span><span class="text-kw">],
-    </span><span class="text-str">&#039;status&#039;     </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;!=&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;inactive&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;username&#039;   </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;LIKE&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;%smith%&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;created_at&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;BETWEEN&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;2024-01-01&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;2024-12-31&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;role&#039;       </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;IN&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">]],
-    </span><span class="text-str">&#039;deleted_at&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;IS NULL&#039;</span><span class="text-kw">],
+<pre><code><span class="text-var">$users</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([
+    <span class="text-str">&#039;age&#039;</span>        =&gt; [<span class="text-str">&#039;&gt;=&#039;</span>, <span class="text-num">18</span>],
+    <span class="text-str">&#039;status&#039;</span>     =&gt; [<span class="text-str">&#039;!=&#039;</span>, <span class="text-str">&#039;inactive&#039;</span>],
+    <span class="text-str">&#039;username&#039;</span>   =&gt; [<span class="text-str">&#039;LIKE&#039;</span>, <span class="text-str">&#039;%smith%&#039;</span>],
+    <span class="text-str">&#039;created_at&#039;</span> =&gt; [<span class="text-str">&#039;BETWEEN&#039;</span>, <span class="text-str">&#039;2024-01-01&#039;</span>, <span class="text-str">&#039;2024-12-31&#039;</span>],
+    <span class="text-str">&#039;role&#039;</span>       =&gt; [<span class="text-str">&#039;IN&#039;</span>, [<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;editor&#039;</span>]],
+    <span class="text-str">&#039;deleted_at&#039;</span> =&gt; [<span class="text-str">&#039;IS NULL&#039;</span>],
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <table>
@@ -551,15 +551,15 @@ a range, a <code>LIKE</code>, a set — is written as a two-or-more element arra
 grouped predicate without the query builder:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findBy</span><span class="text-kw">([
-    </span><span class="text-str">&#039;status&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;active&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;OR&#039; </span><span class="text-kw">=&gt; [
-        [</span><span class="text-str">&#039;logins&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;&gt;=&#039;</span><span class="text-kw">, </span><span class="text-var">9</span><span class="text-kw">]],
-        [</span><span class="text-str">&#039;age&#039;    </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;&gt;=&#039;</span><span class="text-kw">, </span><span class="text-var">65</span><span class="text-kw">]],
+<pre><code><span class="text-var">$users</span> = <span class="text-type">Users</span>::<span class="text-fn">findBy</span>([
+    <span class="text-str">&#039;status&#039;</span> =&gt; <span class="text-str">&#039;active&#039;</span>,
+    <span class="text-str">&#039;OR&#039;</span> =&gt; [
+        [<span class="text-str">&#039;logins&#039;</span> =&gt; [<span class="text-str">&#039;&gt;=&#039;</span>, <span class="text-num">9</span>]],
+        [<span class="text-str">&#039;age&#039;</span>    =&gt; [<span class="text-str">&#039;&gt;=&#039;</span>, <span class="text-num">65</span>]],
     ],
 ]);
-</span><span class="text-comment">// WHERE status = &#039;active&#039; AND (logins &gt;= 9 OR age &gt;= 65)
-</span></code></pre>
+<span class="text-comment">// WHERE status = &#039;active&#039; AND (logins &gt;= 9 OR age &gt;= 65)</span>
+</code></pre>
 </div>
 
 <p>Each operator knows its own arity, and a mismatch throws a <code>Pop\Db\Sql\Parser\Exception</code> at build time
@@ -570,11 +570,11 @@ empty <code>IN</code> list is what an unfiltered user-supplied array degrades in
 arguments. It builds structured shorthand internally, so nothing about it is deprecated.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$adults    </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findWhereGreaterThanOrEqual</span><span class="text-kw">(</span><span class="text-str">&#039;age&#039;</span><span class="text-kw">, </span><span class="text-var">18</span><span class="text-kw">);
-</span><span class="text-var">$editors   </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findWhereIn</span><span class="text-kw">(</span><span class="text-str">&#039;role&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;admin&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$pending   </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findWhereNull</span><span class="text-kw">(</span><span class="text-str">&#039;confirmed_at&#039;</span><span class="text-kw">);
-</span><span class="text-var">$smiths    </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">findWhereLike</span><span class="text-kw">(</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;%smith%&#039;</span><span class="text-kw">);
-</span></code></pre>
+<pre><code><span class="text-var">$adults</span>    = <span class="text-type">Users</span>::<span class="text-fn">findWhereGreaterThanOrEqual</span>(<span class="text-str">&#039;age&#039;</span>, <span class="text-num">18</span>);
+<span class="text-var">$editors</span>   = <span class="text-type">Users</span>::<span class="text-fn">findWhereIn</span>(<span class="text-str">&#039;role&#039;</span>, [<span class="text-str">&#039;admin&#039;</span>, <span class="text-str">&#039;editor&#039;</span>]);
+<span class="text-var">$pending</span>   = <span class="text-type">Users</span>::<span class="text-fn">findWhereNull</span>(<span class="text-str">&#039;confirmed_at&#039;</span>);
+<span class="text-var">$smiths</span>    = <span class="text-type">Users</span>::<span class="text-fn">findWhereLike</span>(<span class="text-str">&#039;username&#039;</span>, <span class="text-str">&#039;%smith%&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>findWhereEquals()</code>, <code>findWhereNotEquals()</code>, <code>findWhereGreaterThan()</code>, <code>findWhereLessThan()</code>,
@@ -593,19 +593,19 @@ knowing about <code>findBy()</code> or the shape of <code>$options</code>. It's 
 <code>App\Table\Users</code>. Nothing else wires them together.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Model/User.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Model</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Model</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Model\AbstractDataModel</span>;
 
-use </span><span class="text-var">Pop\Db\Model\AbstractDataModel</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">User</span> <span class="text-kw">extends</span> <span class="text-type">AbstractDataModel</span>
+{
 
-class </span><span class="text-var">User </span><span class="text-kw">extends </span><span class="text-var">AbstractDataModel
-</span><span class="text-kw">{
-
-    protected array </span><span class="text-var">$requirements </span><span class="text-kw">= [</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039;</span><span class="text-kw">];
+    <span class="text-kw">protected</span> <span class="text-kw">array</span> <span class="text-var">$requirements</span> = [<span class="text-str">&#039;username&#039;</span>, <span class="text-str">&#039;email&#039;</span>];
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>$requirements</code> lists the columns that must be present. <code>create()</code> and <code>replace()</code> check <code>$data</code> against
@@ -613,36 +613,36 @@ it before writing, and a missing column comes back as an errors array instead of
 is a return value, not an exception the controller has to catch.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Model\User</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Model\User</span>;
 
-</span><span class="text-var">$user </span><span class="text-kw">= </span><span class="text-var">User</span><span class="text-kw">::</span><span class="text-var">createNew</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]);
+<span class="text-var">$user</span> = <span class="text-type">User</span>::<span class="text-fn">createNew</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]);
 
-if (isset(</span><span class="text-var">$user</span><span class="text-kw">[</span><span class="text-str">&#039;errors&#039;</span><span class="text-kw">])) {
-    </span><span class="text-comment">// [&#039;errors&#039; =&gt; [&#039;email&#039; =&gt; &quot;The column &#039;email&#039; is required.&quot;]]
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">if</span> (<span class="text-kw">isset</span>(<span class="text-var">$user</span>[<span class="text-str">&#039;errors&#039;</span>])) {
+    <span class="text-comment">// [&#039;errors&#039; =&gt; [&#039;email&#039; =&gt; &quot;The column &#039;email&#039; is required.&quot;]]</span>
+}
+</code></pre>
 </div>
 
 <p>The static entry points cover the common reads and the create; the instance methods cover everything that
 takes an id.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">User</span><span class="text-kw">::</span><span class="text-var">fetchAll</span><span class="text-kw">();
-</span><span class="text-var">$user  </span><span class="text-kw">= </span><span class="text-var">User</span><span class="text-kw">::</span><span class="text-var">fetch</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
+<pre><code><span class="text-var">$users</span> = <span class="text-type">User</span>::<span class="text-fn">fetchAll</span>();
+<span class="text-var">$user</span>  = <span class="text-type">User</span>::<span class="text-fn">fetch</span>(<span class="text-num">1</span>);
 
-</span><span class="text-var">$model </span><span class="text-kw">= new </span><span class="text-var">User</span><span class="text-kw">();
+<span class="text-var">$model</span> = <span class="text-kw">new</span> <span class="text-type">User</span>();
 
-</span><span class="text-var">$user  </span><span class="text-kw">= </span><span class="text-var">$model</span><span class="text-kw">-&gt;</span><span class="text-var">getById</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
-</span><span class="text-var">$user  </span><span class="text-kw">= </span><span class="text-var">$model</span><span class="text-kw">-&gt;</span><span class="text-var">getOne</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$user  </span><span class="text-kw">= </span><span class="text-var">$model</span><span class="text-kw">-&gt;</span><span class="text-var">update</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">, [</span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;new@test.com&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$user  </span><span class="text-kw">= </span><span class="text-var">$model</span><span class="text-kw">-&gt;</span><span class="text-var">replace</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">, [</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;new@test.com&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$user  </span><span class="text-kw">= </span><span class="text-var">$model</span><span class="text-kw">-&gt;</span><span class="text-var">copy</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">, [</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser-copy&#039;</span><span class="text-kw">]);
+<span class="text-var">$user</span>  = <span class="text-var">$model</span>-&gt;<span class="text-fn">getById</span>(<span class="text-num">1</span>);
+<span class="text-var">$user</span>  = <span class="text-var">$model</span>-&gt;<span class="text-fn">getOne</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>]);
+<span class="text-var">$user</span>  = <span class="text-var">$model</span>-&gt;<span class="text-fn">update</span>(<span class="text-num">1</span>, [<span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;new@test.com&#039;</span>]);
+<span class="text-var">$user</span>  = <span class="text-var">$model</span>-&gt;<span class="text-fn">replace</span>(<span class="text-num">1</span>, [<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;new@test.com&#039;</span>]);
+<span class="text-var">$user</span>  = <span class="text-var">$model</span>-&gt;<span class="text-fn">copy</span>(<span class="text-num">1</span>, [<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser-copy&#039;</span>]);
 
-</span><span class="text-var">$model</span><span class="text-kw">-&gt;</span><span class="text-var">delete</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
-</span><span class="text-var">$model</span><span class="text-kw">-&gt;</span><span class="text-var">remove</span><span class="text-kw">([</span><span class="text-var">2</span><span class="text-kw">, </span><span class="text-var">3</span><span class="text-kw">, </span><span class="text-var">4</span><span class="text-kw">]);
+<span class="text-var">$model</span>-&gt;<span class="text-fn">delete</span>(<span class="text-num">1</span>);
+<span class="text-var">$model</span>-&gt;<span class="text-fn">remove</span>([<span class="text-num">2</span>, <span class="text-num">3</span>, <span class="text-num">4</span>]);
 
-echo </span><span class="text-var">$model</span><span class="text-kw">-&gt;</span><span class="text-var">count</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$model</span>-&gt;<span class="text-fn">count</span>();
+</code></pre>
 </div>
 
 <p><code>update()</code> is a <code>PATCH</code> and <code>replace()</code> is a <code>PUT</code>: the first merges the given columns into the existing
@@ -651,17 +651,17 @@ now stands. <code>delete()</code> and <code>remove()</code> return the number of
 <p>Every read takes a <code>$toArray</code> flag as its last argument, which is what a JSON controller passes:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$rows </span><span class="text-kw">= </span><span class="text-var">User</span><span class="text-kw">::</span><span class="text-var">fetchAll</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
-</span><span class="text-var">$row  </span><span class="text-kw">= </span><span class="text-var">User</span><span class="text-kw">::</span><span class="text-var">fetch</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">);
-</span></code></pre>
+<pre><code><span class="text-var">$rows</span> = <span class="text-type">User</span>::<span class="text-fn">fetchAll</span>(<span class="text-num">null</span>, <span class="text-num">null</span>, <span class="text-num">null</span>, <span class="text-num">true</span>);
+<span class="text-var">$row</span>  = <span class="text-type">User</span>::<span class="text-fn">fetch</span>(<span class="text-num">1</span>, <span class="text-num">true</span>);
+</code></pre>
 </div>
 
 <p><code>fetchAll()</code> and <code>getAll()</code> also take sorting and pagination directly, and <code>filterBy()</code> puts a <code>WHERE</code> in
 front of them. A <code>-</code> prefix on the sort column means descending.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$users </span><span class="text-kw">= </span><span class="text-var">User</span><span class="text-kw">::</span><span class="text-var">filterBy</span><span class="text-kw">(</span><span class="text-str">&#039;username LIKE myuser%&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">getAll</span><span class="text-kw">(</span><span class="text-str">&#039;-id&#039;</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">);
-</span></code></pre>
+<pre><code><span class="text-var">$users</span> = <span class="text-type">User</span>::<span class="text-fn">filterBy</span>(<span class="text-str">&#039;username LIKE myuser%&#039;</span>)-&gt;<span class="text-fn">getAll</span>(<span class="text-str">&#039;-id&#039;</span>, <span class="text-num">10</span>, <span class="text-num">2</span>);
+</code></pre>
 </div>
 
 <p>That reads page 2 of a 10-row page size, ordered by <code>id DESC</code>. <code>filterBy()</code> takes SQL-expression strings
@@ -674,37 +674,37 @@ converts internally.</p>
 itself on success and rolls itself back on any exception — including one thrown from a lifecycle hook.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$user </span><span class="text-kw">= new </span><span class="text-var">Users</span><span class="text-kw">([
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;email&#039;    </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;
-</span><span class="text-kw">]);
+<pre><code><span class="text-var">$user</span> = <span class="text-kw">new</span> <span class="text-type">Users</span>([
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>,
+    <span class="text-str">&#039;email&#039;</span>    =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>
+]);
 
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">startTransaction</span><span class="text-kw">();
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$user</span>-&gt;<span class="text-fn">startTransaction</span>();
+<span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <p><code>Users::start()</code> is the constructor and <code>startTransaction()</code> in one call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$user </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">start</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">();
-</span></code></pre>
+<pre><code><span class="text-var">$user</span> = <span class="text-type">Users</span>::<span class="text-fn">start</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]);
+<span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>();
+</code></pre>
 </div>
 
 <p>That auto-commit is what <code>save()</code>'s second argument controls. Pass <code>false</code> and the transaction stays open,
 which is what you want when several writes belong to one unit of work.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$user </span><span class="text-kw">= </span><span class="text-var">Users</span><span class="text-kw">::</span><span class="text-var">start</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]);
+<pre><code><span class="text-var">$user</span> = <span class="text-type">Users</span>::<span class="text-fn">start</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]);
 
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
 
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">logins </span><span class="text-kw">= </span><span class="text-var">1</span><span class="text-kw">;
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-var">$user</span>-&gt;<span class="text-type">logins</span> = <span class="text-num">1</span>;
+<span class="text-var">$user</span>-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
 
-</span><span class="text-var">$user</span><span class="text-kw">-&gt;</span><span class="text-var">commitTransaction</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$user</span>-&gt;<span class="text-fn">commitTransaction</span>();
+</code></pre>
 </div>
 
 <p>Watch for the helpers here: <code>increment()</code>, <code>decrement()</code>, <code>reset()</code> and <code>copy()</code> call <code>save()</code> with the
@@ -714,63 +714,63 @@ default <code>$commit</code>, so any one of them closes an open per-record trans
 class resolving to that connection is inside it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
-use </span><span class="text-var">App\Table\Roles</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
+<span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+<span class="text-kw">use</span> <span class="text-type">App\Table\Roles</span>;
 
-try {
-    </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">start</span><span class="text-kw">();
+<span class="text-kw">try</span> {
+    <span class="text-type">Record</span>::<span class="text-fn">start</span>();
 
-    (new </span><span class="text-var">Users</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
-    (new </span><span class="text-var">Roles</span><span class="text-kw">([</span><span class="text-str">&#039;role&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Admin&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+    (<span class="text-kw">new</span> <span class="text-type">Users</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]))-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
+    (<span class="text-kw">new</span> <span class="text-type">Roles</span>([<span class="text-str">&#039;role&#039;</span> =&gt; <span class="text-str">&#039;Admin&#039;</span>]))-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
 
-    </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">commit</span><span class="text-kw">();
-} catch (</span><span class="text-var">\Exception $e</span><span class="text-kw">) {
-    </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">rollback</span><span class="text-kw">();
-    echo </span><span class="text-var">$e</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">();
+    <span class="text-type">Record</span>::<span class="text-fn">commit</span>();
+} <span class="text-kw">catch</span> (<span class="text-type">\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-type">Record</span>::<span class="text-fn">rollback</span>();
+    <span class="text-kw">echo</span> <span class="text-var">$e</span>-&gt;<span class="text-fn">getMessage</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Record::transaction()</code> is the same thing with the <code>try</code>/<code>catch</code> folded in. It commits when the callable
 returns, rolls back and rethrows when it throws.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
 
-try {
-    </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">transaction</span><span class="text-kw">(function () {
-        (new </span><span class="text-var">Users</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
-        (new </span><span class="text-var">Roles</span><span class="text-kw">([</span><span class="text-str">&#039;role&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Admin&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-kw">try</span> {
+    <span class="text-type">Record</span>::<span class="text-fn">transaction</span>(<span class="text-kw">function</span> () {
+        (<span class="text-kw">new</span> <span class="text-type">Users</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]))-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
+        (<span class="text-kw">new</span> <span class="text-type">Roles</span>([<span class="text-str">&#039;role&#039;</span> =&gt; <span class="text-str">&#039;Admin&#039;</span>]))-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
     });
-} catch (</span><span class="text-var">\Exception $e</span><span class="text-kw">) {
-    echo </span><span class="text-var">$e</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">();
+} <span class="text-kw">catch</span> (<span class="text-type">\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$e</span>-&gt;<span class="text-fn">getMessage</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The adapter issues a <code>SAVEPOINT</code> for every nested <code>begin</code>, on <code>MySQL</code>, <code>PostgreSQL</code>, <code>SQLite</code> and <code>PDO</code>
 alike. A rollback at depth 1 is a real <code>ROLLBACK</code>; deeper, it rolls back to that depth's savepoint.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
+<span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">transaction</span><span class="text-kw">(function () {
-    (new </span><span class="text-var">Users</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;outer&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;outer@test.com&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-type">Record</span>::<span class="text-fn">transaction</span>(<span class="text-kw">function</span> () {
+    (<span class="text-kw">new</span> <span class="text-type">Users</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;outer&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;outer@test.com&#039;</span>]))-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
 
-    try {
-        </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">transaction</span><span class="text-kw">(function () {
-            (new </span><span class="text-var">Users</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;inner&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;inner@test.com&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
-            throw new </span><span class="text-var">\RuntimeException</span><span class="text-kw">(</span><span class="text-str">&#039;inner failed&#039;</span><span class="text-kw">);
+    <span class="text-kw">try</span> {
+        <span class="text-type">Record</span>::<span class="text-fn">transaction</span>(<span class="text-kw">function</span> () {
+            (<span class="text-kw">new</span> <span class="text-type">Users</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;inner&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;inner@test.com&#039;</span>]))-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
+            <span class="text-kw">throw</span> <span class="text-kw">new</span> <span class="text-type">\RuntimeException</span>(<span class="text-str">&#039;inner failed&#039;</span>);
         });
-    } catch (</span><span class="text-var">\RuntimeException $e</span><span class="text-kw">) {
-        </span><span class="text-comment">// the inner row is gone; the outer transaction is still open
-    </span><span class="text-kw">}
+    } <span class="text-kw">catch</span> (<span class="text-type">\RuntimeException</span> <span class="text-var">$e</span>) {
+        <span class="text-comment">// the inner row is gone; the outer transaction is still open</span>
+    }
 
-    (new </span><span class="text-var">Users</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;outer2&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;outer2@test.com&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+    (<span class="text-kw">new</span> <span class="text-type">Users</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;outer2&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;outer2@test.com&#039;</span>]))-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>outer</code> and <code>outer2</code> commit; <code>inner</code> rolls back to the savepoint. Catch the inner failure where it happens —
@@ -780,15 +780,15 @@ without that inner <code>try</code>/<code>catch</code> it reaches the outer tran
 rather than the record classes to be the unit of control.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-use </span><span class="text-var">App\Table\Users</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
+<span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
 
-</span><span class="text-var">$db </span><span class="text-kw">= </span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">();
+<span class="text-var">$db</span> = <span class="text-type">Record</span>::<span class="text-fn">getDb</span>();
 
-</span><span class="text-var">$db</span><span class="text-kw">-&gt;</span><span class="text-var">transaction</span><span class="text-kw">(function () {
-    (new </span><span class="text-var">Users</span><span class="text-kw">([</span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;email&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser@test.com&#039;</span><span class="text-kw">]))-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">false</span><span class="text-kw">);
+<span class="text-var">$db</span>-&gt;<span class="text-fn">transaction</span>(<span class="text-kw">function</span> () {
+    (<span class="text-kw">new</span> <span class="text-type">Users</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>, <span class="text-str">&#039;email&#039;</span> =&gt; <span class="text-str">&#039;testuser@test.com&#039;</span>]))-&gt;<span class="text-fn">save</span>(<span class="text-num">null</span>, <span class="text-num">false</span>);
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <h2 id="see-also">See Also<a class="anchor" href="#see-also" aria-label="Link to this section">#</a></h2>

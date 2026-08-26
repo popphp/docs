@@ -26,7 +26,7 @@
     <button type="button" @click="open = !open" :aria-expanded="open.toString()"
             class="flex w-full items-center gap-1.5 py-1 text-left">
         <svg class="transition-transform duration-150" :class="open ? 'rotate-90' : ''" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
-        <span class="eyebrow text-[10.5px]"><?=$attr($navSection) ?></span>
+        <span class="nav-section"><?=$attr($navSection) ?></span>
     </button>
     <div x-show="open" x-cloak class="mt-1.5 flex flex-col gap-px">
 <?php foreach ($navPages as $navPage): ?>

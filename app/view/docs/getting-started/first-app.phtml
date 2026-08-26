@@ -68,40 +68,40 @@ welcome page already. The rest of this page adds one route to it.</p>
 one entry to the existing <code>get</code> group:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;get&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;/api[/]&#039; </span><span class="text-kw">=&gt; [
-                </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Hello\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-            </span><span class="text-kw">],
-            </span><span class="text-str">&#039;[/]&#039; </span><span class="text-kw">=&gt; [
-                </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Hello\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-            </span><span class="text-kw">],
-            </span><span class="text-str">&#039;/greet/:name&#039; </span><span class="text-kw">=&gt; [
-                </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Hello\Http\Controller\GreetController&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-            </span><span class="text-kw">],
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;get&#039;</span> =&gt; [
+            <span class="text-str">&#039;/api[/]&#039;</span> =&gt; [
+                <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;Hello\Http\Controller\IndexController&#039;</span>,
+                <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+            ],
+            <span class="text-str">&#039;[/]&#039;</span> =&gt; [
+                <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;Hello\Http\Controller\IndexController&#039;</span>,
+                <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+            ],
+            <span class="text-str">&#039;/greet/:name&#039;</span> =&gt; [
+                <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;Hello\Http\Controller\GreetController&#039;</span>,
+                <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+            ],
         ],
-        </span><span class="text-str">&#039;*&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;*&#039;    </span><span class="text-kw">=&gt; [
-                </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Hello\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-                </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;error&#039;
-            </span><span class="text-kw">]
+        <span class="text-str">&#039;*&#039;</span> =&gt; [
+            <span class="text-str">&#039;*&#039;</span>    =&gt; [
+                <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;Hello\Http\Controller\IndexController&#039;</span>,
+                <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;error&#039;</span>
+            ]
         ]
     ],
 
-    </span><span class="text-str">&#039;http_options_headers&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;Access-Control-Allow-Origin&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;*&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;Access-Control-Allow-Headers&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Accept, Authorization, Content-Type&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;Access-Control-Allow-Methods&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;HEAD, OPTIONS, GET, PUT, POST, PATCH, DELETE&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;Content-Type&#039;                 </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;application/json&#039;
-    </span><span class="text-kw">]
+    <span class="text-str">&#039;http_options_headers&#039;</span> =&gt; [
+        <span class="text-str">&#039;Access-Control-Allow-Origin&#039;</span>  =&gt; <span class="text-str">&#039;*&#039;</span>,
+        <span class="text-str">&#039;Access-Control-Allow-Headers&#039;</span> =&gt; <span class="text-str">&#039;Accept, Authorization, Content-Type&#039;</span>,
+        <span class="text-str">&#039;Access-Control-Allow-Methods&#039;</span> =&gt; <span class="text-str">&#039;HEAD, OPTIONS, GET, PUT, POST, PATCH, DELETE&#039;</span>,
+        <span class="text-str">&#039;Content-Type&#039;</span>                 =&gt; <span class="text-str">&#039;application/json&#039;</span>
+    ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>:name</code> is a required parameter — the router captures that segment and passes it into the action
@@ -123,23 +123,23 @@ arrives for that path, so the order of the next two steps is up to you.</p>
 <code>Hello\Http\Controller\AbstractController</code>. Fill in the action the route names:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Controller/GreetController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">Hello\Http\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">Hello\Http\Controller</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">GreetController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">GreetController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">index</span><span class="text-kw">(</span><span class="text-var">string $name</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">prepareView</span><span class="text-kw">(</span><span class="text-str">&#039;greet.phtml&#039;</span><span class="text-kw">);
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">view</span><span class="text-kw">-&gt;</span><span class="text-var">title </span><span class="text-kw">= </span><span class="text-str">&#039;Hello&#039;</span><span class="text-kw">;
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">view</span><span class="text-kw">-&gt;</span><span class="text-var">name  </span><span class="text-kw">= </span><span class="text-var">ucfirst</span><span class="text-kw">(</span><span class="text-var">$name</span><span class="text-kw">);
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">index</span>(<span class="text-type">string</span> <span class="text-var">$name</span>): <span class="text-type">void</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">prepareView</span>(<span class="text-str">&#039;greet.phtml&#039;</span>);
+        <span class="text-var">$this</span>-&gt;<span class="text-type">view</span>-&gt;<span class="text-type">title</span> = <span class="text-str">&#039;Hello&#039;</span>;
+        <span class="text-var">$this</span>-&gt;<span class="text-type">view</span>-&gt;<span class="text-type">name</span>  = <span class="text-fn">ucfirst</span>(<span class="text-var">$name</span>);
+        <span class="text-var">$this</span>-&gt;<span class="text-fn">send</span>();
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Four lines, and three of them come from the parent class rather than from the framework. <code>pop:init</code> wrote
@@ -163,10 +163,10 @@ argument, and it's always a string — <code>/greet/world</code> calls <code>ind
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
     &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;<span class="text-var">&lt;?=$title</span><span class="text-kw">; </span><span class="text-var">?&gt;</span>&lt;/title&gt;
+    &lt;title&gt;<span class="text-kw">&lt;?=</span><span class="text-var">$title</span>; <span class="text-kw">?&gt;</span>&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;Hello, <span class="text-var">&lt;?=$name</span><span class="text-kw">; </span><span class="text-var">?&gt;</span>!&lt;/h1&gt;
+    &lt;h1&gt;Hello, <span class="text-kw">&lt;?=</span><span class="text-var">$name</span>; <span class="text-kw">?&gt;</span>!&lt;/h1&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>

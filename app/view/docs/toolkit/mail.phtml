@@ -20,37 +20,37 @@ laptop and production.</p>
 puts the two together.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Sendmail</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Sendmail</span>;
 
-</span><span class="text-var">$message </span><span class="text-kw">= new </span><span class="text-var">Message</span><span class="text-kw">(</span><span class="text-str">&#039;My Message Subject&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setTo</span><span class="text-kw">(</span><span class="text-str">&#039;you@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setFrom</span><span class="text-kw">(</span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World! This is a text body!&#039;</span><span class="text-kw">);
+<span class="text-var">$message</span> = <span class="text-kw">new</span> <span class="text-type">Message</span>(<span class="text-str">&#039;My Message Subject&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setTo</span>(<span class="text-str">&#039;you@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setFrom</span>(<span class="text-str">&#039;me@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;Hello World! This is a text body!&#039;</span>);
 
-</span><span class="text-var">$mailer </span><span class="text-kw">= new </span><span class="text-var">Mailer</span><span class="text-kw">(new </span><span class="text-var">Sendmail</span><span class="text-kw">());
-</span><span class="text-var">$mailer</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">$message</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$mailer</span> = <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-kw">new</span> <span class="text-type">Sendmail</span>());
+<span class="text-var">$mailer</span>-&gt;<span class="text-fn">send</span>(<span class="text-var">$message</span>);
+</code></pre>
 </div>
 
 <p>The subject goes in the constructor. Everything else is a setter, and every address field takes three shapes: a
 plain string, an <code>email =&gt; name</code> array for a display name, or an array of several addresses.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
 
-</span><span class="text-var">$message </span><span class="text-kw">= new </span><span class="text-var">Message</span><span class="text-kw">(</span><span class="text-str">&#039;My Message Subject&#039;</span><span class="text-kw">);
+<span class="text-var">$message</span> = <span class="text-kw">new</span> <span class="text-type">Message</span>(<span class="text-str">&#039;My Message Subject&#039;</span>);
 
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setTo</span><span class="text-kw">([</span><span class="text-str">&#039;you@domain.com&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Recipient Name&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setCc</span><span class="text-kw">(</span><span class="text-str">&#039;cc@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setBcc</span><span class="text-kw">([</span><span class="text-str">&#039;bcc1@domain.com&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;bcc2@domain.com&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setFrom</span><span class="text-kw">([</span><span class="text-str">&#039;me@domain.com&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;My Name&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setReplyTo</span><span class="text-kw">(</span><span class="text-str">&#039;replies@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setSender</span><span class="text-kw">(</span><span class="text-str">&#039;sender@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setReturnPath</span><span class="text-kw">(</span><span class="text-str">&#039;bounces@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World! This is a text body!&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setTo</span>([<span class="text-str">&#039;you@domain.com&#039;</span> =&gt; <span class="text-str">&#039;Recipient Name&#039;</span>]);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setCc</span>(<span class="text-str">&#039;cc@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setBcc</span>([<span class="text-str">&#039;bcc1@domain.com&#039;</span>, <span class="text-str">&#039;bcc2@domain.com&#039;</span>]);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setFrom</span>([<span class="text-str">&#039;me@domain.com&#039;</span> =&gt; <span class="text-str">&#039;My Name&#039;</span>]);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setReplyTo</span>(<span class="text-str">&#039;replies@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setSender</span>(<span class="text-str">&#039;sender@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setReturnPath</span>(<span class="text-str">&#039;bounces@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;Hello World! This is a text body!&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>To</code>, <code>CC</code>, <code>BCC</code>, <code>From</code>, <code>Reply-To</code>, <code>Sender</code> and <code>Return-Path</code> are all there. A name given as an array key
@@ -59,26 +59,26 @@ renders as <code>Recipient Name &lt;you@domain.com&gt;</code>; a bare string ren
 own — which keeps a no-reply address in one place instead of on every message:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Sendmail</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Sendmail</span>;
 
-</span><span class="text-var">$mailer </span><span class="text-kw">= new </span><span class="text-var">Mailer</span><span class="text-kw">(new </span><span class="text-var">Sendmail</span><span class="text-kw">(), </span><span class="text-str">&#039;noreply@domain.com&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$mailer</span> = <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-kw">new</span> <span class="text-type">Sendmail</span>(), <span class="text-str">&#039;noreply@domain.com&#039;</span>);
+</code></pre>
 </div>
 
 <p>Before anything is sent, <code>render()</code> returns the complete MIME message as a string. It's the fastest way to see
 what a recipient will actually receive, and it's worth reading once:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
 
-</span><span class="text-var">$message </span><span class="text-kw">= new </span><span class="text-var">Message</span><span class="text-kw">(</span><span class="text-str">&#039;My Message Subject&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setTo</span><span class="text-kw">(</span><span class="text-str">&#039;you@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setFrom</span><span class="text-kw">(</span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World! This is a text body!&#039;</span><span class="text-kw">);
+<span class="text-var">$message</span> = <span class="text-kw">new</span> <span class="text-type">Message</span>(<span class="text-str">&#039;My Message Subject&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setTo</span>(<span class="text-str">&#039;you@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setFrom</span>(<span class="text-str">&#039;me@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;Hello World! This is a text body!&#039;</span>);
 
-echo </span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">render</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$message</span>-&gt;<span class="text-fn">render</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -108,14 +108,14 @@ otherwise identical messages is that one.</p>
 screen reader or a plain-text client falls back to.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
 
-</span><span class="text-var">$message </span><span class="text-kw">= new </span><span class="text-var">Message</span><span class="text-kw">(</span><span class="text-str">&#039;My Message Subject&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setTo</span><span class="text-kw">(</span><span class="text-str">&#039;you@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setFrom</span><span class="text-kw">(</span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World! This is a text body!&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">addHtml</span><span class="text-kw">(</span><span class="text-str">&#039;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;p&gt;This is an HTML body!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$message</span> = <span class="text-kw">new</span> <span class="text-type">Message</span>(<span class="text-str">&#039;My Message Subject&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setTo</span>(<span class="text-str">&#039;you@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setFrom</span>(<span class="text-str">&#039;me@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">addText</span>(<span class="text-str">&#039;Hello World! This is a text body!&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">addHtml</span>(<span class="text-str">&#039;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;p&gt;This is an HTML body!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&#039;</span>);
+</code></pre>
 </div>
 
 <p>Adding both switches the rendered <code>Content-Type</code> from <code>multipart/mixed</code> to <code>multipart/alternative</code>, which is
@@ -124,14 +124,14 @@ HTML part and some clients show nothing at all — write both.</p>
 <p><code>attachFile()</code> attaches a file from disk:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
 
-</span><span class="text-var">$message </span><span class="text-kw">= new </span><span class="text-var">Message</span><span class="text-kw">(</span><span class="text-str">&#039;Monthly report&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setTo</span><span class="text-kw">(</span><span class="text-str">&#039;you@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setFrom</span><span class="text-kw">(</span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;See attached.&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">attachFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/report.csv&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$message</span> = <span class="text-kw">new</span> <span class="text-type">Message</span>(<span class="text-str">&#039;Monthly report&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setTo</span>(<span class="text-str">&#039;you@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setFrom</span>(<span class="text-str">&#039;me@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;See attached.&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">attachFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/report.csv&#039;</span>);
+</code></pre>
 </div>
 
 <p>The filename in the message is the file's own basename, and the content type is worked out from its extension —
@@ -140,14 +140,14 @@ HTML part and some clients show nothing at all — write both.</p>
 takes the contents and the name to give them:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
 
-</span><span class="text-var">$message </span><span class="text-kw">= new </span><span class="text-var">Message</span><span class="text-kw">(</span><span class="text-str">&#039;Your invoice&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setTo</span><span class="text-kw">(</span><span class="text-str">&#039;you@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setFrom</span><span class="text-kw">(</span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;Your invoice is attached.&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">attachFileFromStream</span><span class="text-kw">(</span><span class="text-var">$pdfContents</span><span class="text-kw">, </span><span class="text-str">&#039;invoice.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$message</span> = <span class="text-kw">new</span> <span class="text-type">Message</span>(<span class="text-str">&#039;Your invoice&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setTo</span>(<span class="text-str">&#039;you@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setFrom</span>(<span class="text-str">&#039;me@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;Your invoice is attached.&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">attachFileFromStream</span>(<span class="text-var">$pdfContents</span>, <span class="text-str">&#039;invoice.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p>The extension on that second argument is what picks the content type, exactly as the real filename does for
@@ -210,14 +210,14 @@ for anything large.</p>
 <p>The four API transports take their options as an array to the constructor:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Mailgun</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Mailgun</span>;
 
-</span><span class="text-var">$mailer </span><span class="text-kw">= new </span><span class="text-var">Mailer</span><span class="text-kw">(new </span><span class="text-var">Mailgun</span><span class="text-kw">([
-    </span><span class="text-str">&#039;api_url&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;https://api.mailgun.net/v3/YOUR_MAIL_DOMAIN/messages&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;api_key&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;MAILGUN_API_KEY&#039;</span><span class="text-kw">,
+<span class="text-var">$mailer</span> = <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-kw">new</span> <span class="text-type">Mailgun</span>([
+    <span class="text-str">&#039;api_url&#039;</span> =&gt; <span class="text-str">&#039;https://api.mailgun.net/v3/YOUR_MAIL_DOMAIN/messages&#039;</span>,
+    <span class="text-str">&#039;api_key&#039;</span> =&gt; <span class="text-str">&#039;MAILGUN_API_KEY&#039;</span>,
 ]));
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Sendgrid</code> and <code>Ses</code> take the same shape with their own keys. Missing options are caught at construction, not at
@@ -230,19 +230,19 @@ discovered when the API rejects a request.</p>
 The static <code>Smtp::create()</code> takes the array.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Smtp</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Smtp</span>;
 
-</span><span class="text-var">$transport </span><span class="text-kw">= </span><span class="text-var">Smtp</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">([
-    </span><span class="text-str">&#039;host&#039;       </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;smtp.example.com&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;port&#039;       </span><span class="text-kw">=&gt; </span><span class="text-var">587</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;SMTP_USERNAME&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;SMTP_PASSWORD&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;encryption&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;tls&#039;</span><span class="text-kw">,
+<span class="text-var">$transport</span> = <span class="text-type">Smtp</span>::<span class="text-fn">create</span>([
+    <span class="text-str">&#039;host&#039;</span>       =&gt; <span class="text-str">&#039;smtp.example.com&#039;</span>,
+    <span class="text-str">&#039;port&#039;</span>       =&gt; <span class="text-num">587</span>,
+    <span class="text-str">&#039;username&#039;</span>   =&gt; <span class="text-str">&#039;SMTP_USERNAME&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span>   =&gt; <span class="text-str">&#039;SMTP_PASSWORD&#039;</span>,
+    <span class="text-str">&#039;encryption&#039;</span> =&gt; <span class="text-str">&#039;tls&#039;</span>,
 ]);
 
-</span><span class="text-var">$mailer </span><span class="text-kw">= new </span><span class="text-var">Mailer</span><span class="text-kw">(</span><span class="text-var">$transport</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$mailer</span> = <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-var">$transport</span>);
+</code></pre>
 </div>
 
 <p><code>create()</code> requires all four of <code>host</code>, <code>port</code>, <code>username</code> and <code>password</code>, and throws
@@ -254,22 +254,22 @@ token and hands it back with <code>setToken()</code> and <code>setTokenExpires()
 refreshed for you, and the fresh one is worth storing in turn.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Office365</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Office365</span>;
 
-</span><span class="text-var">$transport </span><span class="text-kw">= new </span><span class="text-var">Office365</span><span class="text-kw">();
-</span><span class="text-var">$transport</span><span class="text-kw">-&gt;</span><span class="text-var">createClient</span><span class="text-kw">([
-    </span><span class="text-str">&#039;client_id&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;O365_CLIENT_ID&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;client_secret&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;O365_CLIENT_SECRET&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;scope&#039;         </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;https://graph.microsoft.com/.default&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;tenant_id&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;O365_TENANT_ID&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;account_id&#039;    </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;O365_ACCOUNT_ID&#039;</span><span class="text-kw">,
+<span class="text-var">$transport</span> = <span class="text-kw">new</span> <span class="text-type">Office365</span>();
+<span class="text-var">$transport</span>-&gt;<span class="text-fn">createClient</span>([
+    <span class="text-str">&#039;client_id&#039;</span>     =&gt; <span class="text-str">&#039;O365_CLIENT_ID&#039;</span>,
+    <span class="text-str">&#039;client_secret&#039;</span> =&gt; <span class="text-str">&#039;O365_CLIENT_SECRET&#039;</span>,
+    <span class="text-str">&#039;scope&#039;</span>         =&gt; <span class="text-str">&#039;https://graph.microsoft.com/.default&#039;</span>,
+    <span class="text-str">&#039;tenant_id&#039;</span>     =&gt; <span class="text-str">&#039;O365_TENANT_ID&#039;</span>,
+    <span class="text-str">&#039;account_id&#039;</span>    =&gt; <span class="text-str">&#039;O365_ACCOUNT_ID&#039;</span>,
 ]);
 
-</span><span class="text-var">$transport</span><span class="text-kw">-&gt;</span><span class="text-var">requestToken</span><span class="text-kw">();
+<span class="text-var">$transport</span>-&gt;<span class="text-fn">requestToken</span>();
 
-</span><span class="text-var">$mailer </span><span class="text-kw">= new </span><span class="text-var">Mailer</span><span class="text-kw">(</span><span class="text-var">$transport</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$mailer</span> = <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-var">$transport</span>);
+</code></pre>
 </div>
 
 <p><code>Google::createClient()</code> takes the service-account JSON file path and the mailbox address instead:
@@ -283,33 +283,33 @@ use it. It depends on a correctly configured local MTA. A string passed to its c
 and body. The placeholder syntax is <code>[{key}]</code>, and the keys are whatever you put in each recipient's array.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Queue</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Sendmail</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Queue</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Sendmail</span>;
 
-</span><span class="text-var">$queue </span><span class="text-kw">= new </span><span class="text-var">Queue</span><span class="text-kw">();
+<span class="text-var">$queue</span> = <span class="text-kw">new</span> <span class="text-type">Queue</span>();
 
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">addRecipient</span><span class="text-kw">([
-    </span><span class="text-str">&#039;email&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;name&#039;    </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;My Name&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;company&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;My Company&#039;</span><span class="text-kw">,
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">addRecipient</span>([
+    <span class="text-str">&#039;email&#039;</span>   =&gt; <span class="text-str">&#039;me@domain.com&#039;</span>,
+    <span class="text-str">&#039;name&#039;</span>    =&gt; <span class="text-str">&#039;My Name&#039;</span>,
+    <span class="text-str">&#039;company&#039;</span> =&gt; <span class="text-str">&#039;My Company&#039;</span>,
 ]);
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">addRecipient</span><span class="text-kw">([
-    </span><span class="text-str">&#039;email&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;another@domain.com&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;name&#039;    </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Another Name&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;company&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Another Company&#039;</span><span class="text-kw">,
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">addRecipient</span>([
+    <span class="text-str">&#039;email&#039;</span>   =&gt; <span class="text-str">&#039;another@domain.com&#039;</span>,
+    <span class="text-str">&#039;name&#039;</span>    =&gt; <span class="text-str">&#039;Another Name&#039;</span>,
+    <span class="text-str">&#039;company&#039;</span> =&gt; <span class="text-str">&#039;Another Company&#039;</span>,
 ]);
 
-</span><span class="text-var">$message </span><span class="text-kw">= new </span><span class="text-var">Message</span><span class="text-kw">(</span><span class="text-str">&#039;Hello [{name}]!&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setFrom</span><span class="text-kw">(</span><span class="text-str">&#039;noreply@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;How are you doing? Your [{company}] is great!&#039;</span><span class="text-kw">);
+<span class="text-var">$message</span> = <span class="text-kw">new</span> <span class="text-type">Message</span>(<span class="text-str">&#039;Hello [{name}]!&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setFrom</span>(<span class="text-str">&#039;noreply@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;How are you doing? Your [{company}] is great!&#039;</span>);
 
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">addMessage</span><span class="text-kw">(</span><span class="text-var">$message</span><span class="text-kw">);
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">addMessage</span>(<span class="text-var">$message</span>);
 
-</span><span class="text-var">$mailer </span><span class="text-kw">= new </span><span class="text-var">Mailer</span><span class="text-kw">(new </span><span class="text-var">Sendmail</span><span class="text-kw">());
-</span><span class="text-var">$mailer</span><span class="text-kw">-&gt;</span><span class="text-var">sendFromQueue</span><span class="text-kw">(</span><span class="text-var">$queue</span><span class="text-kw">); </span><span class="text-comment">// 2
-</span></code></pre>
+<span class="text-var">$mailer</span> = <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-kw">new</span> <span class="text-type">Sendmail</span>());
+<span class="text-var">$mailer</span>-&gt;<span class="text-fn">sendFromQueue</span>(<span class="text-var">$queue</span>); <span class="text-comment">// 2</span>
+</code></pre>
 </div>
 
 <p><code>email</code> is the one required key — it becomes the <code>To</code> address, and <code>name</code>, where present, becomes the display
@@ -331,27 +331,27 @@ same keys.</p>
 request that has the data writes the message, and something later — a cron job, a worker — sends what it finds.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
 
-</span><span class="text-var">$message </span><span class="text-kw">= new </span><span class="text-var">Message</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setTo</span><span class="text-kw">(</span><span class="text-str">&#039;user1@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">setFrom</span><span class="text-kw">(</span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World! This is a test!&#039;</span><span class="text-kw">);
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">addHtml</span><span class="text-kw">(</span><span class="text-str">&#039;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#039;</span><span class="text-kw">);
+<span class="text-var">$message</span> = <span class="text-kw">new</span> <span class="text-type">Message</span>(<span class="text-str">&#039;Hello World&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setTo</span>(<span class="text-str">&#039;user1@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">setFrom</span>(<span class="text-str">&#039;me@domain.com&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">addText</span>(<span class="text-str">&#039;Hello World! This is a test!&#039;</span>);
+<span class="text-var">$message</span>-&gt;<span class="text-fn">addHtml</span>(<span class="text-str">&#039;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#039;</span>);
 
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">save</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../mail-queue/message1.msg&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$message</span>-&gt;<span class="text-fn">save</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../mail-queue/message1.msg&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>sendFromDir()</code> loads every file in a directory and sends each one, returning the number sent:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Mailer</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Mail\Transport\Sendmail</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Mailer</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Mail\Transport\Sendmail</span>;
 
-</span><span class="text-var">$mailer </span><span class="text-kw">= new </span><span class="text-var">Mailer</span><span class="text-kw">(new </span><span class="text-var">Sendmail</span><span class="text-kw">());
-</span><span class="text-var">$mailer</span><span class="text-kw">-&gt;</span><span class="text-var">sendFromDir</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../mail-queue&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$mailer</span> = <span class="text-kw">new</span> <span class="text-type">Mailer</span>(<span class="text-kw">new</span> <span class="text-type">Sendmail</span>());
+<span class="text-var">$mailer</span>-&gt;<span class="text-fn">sendFromDir</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../mail-queue&#039;</span>);
+</code></pre>
 </div>
 
 <p>Keep <code>sendFromDir()</code> pointed at a dedicated directory — every entry apart from <code>.</code>, <code>..</code> and <code>.empty</code> is
@@ -361,12 +361,12 @@ sends them again.</p>
 send it yourself rather than sweeping a whole directory:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Message</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Message</span>;
 
-</span><span class="text-var">$message </span><span class="text-kw">= </span><span class="text-var">Message</span><span class="text-kw">::</span><span class="text-var">load</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../mail-queue/message1.msg&#039;</span><span class="text-kw">);
+<span class="text-var">$message</span> = <span class="text-type">Message</span>::<span class="text-fn">load</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../mail-queue/message1.msg&#039;</span>);
 
-</span><span class="text-var">$message</span><span class="text-kw">-&gt;</span><span class="text-var">getSubject</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$message</span>-&gt;<span class="text-fn">getSubject</span>();
+</code></pre>
 </div>
 
 <p><code>Message::parse()</code> does the same thing from a raw MIME string rather than a path, for a message that arrived
@@ -383,16 +383,16 @@ which is how an application processes replies, bounces or an inbox used as a wor
 extension, so that extension has to be loaded.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Client\Imap</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Client\Imap</span>;
 
-</span><span class="text-var">$imap </span><span class="text-kw">= new </span><span class="text-var">Imap</span><span class="text-kw">(</span><span class="text-str">&#039;imap.gmail.com&#039;</span><span class="text-kw">, </span><span class="text-var">993</span><span class="text-kw">);
+<span class="text-var">$imap</span> = <span class="text-kw">new</span> <span class="text-type">Imap</span>(<span class="text-str">&#039;imap.gmail.com&#039;</span>, <span class="text-num">993</span>);
 
-</span><span class="text-var">$imap</span><span class="text-kw">-&gt;</span><span class="text-var">setUsername</span><span class="text-kw">(</span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">setPassword</span><span class="text-kw">(</span><span class="text-str">&#039;password&#039;</span><span class="text-kw">);
+<span class="text-var">$imap</span>-&gt;<span class="text-fn">setUsername</span>(<span class="text-str">&#039;me@domain.com&#039;</span>)
+     -&gt;<span class="text-fn">setPassword</span>(<span class="text-str">&#039;password&#039;</span>);
 
-</span><span class="text-var">$imap</span><span class="text-kw">-&gt;</span><span class="text-var">setFolder</span><span class="text-kw">(</span><span class="text-str">&#039;INBOX&#039;</span><span class="text-kw">);
-</span><span class="text-var">$imap</span><span class="text-kw">-&gt;</span><span class="text-var">open</span><span class="text-kw">(</span><span class="text-str">&#039;/ssl&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$imap</span>-&gt;<span class="text-fn">setFolder</span>(<span class="text-str">&#039;INBOX&#039;</span>);
+<span class="text-var">$imap</span>-&gt;<span class="text-fn">open</span>(<span class="text-str">&#039;/ssl&#039;</span>);
+</code></pre>
 </div>
 
 <p>The string passed to <code>open()</code> is appended to the connection string as IMAP flags — <code>/ssl</code>, <code>/tls</code>, <code>/novalidate-cert</code>
@@ -403,16 +403,16 @@ returns <code>null</code> until <code>open()</code> has been called, since the s
 'username' and 'password'.&quot;):</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Client\Imap</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Client\Imap</span>;
 
-</span><span class="text-var">$imap </span><span class="text-kw">= </span><span class="text-var">Imap</span><span class="text-kw">::</span><span class="text-var">connect</span><span class="text-kw">([
-    </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;imap.gmail.com&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;port&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">993</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;folder&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;INBOX&#039;</span><span class="text-kw">,
-], </span><span class="text-str">&#039;/ssl&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$imap</span> = <span class="text-type">Imap</span>::<span class="text-fn">connect</span>([
+    <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-str">&#039;imap.gmail.com&#039;</span>,
+    <span class="text-str">&#039;port&#039;</span>     =&gt; <span class="text-num">993</span>,
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;me@domain.com&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;password&#039;</span>,
+    <span class="text-str">&#039;folder&#039;</span>   =&gt; <span class="text-str">&#039;INBOX&#039;</span>,
+], <span class="text-str">&#039;/ssl&#039;</span>);
+</code></pre>
 </div>
 
 <p>A third constructor argument switches the protocol: <code>new Imap($host, 995, 'pop3')</code> speaks POP3 instead.</p>
@@ -421,22 +421,22 @@ returns <code>null</code> until <code>open()</code> has been called, since the s
 <code>getMessageIdsBy()</code> select messages, the latter sorted:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Mail\Client\Imap</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Mail\Client\Imap</span>;
 
-</span><span class="text-var">$imap </span><span class="text-kw">= </span><span class="text-var">Imap</span><span class="text-kw">::</span><span class="text-var">connect</span><span class="text-kw">([
-    </span><span class="text-str">&#039;host&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;imap.gmail.com&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;port&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">993</span><span class="text-kw">,
-    </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;me@domain.com&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;password&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;folder&#039;   </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;INBOX&#039;</span><span class="text-kw">,
-], </span><span class="text-str">&#039;/ssl&#039;</span><span class="text-kw">);
+<span class="text-var">$imap</span> = <span class="text-type">Imap</span>::<span class="text-fn">connect</span>([
+    <span class="text-str">&#039;host&#039;</span>     =&gt; <span class="text-str">&#039;imap.gmail.com&#039;</span>,
+    <span class="text-str">&#039;port&#039;</span>     =&gt; <span class="text-num">993</span>,
+    <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;me@domain.com&#039;</span>,
+    <span class="text-str">&#039;password&#039;</span> =&gt; <span class="text-str">&#039;password&#039;</span>,
+    <span class="text-str">&#039;folder&#039;</span>   =&gt; <span class="text-str">&#039;INBOX&#039;</span>,
+], <span class="text-str">&#039;/ssl&#039;</span>);
 
-</span><span class="text-var">$ids     </span><span class="text-kw">= </span><span class="text-var">$imap</span><span class="text-kw">-&gt;</span><span class="text-var">getMessageIdsBy</span><span class="text-kw">(</span><span class="text-var">SORTDATE</span><span class="text-kw">, </span><span class="text-var">true</span><span class="text-kw">); </span><span class="text-comment">// newest first
-</span><span class="text-var">$headers </span><span class="text-kw">= </span><span class="text-var">$imap</span><span class="text-kw">-&gt;</span><span class="text-var">getMessageHeadersById</span><span class="text-kw">(</span><span class="text-var">$ids</span><span class="text-kw">[</span><span class="text-var">0</span><span class="text-kw">]);
-</span><span class="text-var">$parts   </span><span class="text-kw">= </span><span class="text-var">$imap</span><span class="text-kw">-&gt;</span><span class="text-var">getMessageParts</span><span class="text-kw">(</span><span class="text-var">$ids</span><span class="text-kw">[</span><span class="text-var">0</span><span class="text-kw">]);
+<span class="text-var">$ids</span>     = <span class="text-var">$imap</span>-&gt;<span class="text-fn">getMessageIdsBy</span>(<span class="text-num">SORTDATE</span>, <span class="text-num">true</span>); <span class="text-comment">// newest first</span>
+<span class="text-var">$headers</span> = <span class="text-var">$imap</span>-&gt;<span class="text-fn">getMessageHeadersById</span>(<span class="text-var">$ids</span>[<span class="text-num">0</span>]);
+<span class="text-var">$parts</span>   = <span class="text-var">$imap</span>-&gt;<span class="text-fn">getMessageParts</span>(<span class="text-var">$ids</span>[<span class="text-num">0</span>]);
 
-</span><span class="text-var">$imap</span><span class="text-kw">-&gt;</span><span class="text-var">close</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$imap</span>-&gt;<span class="text-fn">close</span>();
+</code></pre>
 </div>
 
 <p><code>getMessageParts()</code> returns the decoded parts, each with its own <code>content</code> — an attachment's bytes are on the

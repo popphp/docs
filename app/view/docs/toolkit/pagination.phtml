@@ -20,22 +20,22 @@ result, a filesystem listing or an API response.</p>
 on; everything else follows from those:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">App\Table\Posts</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Posts</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$perPage </span><span class="text-kw">= </span><span class="text-var">10</span><span class="text-kw">;
-</span><span class="text-var">$page    </span><span class="text-kw">= </span><span class="text-var">3</span><span class="text-kw">;
+<span class="text-var">$perPage</span> = <span class="text-num">10</span>;
+<span class="text-var">$page</span>    = <span class="text-num">3</span>;
 
-</span><span class="text-var">$total </span><span class="text-kw">= </span><span class="text-var">Posts</span><span class="text-kw">::</span><span class="text-var">getTotal</span><span class="text-kw">();
+<span class="text-var">$total</span> = <span class="text-type">Posts</span>::<span class="text-fn">getTotal</span>();
 
-</span><span class="text-var">$posts </span><span class="text-kw">= </span><span class="text-var">Posts</span><span class="text-kw">::</span><span class="text-var">findAll</span><span class="text-kw">([
-    </span><span class="text-str">&#039;order&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;id ASC&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;limit&#039;  </span><span class="text-kw">=&gt; </span><span class="text-var">$perPage</span><span class="text-kw">,
-    </span><span class="text-str">&#039;offset&#039; </span><span class="text-kw">=&gt; (</span><span class="text-var">$page </span><span class="text-kw">- </span><span class="text-var">1</span><span class="text-kw">) * </span><span class="text-var">$perPage</span><span class="text-kw">,
+<span class="text-var">$posts</span> = <span class="text-type">Posts</span>::<span class="text-fn">findAll</span>([
+    <span class="text-str">&#039;order&#039;</span>  =&gt; <span class="text-str">&#039;id ASC&#039;</span>,
+    <span class="text-str">&#039;limit&#039;</span>  =&gt; <span class="text-var">$perPage</span>,
+    <span class="text-str">&#039;offset&#039;</span> =&gt; (<span class="text-var">$page</span> - <span class="text-num">1</span>) * <span class="text-var">$perPage</span>,
 ]);
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">$total</span><span class="text-kw">, </span><span class="text-var">$perPage</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-var">$total</span>, <span class="text-var">$perPage</span>);
+</code></pre>
 </div>
 
 <p><code>getTotal()</code> counts every row matching the predicate, ignoring <code>limit</code> and <code>offset</code>, which is exactly
@@ -45,12 +45,12 @@ because the paginator never sees your data.</p>
 string, so cast it and floor it at one:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Server\Request</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Request</span>;
 
-</span><span class="text-var">$request </span><span class="text-kw">= new </span><span class="text-var">Request</span><span class="text-kw">();
+<span class="text-var">$request</span> = <span class="text-kw">new</span> <span class="text-type">Request</span>();
 
-</span><span class="text-var">$page </span><span class="text-kw">= </span><span class="text-var">max</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">, (int)(</span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">getQuery</span><span class="text-kw">(</span><span class="text-str">&#039;page&#039;</span><span class="text-kw">) ?? </span><span class="text-var">1</span><span class="text-kw">));
-</span></code></pre>
+<span class="text-var">$page</span> = <span class="text-fn">max</span>(<span class="text-num">1</span>, <span class="text-kw">(int)</span>(<span class="text-var">$request</span>-&gt;<span class="text-fn">getQuery</span>(<span class="text-str">&#039;page&#039;</span>) <span class="text-kw">??</span> <span class="text-num">1</span>));
+</code></pre>
 </div>
 
 <p>The paginator reads <code>$_GET</code> on its own when you render it, so this value is for the query, not for the
@@ -65,15 +65,15 @@ negative total, a per-page below one or a range below one. A total of exactly <c
 pages and renders an empty string, so a page with no results needs no special case.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">4512</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">);
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-num">4512</span>, <span class="text-num">10</span>, <span class="text-num">10</span>);
 
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getTotal</span><span class="text-kw">();          </span><span class="text-comment">// 4512
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getPerPage</span><span class="text-kw">();        </span><span class="text-comment">// 10
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getNumberOfPages</span><span class="text-kw">();  </span><span class="text-comment">// 452
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getCurrentPage</span><span class="text-kw">();    </span><span class="text-comment">// 1, before anything has been rendered
-</span></code></pre>
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">getTotal</span>();          <span class="text-comment">// 4512</span>
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">getPerPage</span>();        <span class="text-comment">// 10</span>
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">getNumberOfPages</span>();  <span class="text-comment">// 452</span>
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">getCurrentPage</span>();    <span class="text-comment">// 1, before anything has been rendered</span>
+</code></pre>
 </div>
 
 <p><code>getNumberOfPages()</code> is available immediately, which is useful for deciding whether to render
@@ -84,10 +84,10 @@ navigation at all.</p>
 selected:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-echo </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">42</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-num">42</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -105,14 +105,14 @@ job — there's no <code>$_GET</code> to read, so pass the page explicitly. <cod
 and returns the links as an array rather than one string:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">4512</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">);
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-num">4512</span>, <span class="text-num">10</span>, <span class="text-num">10</span>);
 
-foreach (</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getLinkRange</span><span class="text-kw">(</span><span class="text-var">12</span><span class="text-kw">) as </span><span class="text-var">$link</span><span class="text-kw">) {
-    echo </span><span class="text-var">$link</span><span class="text-kw">;
+<span class="text-kw">foreach</span> (<span class="text-var">$paginator</span>-&gt;<span class="text-fn">getLinkRange</span>(<span class="text-num">12</span>) <span class="text-kw">as</span> <span class="text-var">$link</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$link</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Form</code> has the matching <code>getFormString()</code>. Both ignore <code>$_GET</code> entirely when given a page.</p>
@@ -122,16 +122,16 @@ fall back to the first or last.</p>
 and <code>setClassOn()</code>/<code>setClassOff()</code> set the class on the <code>&lt;a&gt;</code> tags and on the current page's <code>&lt;span&gt;</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">42</span><span class="text-kw">);
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">setSeparator</span><span class="text-kw">(</span><span class="text-str">&#039; | &#039;</span><span class="text-kw">);
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">setClassOn</span><span class="text-kw">(</span><span class="text-str">&#039;page-link&#039;</span><span class="text-kw">);
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">setClassOff</span><span class="text-kw">(</span><span class="text-str">&#039;page-current&#039;</span><span class="text-kw">);
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-num">42</span>);
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">setSeparator</span>(<span class="text-str">&#039; | &#039;</span>);
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">setClassOn</span>(<span class="text-str">&#039;page-link&#039;</span>);
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">setClassOff</span>(<span class="text-str">&#039;page-current&#039;</span>);
 
-echo </span><span class="text-var">$paginator</span><span class="text-kw">;
-</span><span class="text-comment">// &lt;span class=&quot;page-current&quot;&gt;1&lt;/span&gt; | &lt;a class=&quot;page-link&quot; href=&quot;/posts?page=2&quot;&gt;2&lt;/a&gt; ...
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$paginator</span>;
+<span class="text-comment">// &lt;span class=&quot;page-current&quot;&gt;1&lt;/span&gt; | &lt;a class=&quot;page-link&quot; href=&quot;/posts?page=2&quot;&gt;2&lt;/a&gt; ...</span>
+</code></pre>
 </div>
 
 <p>The separator applies only to the string cast; <code>getLinkRange()</code> returns the same links unjoined. For a
@@ -139,26 +139,26 @@ list-based component, <code>wrapLinks()</code> wraps each link in an element and
 wrapper instead:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">4512</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">);
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-num">4512</span>, <span class="text-num">10</span>, <span class="text-num">10</span>);
 
-echo </span><span class="text-str">&#039;&lt;ul&gt;&#039; </span><span class="text-kw">. </span><span class="text-var">implode</span><span class="text-kw">(</span><span class="text-str">&#039;&#039;</span><span class="text-kw">, </span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">wrapLinks</span><span class="text-kw">(</span><span class="text-str">&#039;li&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page-link-on&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;page-link-off&#039;</span><span class="text-kw">)) . </span><span class="text-str">&#039;&lt;/ul&gt;&#039;</span><span class="text-kw">;
-</span><span class="text-comment">// &lt;ul&gt;&lt;li class=&quot;page-link-off&quot;&gt;&lt;span&gt;1&lt;/span&gt;&lt;/li&gt;&lt;li class=&quot;page-link-on&quot;&gt;&lt;a href=&quot;/posts?page=2&quot;&gt;2&lt;/a&gt;&lt;/li&gt;...
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-str">&#039;&lt;ul&gt;&#039;</span> . <span class="text-fn">implode</span>(<span class="text-str">&#039;&#039;</span>, <span class="text-var">$paginator</span>-&gt;<span class="text-fn">wrapLinks</span>(<span class="text-str">&#039;li&#039;</span>, <span class="text-str">&#039;page-link-on&#039;</span>, <span class="text-str">&#039;page-link-off&#039;</span>)) . <span class="text-str">&#039;&lt;/ul&gt;&#039;</span>;
+<span class="text-comment">// &lt;ul&gt;&lt;li class=&quot;page-link-off&quot;&gt;&lt;span&gt;1&lt;/span&gt;&lt;/li&gt;&lt;li class=&quot;page-link-on&quot;&gt;&lt;a href=&quot;/posts?page=2&quot;&gt;2&lt;/a&gt;&lt;/li&gt;...</span>
+</code></pre>
 </div>
 
 <p><code>setQueryKey()</code> changes the parameter the paginator both reads and writes, which is what you need when
 two things are paginated on one page:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">4512</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">);
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">setQueryKey</span><span class="text-kw">(</span><span class="text-str">&#039;p&#039;</span><span class="text-kw">);
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-num">4512</span>, <span class="text-num">10</span>, <span class="text-num">10</span>);
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">setQueryKey</span>(<span class="text-str">&#039;p&#039;</span>);
 
-</span><span class="text-comment">// links now use ?p=2, and the current page is read from $_GET[&#039;p&#039;]
-</span></code></pre>
+<span class="text-comment">// links now use ?p=2, and the current page is read from $_GET[&#039;p&#039;]</span>
+</code></pre>
 </div>
 
 <h2 id="ranges-and-bookends">Ranges and Bookends<a class="anchor" href="#ranges-and-bookends" aria-label="Link to this section">#</a></h2>
@@ -168,12 +168,12 @@ show at once, and the paginator adds bookends to move between blocks. On page 12
 of 10:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">4512</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">);
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-num">4512</span>, <span class="text-num">10</span>, <span class="text-num">10</span>);
 
-echo </span><span class="text-var">implode</span><span class="text-kw">(</span><span class="text-str">&quot;\n&quot;</span><span class="text-kw">, </span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getLinkRange</span><span class="text-kw">(</span><span class="text-var">12</span><span class="text-kw">));
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-fn">implode</span>(<span class="text-str">&quot;\n&quot;</span>, <span class="text-var">$paginator</span>-&gt;<span class="text-fn">getLinkRange</span>(<span class="text-num">12</span>));
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -201,27 +201,27 @@ to page 21, the page immediately after it, and <code>end</code> to page 452. <co
 output:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createRange</span><span class="text-kw">(</span><span class="text-var">4512</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">);
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createRange</span>(<span class="text-num">4512</span>, <span class="text-num">10</span>, <span class="text-num">10</span>);
 
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">setBookends</span><span class="text-kw">([</span><span class="text-str">&#039;start&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-str">&#039;end&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">null</span><span class="text-kw">]);
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">setBookends</span>([<span class="text-str">&#039;start&#039;</span> =&gt; <span class="text-num">null</span>, <span class="text-str">&#039;end&#039;</span> =&gt; <span class="text-num">null</span>]);
 
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getBookend</span><span class="text-kw">(</span><span class="text-str">&#039;next&#039;</span><span class="text-kw">);  </span><span class="text-comment">// &#039;&amp;rsaquo;&#039;
-</span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getBookends</span><span class="text-kw">();       </span><span class="text-comment">// start and end are now null
-</span></code></pre>
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">getBookend</span>(<span class="text-str">&#039;next&#039;</span>);  <span class="text-comment">// &#039;&amp;rsaquo;&#039;</span>
+<span class="text-var">$paginator</span>-&gt;<span class="text-fn">getBookends</span>();       <span class="text-comment">// start and end are now null</span>
+</code></pre>
 </div>
 
 <p>For a set too large for even a block of links, <code>Form</code> replaces the numbers with an input the reader
 types a page into, keeping the bookends around it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Paginator\Paginator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Paginator\Paginator</span>;
 
-</span><span class="text-var">$paginator </span><span class="text-kw">= </span><span class="text-var">Paginator</span><span class="text-kw">::</span><span class="text-var">createForm</span><span class="text-kw">(</span><span class="text-var">558</span><span class="text-kw">);
+<span class="text-var">$paginator</span> = <span class="text-type">Paginator</span>::<span class="text-fn">createForm</span>(<span class="text-num">558</span>);
 
-echo </span><span class="text-var">$paginator</span><span class="text-kw">-&gt;</span><span class="text-var">getFormString</span><span class="text-kw">(</span><span class="text-var">14</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$paginator</span>-&gt;<span class="text-fn">getFormString</span>(<span class="text-num">14</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">

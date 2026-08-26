@@ -42,10 +42,14 @@
         --surface-muted: #6d685f;
         --surface-line: #e5dfd5;
         --surface-code: #16150f;
-        --syntax-keyword: #f08a3c;
-        --syntax-string: #ddd8cd;
-        --syntax-var: #9dbfc4;
-        --syntax-comment: #8b867c;
+        --syntax-base: #e8e3d9;
+        --syntax-keyword: #ff8f43;
+        --syntax-type: #3fe0c0;
+        --syntax-fn: #ffd44e;
+        --syntax-var: #5cc2ff;
+        --syntax-string: #a2cd7e;
+        --syntax-number: #d98bff;
+        --syntax-comment: #8f887a;
     }
 
     .dark {
@@ -55,10 +59,16 @@
         --surface-muted: #a09a90;
         --surface-line: #2b2825;
         --surface-code: #0d0c0b;
-        --syntax-keyword: #e06726;
-        --syntax-string: #c9c4bb;
-        --syntax-var: #8fb3b8;
-        --syntax-comment: #6c6a66;
+        /* The code surface is dark in both themes, so the syntax palette does not flip with
+           them — shifting it cost contrast in dark mode for no gain. */
+        --syntax-base: #e8e3d9;
+        --syntax-keyword: #ff8f43;
+        --syntax-type: #3fe0c0;
+        --syntax-fn: #ffd44e;
+        --syntax-var: #5cc2ff;
+        --syntax-string: #a2cd7e;
+        --syntax-number: #d98bff;
+        --syntax-comment: #8f887a;
     }
 
     html {
@@ -121,6 +131,9 @@
     --color-str: var(--syntax-string);
     --color-var: var(--syntax-var);
     --color-comment: var(--syntax-comment);
+    --color-type: var(--syntax-type);
+    --color-fn: var(--syntax-fn);
+    --color-num: var(--syntax-number);
 }
 
 /* ---------------------------------------------------------------
@@ -187,7 +200,16 @@
     }
 
     .code-window pre {
-        @apply overflow-x-auto p-6 font-mono text-[13.5px]/[1.8] text-str;
+        @apply overflow-x-auto p-6 font-mono text-[13.5px]/[1.8];
+        /* Set directly rather than through a utility: `text-base` is Tailwind's font-size
+           utility, so a colour mapped to that name would fight the size above. */
+        color: var(--syntax-base);
+    }
+
+    /* Comments set in italic, the way an editor does — it separates prose from code without
+       spending another colour on it. */
+    .code-window pre .text-comment {
+        @apply italic;
     }
 
     [x-cloak] {

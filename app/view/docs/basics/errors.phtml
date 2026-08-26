@@ -128,20 +128,20 @@ Content-Type: application/json
 gives it your layout, your logging and your JSON shape:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;[/]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;*&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;error&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">return</span> [
+    <span class="text-str">&#039;routes&#039;</span> =&gt; [
+        <span class="text-str">&#039;[/]&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+        ],
+        <span class="text-str">&#039;*&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;error&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>error</code> is also the default action a dispatcher falls back to when a route names an action the controller does
@@ -151,36 +151,36 @@ not have, so the same method absorbs both a missing page and a mistyped route ta
 <code>acceptsHtml()</code> on the request object, which is the same <code>AcceptSpecificity::Loose</code> test:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Controller/IndexController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Response</span>;
 
-use </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">IndexController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">IndexController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">index</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        if (</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">acceptsHtml</span><span class="text-kw">()) {
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;&lt;h1&gt;Welcome&lt;/h1&gt;&#039;</span><span class="text-kw">);
-        } else {
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">addHeader</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">);
-            </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;message&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Index page&#039;</span><span class="text-kw">]));
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">index</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">acceptsHtml</span>()) {
+            <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;&lt;h1&gt;Welcome&lt;/h1&gt;&#039;</span>);
+        } <span class="text-kw">else</span> {
+            <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">addHeader</span>(<span class="text-str">&#039;Content-Type&#039;</span>, <span class="text-str">&#039;application/json&#039;</span>);
+            <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;message&#039;</span> =&gt; <span class="text-str">&#039;Index page&#039;</span>]));
         }
 
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>();
     }
 
-    public function </span><span class="text-var">error</span><span class="text-kw">(</span><span class="text-var">int $code </span><span class="text-kw">= </span><span class="text-var">404</span><span class="text-kw">, ?</span><span class="text-var">string $message </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setCode</span><span class="text-kw">(</span><span class="text-var">$code</span><span class="text-kw">);
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">$message </span><span class="text-kw">?? </span><span class="text-var">Response</span><span class="text-kw">::</span><span class="text-var">getMessageFromCode</span><span class="text-kw">(</span><span class="text-var">$code</span><span class="text-kw">));
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">error</span>(<span class="text-type">int</span> <span class="text-var">$code</span> = <span class="text-num">404</span>, ?<span class="text-type">string</span> <span class="text-var">$message</span> = <span class="text-num">null</span>): <span class="text-type">void</span>
+    {
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setCode</span>(<span class="text-var">$code</span>);
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-var">$message</span> <span class="text-kw">??</span> <span class="text-type">Response</span>::<span class="text-fn">getMessageFromCode</span>(<span class="text-var">$code</span>));
+        <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>();
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>parent::error()</code> is the base controller's JSON error — it sends <code>{&quot;code&quot;: 404, &quot;message&quot;: &quot;Not Found&quot;}</code> with
@@ -193,12 +193,12 @@ catch-all out if you want API clients to see the 405.</p>
 puts the method check somewhere you can also choose the body:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">if (!</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">request</span><span class="text-kw">-&gt;</span><span class="text-var">isGet</span><span class="text-kw">()) {
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-str">&#039;&#039;</span><span class="text-kw">);
-    </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">405</span><span class="text-kw">, [</span><span class="text-str">&#039;Allow&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;GET&#039;</span><span class="text-kw">]);
-    return;
+<pre><code><span class="text-kw">if</span> (!<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">isGet</span>()) {
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-str">&#039;&#039;</span>);
+    <span class="text-var">$this</span>-&gt;<span class="text-type">response</span>-&gt;<span class="text-fn">send</span>(<span class="text-num">405</span>, [<span class="text-str">&#039;Allow&#039;</span> =&gt; <span class="text-str">&#039;GET&#039;</span>]);
+    <span class="text-kw">return</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The <code>setBody('')</code> is load-bearing — a <code>Pop\Http\Server\Response</code> has no body object until one is set, and
@@ -212,15 +212,15 @@ puts the method check somewhere you can also choose the body:</p>
 and then <strong>rethrows</strong>, so the exception leaves <code>run()</code> and the front controller is what finally handles it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">try {
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../app/config/app.http.php&#039;</span><span class="text-kw">);
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">load</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-} catch (</span><span class="text-var">\Throwable $exception</span><span class="text-kw">) {
-    </span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">App\Application</span><span class="text-kw">();
-    </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">httpError</span><span class="text-kw">(</span><span class="text-var">$exception</span><span class="text-kw">);
+<pre><code><span class="text-kw">try</span> {
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../app/config/app.http.php&#039;</span>);
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">load</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+} <span class="text-kw">catch</span> (<span class="text-type">\Throwable</span> <span class="text-var">$exception</span>) {
+    <span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">App\Application</span>();
+    <span class="text-var">$app</span>-&gt;<span class="text-fn">httpError</span>(<span class="text-var">$exception</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>httpError()</code> is an application-level convention, not a framework method — <code>Pop\Application</code> declares nothing
@@ -228,38 +228,38 @@ of the kind. The scaffold writes one on <code>App\Application</code>, and it neg
 else on this page does. Merge this into the application class rather than replacing it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">namespace </span><span class="text-var">App</span><span class="text-kw">;
+<pre><code><span class="text-kw">namespace</span> <span class="text-type">App</span>;
 
-use </span><span class="text-var">Pop\Http\Server\Request</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">;
-use </span><span class="text-var">Pop\View\View</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Request</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Response</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\View\View</span>;
 
-class </span><span class="text-var">Application </span><span class="text-kw">extends </span><span class="text-var">\Pop\Application
-</span><span class="text-kw">{
+<span class="text-kw">class</span> <span class="text-type">Application</span> <span class="text-kw">extends</span> <span class="text-type">\Pop\Application</span>
+{
 
-    public function </span><span class="text-var">httpError</span><span class="text-kw">(</span><span class="text-var">\Throwable $exception</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$request  </span><span class="text-kw">= new </span><span class="text-var">Request</span><span class="text-kw">();
-        </span><span class="text-var">$response </span><span class="text-kw">= new </span><span class="text-var">Response</span><span class="text-kw">();
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">httpError</span>(<span class="text-type">\Throwable</span> <span class="text-var">$exception</span>): <span class="text-type">void</span>
+    {
+        <span class="text-var">$request</span>  = <span class="text-kw">new</span> <span class="text-type">Request</span>();
+        <span class="text-var">$response</span> = <span class="text-kw">new</span> <span class="text-type">Response</span>();
 
-        if (</span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">acceptsHtml</span><span class="text-kw">()) {
-            </span><span class="text-var">$view          </span><span class="text-kw">= new </span><span class="text-var">View</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../view/exception.phtml&#039;</span><span class="text-kw">);
-            </span><span class="text-var">$view</span><span class="text-kw">-&gt;</span><span class="text-var">title   </span><span class="text-kw">= </span><span class="text-str">&#039;Exception&#039;</span><span class="text-kw">;
-            </span><span class="text-var">$view</span><span class="text-kw">-&gt;</span><span class="text-var">message </span><span class="text-kw">= </span><span class="text-var">$exception</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">();
+        <span class="text-kw">if</span> (<span class="text-var">$request</span>-&gt;<span class="text-fn">acceptsHtml</span>()) {
+            <span class="text-var">$view</span>          = <span class="text-kw">new</span> <span class="text-type">View</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../view/exception.phtml&#039;</span>);
+            <span class="text-var">$view</span>-&gt;<span class="text-type">title</span>   = <span class="text-str">&#039;Exception&#039;</span>;
+            <span class="text-var">$view</span>-&gt;<span class="text-type">message</span> = <span class="text-var">$exception</span>-&gt;<span class="text-fn">getMessage</span>();
 
-            </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">addHeader</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;text/html&#039;</span><span class="text-kw">);
-            </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">$view</span><span class="text-kw">-&gt;</span><span class="text-var">render</span><span class="text-kw">());
-        } else {
-            </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">addHeaders</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">config</span><span class="text-kw">[</span><span class="text-str">&#039;http_options_headers&#039;</span><span class="text-kw">] ?? []);
-            </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;error&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$exception</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">()], </span><span class="text-var">JSON_PRETTY_PRINT</span><span class="text-kw">) . </span><span class="text-var">PHP_EOL</span><span class="text-kw">);
+            <span class="text-var">$response</span>-&gt;<span class="text-fn">addHeader</span>(<span class="text-str">&#039;Content-Type&#039;</span>, <span class="text-str">&#039;text/html&#039;</span>);
+            <span class="text-var">$response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-var">$view</span>-&gt;<span class="text-fn">render</span>());
+        } <span class="text-kw">else</span> {
+            <span class="text-var">$response</span>-&gt;<span class="text-fn">addHeaders</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">config</span>[<span class="text-str">&#039;http_options_headers&#039;</span>] <span class="text-kw">??</span> []);
+            <span class="text-var">$response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;error&#039;</span> =&gt; <span class="text-var">$exception</span>-&gt;<span class="text-fn">getMessage</span>()], <span class="text-num">JSON_PRETTY_PRINT</span>) . <span class="text-num">PHP_EOL</span>);
         }
 
-        </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">500</span><span class="text-kw">);
-        exit();
+        <span class="text-var">$response</span>-&gt;<span class="text-fn">send</span>(<span class="text-num">500</span>);
+        <span class="text-kw">exit</span>();
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A console application's equivalent is <code>cliError()</code>, which prints the message in a red block and exits with
@@ -277,10 +277,10 @@ therefore has to tolerate its absence, which is why the sample above uses <code>
 receives the throwable first and the application second:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;app.error&#039;</span><span class="text-kw">, function (</span><span class="text-var">\Throwable $exception</span><span class="text-kw">, </span><span class="text-var">Pop\Application $application</span><span class="text-kw">) {
-    </span><span class="text-var">$application</span><span class="text-kw">-&gt;</span><span class="text-var">getService</span><span class="text-kw">(</span><span class="text-str">&#039;logger&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">error</span><span class="text-kw">(</span><span class="text-var">$exception</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">());
+<pre><code><span class="text-var">$app</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;app.error&#039;</span>, <span class="text-kw">function</span> (<span class="text-type">\Throwable</span> <span class="text-var">$exception</span>, <span class="text-type">Pop\Application</span> <span class="text-var">$application</span>) {
+    <span class="text-var">$application</span>-&gt;<span class="text-fn">getService</span>(<span class="text-str">&#039;logger&#039;</span>)-&gt;<span class="text-fn">error</span>(<span class="text-var">$exception</span>-&gt;<span class="text-fn">getMessage</span>());
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The event fires for anything <code>Throwable</code> — an <code>Error</code> as readily as an <code>Exception</code> — and it fires before the

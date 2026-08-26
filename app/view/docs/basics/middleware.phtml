@@ -13,27 +13,27 @@ left inside-out.</p>
 value, or return something else and the rest of the stack never runs.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Middleware/RequestLog.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Middleware</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Middleware</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Middleware\MiddlewareInterface</span>;
 
-use </span><span class="text-var">Pop\Middleware\MiddlewareInterface</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">RequestLog</span> <span class="text-kw">implements</span> <span class="text-type">MiddlewareInterface</span>
+{
 
-class </span><span class="text-var">RequestLog </span><span class="text-kw">implements </span><span class="text-var">MiddlewareInterface
-</span><span class="text-kw">{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">handle</span>(<span class="text-type">mixed</span> <span class="text-var">$request</span>, <span class="text-type">\Closure</span> <span class="text-var">$next</span>): <span class="text-type">mixed</span>
+    {
+        <span class="text-var">$start</span>    = <span class="text-fn">microtime</span>(<span class="text-num">true</span>);
+        <span class="text-var">$response</span> = <span class="text-var">$next</span>(<span class="text-var">$request</span>);
 
-    public function </span><span class="text-var">handle</span><span class="text-kw">(</span><span class="text-var">mixed $request</span><span class="text-kw">, </span><span class="text-var">\Closure $next</span><span class="text-kw">): </span><span class="text-var">mixed
-    </span><span class="text-kw">{
-        </span><span class="text-var">$start    </span><span class="text-kw">= </span><span class="text-var">microtime</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">);
-        </span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$next</span><span class="text-kw">(</span><span class="text-var">$request</span><span class="text-kw">);
+        <span class="text-fn">error_log</span>(<span class="text-var">$request</span>-&gt;<span class="text-fn">getUriString</span>() . <span class="text-str">&#039; &#039;</span> . <span class="text-fn">round</span>((<span class="text-fn">microtime</span>(<span class="text-num">true</span>) - <span class="text-var">$start</span>) * <span class="text-num">1000</span>) . <span class="text-str">&#039;ms&#039;</span>);
 
-        </span><span class="text-var">error_log</span><span class="text-kw">(</span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">getUriString</span><span class="text-kw">() . </span><span class="text-str">&#039; &#039; </span><span class="text-kw">. </span><span class="text-var">round</span><span class="text-kw">((</span><span class="text-var">microtime</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">) - </span><span class="text-var">$start</span><span class="text-kw">) * </span><span class="text-var">1000</span><span class="text-kw">) . </span><span class="text-str">&#039;ms&#039;</span><span class="text-kw">);
-
-        return </span><span class="text-var">$response</span><span class="text-kw">;
+        <span class="text-kw">return</span> <span class="text-var">$response</span>;
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>$request</code> is typed <code>mixed</code> because <code>run()</code> resolves it per dispatchable: a controller using <code>HttpTrait</code>
@@ -45,30 +45,30 @@ target gets a freshly built one for the runtime.</p>
 instance:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;middleware&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;App\Http\Middleware\RequestLog&#039;</span><span class="text-kw">,
-        new </span><span class="text-var">App\Http\Middleware\RequireApiKey</span><span class="text-kw">(</span><span class="text-str">&#039;X-Api-Key&#039;</span><span class="text-kw">)
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;middleware&#039;</span> =&gt; [
+        <span class="text-str">&#039;App\Http\Middleware\RequestLog&#039;</span>,
+        <span class="text-kw">new</span> <span class="text-type">App\Http\Middleware\RequireApiKey</span>(<span class="text-str">&#039;X-Api-Key&#039;</span>)
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>addMiddleware()</code> does the same imperatively, and takes an optional name so the handler can be found or
 removed again:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">(</span><span class="text-str">&#039;App\Http\Middleware\RequestLog&#039;</span><span class="text-kw">);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">(new </span><span class="text-var">App\Http\Middleware\RequireApiKey</span><span class="text-kw">(</span><span class="text-str">&#039;X-Api-Key&#039;</span><span class="text-kw">), </span><span class="text-str">&#039;api-key&#039;</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">addMiddleware</span>(<span class="text-str">&#039;App\Http\Middleware\RequestLog&#039;</span>);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">addMiddleware</span>(<span class="text-kw">new</span> <span class="text-type">App\Http\Middleware\RequireApiKey</span>(<span class="text-str">&#039;X-Api-Key&#039;</span>), <span class="text-str">&#039;api-key&#039;</span>);
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">middleware</span><span class="text-kw">()-&gt;</span><span class="text-var">hasHandler</span><span class="text-kw">(</span><span class="text-str">&#039;api-key&#039;</span><span class="text-kw">));   </span><span class="text-comment">// true
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">middleware</span>()-&gt;<span class="text-fn">hasHandler</span>(<span class="text-str">&#039;api-key&#039;</span>));   <span class="text-comment">// true</span>
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">removeMiddleware</span><span class="text-kw">(</span><span class="text-str">&#039;api-key&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">removeMiddleware</span>(<span class="text-str">&#039;api-key&#039;</span>);
+</code></pre>
 </div>
 
 <p>A class-name string is constructed with no arguments when the pipeline runs, so it only works for a handler
@@ -89,13 +89,13 @@ pipeline is entered.</p>
 enters first and leaves last:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">([
-    </span><span class="text-str">&#039;middleware&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;App\Http\Middleware\RequestLog&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;App\Http\Middleware\RequireApiKey&#039;
-    </span><span class="text-kw">]
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>([
+    <span class="text-str">&#039;middleware&#039;</span> =&gt; [
+        <span class="text-str">&#039;App\Http\Middleware\RequestLog&#039;</span>,
+        <span class="text-str">&#039;App\Http\Middleware\RequireApiKey&#039;</span>
+    ]
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>RequestLog</code> enters, then <code>RequireApiKey</code>, then the controller action runs, then <code>RequireApiKey</code> finishes,
@@ -110,38 +110,38 @@ handler.</p>
 and the dispatch — never runs, and what the handler returns becomes the pipeline's result.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Middleware/RequireApiKey.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Middleware</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Middleware</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Server\Response</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Middleware\MiddlewareInterface</span>;
 
-use </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Middleware\MiddlewareInterface</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">RequireApiKey</span> <span class="text-kw">implements</span> <span class="text-type">MiddlewareInterface</span>
+{
 
-class </span><span class="text-var">RequireApiKey </span><span class="text-kw">implements </span><span class="text-var">MiddlewareInterface
-</span><span class="text-kw">{
+    <span class="text-kw">protected</span> <span class="text-type">string</span> <span class="text-var">$header</span>;
 
-    protected </span><span class="text-var">string $header</span><span class="text-kw">;
-
-    public function </span><span class="text-var">__construct</span><span class="text-kw">(</span><span class="text-var">string $header </span><span class="text-kw">= </span><span class="text-str">&#039;X-Api-Key&#039;</span><span class="text-kw">)
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">__construct</span>(<span class="text-type">string</span> <span class="text-var">$header</span> = <span class="text-str">&#039;X-Api-Key&#039;</span>)
     {
-        </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">header </span><span class="text-kw">= </span><span class="text-var">$header</span><span class="text-kw">;
+        <span class="text-var">$this</span>-&gt;<span class="text-type">header</span> = <span class="text-var">$header</span>;
     }
 
-    public function </span><span class="text-var">handle</span><span class="text-kw">(</span><span class="text-var">mixed $request</span><span class="text-kw">, </span><span class="text-var">\Closure $next</span><span class="text-kw">): </span><span class="text-var">mixed
-    </span><span class="text-kw">{
-        if (!</span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">hasHeader</span><span class="text-kw">(</span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">header</span><span class="text-kw">)) {
-            </span><span class="text-var">$response </span><span class="text-kw">= new </span><span class="text-var">Response</span><span class="text-kw">();
-            </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">setBody</span><span class="text-kw">(</span><span class="text-var">json_encode</span><span class="text-kw">([</span><span class="text-str">&#039;error&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Unauthorized&#039;</span><span class="text-kw">]));
-            </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">401</span><span class="text-kw">, [</span><span class="text-str">&#039;Content-Type&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;application/json&#039;</span><span class="text-kw">]);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">handle</span>(<span class="text-type">mixed</span> <span class="text-var">$request</span>, <span class="text-type">\Closure</span> <span class="text-var">$next</span>): <span class="text-type">mixed</span>
+    {
+        <span class="text-kw">if</span> (!<span class="text-var">$request</span>-&gt;<span class="text-fn">hasHeader</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">header</span>)) {
+            <span class="text-var">$response</span> = <span class="text-kw">new</span> <span class="text-type">Response</span>();
+            <span class="text-var">$response</span>-&gt;<span class="text-fn">setBody</span>(<span class="text-fn">json_encode</span>([<span class="text-str">&#039;error&#039;</span> =&gt; <span class="text-str">&#039;Unauthorized&#039;</span>]));
+            <span class="text-var">$response</span>-&gt;<span class="text-fn">send</span>(<span class="text-num">401</span>, [<span class="text-str">&#039;Content-Type&#039;</span> =&gt; <span class="text-str">&#039;application/json&#039;</span>]);
 
-            return </span><span class="text-var">$response</span><span class="text-kw">;
+            <span class="text-kw">return</span> <span class="text-var">$response</span>;
         }
 
-        return </span><span class="text-var">$next</span><span class="text-kw">(</span><span class="text-var">$request</span><span class="text-kw">);
+        <span class="text-kw">return</span> <span class="text-var">$next</span>(<span class="text-var">$request</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The handler sends the response itself, because nothing downstream will. Call <code>setBody()</code> first even when the
@@ -155,23 +155,23 @@ nor its <code>terminate()</code> runs.</p>
 when that route matches:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/config/app.http.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;middleware&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;App\Http\Middleware\RequestLog&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;routes&#039;     </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;/&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-        </span><span class="text-kw">],
-        </span><span class="text-str">&#039;/api/orders[/]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;middleware&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Middleware\RequireApiKey&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;App\Http\Controller\OrdersController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;middleware&#039;</span> =&gt; [<span class="text-str">&#039;App\Http\Middleware\RequestLog&#039;</span>],
+    <span class="text-str">&#039;routes&#039;</span>     =&gt; [
+        <span class="text-str">&#039;/&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\IndexController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+        ],
+        <span class="text-str">&#039;/api/orders[/]&#039;</span> =&gt; [
+            <span class="text-str">&#039;middleware&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Middleware\RequireApiKey&#039;</span>,
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;App\Http\Controller\OrdersController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+        ]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Route middleware is appended to the same manager the global list is in, so the global handlers stay outermost
@@ -240,21 +240,21 @@ both lists running.</p>
 request and the pipeline's return value. It's where work that must not delay the response goes.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">class </span><span class="text-var">RequestLog </span><span class="text-kw">implements </span><span class="text-var">Pop\Middleware\MiddlewareInterface</span><span class="text-kw">, </span><span class="text-var">Pop\Middleware\TerminableInterface
-</span><span class="text-kw">{
+<pre><code><span class="text-kw">class</span> <span class="text-type">RequestLog</span> <span class="text-kw">implements</span> <span class="text-type">Pop\Middleware\MiddlewareInterface</span>, <span class="text-type">Pop\Middleware\TerminableInterface</span>
+{
 
-    public function </span><span class="text-var">handle</span><span class="text-kw">(</span><span class="text-var">mixed $request</span><span class="text-kw">, </span><span class="text-var">\Closure $next</span><span class="text-kw">): </span><span class="text-var">mixed
-    </span><span class="text-kw">{
-        return </span><span class="text-var">$next</span><span class="text-kw">(</span><span class="text-var">$request</span><span class="text-kw">);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">handle</span>(<span class="text-type">mixed</span> <span class="text-var">$request</span>, <span class="text-type">\Closure</span> <span class="text-var">$next</span>): <span class="text-type">mixed</span>
+    {
+        <span class="text-kw">return</span> <span class="text-var">$next</span>(<span class="text-var">$request</span>);
     }
 
-    public function </span><span class="text-var">terminate</span><span class="text-kw">(</span><span class="text-var">mixed $request </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">mixed $response </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">error_log</span><span class="text-kw">(</span><span class="text-str">&#039;finished &#039; </span><span class="text-kw">. </span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">getUriString</span><span class="text-kw">());
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">terminate</span>(<span class="text-type">mixed</span> <span class="text-var">$request</span> = <span class="text-num">null</span>, <span class="text-type">mixed</span> <span class="text-var">$response</span> = <span class="text-num">null</span>): <span class="text-type">void</span>
+    {
+        <span class="text-fn">error_log</span>(<span class="text-str">&#039;finished &#039;</span> . <span class="text-var">$request</span>-&gt;<span class="text-fn">getUriString</span>());
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>terminate()</code> runs for every terminable handler in the manager, in registration order, and it runs even when
@@ -268,10 +268,10 @@ in the same queue as a native one, translating Pop's <code>handle($request, $nex
 <code>process($request, $handler)</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">(new </span><span class="text-var">Pop\Middleware\Psr15\MiddlewareAdapter</span><span class="text-kw">(new </span><span class="text-var">SomeThirdPartyMiddleware</span><span class="text-kw">()));
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">addMiddleware</span>(<span class="text-kw">new</span> <span class="text-type">Pop\Middleware\Psr15\MiddlewareAdapter</span>(<span class="text-kw">new</span> <span class="text-type">SomeThirdPartyMiddleware</span>()));
+</code></pre>
 </div>
 
 <p>Both halves of Pop's own HTTP pair are PSR-7 objects: <code>Pop\Http\Server\Request</code> implements
@@ -288,14 +288,14 @@ route, before the queue is entered and before the controller is constructed.</p>
 response object or one from a library such as <code>nyholm/psr7</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">(new </span><span class="text-var">Pop\Middleware\Psr15\MiddlewareAdapter</span><span class="text-kw">(new </span><span class="text-var">SomeThirdPartyMiddleware</span><span class="text-kw">()));
+<span class="text-var">$app</span>-&gt;<span class="text-fn">addMiddleware</span>(<span class="text-kw">new</span> <span class="text-type">Pop\Middleware\Psr15\MiddlewareAdapter</span>(<span class="text-kw">new</span> <span class="text-type">SomeThirdPartyMiddleware</span>()));
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;/status&#039;</span><span class="text-kw">, function() {
-    return new </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">([</span><span class="text-str">&#039;code&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">200</span><span class="text-kw">, </span><span class="text-str">&#039;body&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;ok&#039;</span><span class="text-kw">]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">get</span>(<span class="text-str">&#039;/status&#039;</span>, <span class="text-kw">function</span>() {
+    <span class="text-kw">return</span> <span class="text-kw">new</span> <span class="text-type">Pop\Http\Server\Response</span>([<span class="text-str">&#039;code&#039;</span> =&gt; <span class="text-num">200</span>, <span class="text-str">&#039;body&#039;</span> =&gt; <span class="text-str">&#039;ok&#039;</span>]);
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Two shapes are yours to get right. A closure returning nothing fails on the way back out with a <code>TypeError</code>

@@ -226,3 +226,34 @@
         mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6'/%3E%3Cpath d='M20 4 11 13'/%3E%3Cpath d='M18 14v5a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 19V8.6A1.6 1.6 0 0 1 5.6 7h5'/%3E%3C/svg%3E") center / contain no-repeat;
     }
 }
+
+@layer components {
+    /* Section headings in the sidebar.
+       They were the brand's .eyebrow — mono, uppercase, tracked, orange — which is a label
+       treatment for a marketing page rather than a heading in a list of 61 links. Set in the
+       display face at reading case, they read as headings, and orange goes back to meaning
+       "the page you are on". */
+    .nav-section {
+        @apply font-display text-[13.5px] font-semibold tracking-[-0.01em] text-fg;
+    }
+}
+
+/* ---------------------------------------------------------------
+   Syntax palette
+
+   The palette itself lives in brand.css now — it was ported back to popphp.org so both sites
+   colour code identically, and `php ../new-docs/tools/theme-check.php` keeps them in step.
+
+   What stays here is the part the marketing site has no use for: the three extra token classes
+   Pop\Docs\Tools\Highlighter emits, which Tailwind only generates when it sees them, and the
+   italic comment rule scoped to generated blocks.
+   --------------------------------------------------------------- */
+
+@layer components {
+    /* Italic comments, the way an editor sets them — it separates prose from code at a glance
+       without spending another color on it. */
+    .code-window pre .text-comment {
+        @apply italic;
+    }
+
+}

@@ -19,13 +19,13 @@ to work out which it has.</p>
 <p>The constructor takes CSV data and <code>unserialize()</code> turns it into an array of rows:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$csv </span><span class="text-kw">= new </span><span class="text-var">Csv</span><span class="text-kw">(</span><span class="text-str">&quot;first_name,last_name\nBob,Smith\nJane,Smith\n&quot;</span><span class="text-kw">);
+<span class="text-var">$csv</span> = <span class="text-kw">new</span> <span class="text-type">Csv</span>(<span class="text-str">&quot;first_name,last_name\nBob,Smith\nJane,Smith\n&quot;</span>);
 
-</span><span class="text-var">$rows </span><span class="text-kw">= </span><span class="text-var">$csv</span><span class="text-kw">-&gt;</span><span class="text-var">unserialize</span><span class="text-kw">();
-</span><span class="text-comment">// [[&#039;first_name&#039; =&gt; &#039;Bob&#039;, &#039;last_name&#039; =&gt; &#039;Smith&#039;], [&#039;first_name&#039; =&gt; &#039;Jane&#039;, &#039;last_name&#039; =&gt; &#039;Smith&#039;]]
-</span></code></pre>
+<span class="text-var">$rows</span> = <span class="text-var">$csv</span>-&gt;<span class="text-fn">unserialize</span>();
+<span class="text-comment">// [[&#039;first_name&#039; =&gt; &#039;Bob&#039;, &#039;last_name&#039; =&gt; &#039;Smith&#039;], [&#039;first_name&#039; =&gt; &#039;Jane&#039;, &#039;last_name&#039; =&gt; &#039;Smith&#039;]]</span>
+</code></pre>
 </div>
 
 <p>The header row becomes the array keys, and every value comes back as a string — CSV carries no types.</p>
@@ -35,12 +35,12 @@ immediately; any other string is raw CSV text, parsed later.</p>
 <p>The static shortcuts skip the second call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$csv  </span><span class="text-kw">= </span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">loadFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/import.csv&#039;</span><span class="text-kw">);   </span><span class="text-comment">// Csv object, already unserialized
-</span><span class="text-var">$csv  </span><span class="text-kw">= </span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">loadString</span><span class="text-kw">(</span><span class="text-str">&quot;a,b\n1,2\n&quot;</span><span class="text-kw">);                    </span><span class="text-comment">// the same, from a string
-</span><span class="text-var">$rows </span><span class="text-kw">= </span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">getDataFromFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/import.csv&#039;</span><span class="text-kw">); </span><span class="text-comment">// the array directly
-</span></code></pre>
+<span class="text-var">$csv</span>  = <span class="text-type">Csv</span>::<span class="text-fn">loadFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/import.csv&#039;</span>);   <span class="text-comment">// Csv object, already unserialized</span>
+<span class="text-var">$csv</span>  = <span class="text-type">Csv</span>::<span class="text-fn">loadString</span>(<span class="text-str">&quot;a,b\n1,2\n&quot;</span>);                    <span class="text-comment">// the same, from a string</span>
+<span class="text-var">$rows</span> = <span class="text-type">Csv</span>::<span class="text-fn">getDataFromFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/import.csv&#039;</span>); <span class="text-comment">// the array directly</span>
+</code></pre>
 </div>
 
 <p>All of them take the same options array the constructor does.</p>
@@ -48,14 +48,14 @@ immediately; any other string is raw CSV text, parsed later.</p>
 empty string, and for one whose data rows do not all have the first row's column count:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$string </span><span class="text-kw">= </span><span class="text-str">&quot;a,b\n1,2\n3,4\n&quot;</span><span class="text-kw">;
+<span class="text-var">$string</span> = <span class="text-str">&quot;a,b\n1,2\n3,4\n&quot;</span>;
 
-if (</span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">isValid</span><span class="text-kw">(</span><span class="text-var">$string</span><span class="text-kw">)) {
-    </span><span class="text-var">$rows </span><span class="text-kw">= </span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">loadString</span><span class="text-kw">(</span><span class="text-var">$string</span><span class="text-kw">)-&gt;</span><span class="text-var">getData</span><span class="text-kw">();
+<span class="text-kw">if</span> (<span class="text-type">Csv</span>::<span class="text-fn">isValid</span>(<span class="text-var">$string</span>)) {
+    <span class="text-var">$rows</span> = <span class="text-type">Csv</span>::<span class="text-fn">loadString</span>(<span class="text-var">$string</span>)-&gt;<span class="text-fn">getData</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>It checks structure and nothing else — not encoding, not which delimiter is in use.</p>
@@ -63,12 +63,12 @@ if (</span><span class="text-var">Csv</span><span class="text-kw">::</span><span
 yielding one row at a time:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-foreach (</span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">readRowsFromFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/large-import.csv&#039;</span><span class="text-kw">) as </span><span class="text-var">$row</span><span class="text-kw">) {
-    </span><span class="text-comment">// one row at a time; memory stays flat however long the file is
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">foreach</span> (<span class="text-type">Csv</span>::<span class="text-fn">readRowsFromFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/large-import.csv&#039;</span>) <span class="text-kw">as</span> <span class="text-var">$row</span>) {
+    <span class="text-comment">// one row at a time; memory stays flat however long the file is</span>
+}
+</code></pre>
 </div>
 
 <p><code>Csv::getRowCountFromFile()</code> streams the same way when all you want is a count — for a progress bar
@@ -81,15 +81,15 @@ counts as a row, so a four-record file reports <code>5</code>.</p>
 keys of the first row become the header:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$csv </span><span class="text-kw">= new </span><span class="text-var">Csv</span><span class="text-kw">([
-    [</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Bob&#039;</span><span class="text-kw">,  </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Smith&#039;</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Jane&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Smith&#039;</span><span class="text-kw">],
+<span class="text-var">$csv</span> = <span class="text-kw">new</span> <span class="text-type">Csv</span>([
+    [<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;Bob&#039;</span>,  <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Smith&#039;</span>],
+    [<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;Jane&#039;</span>, <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Smith&#039;</span>],
 ]);
 
-echo </span><span class="text-var">$csv</span><span class="text-kw">-&gt;</span><span class="text-var">serialize</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$csv</span>-&gt;<span class="text-fn">serialize</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -104,18 +104,18 @@ Jane,Smith
 happened yet, so <code>echo $csv;</code> produces the same text without the explicit call.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$rows </span><span class="text-kw">= [
-    [</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Bob&#039;</span><span class="text-kw">,  </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Smith&#039;</span><span class="text-kw">],
-    [</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Jane&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Smith&#039;</span><span class="text-kw">],
+<span class="text-var">$rows</span> = [
+    [<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;Bob&#039;</span>,  <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Smith&#039;</span>],
+    [<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;Jane&#039;</span>, <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Smith&#039;</span>],
 ];
 
-</span><span class="text-var">$csv </span><span class="text-kw">= new </span><span class="text-var">Csv</span><span class="text-kw">(</span><span class="text-var">$rows</span><span class="text-kw">);
+<span class="text-var">$csv</span> = <span class="text-kw">new</span> <span class="text-type">Csv</span>(<span class="text-var">$rows</span>);
 
-</span><span class="text-var">$csv</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/export.csv&#039;</span><span class="text-kw">);
-</span><span class="text-var">$csv</span><span class="text-kw">-&gt;</span><span class="text-var">outputToHttp</span><span class="text-kw">(</span><span class="text-str">&#039;my-file.csv&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$csv</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/export.csv&#039;</span>);
+<span class="text-var">$csv</span>-&gt;<span class="text-fn">outputToHttp</span>(<span class="text-str">&#039;my-file.csv&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>outputToHttp()</code> sends <code>Content-Disposition: attachment</code> by default. Pass <code>false</code> as the second argument
@@ -124,13 +124,13 @@ same in one static call.</p>
 <p>For a file too large to build in memory, append instead. The target has to exist already:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">writeDataToFile</span><span class="text-kw">([[</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Bob&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Smith&#039;</span><span class="text-kw">]], </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/export.csv&#039;</span><span class="text-kw">);
+<span class="text-type">Csv</span>::<span class="text-fn">writeDataToFile</span>([[<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;Bob&#039;</span>, <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Smith&#039;</span>]], <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/export.csv&#039;</span>);
 
-</span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">appendRowToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/export.csv&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;John&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Smith&#039;</span><span class="text-kw">]);
-</span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">appendDataToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/export.csv&#039;</span><span class="text-kw">, [[</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Amy&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Jones&#039;</span><span class="text-kw">]]);
-</span></code></pre>
+<span class="text-type">Csv</span>::<span class="text-fn">appendRowToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/export.csv&#039;</span>, [<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;John&#039;</span>, <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Smith&#039;</span>]);
+<span class="text-type">Csv</span>::<span class="text-fn">appendDataToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/export.csv&#039;</span>, [[<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;Amy&#039;</span>, <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Jones&#039;</span>]]);
+</code></pre>
 </div>
 
 <p>Every append re-reads the target's header row and compares it against the new row's keys, throwing
@@ -141,13 +141,13 @@ argument to skip the check.</p>
 They derive it from the first data row's keys, so one representative row is still needed:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$rows </span><span class="text-kw">= [[</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Bob&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Smith&#039;</span><span class="text-kw">]];
+<span class="text-var">$rows</span> = [[<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;Bob&#039;</span>, <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Smith&#039;</span>]];
 
-</span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">writeTemplateToFile</span><span class="text-kw">(</span><span class="text-var">$rows</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/template.csv&#039;</span><span class="text-kw">);   </span><span class="text-comment">// first_name,last_name
-</span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">outputTemplateToHttp</span><span class="text-kw">(</span><span class="text-var">$rows</span><span class="text-kw">, </span><span class="text-str">&#039;template.csv&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Csv</span>::<span class="text-fn">writeTemplateToFile</span>(<span class="text-var">$rows</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/template.csv&#039;</span>);   <span class="text-comment">// first_name,last_name</span>
+<span class="text-type">Csv</span>::<span class="text-fn">outputTemplateToHttp</span>(<span class="text-var">$rows</span>, <span class="text-str">&#039;template.csv&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>writeBlankFile()</code> and <code>outputBlankFileToHttp()</code> are the instance equivalents, and both throw
@@ -230,15 +230,15 @@ They derive it from the first data row's keys, so one representative row is stil
 a file exactly as <code>.csv</code> is, but the delimiter is still passed on the way back in:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$rows </span><span class="text-kw">= [[</span><span class="text-str">&#039;first_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Bob&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;last_name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Smith&#039;</span><span class="text-kw">]];
+<span class="text-var">$rows</span> = [[<span class="text-str">&#039;first_name&#039;</span> =&gt; <span class="text-str">&#039;Bob&#039;</span>, <span class="text-str">&#039;last_name&#039;</span> =&gt; <span class="text-str">&#039;Smith&#039;</span>]];
 
-</span><span class="text-var">$csv </span><span class="text-kw">= new </span><span class="text-var">Csv</span><span class="text-kw">(</span><span class="text-var">$rows</span><span class="text-kw">, [</span><span class="text-str">&#039;delimiter&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&quot;\t&quot;</span><span class="text-kw">]);
-</span><span class="text-var">$csv</span><span class="text-kw">-&gt;</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/export.tsv&#039;</span><span class="text-kw">);
+<span class="text-var">$csv</span> = <span class="text-kw">new</span> <span class="text-type">Csv</span>(<span class="text-var">$rows</span>, [<span class="text-str">&#039;delimiter&#039;</span> =&gt; <span class="text-str">&quot;\t&quot;</span>]);
+<span class="text-var">$csv</span>-&gt;<span class="text-fn">writeToFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/export.tsv&#039;</span>);
 
-</span><span class="text-var">$loaded </span><span class="text-kw">= </span><span class="text-var">Csv</span><span class="text-kw">::</span><span class="text-var">loadFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../var/export.tsv&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;delimiter&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&quot;\t&quot;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$loaded</span> = <span class="text-type">Csv</span>::<span class="text-fn">loadFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../var/export.tsv&#039;</span>, [<span class="text-str">&#039;delimiter&#039;</span> =&gt; <span class="text-str">&quot;\t&quot;</span>]);
+</code></pre>
 </div>
 
 <p><code>escapeFormulas</code> matters on any export carrying user-supplied text. A cell beginning <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code>
@@ -246,12 +246,12 @@ is a live formula when the file opens in Excel, Google Sheets or LibreOffice; wi
 cell gets a leading single quote that the spreadsheet strips on display and never evaluates:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$csv </span><span class="text-kw">= new </span><span class="text-var">Csv</span><span class="text-kw">([[</span><span class="text-str">&#039;note&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;=SUM(A1:A10)&#039;</span><span class="text-kw">]], [</span><span class="text-str">&#039;escapeFormulas&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">]);
+<span class="text-var">$csv</span> = <span class="text-kw">new</span> <span class="text-type">Csv</span>([[<span class="text-str">&#039;note&#039;</span> =&gt; <span class="text-str">&#039;=SUM(A1:A10)&#039;</span>]], [<span class="text-str">&#039;escapeFormulas&#039;</span> =&gt; <span class="text-num">true</span>]);
 
-echo </span><span class="text-var">$csv</span><span class="text-kw">-&gt;</span><span class="text-var">serialize</span><span class="text-kw">(); </span><span class="text-comment">// note\n&#039;=SUM(A1:A10)\n
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$csv</span>-&gt;<span class="text-fn">serialize</span>(); <span class="text-comment">// note\n&#039;=SUM(A1:A10)\n</span>
+</code></pre>
 </div>
 
 <p>Pass <code>escapeFormulas</code> when the CSV is destined for a spreadsheet, so a cell beginning <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code>
@@ -264,27 +264,27 @@ and two options do that. <code>map</code> handles a single nested array: name th
 joined into one cell.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Csv\Csv</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Csv\Csv</span>;
 
-</span><span class="text-var">$users </span><span class="text-kw">= [
+<span class="text-var">$users</span> = [
     [
-        </span><span class="text-str">&#039;id&#039;       </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">,
-        </span><span class="text-str">&#039;username&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;testuser&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;country&#039;  </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;United States&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;code&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;US&#039;</span><span class="text-kw">],
-        </span><span class="text-str">&#039;roles&#039;    </span><span class="text-kw">=&gt; [
-            [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Admin&#039;</span><span class="text-kw">],
-            [</span><span class="text-str">&#039;id&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">2</span><span class="text-kw">, </span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Staff&#039;</span><span class="text-kw">],
+        <span class="text-str">&#039;id&#039;</span>       =&gt; <span class="text-num">1</span>,
+        <span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-str">&#039;testuser&#039;</span>,
+        <span class="text-str">&#039;country&#039;</span>  =&gt; [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;United States&#039;</span>, <span class="text-str">&#039;code&#039;</span> =&gt; <span class="text-str">&#039;US&#039;</span>],
+        <span class="text-str">&#039;roles&#039;</span>    =&gt; [
+            [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">1</span>, <span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Admin&#039;</span>],
+            [<span class="text-str">&#039;id&#039;</span> =&gt; <span class="text-num">2</span>, <span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Staff&#039;</span>],
         ],
     ],
 ];
 
-</span><span class="text-var">$csv </span><span class="text-kw">= new </span><span class="text-var">Csv</span><span class="text-kw">(</span><span class="text-var">$users</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;map&#039;     </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;country&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;code&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;columns&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;roles&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;name&#039;</span><span class="text-kw">],
+<span class="text-var">$csv</span> = <span class="text-kw">new</span> <span class="text-type">Csv</span>(<span class="text-var">$users</span>, [
+    <span class="text-str">&#039;map&#039;</span>     =&gt; [<span class="text-str">&#039;country&#039;</span> =&gt; <span class="text-str">&#039;code&#039;</span>],
+    <span class="text-str">&#039;columns&#039;</span> =&gt; [<span class="text-str">&#039;roles&#039;</span> =&gt; <span class="text-str">&#039;name&#039;</span>],
 ]);
 
-echo </span><span class="text-var">$csv</span><span class="text-kw">-&gt;</span><span class="text-var">serialize</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$csv</span>-&gt;<span class="text-fn">serialize</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">

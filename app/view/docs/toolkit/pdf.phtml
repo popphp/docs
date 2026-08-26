@@ -20,20 +20,20 @@ PHP, with no external binary and no third-party PDF library behind it.</p>
 <code>Pop\Pdf\Pdf</code> compiles the result:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>);
 
-</span><span class="text-var">$page </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">), </span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">742</span><span class="text-kw">);
+<span class="text-var">$page</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addText</span>(<span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;Hello World&#039;</span>, <span class="text-num">12</span>), <span class="text-type">Font</span>::<span class="text-num">ARIAL</span>, <span class="text-num">50</span>, <span class="text-num">742</span>);
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/my-document.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/my-document.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p>That writes a 912-byte PDF 1.7 file whose text reads back as <code>Hello World</code>. <code>createPage()</code> is the
@@ -48,13 +48,13 @@ so a y of 742 on a 792-point letter page is 50 points down from the top. That's 
 comes from. <code>setOrigin()</code> translates a more comfortable origin into the native one for you:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
 
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">setCompression</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">);
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">setOrigin</span><span class="text-kw">(</span><span class="text-var">Document</span><span class="text-kw">::</span><span class="text-var">ORIGIN_TOP_LEFT</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$document</span>-&gt;<span class="text-fn">setCompression</span>(<span class="text-num">true</span>);
+<span class="text-var">$document</span>-&gt;<span class="text-fn">setOrigin</span>(<span class="text-type">Document</span>::<span class="text-num">ORIGIN_TOP_LEFT</span>);
+</code></pre>
 </div>
 
 <p>The choices are <code>ORIGIN_TOP_LEFT</code>, <code>ORIGIN_TOP_RIGHT</code>, <code>ORIGIN_BOTTOM_LEFT</code>, <code>ORIGIN_BOTTOM_RIGHT</code> and
@@ -70,14 +70,14 @@ envelope and North American series — <code>A4</code>, <code>A5</code>, <code>L
 numbers make a custom size:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
 
-</span><span class="text-var">$letter </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);   </span><span class="text-comment">// 612 x 792
-</span><span class="text-var">$custom </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">500</span><span class="text-kw">, </span><span class="text-var">1000</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$letter</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);   <span class="text-comment">// 612 x 792</span>
+<span class="text-var">$custom</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-num">500</span>, <span class="text-num">1000</span>);
+</code></pre>
 </div>
 
 <h3 id="text-and-fonts">Text and Fonts<a class="anchor" href="#text-and-fonts" aria-label="Link to this section">#</a></h3>
@@ -88,19 +88,19 @@ on <code>Pop\Pdf\Document\Font</code> name the standard PDF fonts — <code>Font
 variants — and those need no file, since every PDF reader has them.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">HELVETICA_BOLD</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-type">Font</span>::<span class="text-num">HELVETICA_BOLD</span>);
 
-</span><span class="text-var">$text </span><span class="text-kw">= new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">);
+<span class="text-var">$text</span> = <span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;Hello World&#039;</span>, <span class="text-num">12</span>);
 
-</span><span class="text-var">$page </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(</span><span class="text-var">$text</span><span class="text-kw">, </span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">HELVETICA_BOLD</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">742</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$page</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addText</span>(<span class="text-var">$text</span>, <span class="text-type">Font</span>::<span class="text-num">HELVETICA_BOLD</span>, <span class="text-num">50</span>, <span class="text-num">742</span>);
+</code></pre>
 </div>
 
 <p><code>addText()</code> takes the text object, the font, and the x and y of its baseline. A <code>Text</code> carries its own
@@ -112,13 +112,13 @@ appearance: <code>setSize()</code>, <code>setFillColor()</code>, <code>setStroke
 words inside a bounding area rather than counting characters:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text\Alignment</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text\Alignment</span>;
 
-</span><span class="text-var">$text </span><span class="text-kw">= new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-var">$longString</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">);
+<span class="text-var">$text</span> = <span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-var">$longString</span>, <span class="text-num">12</span>);
 
-</span><span class="text-var">$text</span><span class="text-kw">-&gt;</span><span class="text-var">setAlignment</span><span class="text-kw">(</span><span class="text-var">Alignment</span><span class="text-kw">::</span><span class="text-var">createLeft</span><span class="text-kw">(</span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">350</span><span class="text-kw">, </span><span class="text-var">16</span><span class="text-kw">));
-</span></code></pre>
+<span class="text-var">$text</span>-&gt;<span class="text-fn">setAlignment</span>(<span class="text-type">Alignment</span>::<span class="text-fn">createLeft</span>(<span class="text-num">50</span>, <span class="text-num">350</span>, <span class="text-num">16</span>));
+</code></pre>
 </div>
 
 <p><code>createLeft()</code>, <code>createRight()</code> and <code>createCenter()</code> all take the left and right bounds of the box and
@@ -126,18 +126,18 @@ the leading between lines. A style is the other way to keep text consistent — 
 font and size on the document, and <code>addText()</code> accepts that name in place of a font:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">);
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createStyle</span><span class="text-kw">(</span><span class="text-str">&#039;body&#039;</span><span class="text-kw">, </span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>);
+<span class="text-var">$document</span>-&gt;<span class="text-fn">createStyle</span>(<span class="text-str">&#039;body&#039;</span>, <span class="text-type">Font</span>::<span class="text-num">ARIAL</span>, <span class="text-num">12</span>);
 
-</span><span class="text-var">$page </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;Styled text&#039;</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">), </span><span class="text-str">&#039;body&#039;</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">742</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$page</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addText</span>(<span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;Styled text&#039;</span>, <span class="text-num">12</span>), <span class="text-str">&#039;body&#039;</span>, <span class="text-num">50</span>, <span class="text-num">742</span>);
+</code></pre>
 </div>
 
 <h3 id="embedding-a-font">Embedding a Font<a class="anchor" href="#embedding-a-font" aria-label="Link to this section">#</a></h3>
@@ -146,19 +146,19 @@ use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="
 hand it to <code>embedFont()</code>, and reference it by <code>getName()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
 
-</span><span class="text-var">$font </span><span class="text-kw">= new </span><span class="text-var">Font</span><span class="text-kw">(</span><span class="text-str">&#039;/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf&#039;</span><span class="text-kw">);
+<span class="text-var">$font</span> = <span class="text-kw">new</span> <span class="text-type">Font</span>(<span class="text-str">&#039;/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf&#039;</span>);
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">embedFont</span><span class="text-kw">(</span><span class="text-var">$font</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$document</span>-&gt;<span class="text-fn">embedFont</span>(<span class="text-var">$font</span>);
 
-</span><span class="text-var">$page </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;123 ПРИВІТ&#039;</span><span class="text-kw">, </span><span class="text-var">24</span><span class="text-kw">), </span><span class="text-var">$font</span><span class="text-kw">-&gt;</span><span class="text-var">getName</span><span class="text-kw">(), </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">700</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$page</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addText</span>(<span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;123 ПРИВІТ&#039;</span>, <span class="text-num">24</span>), <span class="text-var">$font</span>-&gt;<span class="text-fn">getName</span>(), <span class="text-num">50</span>, <span class="text-num">700</span>);
+</code></pre>
 </div>
 
 <p>Embedded TrueType and OpenType fonts are compiled as composite CID fonts with a <code>/ToUnicode</code> map, so
@@ -173,12 +173,12 @@ font.</p>
 the next element goes. It works for standard and embedded fonts alike:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
 
-</span><span class="text-var">$font </span><span class="text-kw">= new </span><span class="text-var">Font</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">HELVETICA_BOLD</span><span class="text-kw">);
+<span class="text-var">$font</span> = <span class="text-kw">new</span> <span class="text-type">Font</span>(<span class="text-type">Font</span>::<span class="text-num">HELVETICA_BOLD</span>);
 
-</span><span class="text-var">$font</span><span class="text-kw">-&gt;</span><span class="text-var">getStringWidth</span><span class="text-kw">(</span><span class="text-str">&#039;Hello World&#039;</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">);  </span><span class="text-comment">// 66.672
-</span></code></pre>
+<span class="text-var">$font</span>-&gt;<span class="text-fn">getStringWidth</span>(<span class="text-str">&#039;Hello World&#039;</span>, <span class="text-num">12</span>);  <span class="text-comment">// 66.672</span>
+</code></pre>
 </div>
 
 <h2 id="images-and-drawing">Images and Drawing<a class="anchor" href="#images-and-drawing" aria-label="Link to this section">#</a></h2>
@@ -187,18 +187,18 @@ the next element goes. It works for standard and embedded fonts alike:</p>
 <code>addImage()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Image</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Image</span>;
 
-</span><span class="text-var">$image </span><span class="text-kw">= </span><span class="text-var">Image</span><span class="text-kw">::</span><span class="text-var">createImageFromFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/photo.jpg&#039;</span><span class="text-kw">);
-</span><span class="text-var">$image</span><span class="text-kw">-&gt;</span><span class="text-var">resizeToWidth</span><span class="text-kw">(</span><span class="text-var">200</span><span class="text-kw">);
+<span class="text-var">$image</span> = <span class="text-type">Image</span>::<span class="text-fn">createImageFromFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/photo.jpg&#039;</span>);
+<span class="text-var">$image</span>-&gt;<span class="text-fn">resizeToWidth</span>(<span class="text-num">200</span>);
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$page     </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$page</span>     = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
 
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addImage</span><span class="text-kw">(</span><span class="text-var">$image</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">500</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addImage</span>(<span class="text-var">$image</span>, <span class="text-num">50</span>, <span class="text-num">500</span>);
+</code></pre>
 </div>
 
 <p><code>Image::loadImageFromStream()</code> takes the bytes instead of a path. Four methods resize —
@@ -216,23 +216,23 @@ image's top 50 points down from the page top.</p>
 and colors come from <code>pop-color</code> exactly as they do for images:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Color\Color</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Path</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Color\Color</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Path</span>;
 
-</span><span class="text-var">$path </span><span class="text-kw">= new </span><span class="text-var">Path</span><span class="text-kw">(</span><span class="text-var">Path</span><span class="text-kw">::</span><span class="text-var">FILL_STROKE</span><span class="text-kw">);
+<span class="text-var">$path</span> = <span class="text-kw">new</span> <span class="text-type">Path</span>(<span class="text-type">Path</span>::<span class="text-num">FILL_STROKE</span>);
 
-</span><span class="text-var">$path</span><span class="text-kw">-&gt;</span><span class="text-var">setFillColor</span><span class="text-kw">(</span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">rgb</span><span class="text-kw">(</span><span class="text-var">155</span><span class="text-kw">, </span><span class="text-var">20</span><span class="text-kw">, </span><span class="text-var">20</span><span class="text-kw">))
-     -&gt;</span><span class="text-var">setStrokeColor</span><span class="text-kw">(</span><span class="text-var">Color</span><span class="text-kw">::</span><span class="text-var">rgb</span><span class="text-kw">(</span><span class="text-var">81</span><span class="text-kw">, </span><span class="text-var">125</span><span class="text-kw">, </span><span class="text-var">153</span><span class="text-kw">))
-     -&gt;</span><span class="text-var">setStroke</span><span class="text-kw">(</span><span class="text-var">5</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">drawRectangle</span><span class="text-kw">(</span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">400</span><span class="text-kw">, </span><span class="text-var">320</span><span class="text-kw">, </span><span class="text-var">240</span><span class="text-kw">);
+<span class="text-var">$path</span>-&gt;<span class="text-fn">setFillColor</span>(<span class="text-type">Color</span>::<span class="text-fn">rgb</span>(<span class="text-num">155</span>, <span class="text-num">20</span>, <span class="text-num">20</span>))
+     -&gt;<span class="text-fn">setStrokeColor</span>(<span class="text-type">Color</span>::<span class="text-fn">rgb</span>(<span class="text-num">81</span>, <span class="text-num">125</span>, <span class="text-num">153</span>))
+     -&gt;<span class="text-fn">setStroke</span>(<span class="text-num">5</span>)
+     -&gt;<span class="text-fn">drawRectangle</span>(<span class="text-num">50</span>, <span class="text-num">400</span>, <span class="text-num">320</span>, <span class="text-num">240</span>);
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$page     </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$page</span>     = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
 
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addPath</span><span class="text-kw">(</span><span class="text-var">$path</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addPath</span>(<span class="text-var">$path</span>);
+</code></pre>
 </div>
 
 <p>Eleven draw methods cover the shapes: <code>drawLine()</code>, <code>drawRectangle()</code>, <code>drawRoundedRectangle()</code>,
@@ -251,23 +251,23 @@ at the same coordinates.</p>
 height of the hot area and the address, and <code>addUrl()</code> places it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Annotation\Url</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Annotation\Url</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>);
 
-</span><span class="text-var">$page </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
+<span class="text-var">$page</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
 
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;Visit Google&#039;</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">), </span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">742</span><span class="text-kw">);
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addUrl</span><span class="text-kw">(new </span><span class="text-var">Url</span><span class="text-kw">(</span><span class="text-var">100</span><span class="text-kw">, </span><span class="text-var">15</span><span class="text-kw">, </span><span class="text-str">&#039;https://www.google.com/&#039;</span><span class="text-kw">), </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">742</span><span class="text-kw">);
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addText</span>(<span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;Visit Google&#039;</span>, <span class="text-num">12</span>), <span class="text-type">Font</span>::<span class="text-num">ARIAL</span>, <span class="text-num">50</span>, <span class="text-num">742</span>);
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addUrl</span>(<span class="text-kw">new</span> <span class="text-type">Url</span>(<span class="text-num">100</span>, <span class="text-num">15</span>, <span class="text-str">&#039;https://www.google.com/&#039;</span>), <span class="text-num">50</span>, <span class="text-num">742</span>);
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/linked.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/linked.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p>The <code>100, 15</code> is a box 100 points wide and 15 tall — sized to cover the text, which is why
@@ -278,30 +278,30 @@ constructor takes the box width and height followed by the x and y to land on, a
 page and the zoom:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Annotation\Link</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Annotation\Link</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>);
 
-</span><span class="text-var">$page1 </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
-</span><span class="text-var">$page1</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;Jump to page 2&#039;</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">), </span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">742</span><span class="text-kw">);
+<span class="text-var">$page1</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
+<span class="text-var">$page1</span>-&gt;<span class="text-fn">addText</span>(<span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;Jump to page 2&#039;</span>, <span class="text-num">12</span>), <span class="text-type">Font</span>::<span class="text-num">ARIAL</span>, <span class="text-num">50</span>, <span class="text-num">742</span>);
 
-</span><span class="text-var">$page2 </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
-</span><span class="text-var">$page2</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;This is the destination&#039;</span><span class="text-kw">, </span><span class="text-var">12</span><span class="text-kw">), </span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">742</span><span class="text-kw">);
+<span class="text-var">$page2</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
+<span class="text-var">$page2</span>-&gt;<span class="text-fn">addText</span>(<span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;This is the destination&#039;</span>, <span class="text-num">12</span>), <span class="text-type">Font</span>::<span class="text-num">ARIAL</span>, <span class="text-num">50</span>, <span class="text-num">742</span>);
 
-</span><span class="text-var">$link </span><span class="text-kw">= new </span><span class="text-var">Link</span><span class="text-kw">(</span><span class="text-var">120</span><span class="text-kw">, </span><span class="text-var">15</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">752</span><span class="text-kw">);
-</span><span class="text-var">$link</span><span class="text-kw">-&gt;</span><span class="text-var">setPageTarget</span><span class="text-kw">(</span><span class="text-var">2</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">setZTarget</span><span class="text-kw">(</span><span class="text-var">110</span><span class="text-kw">);
+<span class="text-var">$link</span> = <span class="text-kw">new</span> <span class="text-type">Link</span>(<span class="text-num">120</span>, <span class="text-num">15</span>, <span class="text-num">10</span>, <span class="text-num">752</span>);
+<span class="text-var">$link</span>-&gt;<span class="text-fn">setPageTarget</span>(<span class="text-num">2</span>)
+     -&gt;<span class="text-fn">setZTarget</span>(<span class="text-num">110</span>);
 
-</span><span class="text-var">$page1</span><span class="text-kw">-&gt;</span><span class="text-var">addLink</span><span class="text-kw">(</span><span class="text-var">$link</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">742</span><span class="text-kw">);
+<span class="text-var">$page1</span>-&gt;<span class="text-fn">addLink</span>(<span class="text-var">$link</span>, <span class="text-num">50</span>, <span class="text-num">742</span>);
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/internal.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/internal.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>setPageTarget()</code> takes a 1-based page number and <code>setZTarget()</code> a zoom percentage, so the example
@@ -322,43 +322,43 @@ form. Three field classes cover everything supported:
 <code>Field\Choice</code> for drop-downs and multi-selects, and <code>Field\Button</code> for checkboxes and radios.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Form</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Form</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addForm</span><span class="text-kw">(new </span><span class="text-var">Form</span><span class="text-kw">(</span><span class="text-str">&#039;contact_form&#039;</span><span class="text-kw">));
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(new </span><span class="text-var">Font</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">));
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addForm</span>(<span class="text-kw">new</span> <span class="text-type">Form</span>(<span class="text-str">&#039;contact_form&#039;</span>));
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-kw">new</span> <span class="text-type">Font</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>));
 
-</span><span class="text-var">$firstName </span><span class="text-kw">= new </span><span class="text-var">Page\Field\Text</span><span class="text-kw">(</span><span class="text-str">&#039;first_name&#039;</span><span class="text-kw">);
-</span><span class="text-var">$firstName</span><span class="text-kw">-&gt;</span><span class="text-var">setWidth</span><span class="text-kw">(</span><span class="text-var">200</span><span class="text-kw">)-&gt;</span><span class="text-var">setHeight</span><span class="text-kw">(</span><span class="text-var">20</span><span class="text-kw">);
+<span class="text-var">$firstName</span> = <span class="text-kw">new</span> <span class="text-type">Page\Field\Text</span>(<span class="text-str">&#039;first_name&#039;</span>);
+<span class="text-var">$firstName</span>-&gt;<span class="text-fn">setWidth</span>(<span class="text-num">200</span>)-&gt;<span class="text-fn">setHeight</span>(<span class="text-num">20</span>);
 
-</span><span class="text-var">$comments </span><span class="text-kw">= new </span><span class="text-var">Page\Field\Text</span><span class="text-kw">(</span><span class="text-str">&#039;comments&#039;</span><span class="text-kw">);
-</span><span class="text-var">$comments</span><span class="text-kw">-&gt;</span><span class="text-var">setWidth</span><span class="text-kw">(</span><span class="text-var">500</span><span class="text-kw">)-&gt;</span><span class="text-var">setHeight</span><span class="text-kw">(</span><span class="text-var">150</span><span class="text-kw">)-&gt;</span><span class="text-var">setMultiline</span><span class="text-kw">();
+<span class="text-var">$comments</span> = <span class="text-kw">new</span> <span class="text-type">Page\Field\Text</span>(<span class="text-str">&#039;comments&#039;</span>);
+<span class="text-var">$comments</span>-&gt;<span class="text-fn">setWidth</span>(<span class="text-num">500</span>)-&gt;<span class="text-fn">setHeight</span>(<span class="text-num">150</span>)-&gt;<span class="text-fn">setMultiline</span>();
 
-</span><span class="text-var">$city </span><span class="text-kw">= new </span><span class="text-var">Page\Field\Choice</span><span class="text-kw">(</span><span class="text-str">&#039;city&#039;</span><span class="text-kw">);
-</span><span class="text-var">$city</span><span class="text-kw">-&gt;</span><span class="text-var">addOption</span><span class="text-kw">(</span><span class="text-str">&#039;New Orleans&#039;</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">addOption</span><span class="text-kw">(</span><span class="text-str">&#039;New York&#039;</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">setCombo</span><span class="text-kw">()
-     -&gt;</span><span class="text-var">setWidth</span><span class="text-kw">(</span><span class="text-var">200</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">setHeight</span><span class="text-kw">(</span><span class="text-var">20</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">setFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">setSize</span><span class="text-kw">(</span><span class="text-var">11</span><span class="text-kw">);
+<span class="text-var">$city</span> = <span class="text-kw">new</span> <span class="text-type">Page\Field\Choice</span>(<span class="text-str">&#039;city&#039;</span>);
+<span class="text-var">$city</span>-&gt;<span class="text-fn">addOption</span>(<span class="text-str">&#039;New Orleans&#039;</span>)
+     -&gt;<span class="text-fn">addOption</span>(<span class="text-str">&#039;New York&#039;</span>)
+     -&gt;<span class="text-fn">setCombo</span>()
+     -&gt;<span class="text-fn">setWidth</span>(<span class="text-num">200</span>)
+     -&gt;<span class="text-fn">setHeight</span>(<span class="text-num">20</span>)
+     -&gt;<span class="text-fn">setFont</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>)
+     -&gt;<span class="text-fn">setSize</span>(<span class="text-num">11</span>);
 
-</span><span class="text-var">$agree </span><span class="text-kw">= new </span><span class="text-var">Page\Field\Button</span><span class="text-kw">(</span><span class="text-str">&#039;agree&#039;</span><span class="text-kw">);
-</span><span class="text-var">$agree</span><span class="text-kw">-&gt;</span><span class="text-var">addOption</span><span class="text-kw">(</span><span class="text-str">&#039;Yes&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">setWidth</span><span class="text-kw">(</span><span class="text-var">20</span><span class="text-kw">)-&gt;</span><span class="text-var">setHeight</span><span class="text-kw">(</span><span class="text-var">20</span><span class="text-kw">);
+<span class="text-var">$agree</span> = <span class="text-kw">new</span> <span class="text-type">Page\Field\Button</span>(<span class="text-str">&#039;agree&#039;</span>);
+<span class="text-var">$agree</span>-&gt;<span class="text-fn">addOption</span>(<span class="text-str">&#039;Yes&#039;</span>)-&gt;<span class="text-fn">setWidth</span>(<span class="text-num">20</span>)-&gt;<span class="text-fn">setHeight</span>(<span class="text-num">20</span>);
 
-</span><span class="text-var">$page </span><span class="text-kw">= </span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
+<span class="text-var">$page</span> = <span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
 
-</span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addField</span><span class="text-kw">(</span><span class="text-var">$firstName</span><span class="text-kw">, </span><span class="text-str">&#039;contact_form&#039;</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">650</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">addField</span><span class="text-kw">(</span><span class="text-var">$city</span><span class="text-kw">, </span><span class="text-str">&#039;contact_form&#039;</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">, </span><span class="text-var">550</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">addField</span><span class="text-kw">(</span><span class="text-var">$agree</span><span class="text-kw">, </span><span class="text-str">&#039;contact_form&#039;</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">325</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">addField</span><span class="text-kw">(</span><span class="text-var">$comments</span><span class="text-kw">, </span><span class="text-str">&#039;contact_form&#039;</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">100</span><span class="text-kw">);
+<span class="text-var">$page</span>-&gt;<span class="text-fn">addField</span>(<span class="text-var">$firstName</span>, <span class="text-str">&#039;contact_form&#039;</span>, <span class="text-num">50</span>, <span class="text-num">650</span>)
+     -&gt;<span class="text-fn">addField</span>(<span class="text-var">$city</span>, <span class="text-str">&#039;contact_form&#039;</span>, <span class="text-num">300</span>, <span class="text-num">550</span>)
+     -&gt;<span class="text-fn">addField</span>(<span class="text-var">$agree</span>, <span class="text-str">&#039;contact_form&#039;</span>, <span class="text-num">50</span>, <span class="text-num">325</span>)
+     -&gt;<span class="text-fn">addField</span>(<span class="text-var">$comments</span>, <span class="text-str">&#039;contact_form&#039;</span>, <span class="text-num">50</span>, <span class="text-num">100</span>);
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/contact.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/contact.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>addField()</code> takes the field, the name of the form it belongs to, and the x and y of its bottom left
@@ -378,27 +378,27 @@ for what it looks like, once for what it captures.</p>
 objects you would have built. From there it is an ordinary document — add to it, and write it out:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">importFromFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/incoming.pdf&#039;</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-type">Pdf</span>::<span class="text-fn">importFromFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/incoming.pdf&#039;</span>);
 
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">);
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">getPage</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">)-&gt;</span><span class="text-var">addText</span><span class="text-kw">(new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;Received 2026-08-24&#039;</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">), </span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">, </span><span class="text-var">700</span><span class="text-kw">);
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>);
+<span class="text-var">$document</span>-&gt;<span class="text-fn">getPage</span>(<span class="text-num">1</span>)-&gt;<span class="text-fn">addText</span>(<span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;Received 2026-08-24&#039;</span>, <span class="text-num">10</span>), <span class="text-type">Font</span>::<span class="text-num">ARIAL</span>, <span class="text-num">50</span>, <span class="text-num">700</span>);
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/stamped.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/stamped.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p>A second argument selects pages, as an integer or an array of 1-based page numbers, and the imported
 document holds only those:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">importFromFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/incoming.pdf&#039;</span><span class="text-kw">, [</span><span class="text-var">2</span><span class="text-kw">, </span><span class="text-var">4</span><span class="text-kw">, </span><span class="text-var">6</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-var">$document</span> = <span class="text-type">Pdf</span>::<span class="text-fn">importFromFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/incoming.pdf&#039;</span>, [<span class="text-num">2</span>, <span class="text-num">4</span>, <span class="text-num">6</span>]);
+</code></pre>
 </div>
 
 <p>Importing pages <code>[2]</code> from a three-page document gives a one-page document, and that page is then page
@@ -408,13 +408,13 @@ in a request body or came out of a database column.</p>
 <p><code>Pdf::importFromImages()</code> builds a document from images instead, one page per image, sized to fit it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">importFromImages</span><span class="text-kw">([
-    </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/scan-1.jpg&#039;</span><span class="text-kw">,
-    </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/scan-2.png&#039;</span><span class="text-kw">,
-], </span><span class="text-var">70</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$document</span> = <span class="text-type">Pdf</span>::<span class="text-fn">importFromImages</span>([
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/scan-1.jpg&#039;</span>,
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/scan-2.png&#039;</span>,
+], <span class="text-num">70</span>);
+</code></pre>
 </div>
 
 <p>The second argument is the JPEG quality for the embedded images, defaulting to 70. A single path may be
@@ -425,16 +425,16 @@ passed instead of an array.</p>
 appended in order:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">merge</span><span class="text-kw">([
-    </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/cover.pdf&#039;</span><span class="text-kw">,
-    </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/body.pdf&#039;</span><span class="text-kw">,
-    </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/appendix.pdf&#039;</span><span class="text-kw">,
+<span class="text-var">$document</span> = <span class="text-type">Pdf</span>::<span class="text-fn">merge</span>([
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/cover.pdf&#039;</span>,
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/body.pdf&#039;</span>,
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/appendix.pdf&#039;</span>,
 ]);
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/complete.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/complete.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p>Merging three documents of three, two and one pages gives a six-page document, in that order, with
@@ -443,23 +443,23 @@ every page's text intact. <code>Pdf::mergeRawData()</code> is the same operation
 page number on each sheet, or drop a page before writing anything to disk.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page\Text</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page\Text</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">merge</span><span class="text-kw">([
-    </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/cover.pdf&#039;</span><span class="text-kw">,
-    </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/body.pdf&#039;</span><span class="text-kw">,
+<span class="text-var">$document</span> = <span class="text-type">Pdf</span>::<span class="text-fn">merge</span>([
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/cover.pdf&#039;</span>,
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/body.pdf&#039;</span>,
 ]);
 
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">);
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>);
 
-foreach (</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">getPages</span><span class="text-kw">() as </span><span class="text-var">$number </span><span class="text-kw">=&gt; </span><span class="text-var">$page</span><span class="text-kw">) {
-    </span><span class="text-var">$page</span><span class="text-kw">-&gt;</span><span class="text-var">addText</span><span class="text-kw">(new </span><span class="text-var">Text</span><span class="text-kw">(</span><span class="text-str">&#039;Page &#039; </span><span class="text-kw">. (</span><span class="text-var">$number </span><span class="text-kw">+ </span><span class="text-var">1</span><span class="text-kw">), </span><span class="text-var">9</span><span class="text-kw">), </span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">, </span><span class="text-var">300</span><span class="text-kw">, </span><span class="text-var">30</span><span class="text-kw">);
+<span class="text-kw">foreach</span> (<span class="text-var">$document</span>-&gt;<span class="text-fn">getPages</span>() <span class="text-kw">as</span> <span class="text-var">$number</span> =&gt; <span class="text-var">$page</span>) {
+    <span class="text-var">$page</span>-&gt;<span class="text-fn">addText</span>(<span class="text-kw">new</span> <span class="text-type">Text</span>(<span class="text-str">&#039;Page &#039;</span> . (<span class="text-var">$number</span> + <span class="text-num">1</span>), <span class="text-num">9</span>), <span class="text-type">Font</span>::<span class="text-num">ARIAL</span>, <span class="text-num">300</span>, <span class="text-num">30</span>);
 }
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/numbered.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/numbered.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>getPages()</code> is indexed from zero, which is why the counter above adds one — unlike <code>getPage()</code>, which
@@ -478,12 +478,12 @@ uses.</p>
 <p><code>Pdf::importFromHtml()</code> is the one-liner:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">importFromHtml</span><span class="text-kw">(</span><span class="text-str">&#039;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;p&gt;Simple paragraph.&lt;/p&gt;&#039;</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-type">Pdf</span>::<span class="text-fn">importFromHtml</span>(<span class="text-str">&#039;&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;p&gt;Simple paragraph.&lt;/p&gt;&#039;</span>);
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">, </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/from-html.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/from-html.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>Pdf::importFromHtmlFile()</code> reads the markup from a file, following its linked CSS and images. Both
@@ -493,23 +493,23 @@ already built.</p>
 document, parses markup and stylesheets separately, and <code>process()</code> does the layout:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Build\Html\Parser</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Font</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Document\Page</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Build\Html\Parser</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Font</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Page</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$document </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">();
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">addFont</span><span class="text-kw">(</span><span class="text-var">Font</span><span class="text-kw">::</span><span class="text-var">ARIAL</span><span class="text-kw">);
-</span><span class="text-var">$document</span><span class="text-kw">-&gt;</span><span class="text-var">createPage</span><span class="text-kw">(</span><span class="text-var">Page</span><span class="text-kw">::</span><span class="text-var">LETTER</span><span class="text-kw">);
+<span class="text-var">$document</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>();
+<span class="text-var">$document</span>-&gt;<span class="text-fn">addFont</span>(<span class="text-type">Font</span>::<span class="text-num">ARIAL</span>);
+<span class="text-var">$document</span>-&gt;<span class="text-fn">createPage</span>(<span class="text-type">Page</span>::<span class="text-num">LETTER</span>);
 
-</span><span class="text-var">$parser </span><span class="text-kw">= new </span><span class="text-var">Parser</span><span class="text-kw">(</span><span class="text-var">$document</span><span class="text-kw">);
-</span><span class="text-var">$parser</span><span class="text-kw">-&gt;</span><span class="text-var">parseHtml</span><span class="text-kw">(</span><span class="text-var">$html</span><span class="text-kw">, </span><span class="text-var">__DIR__</span><span class="text-kw">);
-</span><span class="text-var">$parser</span><span class="text-kw">-&gt;</span><span class="text-var">parseCss</span><span class="text-kw">(</span><span class="text-var">$css</span><span class="text-kw">);
-</span><span class="text-var">$parser</span><span class="text-kw">-&gt;</span><span class="text-var">process</span><span class="text-kw">();
+<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">Parser</span>(<span class="text-var">$document</span>);
+<span class="text-var">$parser</span>-&gt;<span class="text-fn">parseHtml</span>(<span class="text-var">$html</span>, <span class="text-kw">__DIR__</span>);
+<span class="text-var">$parser</span>-&gt;<span class="text-fn">parseCss</span>(<span class="text-var">$css</span>);
+<span class="text-var">$parser</span>-&gt;<span class="text-fn">process</span>();
 
-</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">writeToFile</span><span class="text-kw">(</span><span class="text-var">$parser</span><span class="text-kw">-&gt;</span><span class="text-var">document</span><span class="text-kw">(), </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/invoice.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$parser</span>-&gt;<span class="text-fn">document</span>(), <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/invoice.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p>The second argument to <code>parseHtml()</code> is a base directory, so relative image paths in the markup resolve
@@ -531,10 +531,10 @@ markup are where support thins out.</p>
 documents using embedded fonts, not only the standard fourteen:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$text </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">extractTextFromFile</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/incoming.pdf&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$text</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractTextFromFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/incoming.pdf&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>Pdf::extractTextFromData()</code> takes bytes instead of a path. Both accept two further arguments: a page
@@ -542,11 +542,11 @@ selection, as an integer or an array of 1-based page numbers, and a page limit t
 are walked at all — which is the one to reach for when the input is untrusted and could be enormous:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-</span><span class="text-var">$firstPages </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">extractTextFromFile</span><span class="text-kw">(</span><span class="text-var">$file</span><span class="text-kw">, [</span><span class="text-var">1</span><span class="text-kw">, </span><span class="text-var">2</span><span class="text-kw">, </span><span class="text-var">3</span><span class="text-kw">]);
-</span><span class="text-var">$bounded    </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">extractTextFromFile</span><span class="text-kw">(</span><span class="text-var">$file</span><span class="text-kw">, </span><span class="text-var">null</span><span class="text-kw">, </span><span class="text-var">50</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$firstPages</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractTextFromFile</span>(<span class="text-var">$file</span>, [<span class="text-num">1</span>, <span class="text-num">2</span>, <span class="text-num">3</span>]);
+<span class="text-var">$bounded</span>    = <span class="text-type">Pdf</span>::<span class="text-fn">extractTextFromFile</span>(<span class="text-var">$file</span>, <span class="text-num">null</span>, <span class="text-num">50</span>);
+</code></pre>
 </div>
 
 <p>Pages come back separated by a blank line, and a page with nothing on it contributes nothing rather
@@ -556,15 +556,15 @@ extracts as those three strings in order.</p>
 Three methods answer the question directly:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Pdf\Pdf</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-if (</span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">isImageOnlyDocument</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/incoming.pdf&#039;</span><span class="text-kw">)) {
-    </span><span class="text-comment">// every page is a single full-page image — route it to OCR
-</span><span class="text-kw">}
+<span class="text-kw">if</span> (<span class="text-type">Pdf</span>::<span class="text-fn">isImageOnlyDocument</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/incoming.pdf&#039;</span>)) {
+    <span class="text-comment">// every page is a single full-page image — route it to OCR</span>
+}
 
-</span><span class="text-var">$pages </span><span class="text-kw">= </span><span class="text-var">Pdf</span><span class="text-kw">::</span><span class="text-var">getImageOnlyPages</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../storage/incoming.pdf&#039;</span><span class="text-kw">);
-</span><span class="text-comment">// [0 =&gt; true, 1 =&gt; false, 2 =&gt; true]
-</span></code></pre>
+<span class="text-var">$pages</span> = <span class="text-type">Pdf</span>::<span class="text-fn">getImageOnlyPages</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/incoming.pdf&#039;</span>);
+<span class="text-comment">// [0 =&gt; true, 1 =&gt; false, 2 =&gt; true]</span>
+</code></pre>
 </div>
 
 <p><code>isImageOnlyDocument()</code> is the whole-document answer and <code>getImageOnlyPages()</code> the per-page breakdown,

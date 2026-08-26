@@ -13,34 +13,34 @@ Kettle scaffolds them, runs them in timestamp order and tracks how far it has go
 The adapter is already on it as <code>$this-&gt;db</code>, so the body is the schema builder and nothing else:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">database/migrations/default/20260101120000_create_widgets_table.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-</span><span class="text-kw">declare(</span><span class="text-var">strict_types</span><span class="text-kw">=</span><span class="text-var">1</span><span class="text-kw">);
+<pre><code><span class="text-kw">&lt;?php
+</span><span class="text-kw">declare</span>(<span class="text-type">strict_types</span>=<span class="text-num">1</span>);
 
-use </span><span class="text-var">Pop\Db\Sql\Migration\AbstractMigration</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Sql\Migration\AbstractMigration</span>;
 
-class </span><span class="text-var">CreateWidgetsTable </span><span class="text-kw">extends </span><span class="text-var">AbstractMigration
-</span><span class="text-kw">{
+<span class="text-kw">class</span> <span class="text-type">CreateWidgetsTable</span> <span class="text-kw">extends</span> <span class="text-type">AbstractMigration</span>
+{
 
-    public function </span><span class="text-var">up</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
-        </span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">)
-            -&gt;</span><span class="text-var">int</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-var">16</span><span class="text-kw">)-&gt;</span><span class="text-var">increment</span><span class="text-kw">()
-            -&gt;</span><span class="text-var">varchar</span><span class="text-kw">(</span><span class="text-str">&#039;name&#039;</span><span class="text-kw">, </span><span class="text-var">255</span><span class="text-kw">)-&gt;</span><span class="text-var">notNullable</span><span class="text-kw">()
-            -&gt;</span><span class="text-var">primary</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">);
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">up</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-var">$schema</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">db</span>-&gt;<span class="text-fn">createSchema</span>();
+        <span class="text-var">$schema</span>-&gt;<span class="text-fn">create</span>(<span class="text-str">&#039;widgets&#039;</span>)
+            -&gt;<span class="text-fn">int</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-num">16</span>)-&gt;<span class="text-fn">increment</span>()
+            -&gt;<span class="text-fn">varchar</span>(<span class="text-str">&#039;name&#039;</span>, <span class="text-num">255</span>)-&gt;<span class="text-fn">notNullable</span>()
+            -&gt;<span class="text-fn">primary</span>(<span class="text-str">&#039;id&#039;</span>);
 
-        </span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
+        <span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
     }
 
-    public function </span><span class="text-var">down</span><span class="text-kw">(): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$schema </span><span class="text-kw">= </span><span class="text-var">$this</span><span class="text-kw">-&gt;</span><span class="text-var">db</span><span class="text-kw">-&gt;</span><span class="text-var">createSchema</span><span class="text-kw">();
-        </span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">dropIfExists</span><span class="text-kw">(</span><span class="text-str">&#039;widgets&#039;</span><span class="text-kw">);
-        </span><span class="text-var">$schema</span><span class="text-kw">-&gt;</span><span class="text-var">execute</span><span class="text-kw">();
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">down</span>(): <span class="text-type">void</span>
+    {
+        <span class="text-var">$schema</span> = <span class="text-var">$this</span>-&gt;<span class="text-type">db</span>-&gt;<span class="text-fn">createSchema</span>();
+        <span class="text-var">$schema</span>-&gt;<span class="text-fn">dropIfExists</span>(<span class="text-str">&#039;widgets&#039;</span>);
+        <span class="text-var">$schema</span>-&gt;<span class="text-fn">execute</span>();
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Write <code>down()</code> if you ever intend to roll back — an empty one rolls back cleanly and changes nothing. The
@@ -115,13 +115,13 @@ a deploy script, a test bootstrap, or a setup command of your own. It takes the 
 holding the migration files:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Db\Record</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Db\Sql\Migrator</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Db\Record</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Sql\Migrator</span>;
 
-</span><span class="text-var">$migrator </span><span class="text-kw">= new </span><span class="text-var">Migrator</span><span class="text-kw">(</span><span class="text-var">Record</span><span class="text-kw">::</span><span class="text-var">getDb</span><span class="text-kw">(), </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../database/migrations/default&#039;</span><span class="text-kw">);
+<span class="text-var">$migrator</span> = <span class="text-kw">new</span> <span class="text-type">Migrator</span>(<span class="text-type">Record</span>::<span class="text-fn">getDb</span>(), <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../database/migrations/default&#039;</span>);
 
-</span><span class="text-var">$migrator</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$migrator</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p><code>run()</code> and <code>rollback()</code> take a number of steps, one by default; <code>runAll()</code> and <code>rollbackAll()</code> cover the

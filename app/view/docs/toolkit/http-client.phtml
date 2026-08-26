@@ -19,46 +19,46 @@ interface, and adds authentication, middleware, promises and a mock handler for 
 <p>The shortest form is a static call named after the verb. It returns a fully populated response object.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">get</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
+</code></pre>
 </div>
 
 <p>That's the same thing as building a client and calling the verb on it, which is what you want as soon as the
 request needs any configuration:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$client   </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">get</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$client</span>   = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
+<span class="text-var">$response</span> = <span class="text-var">$client</span>-&gt;<span class="text-fn">get</span>();
+</code></pre>
 </div>
 
 <p><code>get()</code>, <code>post()</code>, <code>put()</code>, <code>patch()</code> and <code>delete()</code> all exist in both forms. A third form puts the method in
 the options array and dispatches with <code>send()</code>, which is what you reach for when the verb itself is a variable:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$client   </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;method&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;POST&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$client</span>   = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, [<span class="text-str">&#039;method&#039;</span> =&gt; <span class="text-str">&#039;POST&#039;</span>]);
+<span class="text-var">$response</span> = <span class="text-var">$client</span>-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <p>Sending data is the <code>data</code> option:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">post</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;data&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;name&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Widget&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;count&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">123</span><span class="text-kw">,
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">post</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, [
+    <span class="text-str">&#039;data&#039;</span> =&gt; [
+        <span class="text-str">&#039;name&#039;</span>  =&gt; <span class="text-str">&#039;Widget&#039;</span>,
+        <span class="text-str">&#039;count&#039;</span> =&gt; <span class="text-num">123</span>,
     ],
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>With no <code>type</code> set, that goes out as <code>application/x-www-form-urlencoded</code> — <code>name=Widget&amp;count=123</code>. Setting
@@ -66,14 +66,14 @@ the options array and dispatches with <code>send()</code>, which is what you rea
 instead:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Request</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Request</span>;
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">post</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;data&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Widget&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;type&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">Request</span><span class="text-kw">::</span><span class="text-var">JSON</span><span class="text-kw">,
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">post</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, [
+    <span class="text-str">&#039;data&#039;</span> =&gt; [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Widget&#039;</span>],
+    <span class="text-str">&#039;type&#039;</span> =&gt; <span class="text-type">Request</span>::<span class="text-num">JSON</span>,
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>Request::XML</code> and <code>Request::MULTIPART</code> are the other two, and <code>Request::URLENCODED</code> names the default
@@ -161,14 +161,14 @@ first:</p>
 each call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">([</span><span class="text-str">&#039;base_uri&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;https://api.example.com&#039;</span><span class="text-kw">]);
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>([<span class="text-str">&#039;base_uri&#039;</span> =&gt; <span class="text-str">&#039;https://api.example.com&#039;</span>]);
 
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;/widgets&#039;</span><span class="text-kw">);
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;/widgets/42&#039;</span><span class="text-kw">);
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">delete</span><span class="text-kw">(</span><span class="text-str">&#039;/widgets/42&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$client</span>-&gt;<span class="text-fn">get</span>(<span class="text-str">&#039;/widgets&#039;</span>);
+<span class="text-var">$client</span>-&gt;<span class="text-fn">get</span>(<span class="text-str">&#039;/widgets/42&#039;</span>);
+<span class="text-var">$client</span>-&gt;<span class="text-fn">delete</span>(<span class="text-str">&#039;/widgets/42&#039;</span>);
+</code></pre>
 </div>
 
 <h3 id="query-strings-and-bodies">Query Strings and Bodies<a class="anchor" href="#query-strings-and-bodies" aria-label="Link to this section">#</a></h3>
@@ -179,16 +179,16 @@ is exactly what a paginated write endpoint tends to want.</p>
 <p>Headers take either shape, and mixing them in one array works:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;headers&#039;    </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;X-Request-Id&#039;    </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;abc-123&#039;</span><span class="text-kw">,
-        </span><span class="text-str">&#039;Accept-Language: en-GB&#039;</span><span class="text-kw">,
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, [
+    <span class="text-str">&#039;headers&#039;</span>    =&gt; [
+        <span class="text-str">&#039;X-Request-Id&#039;</span>    =&gt; <span class="text-str">&#039;abc-123&#039;</span>,
+        <span class="text-str">&#039;Accept-Language: en-GB&#039;</span>,
     ],
-    </span><span class="text-str">&#039;user_agent&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;my-app/1.0&#039;</span><span class="text-kw">,
+    <span class="text-str">&#039;user_agent&#039;</span> =&gt; <span class="text-str">&#039;my-app/1.0&#039;</span>,
 ]);
-</span></code></pre>
+</code></pre>
 </div>
 
 <h3 id="file-uploads">File Uploads<a class="anchor" href="#file-uploads" aria-label="Link to this section">#</a></h3>
@@ -197,33 +197,33 @@ is exactly what a paginated write endpoint tends to want.</p>
 key the array yourself. Pair it with <code>Request::MULTIPART</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Request</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Request</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/import&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;method&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;POST&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;files&#039;  </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;/path/to/report.csv&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;type&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">Request</span><span class="text-kw">::</span><span class="text-var">MULTIPART</span><span class="text-kw">,
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/import&#039;</span>, [
+    <span class="text-str">&#039;method&#039;</span> =&gt; <span class="text-str">&#039;POST&#039;</span>,
+    <span class="text-str">&#039;files&#039;</span>  =&gt; [<span class="text-str">&#039;/path/to/report.csv&#039;</span>],
+    <span class="text-str">&#039;type&#039;</span>   =&gt; <span class="text-type">Request</span>::<span class="text-num">MULTIPART</span>,
 ]);
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$response</span> = <span class="text-var">$client</span>-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <p>For anything the options array does not reach, build the request yourself. <code>Pop\Http\Client\Request</code> is the
 object the client wraps, and a client accepts one in place of a URI:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Request</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Request</span>;
 
-</span><span class="text-var">$request </span><span class="text-kw">= new </span><span class="text-var">Request</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;POST&#039;</span><span class="text-kw">);
-</span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">createAsJson</span><span class="text-kw">();
-</span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">addHeaders</span><span class="text-kw">([</span><span class="text-str">&#039;X-Custom-Header: Custom-Value&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">setData</span><span class="text-kw">([</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Widget&#039;</span><span class="text-kw">]);
+<span class="text-var">$request</span> = <span class="text-kw">new</span> <span class="text-type">Request</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, <span class="text-str">&#039;POST&#039;</span>);
+<span class="text-var">$request</span>-&gt;<span class="text-fn">createAsJson</span>();
+<span class="text-var">$request</span>-&gt;<span class="text-fn">addHeaders</span>([<span class="text-str">&#039;X-Custom-Header: Custom-Value&#039;</span>]);
+<span class="text-var">$request</span>-&gt;<span class="text-fn">setData</span>([<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Widget&#039;</span>]);
 
-</span><span class="text-var">$response </span><span class="text-kw">= (new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-var">$request</span><span class="text-kw">))-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$response</span> = (<span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-var">$request</span>))-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <h3 id="request-factories">Request Factories<a class="anchor" href="#request-factories" aria-label="Link to this section">#</a></h3>
@@ -236,18 +236,18 @@ counterpart that builds the request in one call: <code>Request::createJson($uri,
 an argument with an API's documentation:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Request</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Request</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;method&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;POST&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;data&#039;    </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;foo&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;bar&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;headers&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;Authorization&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Bearer 123456789&#039;</span><span class="text-kw">],
-    </span><span class="text-str">&#039;type&#039;    </span><span class="text-kw">=&gt; </span><span class="text-var">Request</span><span class="text-kw">::</span><span class="text-var">URLENCODED</span><span class="text-kw">,
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, [
+    <span class="text-str">&#039;method&#039;</span>  =&gt; <span class="text-str">&#039;POST&#039;</span>,
+    <span class="text-str">&#039;data&#039;</span>    =&gt; [<span class="text-str">&#039;foo&#039;</span> =&gt; <span class="text-str">&#039;bar&#039;</span>],
+    <span class="text-str">&#039;headers&#039;</span> =&gt; [<span class="text-str">&#039;Authorization&#039;</span> =&gt; <span class="text-str">&#039;Bearer 123456789&#039;</span>],
+    <span class="text-str">&#039;type&#039;</span>    =&gt; <span class="text-type">Request</span>::<span class="text-num">URLENCODED</span>,
 ]);
 
-echo </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">render</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$client</span>-&gt;<span class="text-fn">render</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -268,35 +268,35 @@ foo=bar
 <code>Auth</code> object drops straight into the call:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Auth</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Auth</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/me&#039;</span><span class="text-kw">, </span><span class="text-var">Auth</span><span class="text-kw">::</span><span class="text-var">createBasic</span><span class="text-kw">(</span><span class="text-str">&#039;username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">));
-</span></code></pre>
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">get</span>(<span class="text-str">&#039;https://api.example.com/me&#039;</span>, <span class="text-type">Auth</span>::<span class="text-fn">createBasic</span>(<span class="text-str">&#039;username&#039;</span>, <span class="text-str">&#039;password&#039;</span>));
+</code></pre>
 </div>
 
 <p>That sends <code>Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=</code>. The other two common forms are the same shape:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Auth</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Auth</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$bearer </span><span class="text-kw">= </span><span class="text-var">Auth</span><span class="text-kw">::</span><span class="text-var">createBearer</span><span class="text-kw">(</span><span class="text-str">&#039;MY_AUTH_TOKEN&#039;</span><span class="text-kw">);  </span><span class="text-comment">// Authorization: Bearer MY_AUTH_TOKEN
-</span><span class="text-var">$apiKey </span><span class="text-kw">= </span><span class="text-var">Auth</span><span class="text-kw">::</span><span class="text-var">createKey</span><span class="text-kw">(</span><span class="text-str">&#039;MY_API_KEY&#039;</span><span class="text-kw">);        </span><span class="text-comment">// Authorization: MY_API_KEY
+<span class="text-var">$bearer</span> = <span class="text-type">Auth</span>::<span class="text-fn">createBearer</span>(<span class="text-str">&#039;MY_AUTH_TOKEN&#039;</span>);  <span class="text-comment">// Authorization: Bearer MY_AUTH_TOKEN</span>
+<span class="text-var">$apiKey</span> = <span class="text-type">Auth</span>::<span class="text-fn">createKey</span>(<span class="text-str">&#039;MY_API_KEY&#039;</span>);        <span class="text-comment">// Authorization: MY_API_KEY</span>
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/me&#039;</span><span class="text-kw">, </span><span class="text-var">$bearer</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">get</span>(<span class="text-str">&#039;https://api.example.com/me&#039;</span>, <span class="text-var">$bearer</span>);
+</code></pre>
 </div>
 
 <p><code>createKey()</code> differs from the other two in that it takes the header name and an optional scheme, for the many
 APIs that want their key somewhere other than <code>Authorization</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Auth</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Auth</span>;
 
-</span><span class="text-var">Auth</span><span class="text-kw">::</span><span class="text-var">createKey</span><span class="text-kw">(</span><span class="text-str">&#039;MY_API_KEY&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;X-Api-Key&#039;</span><span class="text-kw">);           </span><span class="text-comment">// X-Api-Key: MY_API_KEY
-</span><span class="text-var">Auth</span><span class="text-kw">::</span><span class="text-var">createKey</span><span class="text-kw">(</span><span class="text-str">&#039;MY_API_KEY&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;X-Api-Key&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Token &#039;</span><span class="text-kw">); </span><span class="text-comment">// X-Api-Key: Token MY_API_KEY
-</span></code></pre>
+<span class="text-type">Auth</span>::<span class="text-fn">createKey</span>(<span class="text-str">&#039;MY_API_KEY&#039;</span>, <span class="text-str">&#039;X-Api-Key&#039;</span>);           <span class="text-comment">// X-Api-Key: MY_API_KEY</span>
+<span class="text-type">Auth</span>::<span class="text-fn">createKey</span>(<span class="text-str">&#039;MY_API_KEY&#039;</span>, <span class="text-str">&#039;X-Api-Key&#039;</span>, <span class="text-str">&#039;Token &#039;</span>); <span class="text-comment">// X-Api-Key: Token MY_API_KEY</span>
+</code></pre>
 </div>
 
 <p>Include the trailing space in a custom scheme — <code>createKey($key, 'Token ')</code> — since it is concatenated
@@ -308,13 +308,13 @@ which is the quickest way to check what you have built.</p>
 <p>Digest is the fourth form, and it needs the server's challenge parameters rather than a single secret:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Auth</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Auth</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$digest </span><span class="text-kw">= new </span><span class="text-var">Auth\Digest</span><span class="text-kw">(</span><span class="text-str">&#039;test@example.com&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;username&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;password&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;/&#039;</span><span class="text-kw">, </span><span class="text-var">$serverNonce</span><span class="text-kw">);
+<span class="text-var">$digest</span> = <span class="text-kw">new</span> <span class="text-type">Auth\Digest</span>(<span class="text-str">&#039;test@example.com&#039;</span>, <span class="text-str">&#039;username&#039;</span>, <span class="text-str">&#039;password&#039;</span>, <span class="text-str">&#039;/&#039;</span>, <span class="text-var">$serverNonce</span>);
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;http://localhost/&#039;</span><span class="text-kw">, </span><span class="text-var">Auth</span><span class="text-kw">::</span><span class="text-var">createDigest</span><span class="text-kw">(</span><span class="text-var">$digest</span><span class="text-kw">));
-</span></code></pre>
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">get</span>(<span class="text-str">&#039;http://localhost/&#039;</span>, <span class="text-type">Auth</span>::<span class="text-fn">createDigest</span>(<span class="text-var">$digest</span>));
+</code></pre>
 </div>
 
 <p>The five constructor arguments are realm, username, password, URI and the nonce the server issued. The request
@@ -329,16 +329,16 @@ it goes into the response hash.</p>
 <p>Every verb call returns a <code>Pop\Http\Client\Response</code>. The status line, the headers and the body are all on it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">get</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
 
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">getCode</span><span class="text-kw">();                            </span><span class="text-comment">// 200
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">();                         </span><span class="text-comment">// &#039;OK&#039;
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">hasHeader</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">);            </span><span class="text-comment">// true
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">getHeaderValueAsString</span><span class="text-kw">(</span><span class="text-str">&#039;Content-Type&#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;application/json&#039;
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">getBodyContent</span><span class="text-kw">();                     </span><span class="text-comment">// the raw body as a string
-</span></code></pre>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">getCode</span>();                            <span class="text-comment">// 200</span>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">getMessage</span>();                         <span class="text-comment">// &#039;OK&#039;</span>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">hasHeader</span>(<span class="text-str">&#039;Content-Type&#039;</span>);            <span class="text-comment">// true</span>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">getHeaderValueAsString</span>(<span class="text-str">&#039;Content-Type&#039;</span>); <span class="text-comment">// &#039;application/json&#039;</span>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">getBodyContent</span>();                     <span class="text-comment">// the raw body as a string</span>
+</code></pre>
 </div>
 
 <p><code>getHeaders()</code> returns every header as an array of arrays — a header name maps to a list of values, because a
@@ -348,14 +348,14 @@ single-valued case.</p>
 they trust:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">get</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">get</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
 
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">getParsedResponse</span><span class="text-kw">(); </span><span class="text-comment">// parses according to the Content-Type header
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">json</span><span class="text-kw">();              </span><span class="text-comment">// parses as JSON regardless of Content-Type
-</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">collect</span><span class="text-kw">();           </span><span class="text-comment">// the same, wrapped in a Pop\Utils\Collection
-</span></code></pre>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">getParsedResponse</span>(); <span class="text-comment">// parses according to the Content-Type header</span>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">json</span>();              <span class="text-comment">// parses as JSON regardless of Content-Type</span>
+<span class="text-var">$response</span>-&gt;<span class="text-fn">collect</span>();           <span class="text-comment">// the same, wrapped in a Pop\Utils\Collection</span>
+</code></pre>
 </div>
 
 <p><code>getParsedResponse()</code> reads the <code>Content-Type</code> and picks a parser, so a <code>text/plain</code> response comes back as
@@ -366,13 +366,13 @@ mislabels its responses — a body that is not JSON gives an empty array. <code>
 response object is still reachable when you need it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;auto&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">]);
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, [<span class="text-str">&#039;auto&#039;</span> =&gt; <span class="text-num">true</span>]);
 
-</span><span class="text-var">$data     </span><span class="text-kw">= </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">get</span><span class="text-kw">();          </span><span class="text-comment">// an array
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">getResponse</span><span class="text-kw">();  </span><span class="text-comment">// the full Response object
-</span></code></pre>
+<span class="text-var">$data</span>     = <span class="text-var">$client</span>-&gt;<span class="text-fn">get</span>();          <span class="text-comment">// an array</span>
+<span class="text-var">$response</span> = <span class="text-var">$client</span>-&gt;<span class="text-fn">getResponse</span>();  <span class="text-comment">// the full Response object</span>
+</code></pre>
 </div>
 
 <p>A large family of <code>is*()</code> methods reads the status code without you writing a comparison —
@@ -380,16 +380,16 @@ response object is still reachable when you need it:</p>
 <code>isForbidden()</code>, <code>isNotFound()</code>, <code>isUnprocessableEntity()</code>, <code>isTooManyRequests()</code>, <code>isServerError()</code> and more.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">post</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;data&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Widget&#039;</span><span class="text-kw">]]);
+<span class="text-var">$response</span> = <span class="text-type">Client</span>::<span class="text-fn">post</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, [<span class="text-str">&#039;data&#039;</span> =&gt; [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;Widget&#039;</span>]]);
 
-if (</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">isCreated</span><span class="text-kw">()) {
-    </span><span class="text-var">$widget </span><span class="text-kw">= </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">json</span><span class="text-kw">();
-} elseif (</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">isUnprocessableEntity</span><span class="text-kw">()) {
-    </span><span class="text-var">$errors </span><span class="text-kw">= </span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">json</span><span class="text-kw">();
+<span class="text-kw">if</span> (<span class="text-var">$response</span>-&gt;<span class="text-fn">isCreated</span>()) {
+    <span class="text-var">$widget</span> = <span class="text-var">$response</span>-&gt;<span class="text-fn">json</span>();
+} <span class="text-kw">elseif</span> (<span class="text-var">$response</span>-&gt;<span class="text-fn">isUnprocessableEntity</span>()) {
+    <span class="text-var">$errors</span> = <span class="text-var">$response</span>-&gt;<span class="text-fn">json</span>();
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>A <code>404</code>, <code>422</code> or <code>500</code> comes back as an ordinary response, so check the status yourself — the body is
@@ -431,14 +431,14 @@ parsed the same way a success is.</p>
 <p>Pass one to the constructor, or set it afterward:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Handler\Stream</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Handler\Stream</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, new </span><span class="text-var">Stream</span><span class="text-kw">());
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Stream</span>());
 
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">setHandler</span><span class="text-kw">(new </span><span class="text-var">Stream</span><span class="text-kw">());
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">getHandler</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$client</span>-&gt;<span class="text-fn">setHandler</span>(<span class="text-kw">new</span> <span class="text-type">Stream</span>());
+<span class="text-var">$client</span>-&gt;<span class="text-fn">getHandler</span>();
+</code></pre>
 </div>
 
 <p>Each handler exposes its own low-level knobs, and <code>getHandler()</code> is how you reach them. <code>Curl</code> takes curl
@@ -446,15 +446,15 @@ options; <code>Stream</code> takes stream context options. The client sets the o
 URL, the method, the headers — so what you set here is the remainder:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Handler\Curl</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Handler\Curl</span>;
 
-</span><span class="text-var">$curl </span><span class="text-kw">= new </span><span class="text-var">Curl</span><span class="text-kw">();
-</span><span class="text-var">$curl</span><span class="text-kw">-&gt;</span><span class="text-var">setOptions</span><span class="text-kw">([</span><span class="text-var">CURLOPT_HTTP_VERSION </span><span class="text-kw">=&gt; </span><span class="text-var">CURL_HTTP_VERSION_1_0</span><span class="text-kw">]);
+<span class="text-var">$curl</span> = <span class="text-kw">new</span> <span class="text-type">Curl</span>();
+<span class="text-var">$curl</span>-&gt;<span class="text-fn">setOptions</span>([<span class="text-num">CURLOPT_HTTP_VERSION</span> =&gt; <span class="text-num">CURL_HTTP_VERSION_1_0</span>]);
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">setHandler</span><span class="text-kw">(</span><span class="text-var">$curl</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
+<span class="text-var">$client</span>-&gt;<span class="text-fn">setHandler</span>(<span class="text-var">$curl</span>);
+</code></pre>
 </div>
 
 <h3 id="concurrent-requests">Concurrent Requests<a class="anchor" href="#concurrent-requests" aria-label="Link to this section">#</a></h3>
@@ -463,24 +463,24 @@ use </span><span class="text-var">Pop\Http\Client\Handler\Curl</span><span class
 <code>Request</code> objects, and you pump it until it reports nothing still running:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$multiHandler </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">createMulti</span><span class="text-kw">([
-    </span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;https://api.example.com/gadgets&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;https://api.example.com/sprockets&#039;</span><span class="text-kw">,
+<span class="text-var">$multiHandler</span> = <span class="text-type">Client</span>::<span class="text-fn">createMulti</span>([
+    <span class="text-str">&#039;https://api.example.com/widgets&#039;</span>,
+    <span class="text-str">&#039;https://api.example.com/gadgets&#039;</span>,
+    <span class="text-str">&#039;https://api.example.com/sprockets&#039;</span>,
 ]);
 
-</span><span class="text-var">$running </span><span class="text-kw">= </span><span class="text-var">null</span><span class="text-kw">;
+<span class="text-var">$running</span> = <span class="text-num">null</span>;
 
-do {
-    </span><span class="text-var">$multiHandler</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(</span><span class="text-var">$running</span><span class="text-kw">);
-} while (</span><span class="text-var">$running</span><span class="text-kw">);
+<span class="text-kw">do</span> {
+    <span class="text-var">$multiHandler</span>-&gt;<span class="text-fn">send</span>(<span class="text-var">$running</span>);
+} <span class="text-kw">while</span> (<span class="text-var">$running</span>);
 
-foreach (</span><span class="text-var">$multiHandler</span><span class="text-kw">-&gt;</span><span class="text-var">getAllResponses</span><span class="text-kw">() as </span><span class="text-var">$result</span><span class="text-kw">) {
-    echo </span><span class="text-var">$result</span><span class="text-kw">[</span><span class="text-str">&#039;client_uri&#039;</span><span class="text-kw">] . </span><span class="text-str">&#039;: &#039; </span><span class="text-kw">. </span><span class="text-var">$result</span><span class="text-kw">[</span><span class="text-str">&#039;code&#039;</span><span class="text-kw">];
+<span class="text-kw">foreach</span> (<span class="text-var">$multiHandler</span>-&gt;<span class="text-fn">getAllResponses</span>() <span class="text-kw">as</span> <span class="text-var">$result</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$result</span>[<span class="text-str">&#039;client_uri&#039;</span>] . <span class="text-str">&#039;: &#039;</span> . <span class="text-var">$result</span>[<span class="text-str">&#039;code&#039;</span>];
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p><code>getAllResponses()</code> returns an array of arrays, each carrying <code>client_uri</code>, <code>method</code>, <code>code</code> and
@@ -491,38 +491,38 @@ foreach (</span><span class="text-var">$multiHandler</span><span class="text-kw"
 it was asked for:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Handler\Mock</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Response</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Handler\Mock</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Response</span>;
 
-</span><span class="text-var">$mock </span><span class="text-kw">= new </span><span class="text-var">Mock</span><span class="text-kw">();
-</span><span class="text-var">$mock</span><span class="text-kw">-&gt;</span><span class="text-var">queue</span><span class="text-kw">(new </span><span class="text-var">Response</span><span class="text-kw">([</span><span class="text-str">&#039;code&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">200</span><span class="text-kw">, </span><span class="text-str">&#039;body&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;{&quot;result&quot;:&quot;ok&quot;}&#039;</span><span class="text-kw">]));
-</span><span class="text-var">$mock</span><span class="text-kw">-&gt;</span><span class="text-var">queue</span><span class="text-kw">(new </span><span class="text-var">Response</span><span class="text-kw">([</span><span class="text-str">&#039;code&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">404</span><span class="text-kw">]));
+<span class="text-var">$mock</span> = <span class="text-kw">new</span> <span class="text-type">Mock</span>();
+<span class="text-var">$mock</span>-&gt;<span class="text-fn">queue</span>(<span class="text-kw">new</span> <span class="text-type">Response</span>([<span class="text-str">&#039;code&#039;</span> =&gt; <span class="text-num">200</span>, <span class="text-str">&#039;body&#039;</span> =&gt; <span class="text-str">&#039;{&quot;result&quot;:&quot;ok&quot;}&#039;</span>]));
+<span class="text-var">$mock</span>-&gt;<span class="text-fn">queue</span>(<span class="text-kw">new</span> <span class="text-type">Response</span>([<span class="text-str">&#039;code&#039;</span> =&gt; <span class="text-num">404</span>]));
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">, </span><span class="text-var">$mock</span><span class="text-kw">);
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>, <span class="text-var">$mock</span>);
 
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(); </span><span class="text-comment">// 200
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">(); </span><span class="text-comment">// 404
+<span class="text-var">$client</span>-&gt;<span class="text-fn">send</span>(); <span class="text-comment">// 200</span>
+<span class="text-var">$client</span>-&gt;<span class="text-fn">send</span>(); <span class="text-comment">// 404</span>
 
-</span><span class="text-var">$mock</span><span class="text-kw">-&gt;</span><span class="text-var">getRequests</span><span class="text-kw">();    </span><span class="text-comment">// every Client\Request dispatched, in order
-</span><span class="text-var">$mock</span><span class="text-kw">-&gt;</span><span class="text-var">getLastRequest</span><span class="text-kw">(); </span><span class="text-comment">// the most recent one, or null
-</span></code></pre>
+<span class="text-var">$mock</span>-&gt;<span class="text-fn">getRequests</span>();    <span class="text-comment">// every Client\Request dispatched, in order</span>
+<span class="text-var">$mock</span>-&gt;<span class="text-fn">getLastRequest</span>(); <span class="text-comment">// the most recent one, or null</span>
+</code></pre>
 </div>
 
 <p>The queue is first-in, first-out, one response per request. <code>when()</code> registers a matcher that is consulted
 before the queue, so a test can pin one particular request's answer and leave the rest to the queue:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client\Handler\Mock</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Response</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Handler\Mock</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Response</span>;
 
-</span><span class="text-var">$mock </span><span class="text-kw">= new </span><span class="text-var">Mock</span><span class="text-kw">();
+<span class="text-var">$mock</span> = <span class="text-kw">new</span> <span class="text-type">Mock</span>();
 
-</span><span class="text-var">$mock</span><span class="text-kw">-&gt;</span><span class="text-var">when</span><span class="text-kw">(
-    fn(</span><span class="text-var">$request</span><span class="text-kw">) =&gt; </span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">getMethod</span><span class="text-kw">() === </span><span class="text-str">&#039;POST&#039;</span><span class="text-kw">,
-    new </span><span class="text-var">Response</span><span class="text-kw">([</span><span class="text-str">&#039;code&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">201</span><span class="text-kw">])
+<span class="text-var">$mock</span>-&gt;<span class="text-fn">when</span>(
+    <span class="text-kw">fn</span>(<span class="text-var">$request</span>) =&gt; <span class="text-var">$request</span>-&gt;<span class="text-fn">getMethod</span>() <span class="text-kw">===</span> <span class="text-str">&#039;POST&#039;</span>,
+    <span class="text-kw">new</span> <span class="text-type">Response</span>([<span class="text-str">&#039;code&#039;</span> =&gt; <span class="text-num">201</span>])
 );
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Matchers are checked in registration order and the first match wins. Queue a <code>\Throwable</code> instead of a response
@@ -537,20 +537,20 @@ names the call.</p>
 back, and it applies to <code>send()</code>, <code>sendAsync()</code> and <code>sendRequest()</code> alike.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
 
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">(function (</span><span class="text-var">$request</span><span class="text-kw">, </span><span class="text-var">$handler</span><span class="text-kw">) {
-    </span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">addHeader</span><span class="text-kw">(</span><span class="text-str">&#039;X-Trace-Id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;abc-123&#039;</span><span class="text-kw">);
+<span class="text-var">$client</span>-&gt;<span class="text-fn">addMiddleware</span>(<span class="text-kw">function</span> (<span class="text-var">$request</span>, <span class="text-var">$handler</span>) {
+    <span class="text-var">$request</span>-&gt;<span class="text-fn">addHeader</span>(<span class="text-str">&#039;X-Trace-Id&#039;</span>, <span class="text-str">&#039;abc-123&#039;</span>);
 
-    </span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$handler</span><span class="text-kw">-&gt;</span><span class="text-var">handle</span><span class="text-kw">(</span><span class="text-var">$request</span><span class="text-kw">);
+    <span class="text-var">$response</span> = <span class="text-var">$handler</span>-&gt;<span class="text-fn">handle</span>(<span class="text-var">$request</span>);
 
-    return </span><span class="text-var">$response</span><span class="text-kw">;
+    <span class="text-kw">return</span> <span class="text-var">$response</span>;
 });
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$response</span> = <span class="text-var">$client</span>-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <p>Registration order is wrap order, so the first middleware registered is outermost: it runs first on the way out
@@ -560,21 +560,21 @@ and last on the way back. A closure of the shape <code>function ($request, $hand
 which is how a cache layer answers without touching the network:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Response</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Response</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
 
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">(function (</span><span class="text-var">$request</span><span class="text-kw">, </span><span class="text-var">$handler</span><span class="text-kw">) use (</span><span class="text-var">$cache</span><span class="text-kw">) {
-    </span><span class="text-var">$key </span><span class="text-kw">= </span><span class="text-var">md5</span><span class="text-kw">(</span><span class="text-var">$request</span><span class="text-kw">-&gt;</span><span class="text-var">getUriAsString</span><span class="text-kw">());
+<span class="text-var">$client</span>-&gt;<span class="text-fn">addMiddleware</span>(<span class="text-kw">function</span> (<span class="text-var">$request</span>, <span class="text-var">$handler</span>) <span class="text-kw">use</span> (<span class="text-var">$cache</span>) {
+    <span class="text-var">$key</span> = <span class="text-fn">md5</span>(<span class="text-var">$request</span>-&gt;<span class="text-fn">getUriAsString</span>());
 
-    if (</span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">hasItem</span><span class="text-kw">(</span><span class="text-var">$key</span><span class="text-kw">)) {
-        return new </span><span class="text-var">Response</span><span class="text-kw">([</span><span class="text-str">&#039;code&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">200</span><span class="text-kw">, </span><span class="text-str">&#039;body&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">$cache</span><span class="text-kw">-&gt;</span><span class="text-var">getItem</span><span class="text-kw">(</span><span class="text-var">$key</span><span class="text-kw">)]);
+    <span class="text-kw">if</span> (<span class="text-var">$cache</span>-&gt;<span class="text-fn">hasItem</span>(<span class="text-var">$key</span>)) {
+        <span class="text-kw">return</span> <span class="text-kw">new</span> <span class="text-type">Response</span>([<span class="text-str">&#039;code&#039;</span> =&gt; <span class="text-num">200</span>, <span class="text-str">&#039;body&#039;</span> =&gt; <span class="text-var">$cache</span>-&gt;<span class="text-fn">getItem</span>(<span class="text-var">$key</span>)]);
     }
 
-    return </span><span class="text-var">$handler</span><span class="text-kw">-&gt;</span><span class="text-var">handle</span><span class="text-kw">(</span><span class="text-var">$request</span><span class="text-kw">);
+    <span class="text-kw">return</span> <span class="text-var">$handler</span>-&gt;<span class="text-fn">handle</span>(<span class="text-var">$request</span>);
 });
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The URI is hashed rather than used directly because <code>/</code> and <code>:</code> are reserved in a cache key — see
@@ -585,14 +585,14 @@ use </span><span class="text-var">Pop\Http\Client\Response</span><span class="te
 jitter:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Middleware\RetryMiddleware</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Middleware\RetryMiddleware</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">(new </span><span class="text-var">RetryMiddleware</span><span class="text-kw">(</span><span class="text-var">3</span><span class="text-kw">));
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
+<span class="text-var">$client</span>-&gt;<span class="text-fn">addMiddleware</span>(<span class="text-kw">new</span> <span class="text-type">RetryMiddleware</span>(<span class="text-num">3</span>));
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$response</span> = <span class="text-var">$client</span>-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <p>Out of the box that retries up to three times on a network exception or a <code>429</code>, <code>502</code>, <code>503</code> or <code>504</code> — and
@@ -601,18 +601,18 @@ request that may already have created something is how a customer gets charged t
 configurable, and <code>setOnRetry()</code> gives you a hook that fires once per attempt, before the sleep:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client\Middleware\RetryMiddleware</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Middleware\RetryMiddleware</span>;
 
-</span><span class="text-var">$retry </span><span class="text-kw">= new </span><span class="text-var">RetryMiddleware</span><span class="text-kw">();
+<span class="text-var">$retry</span> = <span class="text-kw">new</span> <span class="text-type">RetryMiddleware</span>();
 
-</span><span class="text-var">$retry</span><span class="text-kw">-&gt;</span><span class="text-var">setMaxRetries</span><span class="text-kw">(</span><span class="text-var">5</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setRetryableStatusCodes</span><span class="text-kw">([</span><span class="text-var">429</span><span class="text-kw">, </span><span class="text-var">500</span><span class="text-kw">, </span><span class="text-var">502</span><span class="text-kw">, </span><span class="text-var">503</span><span class="text-kw">, </span><span class="text-var">504</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">setBaseDelay</span><span class="text-kw">(</span><span class="text-var">0.1</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setMaxDelay</span><span class="text-kw">(</span><span class="text-var">10.0</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setOnRetry</span><span class="text-kw">(function (</span><span class="text-var">$attempt</span><span class="text-kw">, </span><span class="text-var">$request</span><span class="text-kw">, </span><span class="text-var">$response</span><span class="text-kw">, </span><span class="text-var">$exception</span><span class="text-kw">, </span><span class="text-var">$delaySeconds</span><span class="text-kw">) {
-        </span><span class="text-comment">// record the attempt
-    </span><span class="text-kw">});
-</span></code></pre>
+<span class="text-var">$retry</span>-&gt;<span class="text-fn">setMaxRetries</span>(<span class="text-num">5</span>)
+    -&gt;<span class="text-fn">setRetryableStatusCodes</span>([<span class="text-num">429</span>, <span class="text-num">500</span>, <span class="text-num">502</span>, <span class="text-num">503</span>, <span class="text-num">504</span>])
+    -&gt;<span class="text-fn">setBaseDelay</span>(<span class="text-num">0.1</span>)
+    -&gt;<span class="text-fn">setMaxDelay</span>(<span class="text-num">10.0</span>)
+    -&gt;<span class="text-fn">setOnRetry</span>(<span class="text-kw">function</span> (<span class="text-var">$attempt</span>, <span class="text-var">$request</span>, <span class="text-var">$response</span>, <span class="text-var">$exception</span>, <span class="text-var">$delaySeconds</span>) {
+        <span class="text-comment">// record the attempt</span>
+    });
+</code></pre>
 </div>
 
 <p>A <code>Retry-After</code> header on the response wins over the computed backoff for that attempt, capped by
@@ -622,19 +622,19 @@ cannot be resent intact.</p>
 outcome: <code>info</code> for a success, <code>warning</code> for a <code>4xx</code>, <code>error</code> for a <code>5xx</code> or a thrown exception.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Middleware\LoggingMiddleware</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Middleware\RetryMiddleware</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Logger</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Log\Writer\File</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Middleware\LoggingMiddleware</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Middleware\RetryMiddleware</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Logger</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Log\Writer\File</span>;
 
-</span><span class="text-var">$logger </span><span class="text-kw">= new </span><span class="text-var">Logger</span><span class="text-kw">(new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../logs/app.log&#039;</span><span class="text-kw">));
+<span class="text-var">$logger</span> = <span class="text-kw">new</span> <span class="text-type">Logger</span>(<span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../logs/app.log&#039;</span>));
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
 
-</span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">((new </span><span class="text-var">RetryMiddleware</span><span class="text-kw">(</span><span class="text-var">3</span><span class="text-kw">))-&gt;</span><span class="text-var">setOnRetry</span><span class="text-kw">(</span><span class="text-var">LoggingMiddleware</span><span class="text-kw">::</span><span class="text-var">logRetriesTo</span><span class="text-kw">(</span><span class="text-var">$logger</span><span class="text-kw">)))
-    -&gt;</span><span class="text-var">addMiddleware</span><span class="text-kw">(new </span><span class="text-var">LoggingMiddleware</span><span class="text-kw">(</span><span class="text-var">$logger</span><span class="text-kw">));
-</span></code></pre>
+<span class="text-var">$client</span>-&gt;<span class="text-fn">addMiddleware</span>((<span class="text-kw">new</span> <span class="text-type">RetryMiddleware</span>(<span class="text-num">3</span>))-&gt;<span class="text-fn">setOnRetry</span>(<span class="text-type">LoggingMiddleware</span>::<span class="text-fn">logRetriesTo</span>(<span class="text-var">$logger</span>)))
+    -&gt;<span class="text-fn">addMiddleware</span>(<span class="text-kw">new</span> <span class="text-type">LoggingMiddleware</span>(<span class="text-var">$logger</span>));
+</code></pre>
 </div>
 
 <p>The two compose purely by registration order. <code>LoggingMiddleware</code> registered <em>after</em> <code>RetryMiddleware</code> sits
@@ -652,10 +652,10 @@ inside the handler when you use <code>Client::createMulti()</code>.</p>
 <code>Pop\Http\Promise</code>. You never construct one — the client makes it, and you decide when it runs.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$promise </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">getAsync</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$promise</span> = <span class="text-type">Client</span>::<span class="text-fn">getAsync</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
+</code></pre>
 </div>
 
 <p><code>$client-&gt;getAsync()</code>, <code>$client-&gt;sendAsync()</code>, and <code>['async' =&gt; true]</code> with a plain <code>send()</code> all produce the
@@ -664,17 +664,17 @@ same thing.</p>
 and returns the response:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$promise </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">getAsync</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
+<span class="text-var">$promise</span> = <span class="text-type">Client</span>::<span class="text-fn">getAsync</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
 
-try {
-    </span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$promise</span><span class="text-kw">-&gt;</span><span class="text-var">wait</span><span class="text-kw">();
-    </span><span class="text-var">print_r</span><span class="text-kw">(</span><span class="text-var">$response</span><span class="text-kw">-&gt;</span><span class="text-var">getParsedResponse</span><span class="text-kw">());
-} catch (</span><span class="text-var">Pop\Http\Promise\Exception $e</span><span class="text-kw">) {
-    </span><span class="text-comment">// the response came back an error status
-</span><span class="text-kw">}
-</span></code></pre>
+<span class="text-kw">try</span> {
+    <span class="text-var">$response</span> = <span class="text-var">$promise</span>-&gt;<span class="text-fn">wait</span>();
+    <span class="text-fn">print_r</span>(<span class="text-var">$response</span>-&gt;<span class="text-fn">getParsedResponse</span>());
+} <span class="text-kw">catch</span> (<span class="text-type">Pop\Http\Promise\Exception</span> <span class="text-var">$e</span>) {
+    <span class="text-comment">// the response came back an error status</span>
+}
+</code></pre>
 </div>
 
 <p><code>wait()</code> throws <code>Pop\Http\Promise\Exception</code> when the response is an error status — this is the one place in the
@@ -682,11 +682,11 @@ client where a <code>4xx</code> or <code>5xx</code> becomes an exception rather 
 that and get <code>null</code> for a failure instead:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$promise  </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">getAsync</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$promise</span><span class="text-kw">-&gt;</span><span class="text-var">wait</span><span class="text-kw">(</span><span class="text-var">false</span><span class="text-kw">); </span><span class="text-comment">// a Response, or null on an error status
-</span></code></pre>
+<span class="text-var">$promise</span>  = <span class="text-type">Client</span>::<span class="text-fn">getAsync</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
+<span class="text-var">$response</span> = <span class="text-var">$promise</span>-&gt;<span class="text-fn">wait</span>(<span class="text-num">false</span>); <span class="text-comment">// a Response, or null on an error status</span>
+</code></pre>
 </div>
 
 <p><code>wait(false)</code> suppresses the promise's error-status exception. A request that never reaches the server
@@ -695,22 +695,22 @@ still throws <code>Pop\Http\Client\Handler\Exception</code>, so catch that too.<
 runs the request:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Response</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Promise</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Response</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Promise</span>;
 
-</span><span class="text-var">$promise </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">getAsync</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
+<span class="text-var">$promise</span> = <span class="text-type">Client</span>::<span class="text-fn">getAsync</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
 
-</span><span class="text-var">$promise</span><span class="text-kw">-&gt;</span><span class="text-var">then</span><span class="text-kw">(function (</span><span class="text-var">Response $response</span><span class="text-kw">) {
-    </span><span class="text-comment">// a successful response
-</span><span class="text-kw">})-&gt;</span><span class="text-var">catch</span><span class="text-kw">(function (</span><span class="text-var">Response $response</span><span class="text-kw">) {
-    </span><span class="text-comment">// an error status — the response is still handed to you
-</span><span class="text-kw">})-&gt;</span><span class="text-var">finally</span><span class="text-kw">(function (</span><span class="text-var">Promise $promise</span><span class="text-kw">) {
-    </span><span class="text-comment">// always, after either branch
-</span><span class="text-kw">});
+<span class="text-var">$promise</span>-&gt;<span class="text-fn">then</span>(<span class="text-kw">function</span> (<span class="text-type">Response</span> <span class="text-var">$response</span>) {
+    <span class="text-comment">// a successful response</span>
+})-&gt;<span class="text-fn">catch</span>(<span class="text-kw">function</span> (<span class="text-type">Response</span> <span class="text-var">$response</span>) {
+    <span class="text-comment">// an error status — the response is still handed to you</span>
+})-&gt;<span class="text-fn">finally</span>(<span class="text-kw">function</span> (<span class="text-type">Promise</span> <span class="text-var">$promise</span>) {
+    <span class="text-comment">// always, after either branch</span>
+});
 
-</span><span class="text-var">$promise</span><span class="text-kw">-&gt;</span><span class="text-var">resolve</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$promise</span>-&gt;<span class="text-fn">resolve</span>();
+</code></pre>
 </div>
 
 <p>Call <code>resolve()</code> on a promise you registered a <code>then()</code> against — <code>wait()</code> runs the request and returns
@@ -719,33 +719,33 @@ the response, and <code>resolve()</code> is what runs the callback.</p>
 whose whole configuration is one callback:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Response</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Response</span>;
 
-</span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">getAsync</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">then</span><span class="text-kw">(function (</span><span class="text-var">Response $response</span><span class="text-kw">) {
-    </span><span class="text-comment">// runs immediately — no separate resolve() call
-</span><span class="text-kw">}, </span><span class="text-var">true</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-type">Client</span>::<span class="text-fn">getAsync</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>)-&gt;<span class="text-fn">then</span>(<span class="text-kw">function</span> (<span class="text-type">Response</span> <span class="text-var">$response</span>) {
+    <span class="text-comment">// runs immediately — no separate resolve() call</span>
+}, <span class="text-num">true</span>);
+</code></pre>
 </div>
 
 <p>Returning a promise from a <code>then()</code> forwards to it, so a second <code>then()</code> in the chain receives the second
 request's response:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Response</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Response</span>;
 
-</span><span class="text-var">$promise1 </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">getAsync</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/widgets&#039;</span><span class="text-kw">);
-</span><span class="text-var">$promise2 </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">getAsync</span><span class="text-kw">(</span><span class="text-str">&#039;https://api.example.com/gadgets&#039;</span><span class="text-kw">);
+<span class="text-var">$promise1</span> = <span class="text-type">Client</span>::<span class="text-fn">getAsync</span>(<span class="text-str">&#039;https://api.example.com/widgets&#039;</span>);
+<span class="text-var">$promise2</span> = <span class="text-type">Client</span>::<span class="text-fn">getAsync</span>(<span class="text-str">&#039;https://api.example.com/gadgets&#039;</span>);
 
-</span><span class="text-var">$promise1</span><span class="text-kw">-&gt;</span><span class="text-var">then</span><span class="text-kw">(function (</span><span class="text-var">Response $response</span><span class="text-kw">) use (</span><span class="text-var">$promise2</span><span class="text-kw">) {
-    return </span><span class="text-var">$promise2</span><span class="text-kw">;
-})-&gt;</span><span class="text-var">then</span><span class="text-kw">(function (</span><span class="text-var">Response $response</span><span class="text-kw">) {
-    </span><span class="text-comment">// the response from $promise2
-</span><span class="text-kw">});
+<span class="text-var">$promise1</span>-&gt;<span class="text-fn">then</span>(<span class="text-kw">function</span> (<span class="text-type">Response</span> <span class="text-var">$response</span>) <span class="text-kw">use</span> (<span class="text-var">$promise2</span>) {
+    <span class="text-kw">return</span> <span class="text-var">$promise2</span>;
+})-&gt;<span class="text-fn">then</span>(<span class="text-kw">function</span> (<span class="text-type">Response</span> <span class="text-var">$response</span>) {
+    <span class="text-comment">// the response from $promise2</span>
+});
 
-</span><span class="text-var">$promise1</span><span class="text-kw">-&gt;</span><span class="text-var">resolve</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$promise1</span>-&gt;<span class="text-fn">resolve</span>();
+</code></pre>
 </div>
 
 <p><code>setCancel()</code> registers a callback that fires if the promise is canceled. And a client set to <code>auto</code> hands its
@@ -759,12 +759,12 @@ and the promise wraps the batch.</p>
 into a client you can send:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= </span><span class="text-var">Client</span><span class="text-kw">::</span><span class="text-var">fromCurlCommand</span><span class="text-kw">(</span><span class="text-str">&#039;curl -i -X POST -d&quot;foo=bar&amp;baz=123&quot; http://localhost/post.php&#039;</span><span class="text-kw">);
+<span class="text-var">$client</span> = <span class="text-type">Client</span>::<span class="text-fn">fromCurlCommand</span>(<span class="text-str">&#039;curl -i -X POST -d&quot;foo=bar&amp;baz=123&quot; http://localhost/post.php&#039;</span>);
 
-</span><span class="text-var">$response </span><span class="text-kw">= </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">send</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$response</span> = <span class="text-var">$client</span>-&gt;<span class="text-fn">send</span>();
+</code></pre>
 </div>
 
 <p>The method, the URL, <code>-d</code> data and <code>-H</code> headers all survive the trip, so pasting a vendor's example into your
@@ -773,17 +773,17 @@ code is a paste rather than a translation.</p>
 run without your application:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Http\Client</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Http\Client\Request</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Http\Client</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Http\Client\Request</span>;
 
-</span><span class="text-var">$client </span><span class="text-kw">= new </span><span class="text-var">Client</span><span class="text-kw">(</span><span class="text-str">&#039;http://localhost/post.php&#039;</span><span class="text-kw">, [
-    </span><span class="text-str">&#039;method&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;POST&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;data&#039;   </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;foo&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;bar&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;baz&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">123</span><span class="text-kw">],
-    </span><span class="text-str">&#039;type&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">Request</span><span class="text-kw">::</span><span class="text-var">URLENCODED</span><span class="text-kw">,
+<span class="text-var">$client</span> = <span class="text-kw">new</span> <span class="text-type">Client</span>(<span class="text-str">&#039;http://localhost/post.php&#039;</span>, [
+    <span class="text-str">&#039;method&#039;</span> =&gt; <span class="text-str">&#039;POST&#039;</span>,
+    <span class="text-str">&#039;data&#039;</span>   =&gt; [<span class="text-str">&#039;foo&#039;</span> =&gt; <span class="text-str">&#039;bar&#039;</span>, <span class="text-str">&#039;baz&#039;</span> =&gt; <span class="text-num">123</span>],
+    <span class="text-str">&#039;type&#039;</span>   =&gt; <span class="text-type">Request</span>::<span class="text-num">URLENCODED</span>,
 ]);
 
-echo </span><span class="text-var">$client</span><span class="text-kw">-&gt;</span><span class="text-var">toCurlCommand</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$client</span>-&gt;<span class="text-fn">toCurlCommand</span>();
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">

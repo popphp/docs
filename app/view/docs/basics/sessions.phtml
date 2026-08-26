@@ -14,52 +14,52 @@ write looks the same in a controller, a model or a middleware handler.</p>
 wherever you need it — you get the same instance every time within a request.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
+<pre><code><span class="text-var">$session</span> = <span class="text-type">Pop\Session\Session</span>::<span class="text-fn">getInstance</span>();
 
-</span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">user_id </span><span class="text-kw">= </span><span class="text-var">1001</span><span class="text-kw">;
-</span><span class="text-var">$session</span><span class="text-kw">[</span><span class="text-str">&#039;role&#039;</span><span class="text-kw">]  = </span><span class="text-str">&#039;editor&#039;</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-var">$session</span>-&gt;<span class="text-type">user_id</span> = <span class="text-num">1001</span>;
+<span class="text-var">$session</span>[<span class="text-str">&#039;role&#039;</span>]  = <span class="text-str">&#039;editor&#039;</span>;
+</code></pre>
 </div>
 
 <p>Reading back is the mirror of that, and a key that was never set reads as <code>null</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
+<pre><code><span class="text-var">$session</span> = <span class="text-type">Pop\Session\Session</span>::<span class="text-fn">getInstance</span>();
 
-</span><span class="text-var">$userId </span><span class="text-kw">= </span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">user_id </span><span class="text-kw">?? </span><span class="text-var">null</span><span class="text-kw">;
-</span><span class="text-var">$role   </span><span class="text-kw">= </span><span class="text-var">$session</span><span class="text-kw">[</span><span class="text-str">&#039;role&#039;</span><span class="text-kw">] ?? </span><span class="text-str">&#039;guest&#039;</span><span class="text-kw">;
+<span class="text-var">$userId</span> = <span class="text-var">$session</span>-&gt;<span class="text-type">user_id</span> <span class="text-kw">??</span> <span class="text-num">null</span>;
+<span class="text-var">$role</span>   = <span class="text-var">$session</span>[<span class="text-str">&#039;role&#039;</span>] <span class="text-kw">??</span> <span class="text-str">&#039;guest&#039;</span>;
 
-if (isset(</span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">user_id</span><span class="text-kw">)) {
-    unset(</span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">user_id</span><span class="text-kw">);
+<span class="text-kw">if</span> (<span class="text-kw">isset</span>(<span class="text-var">$session</span>-&gt;<span class="text-type">user_id</span>)) {
+    <span class="text-kw">unset</span>(<span class="text-var">$session</span>-&gt;<span class="text-type">user_id</span>);
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>In a controller that is the whole idiom — fetch, read, write:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Http/Controller/CartController.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Http\Controller</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Http\Controller</span><span class="text-kw">;
+<span class="text-kw">use</span> <span class="text-type">Pop\Session\Session</span>;
 
-use </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">CartController</span> <span class="text-kw">extends</span> <span class="text-type">AbstractController</span>
+{
 
-class </span><span class="text-var">CartController </span><span class="text-kw">extends </span><span class="text-var">AbstractController
-</span><span class="text-kw">{
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">add</span>(<span class="text-type">string</span> <span class="text-var">$sku</span>): <span class="text-type">void</span>
+    {
+        <span class="text-var">$session</span> = <span class="text-type">Session</span>::<span class="text-fn">getInstance</span>();
+        <span class="text-var">$items</span>   = <span class="text-var">$session</span>-&gt;<span class="text-type">cart_items</span> <span class="text-kw">??</span> [];
 
-    public function </span><span class="text-var">add</span><span class="text-kw">(</span><span class="text-var">string $sku</span><span class="text-kw">): </span><span class="text-var">void
-    </span><span class="text-kw">{
-        </span><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
-        </span><span class="text-var">$items   </span><span class="text-kw">= </span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">cart_items </span><span class="text-kw">?? [];
+        <span class="text-var">$items</span>[] = <span class="text-var">$sku</span>;
+        <span class="text-var">$session</span>-&gt;<span class="text-type">cart_items</span> = <span class="text-var">$items</span>;
 
-        </span><span class="text-var">$items</span><span class="text-kw">[] = </span><span class="text-var">$sku</span><span class="text-kw">;
-        </span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">cart_items </span><span class="text-kw">= </span><span class="text-var">$items</span><span class="text-kw">;
-
-        </span><span class="text-var">Pop\Http\Server\Response</span><span class="text-kw">::</span><span class="text-var">redirectAndExit</span><span class="text-kw">(</span><span class="text-str">&#039;/cart&#039;</span><span class="text-kw">);
+        <span class="text-type">Pop\Http\Server\Response</span>::<span class="text-fn">redirectAndExit</span>(<span class="text-str">&#039;/cart&#039;</span>);
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Note the read-modify-write. <code>$session-&gt;cart_items[] = $sku</code> does not work: the magic getter returns a copy
@@ -75,14 +75,14 @@ change, a successful login above all, and see <a href="/toolkit/authentication">
 request, from the options array:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">([
-    </span><span class="text-str">&#039;lifetime&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">3600</span><span class="text-kw">,
-    </span><span class="text-str">&#039;path&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;/&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;secure&#039;   </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-    </span><span class="text-str">&#039;httponly&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-    </span><span class="text-str">&#039;samesite&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Strict&#039;
-</span><span class="text-kw">]);
-</span></code></pre>
+<pre><code><span class="text-var">$session</span> = <span class="text-type">Pop\Session\Session</span>::<span class="text-fn">getInstance</span>([
+    <span class="text-str">&#039;lifetime&#039;</span> =&gt; <span class="text-num">3600</span>,
+    <span class="text-str">&#039;path&#039;</span>     =&gt; <span class="text-str">&#039;/&#039;</span>,
+    <span class="text-str">&#039;secure&#039;</span>   =&gt; <span class="text-num">true</span>,
+    <span class="text-str">&#039;httponly&#039;</span> =&gt; <span class="text-num">true</span>,
+    <span class="text-str">&#039;samesite&#039;</span> =&gt; <span class="text-str">&#039;Strict&#039;</span>
+]);
+</code></pre>
 </div>
 
 <p><code>httponly</code> defaults to <code>true</code> and <code>samesite</code> to <code>Lax</code>, which is the safe pair to start from. Options passed on
@@ -94,13 +94,13 @@ your application class, before anything else touches the session.</p>
 colliding over key names:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$cart </span><span class="text-kw">= new </span><span class="text-var">Pop\Session\SessionNamespace</span><span class="text-kw">(</span><span class="text-str">&#039;cart&#039;</span><span class="text-kw">);
+<pre><code><span class="text-var">$cart</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Session\SessionNamespace</span>(<span class="text-str">&#039;cart&#039;</span>);
 
-</span><span class="text-var">$cart</span><span class="text-kw">-&gt;</span><span class="text-var">items    </span><span class="text-kw">= [</span><span class="text-str">&#039;ORD-1001&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;ORD-1002&#039;</span><span class="text-kw">];
-</span><span class="text-var">$cart</span><span class="text-kw">-&gt;</span><span class="text-var">currency </span><span class="text-kw">= </span><span class="text-str">&#039;USD&#039;</span><span class="text-kw">;
+<span class="text-var">$cart</span>-&gt;<span class="text-type">items</span>    = [<span class="text-str">&#039;ORD-1001&#039;</span>, <span class="text-str">&#039;ORD-1002&#039;</span>];
+<span class="text-var">$cart</span>-&gt;<span class="text-type">currency</span> = <span class="text-str">&#039;USD&#039;</span>;
 
-</span><span class="text-var">print_r</span><span class="text-kw">(</span><span class="text-var">$cart</span><span class="text-kw">-&gt;</span><span class="text-var">toArray</span><span class="text-kw">());   </span><span class="text-comment">// [&#039;items&#039; =&gt; [...], &#039;currency&#039; =&gt; &#039;USD&#039;]
-</span></code></pre>
+<span class="text-fn">print_r</span>(<span class="text-var">$cart</span>-&gt;<span class="text-fn">toArray</span>());   <span class="text-comment">// [&#039;items&#039; =&gt; [...], &#039;currency&#039; =&gt; &#039;USD&#039;]</span>
+</code></pre>
 </div>
 
 <p>Constructing a namespace starts the session if needed, so there's no separate <code>Session::getInstance()</code> call
@@ -113,11 +113,11 @@ keys; it's not an isolation boundary.</p>
 the entire session, which is the same thing <code>Session::kill()</code> does.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$cart </span><span class="text-kw">= new </span><span class="text-var">Pop\Session\SessionNamespace</span><span class="text-kw">(</span><span class="text-str">&#039;cart&#039;</span><span class="text-kw">);
+<pre><code><span class="text-var">$cart</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Session\SessionNamespace</span>(<span class="text-str">&#039;cart&#039;</span>);
 
-</span><span class="text-var">$cart</span><span class="text-kw">-&gt;</span><span class="text-var">kill</span><span class="text-kw">();       </span><span class="text-comment">// drops the cart, keeps the login
-</span><span class="text-var">$cart</span><span class="text-kw">-&gt;</span><span class="text-var">kill</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">);   </span><span class="text-comment">// destroys the whole session
-</span></code></pre>
+<span class="text-var">$cart</span>-&gt;<span class="text-fn">kill</span>();       <span class="text-comment">// drops the cart, keeps the login</span>
+<span class="text-var">$cart</span>-&gt;<span class="text-fn">kill</span>(<span class="text-num">true</span>);   <span class="text-comment">// destroys the whole session</span>
+</code></pre>
 </div>
 
 <p><code>_POP_SESSION_</code> is reserved for the component's own bookkeeping and constructing a namespace with that name
@@ -130,20 +130,20 @@ throws <code>Pop\Session\Exception</code> — <code>Error: Cannot use the reserv
 on the next — flash messages, in other words:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
+<pre><code><span class="text-var">$session</span> = <span class="text-type">Pop\Session\Session</span>::<span class="text-fn">getInstance</span>();
 
-</span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">setRequestValue</span><span class="text-kw">(</span><span class="text-str">&#039;flash&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Your order was saved.&#039;</span><span class="text-kw">, </span><span class="text-var">1</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$session</span>-&gt;<span class="text-fn">setRequestValue</span>(<span class="text-str">&#039;flash&#039;</span>, <span class="text-str">&#039;Your order was saved.&#039;</span>, <span class="text-num">1</span>);
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
+<pre><code><span class="text-var">$session</span> = <span class="text-type">Pop\Session\Session</span>::<span class="text-fn">getInstance</span>();
 
-if (isset(</span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">flash</span><span class="text-kw">)) {
-    </span><span class="text-var">$view</span><span class="text-kw">-&gt;</span><span class="text-var">flash </span><span class="text-kw">= </span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">flash</span><span class="text-kw">;
+<span class="text-kw">if</span> (<span class="text-kw">isset</span>(<span class="text-var">$session</span>-&gt;<span class="text-type">flash</span>)) {
+    <span class="text-var">$view</span>-&gt;<span class="text-type">flash</span> = <span class="text-var">$session</span>-&gt;<span class="text-type">flash</span>;
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Set it before a redirect, read it on the page you redirected to, and there's nothing to clean up: the request
@@ -151,10 +151,10 @@ after that one no longer has the key, and <code>isset()</code> on it is <code>fa
 <p><code>setTimedValue()</code> counts seconds instead, defaulting to 300:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
+<pre><code><span class="text-var">$session</span> = <span class="text-type">Pop\Session\Session</span>::<span class="text-fn">getInstance</span>();
 
-</span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">setTimedValue</span><span class="text-kw">(</span><span class="text-str">&#039;checkout_token&#039;</span><span class="text-kw">, </span><span class="text-var">bin2hex</span><span class="text-kw">(</span><span class="text-var">random_bytes</span><span class="text-kw">(</span><span class="text-var">16</span><span class="text-kw">)), </span><span class="text-var">600</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$session</span>-&gt;<span class="text-fn">setTimedValue</span>(<span class="text-str">&#039;checkout_token&#039;</span>, <span class="text-fn">bin2hex</span>(<span class="text-fn">random_bytes</span>(<span class="text-num">16</span>)), <span class="text-num">600</span>);
+</code></pre>
 </div>
 
 <p>Expiry is evaluated when the session is next fetched rather than on a timer, so a value whose window has
@@ -196,16 +196,16 @@ cookie.</p>
 at any point in the request, since each cookie is written separately:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$cookie </span><span class="text-kw">= </span><span class="text-var">Pop\Cookie\Cookie</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">([
-    </span><span class="text-str">&#039;expires&#039;  </span><span class="text-kw">=&gt; </span><span class="text-var">time</span><span class="text-kw">() + </span><span class="text-var">3600</span><span class="text-kw">,
-    </span><span class="text-str">&#039;path&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;/&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;httponly&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">,
-    </span><span class="text-str">&#039;samesite&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Strict&#039;
-</span><span class="text-kw">]);
+<pre><code><span class="text-var">$cookie</span> = <span class="text-type">Pop\Cookie\Cookie</span>::<span class="text-fn">getInstance</span>([
+    <span class="text-str">&#039;expires&#039;</span>  =&gt; <span class="text-fn">time</span>() + <span class="text-num">3600</span>,
+    <span class="text-str">&#039;path&#039;</span>     =&gt; <span class="text-str">&#039;/&#039;</span>,
+    <span class="text-str">&#039;httponly&#039;</span> =&gt; <span class="text-num">true</span>,
+    <span class="text-str">&#039;samesite&#039;</span> =&gt; <span class="text-str">&#039;Strict&#039;</span>
+]);
 
-</span><span class="text-var">$cookie</span><span class="text-kw">-&gt;</span><span class="text-var">set</span><span class="text-kw">(</span><span class="text-str">&#039;theme&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;dark&#039;</span><span class="text-kw">);
-</span><span class="text-var">$cookie</span><span class="text-kw">-&gt;</span><span class="text-var">theme </span><span class="text-kw">= </span><span class="text-str">&#039;dark&#039;</span><span class="text-kw">;        </span><span class="text-comment">// the same thing
-</span></code></pre>
+<span class="text-var">$cookie</span>-&gt;<span class="text-fn">set</span>(<span class="text-str">&#039;theme&#039;</span>, <span class="text-str">&#039;dark&#039;</span>);
+<span class="text-var">$cookie</span>-&gt;<span class="text-type">theme</span> = <span class="text-str">&#039;dark&#039;</span>;        <span class="text-comment">// the same thing</span>
+</code></pre>
 </div>
 
 <p>Reading uses <code>$_COOKIE</code>, so a cookie you write is readable on the <em>next</em> request, not this one. A non-scalar
@@ -213,13 +213,13 @@ value is JSON-encoded on the way out and decoded on the way back, which makes a 
 store:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$cookie </span><span class="text-kw">= </span><span class="text-var">Pop\Cookie\Cookie</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
+<pre><code><span class="text-var">$cookie</span> = <span class="text-type">Pop\Cookie\Cookie</span>::<span class="text-fn">getInstance</span>();
 
-</span><span class="text-var">$cookie</span><span class="text-kw">-&gt;</span><span class="text-var">set</span><span class="text-kw">(</span><span class="text-str">&#039;prefs&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;lang&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;en&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;tz&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;UTC&#039;</span><span class="text-kw">]);
+<span class="text-var">$cookie</span>-&gt;<span class="text-fn">set</span>(<span class="text-str">&#039;prefs&#039;</span>, [<span class="text-str">&#039;lang&#039;</span> =&gt; <span class="text-str">&#039;en&#039;</span>, <span class="text-str">&#039;tz&#039;</span> =&gt; <span class="text-str">&#039;UTC&#039;</span>]);
 
-</span><span class="text-var">$prefs </span><span class="text-kw">= </span><span class="text-var">$cookie</span><span class="text-kw">-&gt;</span><span class="text-var">prefs</span><span class="text-kw">;                 </span><span class="text-comment">// [&#039;lang&#039; =&gt; &#039;en&#039;, &#039;tz&#039; =&gt; &#039;UTC&#039;] next request
-</span><span class="text-var">$theme </span><span class="text-kw">= </span><span class="text-var">$cookie</span><span class="text-kw">-&gt;</span><span class="text-var">theme </span><span class="text-kw">?? </span><span class="text-str">&#039;light&#039;</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-var">$prefs</span> = <span class="text-var">$cookie</span>-&gt;<span class="text-type">prefs</span>;                 <span class="text-comment">// [&#039;lang&#039; =&gt; &#039;en&#039;, &#039;tz&#039; =&gt; &#039;UTC&#039;] next request</span>
+<span class="text-var">$theme</span> = <span class="text-var">$cookie</span>-&gt;<span class="text-type">theme</span> <span class="text-kw">??</span> <span class="text-str">&#039;light&#039;</span>;
+</code></pre>
 </div>
 
 <p><code>expires</code> defaults to <code>0</code>, a browser-session cookie discarded when the browser closes. Pass an absolute Unix
@@ -243,10 +243,10 @@ through <code>Pop\Cookie\Cookie</code> — see <a href="/basics/requests-respons
 what a logout wants:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$session </span><span class="text-kw">= </span><span class="text-var">Pop\Session\Session</span><span class="text-kw">::</span><span class="text-var">getInstance</span><span class="text-kw">();
+<pre><code><span class="text-var">$session</span> = <span class="text-type">Pop\Session\Session</span>::<span class="text-fn">getInstance</span>();
 
-</span><span class="text-var">$session</span><span class="text-kw">-&gt;</span><span class="text-var">kill</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$session</span>-&gt;<span class="text-fn">kill</span>();
+</code></pre>
 </div>
 
 <p>Everything goes, namespaces included. A <code>getInstance()</code> after a <code>kill()</code> starts a fresh session with a new id.</p>

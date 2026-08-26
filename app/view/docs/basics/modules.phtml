@@ -16,34 +16,34 @@ module carries a name, a version and a config array of its own. What it does not
 locator or an event manager — it borrows the application's, which is the whole point.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(new </span><span class="text-var">Pop\Router\Router</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, new </span><span class="text-var">Pop\Router\Match\Http</span><span class="text-kw">()));
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(<span class="text-kw">new</span> <span class="text-type">Pop\Router\Router</span>(<span class="text-num">null</span>, <span class="text-kw">new</span> <span class="text-type">Pop\Router\Match\Http</span>()));
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">([
-    </span><span class="text-str">&#039;name&#039;    </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;blog&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;version&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;1.0.0&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;routes&#039;  </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;/blog[/]&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Blog\Http\Controller\IndexController&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;</span><span class="text-kw">]
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>([
+    <span class="text-str">&#039;name&#039;</span>    =&gt; <span class="text-str">&#039;blog&#039;</span>,
+    <span class="text-str">&#039;version&#039;</span> =&gt; <span class="text-str">&#039;1.0.0&#039;</span>,
+    <span class="text-str">&#039;routes&#039;</span>  =&gt; [
+        <span class="text-str">&#039;/blog[/]&#039;</span> =&gt; [<span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;Blog\Http\Controller\IndexController&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;index&#039;</span>]
     ]
 ]);
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p>After <code>register()</code> returns, <code>/blog</code> is a route on the application's router like any route the application's
 own config declared. The module object itself stays reachable by name:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">([</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;blog&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;version&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;1.0.0&#039;</span><span class="text-kw">]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>([<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;blog&#039;</span>, <span class="text-str">&#039;version&#039;</span> =&gt; <span class="text-str">&#039;1.0.0&#039;</span>]);
 
-</span><span class="text-var">$blog </span><span class="text-kw">= </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">module</span><span class="text-kw">(</span><span class="text-str">&#039;blog&#039;</span><span class="text-kw">);
+<span class="text-var">$blog</span> = <span class="text-var">$app</span>-&gt;<span class="text-fn">module</span>(<span class="text-str">&#039;blog&#039;</span>);
 
-echo </span><span class="text-var">$blog</span><span class="text-kw">-&gt;</span><span class="text-var">getName</span><span class="text-kw">();      </span><span class="text-comment">// blog
-</span><span class="text-kw">echo </span><span class="text-var">$blog</span><span class="text-kw">-&gt;</span><span class="text-var">getVersion</span><span class="text-kw">();   </span><span class="text-comment">// 1.0.0
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">isRegistered</span><span class="text-kw">(</span><span class="text-str">&#039;blog&#039;</span><span class="text-kw">));   </span><span class="text-comment">// true
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$blog</span>-&gt;<span class="text-fn">getName</span>();      <span class="text-comment">// blog</span>
+<span class="text-kw">echo</span> <span class="text-var">$blog</span>-&gt;<span class="text-fn">getVersion</span>();   <span class="text-comment">// 1.0.0</span>
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">isRegistered</span>(<span class="text-str">&#039;blog&#039;</span>));   <span class="text-comment">// true</span>
+</code></pre>
 </div>
 
 <p><code>module()</code> returns <code>null</code> for a name that was never registered rather than throwing, so it pairs with a
@@ -63,13 +63,13 @@ in <a href="/basics/applications">Applications &amp; Bootstrap</a>.</p>
 name comes from the config's <code>name</code> key:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">([</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;blog&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; []]);          </span><span class="text-comment">// named by config
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">(new </span><span class="text-var">Pop\Module\Module</span><span class="text-kw">(</span><span class="text-str">&#039;shop&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;2.1.0&#039;</span><span class="text-kw">, []));  </span><span class="text-comment">// named by constructor
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>([<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;blog&#039;</span>, <span class="text-str">&#039;routes&#039;</span> =&gt; []]);          <span class="text-comment">// named by config</span>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>(<span class="text-kw">new</span> <span class="text-type">Pop\Module\Module</span>(<span class="text-str">&#039;shop&#039;</span>, <span class="text-str">&#039;2.1.0&#039;</span>, []));  <span class="text-comment">// named by constructor</span>
 
-</span><span class="text-kw">echo </span><span class="text-var">implode</span><span class="text-kw">(</span><span class="text-str">&#039;, &#039;</span><span class="text-kw">, </span><span class="text-var">array_keys</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">modules</span><span class="text-kw">()-&gt;</span><span class="text-var">getItems</span><span class="text-kw">()));  </span><span class="text-comment">// blog, shop
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-fn">implode</span>(<span class="text-str">&#039;, &#039;</span>, <span class="text-fn">array_keys</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">modules</span>()-&gt;<span class="text-fn">getItems</span>()));  <span class="text-comment">// blog, shop</span>
+</code></pre>
 </div>
 
 <p>The <code>Module</code> constructor sorts its arguments by type rather than position, the way the application
@@ -80,16 +80,16 @@ behaves identically for a config array and for a module object — the array is 
 and the name is applied to that wrapper before it registers itself:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">([</span><span class="text-str">&#039;routes&#039; </span><span class="text-kw">=&gt; []], </span><span class="text-str">&#039;shop&#039;</span><span class="text-kw">);                   </span><span class="text-comment">// config array + name argument
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">(new </span><span class="text-var">Pop\Module\Module</span><span class="text-kw">(</span><span class="text-str">&#039;2.1.0&#039;</span><span class="text-kw">, []), </span><span class="text-str">&#039;api&#039;</span><span class="text-kw">);  </span><span class="text-comment">// module object + name argument
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>([<span class="text-str">&#039;routes&#039;</span> =&gt; []], <span class="text-str">&#039;shop&#039;</span>);                   <span class="text-comment">// config array + name argument</span>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>(<span class="text-kw">new</span> <span class="text-type">Pop\Module\Module</span>(<span class="text-str">&#039;2.1.0&#039;</span>, []), <span class="text-str">&#039;api&#039;</span>);  <span class="text-comment">// module object + name argument</span>
 
-</span><span class="text-kw">echo </span><span class="text-var">implode</span><span class="text-kw">(</span><span class="text-str">&#039;, &#039;</span><span class="text-kw">, </span><span class="text-var">array_keys</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">modules</span><span class="text-kw">()-&gt;</span><span class="text-var">getItems</span><span class="text-kw">()));  </span><span class="text-comment">// shop, api
+<span class="text-kw">echo</span> <span class="text-fn">implode</span>(<span class="text-str">&#039;, &#039;</span>, <span class="text-fn">array_keys</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">modules</span>()-&gt;<span class="text-fn">getItems</span>()));  <span class="text-comment">// shop, api</span>
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">isRegistered</span><span class="text-kw">(</span><span class="text-str">&#039;shop&#039;</span><span class="text-kw">));       </span><span class="text-comment">// true
-</span><span class="text-kw">echo </span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">module</span><span class="text-kw">(</span><span class="text-str">&#039;shop&#039;</span><span class="text-kw">)-&gt;</span><span class="text-var">getName</span><span class="text-kw">();       </span><span class="text-comment">// shop
-</span></code></pre>
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">isRegistered</span>(<span class="text-str">&#039;shop&#039;</span>));       <span class="text-comment">// true</span>
+<span class="text-kw">echo</span> <span class="text-var">$app</span>-&gt;<span class="text-fn">module</span>(<span class="text-str">&#039;shop&#039;</span>)-&gt;<span class="text-fn">getName</span>();       <span class="text-comment">// shop</span>
+</code></pre>
 </div>
 
 <p>Name a module one way or the other: a <code>name</code> key in the config wins over the <code>$name</code> argument, since the
@@ -148,27 +148,27 @@ this is what a module does with each one:</p>
 <p>A module's own config file returns that array, and looks like a smaller version of <code>app/config/app.http.php</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">modules/blog/config/module.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
-
-</span><span class="text-kw">return [
-    </span><span class="text-str">&#039;name&#039;    </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;blog&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;version&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;1.0.0&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;prefix&#039;  </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Blog\\&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;src&#039;     </span><span class="text-kw">=&gt; </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../src&#039;</span><span class="text-kw">,
-    </span><span class="text-str">&#039;routes&#039;  </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;/blog[/]&#039; </span><span class="text-kw">=&gt; [
-            </span><span class="text-str">&#039;controller&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Blog\Http\Controller\IndexController&#039;</span><span class="text-kw">,
-            </span><span class="text-str">&#039;action&#039;     </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;index&#039;
-        </span><span class="text-kw">]
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">return</span> [
+    <span class="text-str">&#039;name&#039;</span>    =&gt; <span class="text-str">&#039;blog&#039;</span>,
+    <span class="text-str">&#039;version&#039;</span> =&gt; <span class="text-str">&#039;1.0.0&#039;</span>,
+    <span class="text-str">&#039;prefix&#039;</span>  =&gt; <span class="text-str">&#039;Blog\\&#039;</span>,
+    <span class="text-str">&#039;src&#039;</span>     =&gt; <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../src&#039;</span>,
+    <span class="text-str">&#039;routes&#039;</span>  =&gt; [
+        <span class="text-str">&#039;/blog[/]&#039;</span> =&gt; [
+            <span class="text-str">&#039;controller&#039;</span> =&gt; <span class="text-str">&#039;Blog\Http\Controller\IndexController&#039;</span>,
+            <span class="text-str">&#039;action&#039;</span>     =&gt; <span class="text-str">&#039;index&#039;</span>
+        ]
     ],
-    </span><span class="text-str">&#039;services&#039; </span><span class="text-kw">=&gt; [
-        </span><span class="text-str">&#039;posts&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;call&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Blog\Model\Posts&#039;</span><span class="text-kw">]
+    <span class="text-str">&#039;services&#039;</span> =&gt; [
+        <span class="text-str">&#039;posts&#039;</span> =&gt; [<span class="text-str">&#039;call&#039;</span> =&gt; <span class="text-str">&#039;Blog\Model\Posts&#039;</span>]
     ],
-    </span><span class="text-str">&#039;events&#039; </span><span class="text-kw">=&gt; [
-        [</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;app.dispatch.post&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;action&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;Blog\Http\Event\Ping::send&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;priority&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">10</span><span class="text-kw">]
+    <span class="text-str">&#039;events&#039;</span> =&gt; [
+        [<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;app.dispatch.post&#039;</span>, <span class="text-str">&#039;action&#039;</span> =&gt; <span class="text-str">&#039;Blog\Http\Event\Ping::send&#039;</span>, <span class="text-str">&#039;priority&#039;</span> =&gt; <span class="text-num">10</span>]
     ]
 ];
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>The <code>events</code> entries take the same <code>name</code>/<code>action</code>/<code>priority</code> shape the application config uses — see
@@ -176,10 +176,10 @@ this is what a module does with each one:</p>
 <a href="/basics/services">Services</a>. Registering the module is then one line in <code>load()</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">(include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../../modules/blog/config/module.php&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>(<span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../../modules/blog/config/module.php&#039;</span>);
+</code></pre>
 </div>
 
 <h2 id="autoloading-a-module-s-classes">Autoloading a Module's Classes<a class="anchor" href="#autoloading-a-module-s-classes" aria-label="Link to this section">#</a></h2>
@@ -190,14 +190,14 @@ the front controller captures the <code>ClassLoader</code> that <code>vendor/aut
 application.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$autoloader </span><span class="text-kw">= include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../vendor/autoload.php&#039;</span><span class="text-kw">;
+<pre><code><span class="text-var">$autoloader</span> = <span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../vendor/autoload.php&#039;</span>;
 
-</span><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">(</span><span class="text-var">$autoloader</span><span class="text-kw">, new </span><span class="text-var">Pop\Router\Router</span><span class="text-kw">(</span><span class="text-var">null</span><span class="text-kw">, new </span><span class="text-var">Pop\Router\Match\Http</span><span class="text-kw">()));
+<span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>(<span class="text-var">$autoloader</span>, <span class="text-kw">new</span> <span class="text-type">Pop\Router\Router</span>(<span class="text-num">null</span>, <span class="text-kw">new</span> <span class="text-type">Pop\Router\Match\Http</span>()));
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">(include </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/../modules/blog/config/module.php&#039;</span><span class="text-kw">);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>(<span class="text-kw">include</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../modules/blog/config/module.php&#039;</span>);
 
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">class_exists</span><span class="text-kw">(</span><span class="text-str">&#039;Blog\Http\Controller\IndexController&#039;</span><span class="text-kw">));   </span><span class="text-comment">// true
-</span></code></pre>
+<span class="text-fn">var_dump</span>(<span class="text-fn">class_exists</span>(<span class="text-str">&#039;Blog\Http\Controller\IndexController&#039;</span>));   <span class="text-comment">// true</span>
+</code></pre>
 </div>
 
 <p>Two things make that registration a silent no-op: an application constructed without an autoloader, or a
@@ -209,20 +209,20 @@ application.</p>
 countable, iterable, and addressable by name.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$app </span><span class="text-kw">= new </span><span class="text-var">Pop\Application</span><span class="text-kw">();
+<pre><code><span class="text-var">$app</span> = <span class="text-kw">new</span> <span class="text-type">Pop\Application</span>();
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">([</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;blog&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;version&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;1.0.0&#039;</span><span class="text-kw">]);
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">register</span><span class="text-kw">([</span><span class="text-str">&#039;name&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;shop&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;version&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;2.1.0&#039;</span><span class="text-kw">]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>([<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;blog&#039;</span>, <span class="text-str">&#039;version&#039;</span> =&gt; <span class="text-str">&#039;1.0.0&#039;</span>]);
+<span class="text-var">$app</span>-&gt;<span class="text-fn">register</span>([<span class="text-str">&#039;name&#039;</span> =&gt; <span class="text-str">&#039;shop&#039;</span>, <span class="text-str">&#039;version&#039;</span> =&gt; <span class="text-str">&#039;2.1.0&#039;</span>]);
 
-echo </span><span class="text-var">count</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">modules</span><span class="text-kw">());          </span><span class="text-comment">// 2
+<span class="text-kw">echo</span> <span class="text-fn">count</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">modules</span>());          <span class="text-comment">// 2</span>
 
-</span><span class="text-kw">foreach (</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">modules</span><span class="text-kw">() as </span><span class="text-var">$name </span><span class="text-kw">=&gt; </span><span class="text-var">$module</span><span class="text-kw">) {
-    echo </span><span class="text-var">$name </span><span class="text-kw">. </span><span class="text-str">&#039; &#039; </span><span class="text-kw">. </span><span class="text-var">$module</span><span class="text-kw">-&gt;</span><span class="text-var">getVersion</span><span class="text-kw">() . </span><span class="text-var">PHP_EOL</span><span class="text-kw">;
+<span class="text-kw">foreach</span> (<span class="text-var">$app</span>-&gt;<span class="text-fn">modules</span>() <span class="text-kw">as</span> <span class="text-var">$name</span> =&gt; <span class="text-var">$module</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$name</span> . <span class="text-str">&#039; &#039;</span> . <span class="text-var">$module</span>-&gt;<span class="text-fn">getVersion</span>() . <span class="text-num">PHP_EOL</span>;
 }
 
-</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">unregister</span><span class="text-kw">(</span><span class="text-str">&#039;shop&#039;</span><span class="text-kw">);
-</span><span class="text-var">var_dump</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">-&gt;</span><span class="text-var">isRegistered</span><span class="text-kw">(</span><span class="text-str">&#039;shop&#039;</span><span class="text-kw">));   </span><span class="text-comment">// false
-</span></code></pre>
+<span class="text-var">$app</span>-&gt;<span class="text-fn">unregister</span>(<span class="text-str">&#039;shop&#039;</span>);
+<span class="text-fn">var_dump</span>(<span class="text-var">$app</span>-&gt;<span class="text-fn">isRegistered</span>(<span class="text-str">&#039;shop&#039;</span>));   <span class="text-comment">// false</span>
+</code></pre>
 </div>
 
 <p>Guard with <code>hasVersion()</code> before reading <code>getVersion()</code> on modules you did not write — the property behind

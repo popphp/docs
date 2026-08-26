@@ -18,17 +18,17 @@ turns existing markup back into the same objects.</p>
 <p>Every node is a <code>Pop\Dom\Child</code>. The constructor takes a node name and, optionally, its value:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$div </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;div&#039;</span><span class="text-kw">);
-</span><span class="text-var">$h1  </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;h1&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;This is a header&#039;</span><span class="text-kw">);
-</span><span class="text-var">$p   </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;p&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;This is a paragraph.&#039;</span><span class="text-kw">);
+<span class="text-var">$div</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;div&#039;</span>);
+<span class="text-var">$h1</span>  = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;h1&#039;</span>, <span class="text-str">&#039;This is a header&#039;</span>);
+<span class="text-var">$p</span>   = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;p&#039;</span>, <span class="text-str">&#039;This is a paragraph.&#039;</span>);
 
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">setAttribute</span><span class="text-kw">(</span><span class="text-str">&#039;class&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;paragraph&#039;</span><span class="text-kw">);
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">addChildren</span><span class="text-kw">([</span><span class="text-var">$h1</span><span class="text-kw">, </span><span class="text-var">$p</span><span class="text-kw">]);
+<span class="text-var">$p</span>-&gt;<span class="text-fn">setAttribute</span>(<span class="text-str">&#039;class&#039;</span>, <span class="text-str">&#039;paragraph&#039;</span>);
+<span class="text-var">$div</span>-&gt;<span class="text-fn">addChildren</span>([<span class="text-var">$h1</span>, <span class="text-var">$p</span>]);
 
-echo </span><span class="text-var">$div</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$div</span>;
+</code></pre>
 </div>
 
 <p>That renders pretty-printed, four spaces per level of depth:</p>
@@ -45,17 +45,17 @@ echo </span><span class="text-var">$div</span><span class="text-kw">;
 tree in a doctype and reports the content type that belongs with it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Dom\Document</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Dom\Document</span>;
 
-</span><span class="text-var">$html </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;html&#039;</span><span class="text-kw">);
-</span><span class="text-var">$html</span><span class="text-kw">-&gt;</span><span class="text-var">addChild</span><span class="text-kw">(new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;body&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Hello&#039;</span><span class="text-kw">));
+<span class="text-var">$html</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;html&#039;</span>);
+<span class="text-var">$html</span>-&gt;<span class="text-fn">addChild</span>(<span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;body&#039;</span>, <span class="text-str">&#039;Hello&#039;</span>));
 
-</span><span class="text-var">$doc </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">(</span><span class="text-var">Document</span><span class="text-kw">::</span><span class="text-var">HTML</span><span class="text-kw">, </span><span class="text-var">$html</span><span class="text-kw">);
+<span class="text-var">$doc</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>(<span class="text-type">Document</span>::<span class="text-num">HTML</span>, <span class="text-var">$html</span>);
 
-echo </span><span class="text-var">$doc</span><span class="text-kw">;                  </span><span class="text-comment">// &lt;!DOCTYPE html&gt; followed by the tree
-</span><span class="text-var">$doc</span><span class="text-kw">-&gt;</span><span class="text-var">getContentType</span><span class="text-kw">();     </span><span class="text-comment">// &#039;text/html&#039;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$doc</span>;                  <span class="text-comment">// &lt;!DOCTYPE html&gt; followed by the tree</span>
+<span class="text-var">$doc</span>-&gt;<span class="text-fn">getContentType</span>();     <span class="text-comment">// &#039;text/html&#039;</span>
+</code></pre>
 </div>
 
 <p>Four doctypes exist. <code>Document::XML</code> is the default and emits an XML declaration; <code>Document::RSS</code> and
@@ -68,19 +68,19 @@ emits <code>&lt;!DOCTYPE html&gt;</code>.</p>
 in an ordered list, addressed by index:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$ul </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;ul&#039;</span><span class="text-kw">);
-</span><span class="text-var">$ul</span><span class="text-kw">-&gt;</span><span class="text-var">addChildren</span><span class="text-kw">([new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;li&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;One&#039;</span><span class="text-kw">), new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;li&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Two&#039;</span><span class="text-kw">), new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;li&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Three&#039;</span><span class="text-kw">)]);
+<span class="text-var">$ul</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;ul&#039;</span>);
+<span class="text-var">$ul</span>-&gt;<span class="text-fn">addChildren</span>([<span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;li&#039;</span>, <span class="text-str">&#039;One&#039;</span>), <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;li&#039;</span>, <span class="text-str">&#039;Two&#039;</span>), <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;li&#039;</span>, <span class="text-str">&#039;Three&#039;</span>)]);
 
-</span><span class="text-var">$ul</span><span class="text-kw">-&gt;</span><span class="text-var">hasChildren</span><span class="text-kw">();                </span><span class="text-comment">// true
-</span><span class="text-var">count</span><span class="text-kw">(</span><span class="text-var">$ul</span><span class="text-kw">-&gt;</span><span class="text-var">getChildren</span><span class="text-kw">());         </span><span class="text-comment">// 3
-</span><span class="text-var">$ul</span><span class="text-kw">-&gt;</span><span class="text-var">getChild</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">)-&gt;</span><span class="text-var">getNodeValue</span><span class="text-kw">();  </span><span class="text-comment">// &#039;Two&#039;
-</span><span class="text-var">$ul</span><span class="text-kw">-&gt;</span><span class="text-var">getChild</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">)-&gt;</span><span class="text-var">getParent</span><span class="text-kw">();     </span><span class="text-comment">// the $ul instance
+<span class="text-var">$ul</span>-&gt;<span class="text-fn">hasChildren</span>();                <span class="text-comment">// true</span>
+<span class="text-fn">count</span>(<span class="text-var">$ul</span>-&gt;<span class="text-fn">getChildren</span>());         <span class="text-comment">// 3</span>
+<span class="text-var">$ul</span>-&gt;<span class="text-fn">getChild</span>(<span class="text-num">1</span>)-&gt;<span class="text-fn">getNodeValue</span>();  <span class="text-comment">// &#039;Two&#039;</span>
+<span class="text-var">$ul</span>-&gt;<span class="text-fn">getChild</span>(<span class="text-num">0</span>)-&gt;<span class="text-fn">getParent</span>();     <span class="text-comment">// the $ul instance</span>
 
-</span><span class="text-var">$ul</span><span class="text-kw">-&gt;</span><span class="text-var">removeChild</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">);               </span><span class="text-comment">// &#039;One&#039; goes; the rest reindex from 0
-</span><span class="text-var">$ul</span><span class="text-kw">-&gt;</span><span class="text-var">getChild</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">)-&gt;</span><span class="text-var">getNodeValue</span><span class="text-kw">();  </span><span class="text-comment">// &#039;Two&#039;
-</span></code></pre>
+<span class="text-var">$ul</span>-&gt;<span class="text-fn">removeChild</span>(<span class="text-num">0</span>);               <span class="text-comment">// &#039;One&#039; goes; the rest reindex from 0</span>
+<span class="text-var">$ul</span>-&gt;<span class="text-fn">getChild</span>(<span class="text-num">0</span>)-&gt;<span class="text-fn">getNodeValue</span>();  <span class="text-comment">// &#039;Two&#039;</span>
+</code></pre>
 </div>
 
 <p><code>removeChild()</code> reindexes, so an index you captured before a removal points at a different node
@@ -91,34 +91,34 @@ afterward. <code>getChild()</code> on an index that does not exist returns <code
 replaces:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$note </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;note&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Hello&#039;</span><span class="text-kw">);
+<span class="text-var">$note</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;note&#039;</span>, <span class="text-str">&#039;Hello&#039;</span>);
 
-</span><span class="text-var">$note</span><span class="text-kw">-&gt;</span><span class="text-var">addNodeValue</span><span class="text-kw">(</span><span class="text-str">&#039; World&#039;</span><span class="text-kw">);
-</span><span class="text-var">$note</span><span class="text-kw">-&gt;</span><span class="text-var">getNodeValue</span><span class="text-kw">();  </span><span class="text-comment">// &#039;Hello World&#039;
+<span class="text-var">$note</span>-&gt;<span class="text-fn">addNodeValue</span>(<span class="text-str">&#039; World&#039;</span>);
+<span class="text-var">$note</span>-&gt;<span class="text-fn">getNodeValue</span>();  <span class="text-comment">// &#039;Hello World&#039;</span>
 
-</span><span class="text-var">$note</span><span class="text-kw">-&gt;</span><span class="text-var">setNodeName</span><span class="text-kw">(</span><span class="text-str">&#039;memo&#039;</span><span class="text-kw">);
-</span><span class="text-var">$note</span><span class="text-kw">-&gt;</span><span class="text-var">getNodeName</span><span class="text-kw">();   </span><span class="text-comment">// &#039;memo&#039;
-</span></code></pre>
+<span class="text-var">$note</span>-&gt;<span class="text-fn">setNodeName</span>(<span class="text-str">&#039;memo&#039;</span>);
+<span class="text-var">$note</span>-&gt;<span class="text-fn">getNodeName</span>();   <span class="text-comment">// &#039;memo&#039;</span>
+</code></pre>
 </div>
 
 <p>Attributes are a flat map, set one at a time or in bulk:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$div </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;div&#039;</span><span class="text-kw">);
+<span class="text-var">$div</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;div&#039;</span>);
 
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">setAttribute</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;main&#039;</span><span class="text-kw">);
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">setAttributes</span><span class="text-kw">([</span><span class="text-str">&#039;data-role&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;content&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;class&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;box&#039;</span><span class="text-kw">]);
+<span class="text-var">$div</span>-&gt;<span class="text-fn">setAttribute</span>(<span class="text-str">&#039;id&#039;</span>, <span class="text-str">&#039;main&#039;</span>);
+<span class="text-var">$div</span>-&gt;<span class="text-fn">setAttributes</span>([<span class="text-str">&#039;data-role&#039;</span> =&gt; <span class="text-str">&#039;content&#039;</span>, <span class="text-str">&#039;class&#039;</span> =&gt; <span class="text-str">&#039;box&#039;</span>]);
 
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">hasAttribute</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">);    </span><span class="text-comment">// true
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">getAttribute</span><span class="text-kw">(</span><span class="text-str">&#039;class&#039;</span><span class="text-kw">); </span><span class="text-comment">// &#039;box&#039;
+<span class="text-var">$div</span>-&gt;<span class="text-fn">hasAttribute</span>(<span class="text-str">&#039;id&#039;</span>);    <span class="text-comment">// true</span>
+<span class="text-var">$div</span>-&gt;<span class="text-fn">getAttribute</span>(<span class="text-str">&#039;class&#039;</span>); <span class="text-comment">// &#039;box&#039;</span>
 
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">removeAttribute</span><span class="text-kw">(</span><span class="text-str">&#039;class&#039;</span><span class="text-kw">);
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">getAttribute</span><span class="text-kw">(</span><span class="text-str">&#039;class&#039;</span><span class="text-kw">); </span><span class="text-comment">// null
-</span></code></pre>
+<span class="text-var">$div</span>-&gt;<span class="text-fn">removeAttribute</span>(<span class="text-str">&#039;class&#039;</span>);
+<span class="text-var">$div</span>-&gt;<span class="text-fn">getAttribute</span>(<span class="text-str">&#039;class&#039;</span>); <span class="text-comment">// null</span>
+</code></pre>
 </div>
 
 <p>Values are HTML-escaped on render, so an attribute holding quotes or angle brackets comes out safe
@@ -128,12 +128,12 @@ without any work on your part: <code>setAttribute('data-q', 'He said &quot;hi&qu
 is shorthand for a run of setters — <code>attributes</code>, <code>cData</code>, <code>childrenFirst</code>, <code>indent</code> and <code>whitespace</code>:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$p </span><span class="text-kw">= </span><span class="text-var">Child</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;p&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Some text&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;attributes&#039; </span><span class="text-kw">=&gt; [</span><span class="text-str">&#039;class&#039; </span><span class="text-kw">=&gt; </span><span class="text-str">&#039;lead&#039;</span><span class="text-kw">]]);
+<span class="text-var">$p</span> = <span class="text-type">Child</span>::<span class="text-fn">create</span>(<span class="text-str">&#039;p&#039;</span>, <span class="text-str">&#039;Some text&#039;</span>, [<span class="text-str">&#039;attributes&#039;</span> =&gt; [<span class="text-str">&#039;class&#039;</span> =&gt; <span class="text-str">&#039;lead&#039;</span>]]);
 
-echo </span><span class="text-var">$p</span><span class="text-kw">;  </span><span class="text-comment">// &lt;p class=&quot;lead&quot;&gt;Some text&lt;/p&gt;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$p</span>;  <span class="text-comment">// &lt;p class=&quot;lead&quot;&gt;Some text&lt;/p&gt;</span>
+</code></pre>
 </div>
 
 <p><code>addChildren()</code> given anything that is not a <code>Child</code> or an array of them throws <code>Pop\Dom\Exception</code>
@@ -146,14 +146,14 @@ four spaces per level of depth. Three settings change that shape.</p>
 <p>A node's own value renders before its children. <code>setChildrenFirst(true)</code> flips the order:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$p </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;p&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Value last:&#039;</span><span class="text-kw">);
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">setChildrenFirst</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">);
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">addChild</span><span class="text-kw">(new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;strong&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;child&#039;</span><span class="text-kw">));
+<span class="text-var">$p</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;p&#039;</span>, <span class="text-str">&#039;Value last:&#039;</span>);
+<span class="text-var">$p</span>-&gt;<span class="text-fn">setChildrenFirst</span>(<span class="text-num">true</span>);
+<span class="text-var">$p</span>-&gt;<span class="text-fn">addChild</span>(<span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;strong&#039;</span>, <span class="text-str">&#039;child&#039;</span>));
 
-echo </span><span class="text-var">$p</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$p</span>;
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -169,14 +169,14 @@ echo </span><span class="text-var">$p</span><span class="text-kw">;
 replaces the indentation string used for that node and everything beneath it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$div </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;div&#039;</span><span class="text-kw">);
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">setIndent</span><span class="text-kw">(</span><span class="text-str">&#039;  &#039;</span><span class="text-kw">);
-</span><span class="text-var">$div</span><span class="text-kw">-&gt;</span><span class="text-var">addChild</span><span class="text-kw">(new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;span&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;two-space indent&#039;</span><span class="text-kw">));
+<span class="text-var">$div</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;div&#039;</span>);
+<span class="text-var">$div</span>-&gt;<span class="text-fn">setIndent</span>(<span class="text-str">&#039;  &#039;</span>);
+<span class="text-var">$div</span>-&gt;<span class="text-fn">addChild</span>(<span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;span&#039;</span>, <span class="text-str">&#039;two-space indent&#039;</span>));
 
-echo </span><span class="text-var">$div</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$div</span>;
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">
@@ -194,13 +194,13 @@ pushed in two spaces even though it's the outermost node.</p>
 may contain markup characters you do not want escaped:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$note </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;note&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Value with &lt;special&gt; &amp; characters&#039;</span><span class="text-kw">);
-</span><span class="text-var">$note</span><span class="text-kw">-&gt;</span><span class="text-var">setAsCData</span><span class="text-kw">();
+<span class="text-var">$note</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;note&#039;</span>, <span class="text-str">&#039;Value with &lt;special&gt; &amp; characters&#039;</span>);
+<span class="text-var">$note</span>-&gt;<span class="text-fn">setAsCData</span>();
 
-echo </span><span class="text-var">$note</span><span class="text-kw">;  </span><span class="text-comment">// &lt;note&gt;&lt;![CDATA[Value with &lt;special&gt; &amp; characters]]&gt;&lt;/note&gt;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$note</span>;  <span class="text-comment">// &lt;note&gt;&lt;![CDATA[Value with &lt;special&gt; &amp; characters]]&gt;&lt;/note&gt;</span>
+</code></pre>
 </div>
 
 <p>Two methods pull content back out without the node's own tags. <code>getNodeContent()</code> returns the inner
@@ -208,16 +208,16 @@ markup; <code>getTextContent()</code> returns the same thing with all tags strip
 collapses runs of whitespace:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$p </span><span class="text-kw">= new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;p&#039;</span><span class="text-kw">);
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">addChild</span><span class="text-kw">(new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;#text&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Some &#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;whitespace&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">]));
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">addChild</span><span class="text-kw">(new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;strong&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;bold&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;whitespace&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">]));
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">addChild</span><span class="text-kw">(new </span><span class="text-var">Child</span><span class="text-kw">(</span><span class="text-str">&#039;#text&#039;</span><span class="text-kw">, </span><span class="text-str">&#039; text&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;whitespace&#039; </span><span class="text-kw">=&gt; </span><span class="text-var">true</span><span class="text-kw">]));
+<span class="text-var">$p</span> = <span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;p&#039;</span>);
+<span class="text-var">$p</span>-&gt;<span class="text-fn">addChild</span>(<span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;#text&#039;</span>, <span class="text-str">&#039;Some &#039;</span>, [<span class="text-str">&#039;whitespace&#039;</span> =&gt; <span class="text-num">true</span>]));
+<span class="text-var">$p</span>-&gt;<span class="text-fn">addChild</span>(<span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;strong&#039;</span>, <span class="text-str">&#039;bold&#039;</span>, [<span class="text-str">&#039;whitespace&#039;</span> =&gt; <span class="text-num">true</span>]));
+<span class="text-var">$p</span>-&gt;<span class="text-fn">addChild</span>(<span class="text-kw">new</span> <span class="text-type">Child</span>(<span class="text-str">&#039;#text&#039;</span>, <span class="text-str">&#039; text&#039;</span>, [<span class="text-str">&#039;whitespace&#039;</span> =&gt; <span class="text-num">true</span>]));
 
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">getNodeContent</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">);  </span><span class="text-comment">// &#039;Some &lt;strong&gt;bold&lt;/strong&gt; text&#039;
-</span><span class="text-var">$p</span><span class="text-kw">-&gt;</span><span class="text-var">getTextContent</span><span class="text-kw">(</span><span class="text-var">true</span><span class="text-kw">);  </span><span class="text-comment">// &#039;Some bold text&#039;
-</span></code></pre>
+<span class="text-var">$p</span>-&gt;<span class="text-fn">getNodeContent</span>(<span class="text-num">true</span>);  <span class="text-comment">// &#039;Some &lt;strong&gt;bold&lt;/strong&gt; text&#039;</span>
+<span class="text-var">$p</span>-&gt;<span class="text-fn">getTextContent</span>(<span class="text-num">true</span>);  <span class="text-comment">// &#039;Some bold text&#039;</span>
+</code></pre>
 </div>
 
 <p>That flag also normalizes spacing around <code>. ? ! , : ;</code> one character at a time, so leave it on for prose
@@ -228,15 +228,15 @@ and off for text carrying repeated punctuation.</p>
 build by hand, so anything on this page applies to markup you did not write:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
 
-</span><span class="text-var">$root </span><span class="text-kw">= </span><span class="text-var">Child</span><span class="text-kw">::</span><span class="text-var">parseString</span><span class="text-kw">(</span><span class="text-str">&#039;&lt;html&gt;&lt;body&gt;&lt;h1 id=&quot;title&quot;&gt;Hello&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#039;</span><span class="text-kw">);
+<span class="text-var">$root</span> = <span class="text-type">Child</span>::<span class="text-fn">parseString</span>(<span class="text-str">&#039;&lt;html&gt;&lt;body&gt;&lt;h1 id=&quot;title&quot;&gt;Hello&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#039;</span>);
 
-</span><span class="text-var">$root</span><span class="text-kw">-&gt;</span><span class="text-var">getNodeName</span><span class="text-kw">();                     </span><span class="text-comment">// &#039;html&#039;
-</span><span class="text-var">$root</span><span class="text-kw">-&gt;</span><span class="text-var">getChild</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">)-&gt;</span><span class="text-var">getNodeName</span><span class="text-kw">();        </span><span class="text-comment">// &#039;body&#039;
-</span><span class="text-var">$root</span><span class="text-kw">-&gt;</span><span class="text-var">getChild</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">)-&gt;</span><span class="text-var">getChild</span><span class="text-kw">(</span><span class="text-var">0</span><span class="text-kw">)
-     -&gt;</span><span class="text-var">getAttribute</span><span class="text-kw">(</span><span class="text-str">&#039;id&#039;</span><span class="text-kw">);                </span><span class="text-comment">// &#039;title&#039;
-</span></code></pre>
+<span class="text-var">$root</span>-&gt;<span class="text-fn">getNodeName</span>();                     <span class="text-comment">// &#039;html&#039;</span>
+<span class="text-var">$root</span>-&gt;<span class="text-fn">getChild</span>(<span class="text-num">0</span>)-&gt;<span class="text-fn">getNodeName</span>();        <span class="text-comment">// &#039;body&#039;</span>
+<span class="text-var">$root</span>-&gt;<span class="text-fn">getChild</span>(<span class="text-num">0</span>)-&gt;<span class="text-fn">getChild</span>(<span class="text-num">0</span>)
+     -&gt;<span class="text-fn">getAttribute</span>(<span class="text-str">&#039;id&#039;</span>);                <span class="text-comment">// &#039;title&#039;</span>
+</code></pre>
 </div>
 
 <p>The return type is <code>Child|array|null</code>. A full document returns one <code>Child</code> for the <code>&lt;html&gt;</code> root, a fragment
@@ -245,14 +245,14 @@ with several top-level nodes returns an array, and unparseable input returns <co
 feeding parsed output into a document — it accepts either form:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Dom\Child</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Dom\Document</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Dom\Child</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Dom\Document</span>;
 
-</span><span class="text-var">$doc </span><span class="text-kw">= new </span><span class="text-var">Document</span><span class="text-kw">(</span><span class="text-var">Document</span><span class="text-kw">::</span><span class="text-var">HTML</span><span class="text-kw">);
-</span><span class="text-var">$doc</span><span class="text-kw">-&gt;</span><span class="text-var">addChildren</span><span class="text-kw">(</span><span class="text-var">Child</span><span class="text-kw">::</span><span class="text-var">parseString</span><span class="text-kw">(</span><span class="text-str">&#039;&lt;div&gt;one&lt;/div&gt;&lt;div&gt;two&lt;/div&gt;&#039;</span><span class="text-kw">));
+<span class="text-var">$doc</span> = <span class="text-kw">new</span> <span class="text-type">Document</span>(<span class="text-type">Document</span>::<span class="text-num">HTML</span>);
+<span class="text-var">$doc</span>-&gt;<span class="text-fn">addChildren</span>(<span class="text-type">Child</span>::<span class="text-fn">parseString</span>(<span class="text-str">&#039;&lt;div&gt;one&lt;/div&gt;&lt;div&gt;two&lt;/div&gt;&#039;</span>));
 
-echo </span><span class="text-var">$doc</span><span class="text-kw">;
-</span></code></pre>
+<span class="text-kw">echo</span> <span class="text-var">$doc</span>;
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">

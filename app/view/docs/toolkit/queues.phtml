@@ -22,18 +22,18 @@ is a cron entry firing once a minute or a long-running daemon.</p>
 to the adapter:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Adapter\File</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Queue\Process\Job</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Queue\Queue</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Adapter\File</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Job</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Queue\Queue</span>;
 
-</span><span class="text-var">$queue </span><span class="text-kw">= new </span><span class="text-var">Queue</span><span class="text-kw">(</span><span class="text-str">&#039;pop-queue&#039;</span><span class="text-kw">, new </span><span class="text-var">File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/queue&#039;</span><span class="text-kw">));
+<span class="text-var">$queue</span> = <span class="text-kw">new</span> <span class="text-type">Queue</span>(<span class="text-str">&#039;pop-queue&#039;</span>, <span class="text-kw">new</span> <span class="text-type">File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/queue&#039;</span>));
 
-</span><span class="text-var">$job </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(function() {
-    echo </span><span class="text-str">&#039;This is a job&#039; </span><span class="text-kw">. </span><span class="text-var">PHP_EOL</span><span class="text-kw">;
+<span class="text-var">$job</span> = <span class="text-type">Job</span>::<span class="text-fn">create</span>(<span class="text-kw">function</span>() {
+    <span class="text-kw">echo</span> <span class="text-str">&#039;This is a job&#039;</span> . <span class="text-num">PHP_EOL</span>;
 });
 
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">addJob</span><span class="text-kw">(</span><span class="text-var">$job</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">addJob</span>(<span class="text-var">$job</span>);
+</code></pre>
 </div>
 
 <p>Nothing has run yet — a worker does that, covered under
@@ -43,17 +43,17 @@ enough to try a queue out.</p>
 passed:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\Job</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Queue\Queue</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Job</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Queue\Queue</span>;
 
-</span><span class="text-var">$queue </span><span class="text-kw">= </span><span class="text-var">Queue</span><span class="text-kw">::</span><span class="text-var">fake</span><span class="text-kw">();
+<span class="text-var">$queue</span> = <span class="text-type">Queue</span>::<span class="text-fn">fake</span>();
 
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">addJob</span><span class="text-kw">(</span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(function(</span><span class="text-var">$app</span><span class="text-kw">, </span><span class="text-var">$to</span><span class="text-kw">) {
-    echo </span><span class="text-str">&#039;Sending to &#039; </span><span class="text-kw">. </span><span class="text-var">$to </span><span class="text-kw">. </span><span class="text-str">&#039; via &#039; </span><span class="text-kw">. </span><span class="text-var">get_class</span><span class="text-kw">(</span><span class="text-var">$app</span><span class="text-kw">) . </span><span class="text-var">PHP_EOL</span><span class="text-kw">;
-}, [</span><span class="text-str">&#039;nick@test.com&#039;</span><span class="text-kw">]));
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">addJob</span>(<span class="text-type">Job</span>::<span class="text-fn">create</span>(<span class="text-kw">function</span>(<span class="text-var">$app</span>, <span class="text-var">$to</span>) {
+    <span class="text-kw">echo</span> <span class="text-str">&#039;Sending to &#039;</span> . <span class="text-var">$to</span> . <span class="text-str">&#039; via &#039;</span> . <span class="text-fn">get_class</span>(<span class="text-var">$app</span>) . <span class="text-num">PHP_EOL</span>;
+}, [<span class="text-str">&#039;nick@test.com&#039;</span>]));
 
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">work</span><span class="text-kw">(</span><span class="text-var">$application</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">work</span>(<span class="text-var">$application</span>);
+</code></pre>
 </div>
 
 <p>It only arrives if something supplies it — <code>work()</code>'s argument here, or the <code>Worker</code> constructor.
@@ -69,15 +69,15 @@ of seconds or a per-attempt schedule like <code>[10, 30, 60]</code>. <code>delay
 run, taking seconds or an absolute time, and <code>setTimeout()</code> interrupts a job that overruns.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\Job</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Job</span>;
 
-</span><span class="text-var">$job </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;App\Service\DigestService-&gt;handle&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;nick@test.com&#039;</span><span class="text-kw">]);
+<span class="text-var">$job</span> = <span class="text-type">Job</span>::<span class="text-fn">create</span>(<span class="text-str">&#039;App\Service\DigestService-&gt;handle&#039;</span>, [<span class="text-str">&#039;nick@test.com&#039;</span>]);
 
-</span><span class="text-var">$job</span><span class="text-kw">-&gt;</span><span class="text-var">setMaxAttempts</span><span class="text-kw">(</span><span class="text-var">3</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">setBackoff</span><span class="text-kw">([</span><span class="text-var">10</span><span class="text-kw">, </span><span class="text-var">30</span><span class="text-kw">, </span><span class="text-var">60</span><span class="text-kw">])
-    -&gt;</span><span class="text-var">setTimeout</span><span class="text-kw">(</span><span class="text-var">30</span><span class="text-kw">)
-    -&gt;</span><span class="text-var">delay</span><span class="text-kw">(</span><span class="text-str">&#039;2026-12-01 09:00:00&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$job</span>-&gt;<span class="text-fn">setMaxAttempts</span>(<span class="text-num">3</span>)
+    -&gt;<span class="text-fn">setBackoff</span>([<span class="text-num">10</span>, <span class="text-num">30</span>, <span class="text-num">60</span>])
+    -&gt;<span class="text-fn">setTimeout</span>(<span class="text-num">30</span>)
+    -&gt;<span class="text-fn">delay</span>(<span class="text-str">&#039;2026-12-01 09:00:00&#039;</span>);
+</code></pre>
 </div>
 
 <p>A job that throws is released for another attempt until its attempts run out, at which point it is
@@ -85,11 +85,11 @@ run, taking seconds or an absolute time, and <code>setTimeout()</code> interrupt
 recorded against it.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">adapter</span><span class="text-kw">()-&gt;</span><span class="text-var">countDead</span><span class="text-kw">();     </span><span class="text-comment">// how many are buried
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">adapter</span><span class="text-kw">()-&gt;</span><span class="text-var">getDeadJobs</span><span class="text-kw">();   </span><span class="text-comment">// the job objects, keyed by id
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">adapter</span><span class="text-kw">()-&gt;</span><span class="text-var">retryDeadJob</span><span class="text-kw">(</span><span class="text-var">$id</span><span class="text-kw">);
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">adapter</span><span class="text-kw">()-&gt;</span><span class="text-var">deleteDeadJob</span><span class="text-kw">(</span><span class="text-var">$id</span><span class="text-kw">);
-</span></code></pre>
+<pre><code><span class="text-var">$queue</span>-&gt;<span class="text-fn">adapter</span>()-&gt;<span class="text-fn">countDead</span>();     <span class="text-comment">// how many are buried</span>
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">adapter</span>()-&gt;<span class="text-fn">getDeadJobs</span>();   <span class="text-comment">// the job objects, keyed by id</span>
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">adapter</span>()-&gt;<span class="text-fn">retryDeadJob</span>(<span class="text-var">$id</span>);
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">adapter</span>()-&gt;<span class="text-fn">deleteDeadJob</span>(<span class="text-var">$id</span>);
+</code></pre>
 </div>
 
 <p><code>getFailedMessages()</code> on a recovered job holds one message per failed attempt, the last being the
@@ -102,37 +102,37 @@ On a shell-command job it goes through <code>Symfony\Process</code>, which needs
 place the closure went:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\Job</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Job</span>;
 
-</span><span class="text-comment">// Construct the class and call the method
-</span><span class="text-var">$job1 </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;App\Service\DigestService-&gt;handle&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;nick@test.com&#039;</span><span class="text-kw">]);
+<span class="text-comment">// Construct the class and call the method</span>
+<span class="text-var">$job1</span> = <span class="text-type">Job</span>::<span class="text-fn">create</span>(<span class="text-str">&#039;App\Service\DigestService-&gt;handle&#039;</span>, [<span class="text-str">&#039;nick@test.com&#039;</span>]);
 
-</span><span class="text-comment">// Call a static method
-</span><span class="text-var">$job2 </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;App\Service\DigestService::handleStatic&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;nick@test.com&#039;</span><span class="text-kw">]);
+<span class="text-comment">// Call a static method</span>
+<span class="text-var">$job2</span> = <span class="text-type">Job</span>::<span class="text-fn">create</span>(<span class="text-str">&#039;App\Service\DigestService::handleStatic&#039;</span>, [<span class="text-str">&#039;nick@test.com&#039;</span>]);
 
-</span><span class="text-comment">// Construct the class with the parameters; the object becomes the job&#039;s results
-</span><span class="text-var">$job3 </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-str">&#039;App\Service\DigestService&#039;</span><span class="text-kw">, [</span><span class="text-str">&#039;nick@test.com&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-comment">// Construct the class with the parameters; the object becomes the job&#039;s results</span>
+<span class="text-var">$job3</span> = <span class="text-type">Job</span>::<span class="text-fn">create</span>(<span class="text-str">&#039;App\Service\DigestService&#039;</span>, [<span class="text-str">&#039;nick@test.com&#039;</span>]);
+</code></pre>
 </div>
 
 <p>The application is prepended exactly as it is for a closure, so write the method to take it first. What
 the method returns becomes the job's results:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Service/DigestService.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-var">&lt;?php
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Service</span>;
 
-</span><span class="text-kw">namespace </span><span class="text-var">App\Service</span><span class="text-kw">;
+<span class="text-kw">class</span> <span class="text-type">DigestService</span>
+{
 
-class </span><span class="text-var">DigestService
-</span><span class="text-kw">{
-
-    public function </span><span class="text-var">handle</span><span class="text-kw">(</span><span class="text-var">$application</span><span class="text-kw">, </span><span class="text-var">string $to</span><span class="text-kw">): </span><span class="text-var">string
-    </span><span class="text-kw">{
-        return </span><span class="text-str">&#039;sent to &#039; </span><span class="text-kw">. </span><span class="text-var">$to</span><span class="text-kw">;
+    <span class="text-kw">public</span> <span class="text-kw">function</span> <span class="text-fn">handle</span>(<span class="text-var">$application</span>, <span class="text-type">string</span> <span class="text-var">$to</span>): <span class="text-type">string</span>
+    {
+        <span class="text-kw">return</span> <span class="text-str">&#039;sent to &#039;</span> . <span class="text-var">$to</span>;
     }
 
 }
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>Two things make this the right default for work of any size. The class needs no route and no
@@ -142,13 +142,13 @@ parameters are serialized, so the stored payload stays small: queue identifiers,
 type it, and the application's own router resolves it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\Job</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Job</span>;
 
-</span><span class="text-var">$job </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">command</span><span class="text-kw">(</span><span class="text-str">&#039;greet Nick&#039;</span><span class="text-kw">);
+<span class="text-var">$job</span> = <span class="text-type">Job</span>::<span class="text-fn">command</span>(<span class="text-str">&#039;greet Nick&#039;</span>);
 
-</span><span class="text-comment">// An argument containing spaces needs the argv-style array form
-</span><span class="text-var">$job </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">command</span><span class="text-kw">([</span><span class="text-str">&#039;greet&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;Nick Sagona&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-comment">// An argument containing spaces needs the argv-style array form</span>
+<span class="text-var">$job</span> = <span class="text-type">Job</span>::<span class="text-fn">command</span>([<span class="text-str">&#039;greet&#039;</span>, <span class="text-str">&#039;Nick Sagona&#039;</span>]);
+</code></pre>
 </div>
 
 <p>Its results are the lines the command printed — output is captured, not echoed, so a worker servicing
@@ -159,14 +159,14 @@ completes with no results.</p>
 <p>A <strong>shell command</strong> is the third: <code>Job::exec()</code>, run through <code>Symfony\Process</code>.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\Job</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Job</span>;
 
-</span><span class="text-comment">// String form — goes through a shell, so pipes and redirects work
-</span><span class="text-var">$job1 </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">exec</span><span class="text-kw">(</span><span class="text-str">&#039;echo hello | tr a-z A-Z&#039;</span><span class="text-kw">);   </span><span class="text-comment">// results: [&#039;HELLO&#039;]
+<span class="text-comment">// String form — goes through a shell, so pipes and redirects work</span>
+<span class="text-var">$job1</span> = <span class="text-type">Job</span>::<span class="text-fn">exec</span>(<span class="text-str">&#039;echo hello | tr a-z A-Z&#039;</span>);   <span class="text-comment">// results: [&#039;HELLO&#039;]</span>
 
-// Array form — no shell at all, so metacharacters are inert
-</span><span class="text-var">$job2 </span><span class="text-kw">= </span><span class="text-var">Job</span><span class="text-kw">::</span><span class="text-var">exec</span><span class="text-kw">([</span><span class="text-str">&#039;echo&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;hello | tr a-z A-Z&#039;</span><span class="text-kw">]);   </span><span class="text-comment">// results: [&#039;hello | tr a-z A-Z&#039;]
-</span></code></pre>
+<span class="text-comment">// Array form — no shell at all, so metacharacters are inert</span>
+<span class="text-var">$job2</span> = <span class="text-type">Job</span>::<span class="text-fn">exec</span>([<span class="text-str">&#039;echo&#039;</span>, <span class="text-str">&#039;hello | tr a-z A-Z&#039;</span>]);   <span class="text-comment">// results: [&#039;hello | tr a-z A-Z&#039;]</span>
+</code></pre>
 </div>
 
 <p>That difference is the security boundary: build the command from anything you do not fully control and
@@ -180,19 +180,19 @@ the one you added — the adapter stores a serialized copy and hands back a fres
 it's a worker's <code>run()</code> rather than <code>work()</code> that evaluates it:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\Task</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Queue\Queue</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Task</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Queue\Queue</span>;
 
-</span><span class="text-var">$queue </span><span class="text-kw">= </span><span class="text-var">Queue</span><span class="text-kw">::</span><span class="text-var">fake</span><span class="text-kw">();
+<span class="text-var">$queue</span> = <span class="text-type">Queue</span>::<span class="text-fn">fake</span>();
 
-</span><span class="text-var">$task </span><span class="text-kw">= </span><span class="text-var">Task</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(function() {
-    echo </span><span class="text-str">&#039;This is a scheduled task&#039; </span><span class="text-kw">. </span><span class="text-var">PHP_EOL</span><span class="text-kw">;
-})-&gt;</span><span class="text-var">every30Minutes</span><span class="text-kw">();
+<span class="text-var">$task</span> = <span class="text-type">Task</span>::<span class="text-fn">create</span>(<span class="text-kw">function</span>() {
+    <span class="text-kw">echo</span> <span class="text-str">&#039;This is a scheduled task&#039;</span> . <span class="text-num">PHP_EOL</span>;
+})-&gt;<span class="text-fn">every30Minutes</span>();
 
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">addTask</span><span class="text-kw">(</span><span class="text-var">$task</span><span class="text-kw">);
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">addTask</span>(<span class="text-var">$task</span>);
 
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">run</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">run</span>();
+</code></pre>
 </div>
 
 <p>The schedule is a cron expression underneath, and the fluent methods write it: <code>every30Minutes()</code>
@@ -201,10 +201,10 @@ through <code>yearly()</code>, with <code>weekdays()</code>, <code>weekends()</c
 string directly when none of them fit:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\Task</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Task</span>;
 
-</span><span class="text-var">$task </span><span class="text-kw">= </span><span class="text-var">Task</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(function() {})-&gt;</span><span class="text-var">schedule</span><span class="text-kw">(</span><span class="text-str">&#039;* */2 1,15 1-4 *&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$task</span> = <span class="text-type">Task</span>::<span class="text-fn">create</span>(<span class="text-kw">function</span>() {})-&gt;<span class="text-fn">schedule</span>(<span class="text-str">&#039;* */2 1,15 1-4 *&#039;</span>);
+</code></pre>
 </div>
 
 <p>Pop's format extends cron with an optional leading seconds field, so a six-field string schedules below
@@ -216,12 +216,12 @@ and the reason to run the scheduler as a daemon rather than from a crontab.</p>
 and <code>isValid()</code> folds in the max-attempts check too:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\Task</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\Task</span>;
 
-</span><span class="text-var">$task </span><span class="text-kw">= </span><span class="text-var">Task</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(function() {})
-    -&gt;</span><span class="text-var">every30Minutes</span><span class="text-kw">()
-    -&gt;</span><span class="text-var">runUntil</span><span class="text-kw">(</span><span class="text-str">&#039;2027-11-30 23:59:59&#039;</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$task</span> = <span class="text-type">Task</span>::<span class="text-fn">create</span>(<span class="text-kw">function</span>() {})
+    -&gt;<span class="text-fn">every30Minutes</span>()
+    -&gt;<span class="text-fn">runUntil</span>(<span class="text-str">&#039;2027-11-30 23:59:59&#039;</span>);
+</code></pre>
 </div>
 
 <p>The <strong>grace period</strong> decides how late a worker may be and still count a task as due. It defaults to <code>-1</code>,
@@ -300,11 +300,11 @@ with an <code>Aws\Sqs\Exception\SqsException</code>. Nothing is checked until th
 extension or disk. <code>Queue::fake()</code> is the shorthand:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Queue</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Queue</span>;
 
-</span><span class="text-var">$queue </span><span class="text-kw">= </span><span class="text-var">Queue</span><span class="text-kw">::</span><span class="text-var">fake</span><span class="text-kw">();                      </span><span class="text-comment">// Queue::create(&#039;pop-queue&#039;, new Memory())
-</span><span class="text-var">$queue </span><span class="text-kw">= </span><span class="text-var">Queue</span><span class="text-kw">::</span><span class="text-var">fake</span><span class="text-kw">(</span><span class="text-str">&#039;test-queue&#039;</span><span class="text-kw">, </span><span class="text-str">&#039;FILO&#039;</span><span class="text-kw">, </span><span class="text-var">30</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$queue</span> = <span class="text-type">Queue</span>::<span class="text-fn">fake</span>();                      <span class="text-comment">// Queue::create(&#039;pop-queue&#039;, new Memory())</span>
+<span class="text-var">$queue</span> = <span class="text-type">Queue</span>::<span class="text-fn">fake</span>(<span class="text-str">&#039;test-queue&#039;</span>, <span class="text-str">&#039;FILO&#039;</span>, <span class="text-num">30</span>);
+</code></pre>
 </div>
 
 <p>SQS differs in three ways. <code>addTask()</code> is unsupported. Burying deletes the message rather than storing it,
@@ -317,15 +317,15 @@ a <code>.fifo</code> queue.</p>
 takes the newest.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Adapter\Memory</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Queue\Queue</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Adapter\Memory</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Queue\Queue</span>;
 
-</span><span class="text-var">$queue </span><span class="text-kw">= new </span><span class="text-var">Queue</span><span class="text-kw">(</span><span class="text-str">&#039;pop-queue&#039;</span><span class="text-kw">, new </span><span class="text-var">Memory</span><span class="text-kw">(), </span><span class="text-var">Queue</span><span class="text-kw">::</span><span class="text-var">FILO</span><span class="text-kw">);
+<span class="text-var">$queue</span> = <span class="text-kw">new</span> <span class="text-type">Queue</span>(<span class="text-str">&#039;pop-queue&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Memory</span>(), <span class="text-type">Queue</span>::<span class="text-num">FILO</span>);
 
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">setPriority</span><span class="text-kw">(</span><span class="text-var">Queue</span><span class="text-kw">::</span><span class="text-var">FIFO</span><span class="text-kw">);   </span><span class="text-comment">// or after the fact
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">getPriority</span><span class="text-kw">();              </span><span class="text-comment">// &#039;FIFO&#039;
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">isFifo</span><span class="text-kw">();                   </span><span class="text-comment">// true
-</span></code></pre>
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">setPriority</span>(<span class="text-type">Queue</span>::<span class="text-num">FIFO</span>);   <span class="text-comment">// or after the fact</span>
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">getPriority</span>();              <span class="text-comment">// &#039;FIFO&#039;</span>
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">isFifo</span>();                   <span class="text-comment">// true</span>
+</code></pre>
 </div>
 
 <p>Three jobs added as <code>first</code>, <code>second</code>, <code>third</code> and worked three times come back in that order under
@@ -340,10 +340,10 @@ able to write to the underlying storage can plant a payload and have a worker ex
 <code>PayloadSigner</code> closes that. Set a key once at bootstrap, before any queue operation:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Process\PayloadSigner</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Process\PayloadSigner</span>;
 
-</span><span class="text-var">PayloadSigner</span><span class="text-kw">::</span><span class="text-var">setKey</span><span class="text-kw">(</span><span class="text-var">$_ENV</span><span class="text-kw">[</span><span class="text-str">&#039;QUEUE_SIGNING_KEY&#039;</span><span class="text-kw">]);
-</span></code></pre>
+<span class="text-type">PayloadSigner</span>::<span class="text-fn">setKey</span>(<span class="text-var">$_ENV</span>[<span class="text-str">&#039;QUEUE_SIGNING_KEY&#039;</span>]);
+</code></pre>
 </div>
 
 <p>From then on every adapter HMAC-signs what it writes and verifies the signature before unserializing.
@@ -355,16 +355,16 @@ there, so rotate keys with <code>APP_PREVIOUS_KEYS</code> set.</p>
 <p>A worker services one or more queues. Adding a queue with a <strong>weight</strong> says which matters more:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Worker</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Worker</span>;
 
-</span><span class="text-var">$worker </span><span class="text-kw">= </span><span class="text-var">Worker</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">();
+<span class="text-var">$worker</span> = <span class="text-type">Worker</span>::<span class="text-fn">create</span>();
 
-</span><span class="text-var">$worker</span><span class="text-kw">-&gt;</span><span class="text-var">addQueue</span><span class="text-kw">(</span><span class="text-var">$reports</span><span class="text-kw">, </span><span class="text-var">1</span><span class="text-kw">);
-</span><span class="text-var">$worker</span><span class="text-kw">-&gt;</span><span class="text-var">addQueue</span><span class="text-kw">(</span><span class="text-var">$emails</span><span class="text-kw">, </span><span class="text-var">10</span><span class="text-kw">);
+<span class="text-var">$worker</span>-&gt;<span class="text-fn">addQueue</span>(<span class="text-var">$reports</span>, <span class="text-num">1</span>);
+<span class="text-var">$worker</span>-&gt;<span class="text-fn">addQueue</span>(<span class="text-var">$emails</span>, <span class="text-num">10</span>);
 
-</span><span class="text-var">$worker</span><span class="text-kw">-&gt;</span><span class="text-var">work</span><span class="text-kw">();      </span><span class="text-comment">// tries emails first, falls through to reports
-</span><span class="text-var">$worker</span><span class="text-kw">-&gt;</span><span class="text-var">workAll</span><span class="text-kw">();   </span><span class="text-comment">// one job from every queue, highest weight first
-</span></code></pre>
+<span class="text-var">$worker</span>-&gt;<span class="text-fn">work</span>();      <span class="text-comment">// tries emails first, falls through to reports</span>
+<span class="text-var">$worker</span>-&gt;<span class="text-fn">workAll</span>();   <span class="text-comment">// one job from every queue, highest weight first</span>
+</code></pre>
 </div>
 
 <p><code>getQueues()</code>, <code>workAll()</code> and <code>runAll()</code> iterate in weight order rather than insertion order, so the
@@ -377,14 +377,14 @@ process, <code>workLoop()</code> and <code>runLoop()</code> call their non-loopi
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">worker.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>#!/usr/bin/env php
-<span class="text-var">&lt;?php
-</span><span class="text-kw">require </span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/vendor/autoload.php&#039;</span><span class="text-kw">;
+<span class="text-kw">&lt;?php
+</span><span class="text-kw">require</span> <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/vendor/autoload.php&#039;</span>;
 
-</span><span class="text-var">$queue  </span><span class="text-kw">= new </span><span class="text-var">Pop\Queue\Queue</span><span class="text-kw">(</span><span class="text-str">&#039;pop-queue&#039;</span><span class="text-kw">, new </span><span class="text-var">Pop\Queue\Adapter\File</span><span class="text-kw">(</span><span class="text-var">__DIR__ </span><span class="text-kw">. </span><span class="text-str">&#039;/queue&#039;</span><span class="text-kw">));
-</span><span class="text-var">$worker </span><span class="text-kw">= </span><span class="text-var">Pop\Queue\Worker</span><span class="text-kw">::</span><span class="text-var">create</span><span class="text-kw">(</span><span class="text-var">$queue</span><span class="text-kw">);
+<span class="text-var">$queue</span>  = <span class="text-kw">new</span> <span class="text-type">Pop\Queue\Queue</span>(<span class="text-str">&#039;pop-queue&#039;</span>, <span class="text-kw">new</span> <span class="text-type">Pop\Queue\Adapter\File</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/queue&#039;</span>));
+<span class="text-var">$worker</span> = <span class="text-type">Pop\Queue\Worker</span>::<span class="text-fn">create</span>(<span class="text-var">$queue</span>);
 
-</span><span class="text-var">$worker</span><span class="text-kw">-&gt;</span><span class="text-var">workLoop</span><span class="text-kw">(</span><span class="text-var">1</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$worker</span>-&gt;<span class="text-fn">workLoop</span>(<span class="text-num">1</span>);
+</code></pre>
 </div>
 
 <p>The argument is how many seconds to sleep after a pass that found nothing anywhere. A pass that found
@@ -413,22 +413,22 @@ the same system <code>Pop\Application</code> uses, so a listener has the finishe
 throughput and failure rate need no extra machinery:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Event\Manager</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Queue\Queue</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Event\Manager</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Queue\Queue</span>;
 
-</span><span class="text-var">$events </span><span class="text-kw">= new </span><span class="text-var">Manager</span><span class="text-kw">();
+<span class="text-var">$events</span> = <span class="text-kw">new</span> <span class="text-type">Manager</span>();
 
-</span><span class="text-var">$events</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;queue.job.post&#039;</span><span class="text-kw">, function(</span><span class="text-var">$job</span><span class="text-kw">, </span><span class="text-var">$queue</span><span class="text-kw">) {
-    echo </span><span class="text-str">&#039;job &#039; </span><span class="text-kw">. </span><span class="text-var">$job</span><span class="text-kw">-&gt;</span><span class="text-var">getJobId</span><span class="text-kw">() . </span><span class="text-str">&#039; done in &#039; </span><span class="text-kw">. </span><span class="text-var">$job</span><span class="text-kw">-&gt;</span><span class="text-var">getDuration</span><span class="text-kw">() . </span><span class="text-str">&#039;s&#039; </span><span class="text-kw">. </span><span class="text-var">PHP_EOL</span><span class="text-kw">;
+<span class="text-var">$events</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;queue.job.post&#039;</span>, <span class="text-kw">function</span>(<span class="text-var">$job</span>, <span class="text-var">$queue</span>) {
+    <span class="text-kw">echo</span> <span class="text-str">&#039;job &#039;</span> . <span class="text-var">$job</span>-&gt;<span class="text-fn">getJobId</span>() . <span class="text-str">&#039; done in &#039;</span> . <span class="text-var">$job</span>-&gt;<span class="text-fn">getDuration</span>() . <span class="text-str">&#039;s&#039;</span> . <span class="text-num">PHP_EOL</span>;
 });
 
-</span><span class="text-var">$events</span><span class="text-kw">-&gt;</span><span class="text-var">on</span><span class="text-kw">(</span><span class="text-str">&#039;queue.job.failed&#039;</span><span class="text-kw">, function(</span><span class="text-var">$job</span><span class="text-kw">, </span><span class="text-var">$queue</span><span class="text-kw">, </span><span class="text-var">$exception</span><span class="text-kw">) {
-    echo </span><span class="text-str">&#039;job &#039; </span><span class="text-kw">. </span><span class="text-var">$job</span><span class="text-kw">-&gt;</span><span class="text-var">getJobId</span><span class="text-kw">() . </span><span class="text-str">&#039; failed: &#039; </span><span class="text-kw">. </span><span class="text-var">$exception</span><span class="text-kw">-&gt;</span><span class="text-var">getMessage</span><span class="text-kw">() . </span><span class="text-var">PHP_EOL</span><span class="text-kw">;
+<span class="text-var">$events</span>-&gt;<span class="text-fn">on</span>(<span class="text-str">&#039;queue.job.failed&#039;</span>, <span class="text-kw">function</span>(<span class="text-var">$job</span>, <span class="text-var">$queue</span>, <span class="text-var">$exception</span>) {
+    <span class="text-kw">echo</span> <span class="text-str">&#039;job &#039;</span> . <span class="text-var">$job</span>-&gt;<span class="text-fn">getJobId</span>() . <span class="text-str">&#039; failed: &#039;</span> . <span class="text-var">$exception</span>-&gt;<span class="text-fn">getMessage</span>() . <span class="text-num">PHP_EOL</span>;
 });
 
-</span><span class="text-var">$queue </span><span class="text-kw">= </span><span class="text-var">Queue</span><span class="text-kw">::</span><span class="text-var">fake</span><span class="text-kw">();
-</span><span class="text-var">$queue</span><span class="text-kw">-&gt;</span><span class="text-var">setEvents</span><span class="text-kw">(</span><span class="text-var">$events</span><span class="text-kw">);
-</span></code></pre>
+<span class="text-var">$queue</span> = <span class="text-type">Queue</span>::<span class="text-fn">fake</span>();
+<span class="text-var">$queue</span>-&gt;<span class="text-fn">setEvents</span>(<span class="text-var">$events</span>);
+</code></pre>
 </div>
 
 <table>
@@ -480,16 +480,16 @@ worker emits nothing. Give a worker a registry and it registers on start, heartb
 what it is working on and deregisters on a graceful stop:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Registry\Adapter\Redis </span><span class="text-kw">as </span><span class="text-var">RegistryRedis</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Queue\Registry\WorkerRegistry</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Registry\Adapter\Redis</span> <span class="text-kw">as</span> <span class="text-type">RegistryRedis</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Queue\Registry\WorkerRegistry</span>;
 
-</span><span class="text-var">$registry </span><span class="text-kw">= new </span><span class="text-var">WorkerRegistry</span><span class="text-kw">(new </span><span class="text-var">RegistryRedis</span><span class="text-kw">());
+<span class="text-var">$registry</span> = <span class="text-kw">new</span> <span class="text-type">WorkerRegistry</span>(<span class="text-kw">new</span> <span class="text-type">RegistryRedis</span>());
 
-</span><span class="text-var">$worker</span><span class="text-kw">-&gt;</span><span class="text-var">setName</span><span class="text-kw">(</span><span class="text-str">&#039;billing-worker-01&#039;</span><span class="text-kw">);
-</span><span class="text-var">$worker</span><span class="text-kw">-&gt;</span><span class="text-var">setRegistry</span><span class="text-kw">(</span><span class="text-var">$registry</span><span class="text-kw">);
+<span class="text-var">$worker</span>-&gt;<span class="text-fn">setName</span>(<span class="text-str">&#039;billing-worker-01&#039;</span>);
+<span class="text-var">$worker</span>-&gt;<span class="text-fn">setRegistry</span>(<span class="text-var">$registry</span>);
 
-</span><span class="text-var">$worker</span><span class="text-kw">-&gt;</span><span class="text-var">workLoop</span><span class="text-kw">();
-</span></code></pre>
+<span class="text-var">$worker</span>-&gt;<span class="text-fn">workLoop</span>();
+</code></pre>
 </div>
 
 <p>The backend is chosen independently of the queue adapter — <code>Memory</code>, <code>File</code>, <code>Database</code> and <code>Redis</code>
@@ -497,21 +497,21 @@ all exist under <code>Pop\Queue\Registry\Adapter</code> — so an SQS-backed que
 Query it from a status command, a health check or a dashboard:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
-<pre><code><span class="text-kw">use </span><span class="text-var">Pop\Queue\Registry\Adapter\Redis </span><span class="text-kw">as </span><span class="text-var">RegistryRedis</span><span class="text-kw">;
-use </span><span class="text-var">Pop\Queue\Registry\WorkerRegistry</span><span class="text-kw">;
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Queue\Registry\Adapter\Redis</span> <span class="text-kw">as</span> <span class="text-type">RegistryRedis</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Queue\Registry\WorkerRegistry</span>;
 
-</span><span class="text-var">$registry </span><span class="text-kw">= new </span><span class="text-var">WorkerRegistry</span><span class="text-kw">(new </span><span class="text-var">RegistryRedis</span><span class="text-kw">());
+<span class="text-var">$registry</span> = <span class="text-kw">new</span> <span class="text-type">WorkerRegistry</span>(<span class="text-kw">new</span> <span class="text-type">RegistryRedis</span>());
 
-foreach (</span><span class="text-var">$registry</span><span class="text-kw">-&gt;</span><span class="text-var">getWorkers</span><span class="text-kw">() as </span><span class="text-var">$record</span><span class="text-kw">) {
-    echo </span><span class="text-var">$record</span><span class="text-kw">-&gt;</span><span class="text-var">getName</span><span class="text-kw">() . </span><span class="text-str">&#039; on &#039; </span><span class="text-kw">. </span><span class="text-var">$record</span><span class="text-kw">-&gt;</span><span class="text-var">getHost</span><span class="text-kw">() . </span><span class="text-str">&#039; (pid &#039; </span><span class="text-kw">. </span><span class="text-var">$record</span><span class="text-kw">-&gt;</span><span class="text-var">getPid</span><span class="text-kw">() . </span><span class="text-str">&#039;) - &#039;
-        </span><span class="text-kw">. </span><span class="text-var">$record</span><span class="text-kw">-&gt;</span><span class="text-var">getJobsProcessed</span><span class="text-kw">() . </span><span class="text-str">&#039; done, &#039; </span><span class="text-kw">. </span><span class="text-var">$record</span><span class="text-kw">-&gt;</span><span class="text-var">getJobsFailed</span><span class="text-kw">() . </span><span class="text-str">&#039; failed&#039; </span><span class="text-kw">. </span><span class="text-var">PHP_EOL</span><span class="text-kw">;
+<span class="text-kw">foreach</span> (<span class="text-var">$registry</span>-&gt;<span class="text-fn">getWorkers</span>() <span class="text-kw">as</span> <span class="text-var">$record</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$record</span>-&gt;<span class="text-fn">getName</span>() . <span class="text-str">&#039; on &#039;</span> . <span class="text-var">$record</span>-&gt;<span class="text-fn">getHost</span>() . <span class="text-str">&#039; (pid &#039;</span> . <span class="text-var">$record</span>-&gt;<span class="text-fn">getPid</span>() . <span class="text-str">&#039;) - &#039;</span>
+        . <span class="text-var">$record</span>-&gt;<span class="text-fn">getJobsProcessed</span>() . <span class="text-str">&#039; done, &#039;</span> . <span class="text-var">$record</span>-&gt;<span class="text-fn">getJobsFailed</span>() . <span class="text-str">&#039; failed&#039;</span> . <span class="text-num">PHP_EOL</span>;
 }
 
-</span><span class="text-var">$registry</span><span class="text-kw">-&gt;</span><span class="text-var">countWorkers</span><span class="text-kw">();
-</span><span class="text-var">$registry</span><span class="text-kw">-&gt;</span><span class="text-var">getStaleWorkers</span><span class="text-kw">();   </span><span class="text-comment">// the heartbeat has gone quiet
-</span><span class="text-var">$registry</span><span class="text-kw">-&gt;</span><span class="text-var">getStuckWorkers</span><span class="text-kw">();   </span><span class="text-comment">// quiet AND holding a job past its own timeout
-</span><span class="text-var">$registry</span><span class="text-kw">-&gt;</span><span class="text-var">prune</span><span class="text-kw">();             </span><span class="text-comment">// reap records untouched for an hour
-</span></code></pre>
+<span class="text-var">$registry</span>-&gt;<span class="text-fn">countWorkers</span>();
+<span class="text-var">$registry</span>-&gt;<span class="text-fn">getStaleWorkers</span>();   <span class="text-comment">// the heartbeat has gone quiet</span>
+<span class="text-var">$registry</span>-&gt;<span class="text-fn">getStuckWorkers</span>();   <span class="text-comment">// quiet AND holding a job past its own timeout</span>
+<span class="text-var">$registry</span>-&gt;<span class="text-fn">prune</span>();             <span class="text-comment">// reap records untouched for an hour</span>
+</code></pre>
 </div>
 
 <div class="code-window" x-data="copyCode">

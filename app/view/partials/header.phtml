@@ -2,34 +2,58 @@
 /**
  * Site header. Expects $attr. Sits above the search overlay and the mobile nav drawer, both of
  * which it opens through Alpine's global store.
+ *
+ * $hasNav is false on the status pages (404, 500, 503), which carry no section nav — the drawer
+ * button would open an empty panel.
+ *
+ * $internalLinks is false in maintenance mode, where every path answers with the same page: a
+ * link home would just render it again, so the logo and the in-site nav go inert and only the
+ * links that leave the site remain.
  */
+$hasNav        = $hasNav ?? true;
+$internalLinks = $internalLinks ?? true;
+// The overlay is only included where it can work; without this the button would be dead on the
+// 500 and 503 pages, and on 503 the index it fetches is the maintenance page itself.
+$hasSearch     = $hasSearch ?? true;
 ?>
 <header class="sticky top-0 z-40 border-b border-line bg-bg/95 backdrop-blur">
     <div class="flex items-center gap-4 px-5 py-2.5 lg:gap-7 lg:px-8">
 
+<?php if ($hasNav): ?>
         <button type="button" class="tap-target lg:hidden" @click="$store.docs.toggleNav()"
                 :aria-expanded="$store.docs.nav.toString()" aria-controls="docs-nav" aria-label="Open navigation">
             <svg x-show="!$store.docs.nav" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
             <svg x-show="$store.docs.nav" x-cloak viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
         </button>
+<?php endif; ?>
 
+<?php if ($internalLinks): ?>
         <a href="/" class="shrink-0" aria-label="Pop PHP documentation home">
-            <img src="https://media.popphp.org/img/pop-php-logo2.png" alt="Pop PHP" class="block h-[42px] w-auto lg:h-[48px]">
+            <img src="https://media.popphp.org/img/pop-php-logo2.png" alt="Pop PHP" class="block h-[46px] w-auto lg:h-[54px]">
         </a>
+<?php else: ?>
+        <span class="shrink-0">
+            <img src="https://media.popphp.org/img/pop-php-logo2.png" alt="Pop PHP" class="block h-[46px] w-auto lg:h-[54px]">
+        </span>
+<?php endif; ?>
 
         <span class="tag hidden px-2.5 py-0.5 text-[11px] sm:inline">v7.0</span>
 
         <div class="flex grow justify-end lg:justify-center">
+<?php if ($hasSearch): ?>
             <button type="button" @click="$store.docs.openSearch()"
                     class="flex w-full max-w-[340px] items-center gap-2.5 rounded-full border border-line bg-panel px-3.5 py-2 text-sm text-muted transition-colors duration-150 hover:border-pop-orange/40">
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-                <span class="grow text-left">Search the docs</span>
+                <span class="grow text-left">Search</span>
                 <span class="key hidden sm:inline">⌘K</span>
             </button>
+<?php endif; ?>
         </div>
 
         <nav class="hidden items-center gap-6 lg:flex">
+<?php if ($internalLinks): ?>
             <a href="/components" class="nav-link">Components</a>
+<?php endif; ?>
             <a href="https://github.com/popphp/popphp" class="nav-link" target="_blank" rel="noopener noreferrer">GitHub</a>
         </nav>
 
