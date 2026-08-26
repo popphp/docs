@@ -4,13 +4,12 @@
  *
  * Built from the approved design canvas: three columns on a wide screen, the section nav
  * collapsing to a drawer below it, and the on-this-page rail appearing only where there is room
- * for it. The landing page at / drops the section nav so the front door reads as an entry point
- * rather than a page you navigated to.
+ * for it. Every page gets the same shell, / included — a front door you cannot navigate from is
+ * the one place the nav matters most.
  *
  * Expects: $title $description $section $components $slug $nav $headings $prev $next $content
  */
-$attr    = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
-$landing = ($slug === '/');
+$attr = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
 ?><!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -22,7 +21,6 @@ $landing = ($slug === '/');
 
 <div class="mx-auto flex w-full max-w-[1440px] items-start gap-8 px-5 pb-20 pt-8 lg:gap-10 lg:px-8">
 
-<?php if (!$landing): ?>
     <!-- One nav, not two: a sticky column from lg up, the same element sliding in as a drawer
          below it. Rendering it twice would ship 61 extra links on every page. -->
     <div x-cloak x-show="$store.docs.nav" class="fixed inset-0 z-30 bg-[rgba(23,21,15,.42)] lg:hidden"
@@ -34,10 +32,9 @@ $landing = ($slug === '/');
            :class="$store.docs.nav ? 'translate-x-0' : '-translate-x-full'">
 <?php include __DIR__ . '/partials/nav.phtml'; ?>
     </aside>
-<?php endif; ?>
 
-    <main class="min-w-0 grow <?=$landing ? 'mx-auto max-w-[64rem]' : 'max-w-[46rem]' ?>">
-        <div class="eyebrow mb-2.5 text-[11px]"><?=$attr($landing ? 'Documentation' : $section) ?></div>
+    <main class="min-w-0 max-w-[46rem] grow">
+        <div class="eyebrow mb-2.5 text-[11px]"><?=$attr($section) ?></div>
         <h1 class="mb-3.5 font-display text-[clamp(2rem,4vw,2.75rem)] leading-[1.06] tracking-[-0.03em]"><?=$attr($title) ?></h1>
 
 <?php if (!empty($components)): ?>
@@ -84,7 +81,7 @@ $landing = ($slug === '/');
 <?php endif; ?>
     </main>
 
-<?php if (!$landing && !empty($headings)): ?>
+<?php if (!empty($headings)): ?>
     <aside class="sticky top-[68px] hidden max-h-[calc(100vh-88px)] w-52 shrink-0 overflow-y-auto xl:block" x-data="reading">
         <div class="eyebrow mb-3 text-[10.5px]">On this page</div>
         <nav class="flex flex-col" aria-label="On this page">
