@@ -1,6 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    Redirect 301 /overview/introduction https://www.popphp.org/why-pop
+    Redirect 301 /overview/about https://www.popphp.org/why-pop
+
     RewriteCond %{HTTP:Authorization} ^(.*)
     RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
