@@ -1,8 +1,11 @@
 /logs
 composer.lock
+package
 vendor
 node_modules
 package-lock.json
 public/assets/app.css
 public/assets/app.js
 .env
+.idea
+CLAUDE.md
