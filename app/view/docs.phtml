@@ -47,7 +47,7 @@ $attr = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTE
                 <ul class="space-y-1">
 <?php foreach ($pages as $page): ?>
                     <li>
-                        <a href="<?=$page['slug'] ?>" class="block rounded px-2 py-1 text-sm <?=$page['current'] ? 'bg-panel font-semibold text-pop-orange' : 'text-muted hover:text-fg' ?>"><?=$page['title'] ?></a>
+                        <a href="<?=$page['slug'] ?>" class="side-link<?=$page['current'] ? ' side-link-active' : '' ?>"><?=$page['title'] ?></a>
                     </li>
 <?php endforeach; ?>
                 </ul>
@@ -68,12 +68,14 @@ $attr = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTE
 <?php endif; ?>
 
 <?php if ($content !== null): ?>
+            <div class="prose">
 <?php include $content; ?>
+            </div>
 <?php else: ?>
             <div class="card">
-                <p class="text-muted">Content for <code class="font-mono text-pop-orange"><?=$slug ?></code>
-                   has not been generated yet. The route, the page index and this shell are working;
-                   the build step writes the page body.</p>
+                <p class="text-muted">Content for <code class="font-mono text-pop-orange"><?=$attr($slug) ?></code>
+                   has not been generated yet. Run <code class="font-mono">php tools/build-views.php</code>
+                   in the new-docs folder.</p>
             </div>
 <?php endif; ?>
 
@@ -82,6 +84,17 @@ $attr = fn(?string $value): string => htmlspecialchars((string)$value, ENT_QUOTE
                 <span><?php if ($next !== null): ?><a href="<?=$next['slug'] ?>"><?=$next['title'] ?> →</a><?php endif; ?></span>
             </div>
         </main>
+
+<?php if (!empty($headings)): ?>
+        <aside class="hidden w-52 shrink-0 xl:block" x-data="reading">
+            <div class="eyebrow mb-3 text-[10.5px]">On this page</div>
+            <nav class="flex flex-col">
+<?php foreach ($headings as $heading): ?>
+                <a href="#<?=$attr($heading['id']) ?>" class="rail-link<?=($heading['level'] === 3) ? ' rail-link-sub' : '' ?>"><?=$attr($heading['text']) ?></a>
+<?php endforeach; ?>
+            </nav>
+        </aside>
+<?php endif; ?>
     </div>
     <script type="module" src="/assets/js/app.js"></script>
 </body>

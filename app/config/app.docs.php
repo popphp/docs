@@ -264,7 +264,7 @@ return [
             'section' => 'Introduction',
             'order' => 1,
             'components' => [],
-            'view' => 'docs/.phtml',
+            'view' => 'docs/index.phtml',
             'prev' => NULL,
             'next' => '/whats-new',
         ],

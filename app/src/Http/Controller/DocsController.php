@@ -32,6 +32,7 @@ class DocsController extends AbstractController
         $this->view->components = $page['components'];
         $this->view->slug       = $slug;
         $this->view->nav        = $this->nav($slug);
+        $this->view->headings   = $page['headings'] ?? [];
         $this->view->prev       = $this->neighbour($page['prev']);
         $this->view->next       = $this->neighbour($page['next']);
 

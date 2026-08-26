@@ -6,6 +6,7 @@
  * hand-edit app.docs.php.
  */
 $docs = include __DIR__ . '/app.docs.php';
+$toc  = include __DIR__ . '/app.docs-toc.php';
 
 return [
     'routes' => [
@@ -23,8 +24,16 @@ return [
         ]
     ],
 
-    // Page index behind the generated routes: title, section, components and prev/next.
-    'docs' => $docs['pages'],
+    // Page index behind the generated routes: title, section, components and prev/next, plus
+    // the on-this-page headings the view builder recorded while rendering each page.
+    'docs' => array_combine(
+        array_keys($docs['pages']),
+        array_map(
+            static fn(array $page, string $slug): array => $page + ['headings' => $toc[$slug] ?? []],
+            $docs['pages'],
+            array_keys($docs['pages'])
+        )
+    ),
 
     'http_options_headers' => [
         'Access-Control-Allow-Origin'  => '*',

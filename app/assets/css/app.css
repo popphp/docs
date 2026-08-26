@@ -17,3 +17,150 @@
 
 @source "../../view";
 @source "../../src";
+
+/* ---------------------------------------------------------------
+   Documentation components
+
+   Values match the approved design canvas, which took them from the
+   marketing site: same radii, shadow, type sizes and hairlines.
+   --------------------------------------------------------------- */
+
+@layer components {
+    /* Code window — the marketing site's anatomy, generated per sample by
+       Pop\Docs\Tools\CodeBlockRenderer and driven by the same copyCode Alpine component. */
+    .code-window {
+        @apply overflow-hidden rounded-2xl bg-code shadow-[0_18px_40px_rgba(23,21,15,0.16)];
+    }
+
+    .code-window-bar {
+        @apply flex items-center gap-2.5 border-b border-white/10 px-5 py-3.5 font-mono text-xs text-comment;
+    }
+
+    .code-lang {
+        @apply text-kw;
+    }
+
+    .code-file {
+        @apply ml-auto opacity-75;
+    }
+
+    .code-copy {
+        @apply -mr-1 flex items-center rounded-md p-1.5 text-comment transition-colors duration-150
+               hover:bg-white/10 hover:text-str;
+    }
+
+    /* The bar has a file label only sometimes; without one the button takes the slack. */
+    .code-window-bar > .code-copy:nth-child(2) {
+        @apply ml-auto;
+    }
+
+    .code-copied {
+        @apply text-pop-orange;
+    }
+
+    .code-window pre {
+        @apply overflow-x-auto p-6 font-mono text-[13.5px]/[1.8] text-str;
+    }
+
+    /* Section nav */
+    .side-link {
+        @apply block rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors duration-150
+               hover:bg-panel hover:text-fg;
+    }
+
+    .side-link-active {
+        @apply bg-panel font-semibold text-pop-orange shadow-[inset_2px_0_0_var(--color-pop-orange)];
+    }
+
+    /* On-this-page rail */
+    .rail-link {
+        @apply border-l-2 border-line py-1 pl-3 text-[13px] text-muted transition-colors duration-150
+               hover:text-fg;
+    }
+
+    .rail-link-sub {
+        @apply pl-6;
+    }
+
+    .rail-link-active {
+        @apply border-pop-orange text-pop-orange;
+    }
+
+    /* Page body. The markdown renderer emits plain tags, so the styling lives here rather than
+       in classes the generator would have to know about. */
+    .prose > p {
+        @apply my-5 text-[16.5px]/[1.75];
+    }
+
+    .prose h2 {
+        @apply mt-11 mb-4 scroll-mt-24 font-display text-[27px] tracking-[-0.02em];
+    }
+
+    .prose h3 {
+        @apply mt-8 mb-3 scroll-mt-24 font-display text-[21px] tracking-[-0.02em];
+    }
+
+    .prose h2 .anchor,
+    .prose h3 .anchor {
+        @apply ml-2 text-pop-orange opacity-0 transition-opacity duration-150;
+    }
+
+    .prose h2:hover .anchor,
+    .prose h3:hover .anchor {
+        @apply opacity-60;
+    }
+
+    .prose :not(pre) > code {
+        @apply font-mono text-[0.9em] text-pop-orange;
+    }
+
+    .prose ul,
+    .prose ol {
+        @apply my-5 flex flex-col gap-2 pl-6 text-[16.5px]/[1.75];
+    }
+
+    .prose ul {
+        @apply list-disc;
+    }
+
+    .prose ol {
+        @apply list-decimal;
+    }
+
+    .prose .code-window {
+        @apply my-7;
+    }
+
+    .prose table {
+        @apply my-7 block w-full overflow-x-auto border-collapse text-[15px];
+    }
+
+    .prose th {
+        @apply border-b border-line px-3 py-2.5 text-left font-semibold;
+    }
+
+    .prose td {
+        @apply border-b border-line px-3 py-2.5 align-top;
+    }
+
+    .prose th:first-child,
+    .prose td:first-child {
+        @apply pl-0;
+    }
+
+    .prose blockquote {
+        @apply my-6 rounded-xl border border-line bg-panel px-5 py-4 text-[15.5px]/[1.7];
+    }
+
+    .prose blockquote > p {
+        @apply my-0;
+    }
+
+    .prose a {
+        @apply underline decoration-pop-orange/30 underline-offset-2 hover:decoration-pop-orange;
+    }
+
+    .prose img {
+        @apply max-w-full;
+    }
+}
