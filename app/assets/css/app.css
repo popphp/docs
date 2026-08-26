@@ -1,7 +1,19 @@
-@import "tailwindcss";
+/* ---------------------------------------------------------------
+   Pop documentation site
 
-@custom-variant dark (&:where(.dark, .dark *));
+   The brand comes from the v7 marketing site and is not redefined here.
+   brand.css is a verbatim copy of popphp.org app/assets/css/app.css on the
+   dev-v7 branch — edit it there and re-copy, never here.
+   `php ../new-docs/tools/theme-check.php` reports drift.
 
-.bg-pop-orange-light {
-    background-color: #e06726
-}
+   brand.css already exposes the four code-token classes as utilities through
+   its `@theme inline` block (text-kw, text-str, text-var, text-comment), so
+   they are not redefined here either. What they need is for Tailwind to see
+   them: they appear only inside generated page views, emitted by
+   Pop\Docs\Tools\Highlighter, so those views have to be in the scan path.
+   --------------------------------------------------------------- */
+
+@import "./brand.css";
+
+@source "../../view";
+@source "../../src";

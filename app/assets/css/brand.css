@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------
+   Brand tokens
+   --------------------------------------------------------------- */
+
+@theme {
+    --font-display: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+    --color-pop-orange: #d95f1e;
+    --color-pop-orange-light: #e06726;
+    --color-pop-orange-bright: #f08a3c;
+
+    /* display scale - marketing headlines */
+    --text-hero: 4.75rem;
+    --text-hero--line-height: 1;
+    --text-hero--letter-spacing: -0.035em;
+    --text-display: 2.875rem;
+    --text-display--line-height: 1.06;
+    --text-display--letter-spacing: -0.035em;
+    --text-section: 2.5rem;
+    --text-section--line-height: 1.08;
+    --text-section--letter-spacing: -0.03em;
+    --text-card: 1.5625rem;
+    --text-card--line-height: 1.2;
+    --text-card--letter-spacing: -0.02em;
+}
+
+/* ---------------------------------------------------------------
+   Semantic surfaces - flip on .dark
+   --------------------------------------------------------------- */
+
+@layer base {
+    :root {
+        --surface-bg: #eeedea;
+        --surface-panel: #ffffff;
+        --surface-fg: #17150f;
+        --surface-muted: #6d685f;
+        --surface-line: #e5dfd5;
+        --surface-code: #16150f;
+        --syntax-keyword: #f08a3c;
+        --syntax-string: #ddd8cd;
+        --syntax-var: #9dbfc4;
+        --syntax-comment: #8b867c;
+    }
+
+    .dark {
+        --surface-bg: #131211;
+        --surface-panel: #1b1a18;
+        --surface-fg: #f3efe8;
+        --surface-muted: #a09a90;
+        --surface-line: #2b2825;
+        --surface-code: #0d0c0b;
+        --syntax-keyword: #e06726;
+        --syntax-string: #c9c4bb;
+        --syntax-var: #8fb3b8;
+        --syntax-comment: #6c6a66;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--surface-bg);
+        color: var(--surface-fg);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-wrap: pretty;
+    }
+
+    a {
+        color: var(--color-pop-orange);
+        text-decoration: none;
+    }
+
+    /* Only unstyled links (content links added later) get the generic fade.
+       Anything carrying utility classes defines its own hover, so the fade
+       does not sit on top of it and flatten the effect. */
+    a:not([class]):hover {
+        opacity: 0.72;
+    }
+
+    /* Visible keyboard focus on everything interactive */
+    :focus-visible {
+        outline: 2px solid var(--color-pop-orange);
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* No-JS: reveal the mobile menu rather than trapping it closed */
+    .no-js [x-cloak] {
+        display: none !important;
+    }
+}
+
+@theme inline {
+    --color-bg: var(--surface-bg);
+    --color-panel: var(--surface-panel);
+    --color-fg: var(--surface-fg);
+    --color-muted: var(--surface-muted);
+    --color-line: var(--surface-line);
+    --color-code: var(--surface-code);
+    --color-kw: var(--syntax-keyword);
+    --color-str: var(--syntax-string);
+    --color-var: var(--syntax-var);
+    --color-comment: var(--syntax-comment);
+}
+
+/* ---------------------------------------------------------------
+   Component classes - only for patterns repeated across pages
+   --------------------------------------------------------------- */
+
+@layer components {
+    /* Nav item: hairline slides in on hover, locks orange when active */
+    .nav-link {
+        @apply relative inline-flex items-center text-[15px] text-muted transition-colors duration-150;
+    }
+
+    .nav-link::after {
+        content: "";
+        @apply absolute -bottom-1.5 left-0 h-0.5 w-full origin-left scale-x-0 rounded-sm bg-current transition-transform duration-150;
+    }
+
+    .nav-link:hover {
+        @apply text-fg;
+    }
+
+    .nav-link:hover::after {
+        @apply scale-x-100;
+    }
+
+    .nav-link-active {
+        @apply font-semibold text-fg;
+    }
+
+    .nav-link-active::after {
+        @apply scale-x-100 bg-pop-orange;
+    }
+
+    .eyebrow {
+        @apply font-mono text-[17px] font-medium uppercase tracking-[0.14em] text-pop-orange;
+    }
+
+    .card {
+        @apply flex flex-col gap-3.5 rounded-2xl border border-line bg-panel p-8;
+    }
+
+    .icon-badge {
+        @apply flex h-12 w-12 items-center justify-center rounded-xl border border-line bg-bg text-pop-orange;
+    }
+
+    .tag {
+        @apply rounded-full border border-line px-2.5 py-1 font-mono text-xs text-pop-orange;
+    }
+
+    .btn-primary {
+        @apply rounded-full bg-pop-orange px-7 py-3.5 text-[15.5px] font-medium text-white;
+    }
+
+    .btn-secondary {
+        @apply rounded-full border border-line bg-panel px-7 py-3.5 text-[15.5px] font-medium text-fg;
+    }
+
+    .code-window {
+        @apply overflow-hidden rounded-2xl bg-code shadow-[0_18px_40px_rgba(23,21,15,0.16)];
+    }
+
+    .code-window-bar {
+        @apply border-b border-white/10 px-5 py-3.5 font-mono text-xs text-comment;
+    }
+
+    .code-window pre {
+        @apply overflow-x-auto p-6 font-mono text-[13.5px]/[1.8] text-str;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}

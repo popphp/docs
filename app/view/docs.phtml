@@ -1,0 +1,65 @@
+<?php
+/**
+ * Scaffolding, not the design.
+ *
+ * This exists so the generated routes, the page index and the prev/next chain can be exercised
+ * end to end before a layout is drawn. It uses brand tokens only — no invented styling — so
+ * whatever the design produces replaces this file outright rather than being untangled from it.
+ */
+?><!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?=$title ?> — Pop PHP Framework</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body class="bg-bg text-fg">
+    <div class="mx-auto flex max-w-7xl gap-10 px-6 py-10">
+
+        <nav class="hidden w-64 shrink-0 lg:block">
+<?php foreach ($nav as $section => $pages): ?>
+            <div class="mb-6">
+                <div class="eyebrow mb-2 text-[11px]"><?=$section ?></div>
+                <ul class="space-y-1">
+<?php foreach ($pages as $page): ?>
+                    <li>
+                        <a href="<?=$page['slug'] ?>" class="block rounded px-2 py-1 text-sm <?=$page['current'] ? 'bg-panel font-semibold text-pop-orange' : 'text-muted hover:text-fg' ?>"><?=$page['title'] ?></a>
+                    </li>
+<?php endforeach; ?>
+                </ul>
+            </div>
+<?php endforeach; ?>
+        </nav>
+
+        <main class="min-w-0 flex-1">
+            <div class="eyebrow text-[11px]"><?=$section ?></div>
+            <h1 class="mb-6 font-display text-section"><?=$title ?></h1>
+
+<?php if (!empty($components)): ?>
+            <div class="mb-6 flex flex-wrap gap-2">
+<?php foreach ($components as $component): ?>
+                <span class="tag"><?=$component ?></span>
+<?php endforeach; ?>
+            </div>
+<?php endif; ?>
+
+<?php if ($content !== null): ?>
+<?php include $content; ?>
+<?php else: ?>
+            <div class="card">
+                <p class="text-muted">Content for <code class="font-mono text-pop-orange"><?=$slug ?></code>
+                   has not been generated yet. The route, the page index and this shell are working;
+                   the build step writes the page body.</p>
+            </div>
+<?php endif; ?>
+
+            <div class="mt-12 flex justify-between border-t border-line pt-6 text-sm">
+                <span><?php if ($prev !== null): ?><a href="<?=$prev['slug'] ?>">← <?=$prev['title'] ?></a><?php endif; ?></span>
+                <span><?php if ($next !== null): ?><a href="<?=$next['slug'] ?>"><?=$next['title'] ?> →</a><?php endif; ?></span>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>
