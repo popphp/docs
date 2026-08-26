@@ -44,7 +44,7 @@ class IndexController extends AbstractController
         $this->prepareView('search');
         $this->view->query   = $query;
         $this->view->version = '/6.x';
-        $this->view->results = (!empty($query)) ? $searchModel->search($query, $version) : [];
+        $this->view->results = (!empty($query)) ? $searchModel->search($query) : [];
 
         $this->send();
     }

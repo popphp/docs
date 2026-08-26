@@ -8,7 +8,7 @@ use Pop\Dir\Dir;
 class Search extends AbstractModel
 {
 
-    public function search(string $query, string $version): array
+    public function search(string $query, string $version = ''): array
     {
         $results = [];
         $omit    = [
