@@ -17,12 +17,16 @@ class IndexController extends AbstractController
         $uri      = str_replace('/6.x', '', $_SERVER['REQUEST_URI']);
         $template = (($uri == '') || ($uri == '/')) ? '/index' : $uri;
 
-        if (file_exists($this->viewPath . $template . '.phtml')) {
-            $this->prepareView($template);
-            $this->view->version = '/6.x';
-            $this->send();
+        if ($template == '/search') {
+            $this->search();
         } else {
-            $this->error();
+            if (file_exists($this->viewPath . $template . '.phtml')) {
+                $this->prepareView($template);
+                $this->view->version = '/6.x';
+                $this->send();
+            } else {
+                $this->error();
+            }
         }
     }
 
