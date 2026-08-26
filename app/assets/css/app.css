@@ -203,3 +203,15 @@
         @apply mb-1 block text-xs text-muted;
     }
 }
+
+@layer components {
+    /* Third-level nav: pages that extend the one above them. The rule ties the children to
+       their parent visually so the indent reads as a hierarchy rather than a stray margin. */
+    .side-children {
+        @apply ml-3 flex flex-col gap-px border-l border-line pl-1.5;
+    }
+
+    .side-link-child {
+        @apply text-[13px];
+    }
+}

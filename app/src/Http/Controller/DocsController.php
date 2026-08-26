@@ -67,19 +67,38 @@ class DocsController extends AbstractController
     /**
      * The section tree, in sitemap order, with the current page marked.
      *
+     * A page carrying a `parent` slug nests under it rather than sitting beside it — the nav
+     * shows Encoded Records and Auth Records under Records because Record\Encoded and
+     * Record\Auth extend it. Nesting is display only: prev/next still walks the section in
+     * sitemap order, so the reading path is unchanged.
+     *
      * @param  string $current
      * @return array
      */
     protected function nav(string $current): array
     {
-        $nav = [];
+        $nav   = [];
+        $where = [];
 
         foreach ($this->application->config['docs'] as $slug => $page) {
-            $nav[$page['section']][] = [
-                'slug'    => $slug,
-                'title'   => $page['title'],
-                'current' => ($slug === $current)
+            $entry = [
+                'slug'     => $slug,
+                'title'    => $page['title'],
+                'current'  => ($slug === $current),
+                'children' => []
             ];
+
+            $parent = $page['parent'] ?? null;
+
+            // A parent always precedes its children in sitemap order, so it is already placed.
+            if (($parent !== null) && isset($where[$parent])) {
+                [$section, $index] = $where[$parent];
+                $nav[$section][$index]['children'][] = $entry;
+                continue;
+            }
+
+            $nav[$page['section']][] = $entry;
+            $where[$slug] = [$page['section'], array_key_last($nav[$page['section']])];
         }
 
         return $nav;

@@ -14,7 +14,15 @@
  */
 ?>
 <?php foreach ($nav as $navSection => $navPages): ?>
-<div class="mb-5" x-data="{ open: <?=in_array(true, array_column($navPages, 'current'), true) ? 'true' : 'false' ?> }">
+<?php
+    $navHere = false;
+    array_walk_recursive($navPages, function ($value, $key) use (&$navHere): void {
+        if ($key === 'current' && $value === true) {
+            $navHere = true;
+        }
+    });
+?>
+<div class="mb-5" x-data="{ open: <?=$navHere ? 'true' : 'false' ?> }">
     <button type="button" @click="open = !open" :aria-expanded="open.toString()"
             class="flex w-full items-center gap-1.5 py-1 text-left">
         <svg class="transition-transform duration-150" :class="open ? 'rotate-90' : ''" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
@@ -23,6 +31,13 @@
     <div x-show="open" x-cloak class="mt-1.5 flex flex-col gap-px">
 <?php foreach ($navPages as $navPage): ?>
         <a href="<?=$attr($navPage['slug']) ?>" class="side-link<?=$navPage['current'] ? ' side-link-active' : '' ?>"<?=$navPage['current'] ? ' aria-current="page"' : '' ?>><?=$attr($navPage['title']) ?></a>
+<?php if (!empty($navPage['children'])): ?>
+        <div class="side-children">
+<?php foreach ($navPage['children'] as $navChild): ?>
+            <a href="<?=$attr($navChild['slug']) ?>" class="side-link side-link-child<?=$navChild['current'] ? ' side-link-active' : '' ?>"<?=$navChild['current'] ? ' aria-current="page"' : '' ?>><?=$attr($navChild['title']) ?></a>
+<?php endforeach; ?>
+        </div>
+<?php endif; ?>
 <?php endforeach; ?>
     </div>
 </div>

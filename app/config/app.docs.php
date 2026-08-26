@@ -264,6 +264,7 @@ return [
             'section' => 'Introduction',
             'order' => 1,
             'components' => [],
+            'parent' => NULL,
             'view' => 'docs/index.phtml',
             'prev' => NULL,
             'next' => '/whats-new',
@@ -274,6 +275,7 @@ return [
             'section' => 'Introduction',
             'order' => 2,
             'components' => [],
+            'parent' => NULL,
             'view' => 'docs/whats-new.phtml',
             'prev' => '/',
             'next' => '/upgrading',
@@ -284,6 +286,7 @@ return [
             'section' => 'Introduction',
             'order' => 3,
             'components' => [],
+            'parent' => NULL,
             'view' => 'docs/upgrading.phtml',
             'prev' => '/whats-new',
             'next' => '/changelog',
@@ -294,6 +297,7 @@ return [
             'section' => 'Introduction',
             'order' => 4,
             'components' => [],
+            'parent' => NULL,
             'view' => 'docs/changelog.phtml',
             'prev' => '/upgrading',
             'next' => '/getting-started/installation',
@@ -307,6 +311,7 @@ return [
                 'popphp',
                 'pop-kettle',
             ],
+            'parent' => NULL,
             'view' => 'docs/getting-started/installation.phtml',
             'prev' => '/changelog',
             'next' => '/getting-started/requirements',
@@ -321,6 +326,7 @@ return [
                 'pop-db',
                 'pop-cache',
             ],
+            'parent' => NULL,
             'view' => 'docs/getting-started/requirements.phtml',
             'prev' => '/getting-started/installation',
             'next' => '/getting-started/configuration',
@@ -334,6 +340,7 @@ return [
                 'popphp',
                 'pop-config',
             ],
+            'parent' => NULL,
             'view' => 'docs/getting-started/configuration.phtml',
             'prev' => '/getting-started/requirements',
             'next' => '/getting-started/structure',
@@ -346,6 +353,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/getting-started/structure.phtml',
             'prev' => '/getting-started/configuration',
             'next' => '/getting-started/first-app',
@@ -359,6 +367,7 @@ return [
                 'popphp',
                 'pop-kettle',
             ],
+            'parent' => NULL,
             'view' => 'docs/getting-started/first-app.phtml',
             'prev' => '/getting-started/structure',
             'next' => '/basics/applications',
@@ -371,6 +380,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/applications.phtml',
             'prev' => '/getting-started/first-app',
             'next' => '/basics/routing',
@@ -383,6 +393,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/routing.phtml',
             'prev' => '/basics/applications',
             'next' => '/basics/controllers',
@@ -395,6 +406,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/controllers.phtml',
             'prev' => '/basics/routing',
             'next' => '/basics/models',
@@ -408,6 +420,7 @@ return [
                 'pop-utils',
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/models.phtml',
             'prev' => '/basics/controllers',
             'next' => '/basics/requests-responses',
@@ -420,6 +433,7 @@ return [
             'components' => [
                 'pop-http',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/requests-responses.phtml',
             'prev' => '/basics/models',
             'next' => '/basics/views',
@@ -432,6 +446,7 @@ return [
             'components' => [
                 'pop-view',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/views.phtml',
             'prev' => '/basics/requests-responses',
             'next' => '/basics/sessions',
@@ -445,6 +460,7 @@ return [
                 'pop-session',
                 'pop-cookie',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/sessions.phtml',
             'prev' => '/basics/views',
             'next' => '/basics/forms',
@@ -459,6 +475,7 @@ return [
                 'pop-validator',
                 'pop-filter',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/forms.phtml',
             'prev' => '/basics/sessions',
             'next' => '/basics/errors',
@@ -471,6 +488,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/errors.phtml',
             'prev' => '/basics/forms',
             'next' => '/basics/modules',
@@ -483,6 +501,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/modules.phtml',
             'prev' => '/basics/errors',
             'next' => '/basics/services',
@@ -495,6 +514,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/services.phtml',
             'prev' => '/basics/modules',
             'next' => '/basics/events',
@@ -507,6 +527,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/events.phtml',
             'prev' => '/basics/services',
             'next' => '/basics/middleware',
@@ -519,6 +540,7 @@ return [
             'components' => [
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/basics/middleware.phtml',
             'prev' => '/basics/events',
             'next' => '/database/connecting',
@@ -531,6 +553,7 @@ return [
             'components' => [
                 'pop-db',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/connecting.phtml',
             'prev' => '/basics/middleware',
             'next' => '/database/records',
@@ -543,6 +566,7 @@ return [
             'components' => [
                 'pop-db',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/records.phtml',
             'prev' => '/database/connecting',
             'next' => '/database/encoded-records',
@@ -556,6 +580,7 @@ return [
                 'pop-db',
                 'pop-crypt',
             ],
+            'parent' => '/database/records',
             'view' => 'docs/database/encoded-records.phtml',
             'prev' => '/database/records',
             'next' => '/database/auth-records',
@@ -568,6 +593,7 @@ return [
             'components' => [
                 'pop-db',
             ],
+            'parent' => '/database/records',
             'view' => 'docs/database/auth-records.phtml',
             'prev' => '/database/encoded-records',
             'next' => '/database/relationships',
@@ -580,6 +606,7 @@ return [
             'components' => [
                 'pop-db',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/relationships.phtml',
             'prev' => '/database/auth-records',
             'next' => '/database/querying',
@@ -592,6 +619,7 @@ return [
             'components' => [
                 'pop-db',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/querying.phtml',
             'prev' => '/database/relationships',
             'next' => '/database/query-builder',
@@ -604,6 +632,7 @@ return [
             'components' => [
                 'pop-db',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/query-builder.phtml',
             'prev' => '/database/querying',
             'next' => '/database/schema-builder',
@@ -616,6 +645,7 @@ return [
             'components' => [
                 'pop-db',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/schema-builder.phtml',
             'prev' => '/database/query-builder',
             'next' => '/database/migrations',
@@ -629,6 +659,7 @@ return [
                 'pop-db',
                 'pop-kettle',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/migrations.phtml',
             'prev' => '/database/schema-builder',
             'next' => '/database/seeding',
@@ -642,6 +673,7 @@ return [
                 'pop-db',
                 'pop-kettle',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/seeding.phtml',
             'prev' => '/database/migrations',
             'next' => '/database/sql-data',
@@ -655,6 +687,7 @@ return [
                 'pop-db',
                 'pop-kettle',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/sql-data.phtml',
             'prev' => '/database/seeding',
             'next' => '/database/profiler',
@@ -668,6 +701,7 @@ return [
                 'pop-db',
                 'pop-debug',
             ],
+            'parent' => NULL,
             'view' => 'docs/database/profiler.phtml',
             'prev' => '/database/sql-data',
             'next' => '/console/kettle',
@@ -680,6 +714,7 @@ return [
             'components' => [
                 'pop-kettle',
             ],
+            'parent' => NULL,
             'view' => 'docs/console/kettle.phtml',
             'prev' => '/database/profiler',
             'next' => '/console/applications',
@@ -693,6 +728,7 @@ return [
                 'pop-console',
                 'popphp',
             ],
+            'parent' => NULL,
             'view' => 'docs/console/applications.phtml',
             'prev' => '/console/kettle',
             'next' => '/toolkit/authentication',
@@ -706,6 +742,7 @@ return [
                 'pop-auth',
                 'pop-db',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/authentication.phtml',
             'prev' => '/console/applications',
             'next' => '/toolkit/authorization',
@@ -718,6 +755,7 @@ return [
             'components' => [
                 'pop-acl',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/authorization.phtml',
             'prev' => '/toolkit/authentication',
             'next' => '/toolkit/encryption',
@@ -730,6 +768,7 @@ return [
             'components' => [
                 'pop-crypt',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/encryption.phtml',
             'prev' => '/toolkit/authorization',
             'next' => '/toolkit/http-client',
@@ -742,6 +781,7 @@ return [
             'components' => [
                 'pop-http',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/http-client.phtml',
             'prev' => '/toolkit/encryption',
             'next' => '/toolkit/mail',
@@ -754,6 +794,7 @@ return [
             'components' => [
                 'pop-mail',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/mail.phtml',
             'prev' => '/toolkit/http-client',
             'next' => '/toolkit/cache',
@@ -766,6 +807,7 @@ return [
             'components' => [
                 'pop-cache',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/cache.phtml',
             'prev' => '/toolkit/mail',
             'next' => '/toolkit/queues',
@@ -778,6 +820,7 @@ return [
             'components' => [
                 'pop-queue',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/queues.phtml',
             'prev' => '/toolkit/cache',
             'next' => '/toolkit/logging',
@@ -790,6 +833,7 @@ return [
             'components' => [
                 'pop-log',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/logging.phtml',
             'prev' => '/toolkit/queues',
             'next' => '/toolkit/auditing',
@@ -802,6 +846,7 @@ return [
             'components' => [
                 'pop-audit',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/auditing.phtml',
             'prev' => '/toolkit/logging',
             'next' => '/toolkit/storage',
@@ -815,6 +860,7 @@ return [
                 'pop-storage',
                 'pop-dir',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/storage.phtml',
             'prev' => '/toolkit/auditing',
             'next' => '/toolkit/images',
@@ -827,6 +873,7 @@ return [
             'components' => [
                 'pop-image',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/images.phtml',
             'prev' => '/toolkit/storage',
             'next' => '/toolkit/pdf',
@@ -839,6 +886,7 @@ return [
             'components' => [
                 'pop-pdf',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/pdf.phtml',
             'prev' => '/toolkit/images',
             'next' => '/toolkit/csv',
@@ -851,6 +899,7 @@ return [
             'components' => [
                 'pop-csv',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/csv.phtml',
             'prev' => '/toolkit/pdf',
             'next' => '/toolkit/mime',
@@ -863,6 +912,7 @@ return [
             'components' => [
                 'pop-mime',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/mime.phtml',
             'prev' => '/toolkit/csv',
             'next' => '/toolkit/i18n',
@@ -875,6 +925,7 @@ return [
             'components' => [
                 'pop-i18n',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/i18n.phtml',
             'prev' => '/toolkit/mime',
             'next' => '/toolkit/navigation',
@@ -887,6 +938,7 @@ return [
             'components' => [
                 'pop-nav',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/navigation.phtml',
             'prev' => '/toolkit/i18n',
             'next' => '/toolkit/pagination',
@@ -899,6 +951,7 @@ return [
             'components' => [
                 'pop-paginator',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/pagination.phtml',
             'prev' => '/toolkit/navigation',
             'next' => '/toolkit/config',
@@ -911,6 +964,7 @@ return [
             'components' => [
                 'pop-config',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/config.phtml',
             'prev' => '/toolkit/pagination',
             'next' => '/toolkit/utilities',
@@ -923,6 +977,7 @@ return [
             'components' => [
                 'pop-utils',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/utilities.phtml',
             'prev' => '/toolkit/config',
             'next' => '/toolkit/debugging',
@@ -935,6 +990,7 @@ return [
             'components' => [
                 'pop-debug',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/debugging.phtml',
             'prev' => '/toolkit/utilities',
             'next' => '/toolkit/code-generation',
@@ -947,6 +1003,7 @@ return [
             'components' => [
                 'pop-code',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/code-generation.phtml',
             'prev' => '/toolkit/debugging',
             'next' => '/toolkit/css',
@@ -960,6 +1017,7 @@ return [
                 'pop-css',
                 'pop-color',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/css.phtml',
             'prev' => '/toolkit/code-generation',
             'next' => '/toolkit/dom',
@@ -972,6 +1030,7 @@ return [
             'components' => [
                 'pop-dom',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/dom.phtml',
             'prev' => '/toolkit/css',
             'next' => '/toolkit/parsing',
@@ -984,6 +1043,7 @@ return [
             'components' => [
                 'pop-parser',
             ],
+            'parent' => NULL,
             'view' => 'docs/toolkit/parsing.phtml',
             'prev' => '/toolkit/dom',
             'next' => '/components',
@@ -994,6 +1054,7 @@ return [
             'section' => 'Components',
             'order' => 1,
             'components' => [],
+            'parent' => NULL,
             'view' => 'docs/components.phtml',
             'prev' => '/toolkit/parsing',
             'next' => NULL,
