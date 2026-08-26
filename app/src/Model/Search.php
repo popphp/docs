@@ -33,7 +33,7 @@ class Search extends AbstractModel
             if (!in_array($file, $omit)) {
                 $contents = strip_tags(file_get_contents(__DIR__ . '/../../view' .$version . '/' . $file));
                 if ((stripos($contents, $query) !== false) || (stripos($file, $query) !== false)) {
-                    $uri   = $version . '/' . str_replace(['index', '.phtml'], ['/', ''], $file);
+                    $uri   = '/6.x/' . str_replace(['index', '.phtml'], ['/', ''], $file);
                     $title = ($file == 'index.phtml') ?
                         'Home' : ucwords(str_replace('-', ' ', substr($uri, (strrpos($uri, '/') + 1))));
 
