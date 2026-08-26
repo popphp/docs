@@ -14,7 +14,7 @@ class IndexController extends AbstractController
      */
     public function route(): void
     {
-        $uri      = $this->request->getUriAsString();
+        $uri      = str_replace('/6.x', '', $_SERVER['REQUEST_URI']);
         $template = (($uri == '') || ($uri == '/')) ? '/index' : $uri;
 
         if (file_exists($this->viewPath . $template . '.phtml')) {
