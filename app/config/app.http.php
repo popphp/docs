@@ -2,7 +2,7 @@
 
 return [
     'routes' => [
-        '/6.x/search' => [
+        '/search' => [
             'controller' => 'Pop\Docs\Http\Controller\IndexController',
             'action'     => 'search'
         ],

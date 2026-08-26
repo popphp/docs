@@ -38,7 +38,7 @@ class IndexController extends AbstractController
     public function search(): void
     {
         $searchModel = new Model\Search();
-        $query       = htmlentities(strip_tags($this->request->getQuery('query')), ENT_QUOTES, 'UTF-8');
+        $query       = htmlentities(strip_tags($this->request->getPost('query')), ENT_QUOTES, 'UTF-8');
         $version     = '/6.x';
 
         $this->prepareView('search');
