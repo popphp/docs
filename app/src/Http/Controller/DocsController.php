@@ -27,6 +27,7 @@ class DocsController extends AbstractController
         $this->prepareView('docs.phtml');
 
         $this->view->title      = $page['title'];
+        $this->view->description = $page['description'] ?? ($page['title'] . ' — Pop PHP Framework documentation.');
         $this->view->section    = $page['section'];
         $this->view->components = $page['components'];
         $this->view->slug       = $slug;

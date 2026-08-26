@@ -260,6 +260,7 @@ return [
     'pages' => [
         '/' => [
             'title' => 'Overview',
+            'description' => 'What the Pop PHP Framework is, how the core-plus-components model works, and where to start reading.',
             'section' => 'Introduction',
             'order' => 1,
             'components' => [],
@@ -269,6 +270,7 @@ return [
         ],
         '/whats-new' => [
             'title' => 'What\'s New in v7',
+            'description' => 'A guided tour of what Pop PHP Framework v7.0.0 adds over v6.0.0 — the framework-level changes, the additions that matter most, and the themes behind them.',
             'section' => 'Introduction',
             'order' => 2,
             'components' => [],
@@ -278,6 +280,7 @@ return [
         ],
         '/upgrading' => [
             'title' => 'Upgrading from v6',
+            'description' => 'What breaks when you move an application from Pop PHP Framework v6.0.0 to v7.0.0, in the order you should deal with it.',
             'section' => 'Introduction',
             'order' => 3,
             'components' => [],
@@ -287,6 +290,7 @@ return [
         ],
         '/changelog' => [
             'title' => 'Changelog',
+            'description' => 'The full release history of the Pop PHP Framework, newest first.',
             'section' => 'Introduction',
             'order' => 4,
             'components' => [],
@@ -296,6 +300,7 @@ return [
         ],
         '/getting-started/installation' => [
             'title' => 'Installation',
+            'description' => 'Creating a project with Composer, adding Pop to an existing codebase, and running the built-in dev server.',
             'section' => 'Getting Started',
             'order' => 1,
             'components' => [
@@ -308,6 +313,7 @@ return [
         ],
         '/getting-started/requirements' => [
             'title' => 'Requirements',
+            'description' => 'The PHP version Pop needs, the extensions Composer enforces, and the optional ones each component wants.',
             'section' => 'Getting Started',
             'order' => 2,
             'components' => [
@@ -321,6 +327,7 @@ return [
         ],
         '/getting-started/configuration' => [
             'title' => 'Configuration',
+            'description' => 'The application config array, environment variables and .env, per-environment branching, and config objects.',
             'section' => 'Getting Started',
             'order' => 3,
             'components' => [
@@ -333,6 +340,7 @@ return [
         ],
         '/getting-started/structure' => [
             'title' => 'Application Structure',
+            'description' => 'What the generated skeleton contains, what belongs in each directory, and where your own code goes as the application grows.',
             'section' => 'Getting Started',
             'order' => 4,
             'components' => [
@@ -344,6 +352,7 @@ return [
         ],
         '/getting-started/first-app' => [
             'title' => 'Your First Application',
+            'description' => 'Create a project, add a route, write a controller, render a view and see it in a browser.',
             'section' => 'Getting Started',
             'order' => 5,
             'components' => [
@@ -356,6 +365,7 @@ return [
         ],
         '/basics/applications' => [
             'title' => 'Applications & Bootstrap',
+            'description' => 'The front controller, what the Pop\\Application constructor wires up, and what belongs in your application class\'s load() method.',
             'section' => 'The Basics',
             'order' => 1,
             'components' => [
@@ -367,6 +377,7 @@ return [
         ],
         '/basics/routing' => [
             'title' => 'Routing',
+            'description' => 'Mapping HTTP requests and console commands onto controllers, actions and callables with the Pop router.',
             'section' => 'The Basics',
             'order' => 2,
             'components' => [
@@ -378,6 +389,7 @@ return [
         ],
         '/basics/controllers' => [
             'title' => 'Controllers',
+            'description' => 'Writing controllers, what a dispatched controller receives, actions and default actions, and locating services from inside one.',
             'section' => 'The Basics',
             'order' => 3,
             'components' => [
@@ -389,6 +401,7 @@ return [
         ],
         '/basics/models' => [
             'title' => 'Models',
+            'description' => 'Where an application\'s business logic lives, the AbstractModel base class, and how models relate to records and controllers.',
             'section' => 'The Basics',
             'order' => 4,
             'components' => [
@@ -401,6 +414,7 @@ return [
         ],
         '/basics/requests-responses' => [
             'title' => 'Requests & Responses',
+            'description' => 'Reading the incoming request inside a controller, query and body data, headers, uploads, and building and sending a response.',
             'section' => 'The Basics',
             'order' => 5,
             'components' => [
@@ -412,6 +426,7 @@ return [
         ],
         '/basics/views' => [
             'title' => 'Views & Templates',
+            'description' => 'Rendering PHP and stream templates, passing data in, includes, iteration, conditionals, inheritance and output filters.',
             'section' => 'The Basics',
             'order' => 6,
             'components' => [
@@ -423,6 +438,7 @@ return [
         ],
         '/basics/sessions' => [
             'title' => 'Sessions & Cookies',
+            'description' => 'Reading and writing session data, namespaces, flash and expiring values, and setting cookies.',
             'section' => 'The Basics',
             'order' => 7,
             'components' => [
@@ -435,6 +451,7 @@ return [
         ],
         '/basics/forms' => [
             'title' => 'Forms & Validation',
+            'description' => 'Building a form from a config array, validating and filtering a submission, rendering errors, CSRF tokens and file uploads.',
             'section' => 'The Basics',
             'order' => 8,
             'components' => [
@@ -448,6 +465,7 @@ return [
         ],
         '/basics/errors' => [
             'title' => 'Error Handling',
+            'description' => 'The 404 and 405 the router generates, the catch-all route, uncaught exceptions, the app.error event and maintenance mode.',
             'section' => 'The Basics',
             'order' => 9,
             'components' => [
@@ -459,6 +477,7 @@ return [
         ],
         '/basics/modules' => [
             'title' => 'Modules',
+            'description' => 'What a module is, registering one, the module config array, autoloading its classes and the module manager.',
             'section' => 'The Basics',
             'order' => 10,
             'components' => [
@@ -470,6 +489,7 @@ return [
         ],
         '/basics/services' => [
             'title' => 'Services',
+            'description' => 'Registering services with the locator, the ways to define one, lazy construction, and retrieving a service by name.',
             'section' => 'The Basics',
             'order' => 11,
             'components' => [
@@ -481,6 +501,7 @@ return [
         ],
         '/basics/events' => [
             'title' => 'Events',
+            'description' => 'The application lifecycle events, registering listeners, priorities, what a listener receives, and firing your own events.',
             'section' => 'The Basics',
             'order' => 12,
             'components' => [
@@ -492,6 +513,7 @@ return [
         ],
         '/basics/middleware' => [
             'title' => 'Middleware',
+            'description' => 'Writing and registering middleware handlers, pipeline order, short-circuiting, per-route middleware, terminable handlers and PSR-15 adapters.',
             'section' => 'The Basics',
             'order' => 13,
             'components' => [
@@ -503,6 +525,7 @@ return [
         ],
         '/database/connecting' => [
             'title' => 'Connecting & Adapters',
+            'description' => 'Opening a connection, the five database adapters, and where the credentials live in an application.',
             'section' => 'Database',
             'order' => 1,
             'components' => [
@@ -514,6 +537,7 @@ return [
         ],
         '/database/records' => [
             'title' => 'Records & the ORM',
+            'description' => 'Defining table classes, finding and saving records, per-class connections, and data models.',
             'section' => 'Database',
             'order' => 2,
             'components' => [
@@ -525,6 +549,7 @@ return [
         ],
         '/database/encoded-records' => [
             'title' => 'Encoded Records',
+            'description' => 'Encoding named columns on the way in and decoding them on the way out — JSON, serialized, base64, hashed and encrypted.',
             'section' => 'Database',
             'order' => 3,
             'components' => [
@@ -537,6 +562,7 @@ return [
         ],
         '/database/auth-records' => [
             'title' => 'Auth Records',
+            'description' => 'Turning a credentials table into a login flow — password verification, failed-attempt lockout and multi-factor codes.',
             'section' => 'Database',
             'order' => 4,
             'components' => [
@@ -548,6 +574,7 @@ return [
         ],
         '/database/relationships' => [
             'title' => 'Relationships',
+            'description' => 'One-to-one, one-to-many and many-to-many relationships between record classes, and eager loading with with().',
             'section' => 'Database',
             'order' => 5,
             'components' => [
@@ -559,6 +586,7 @@ return [
         ],
         '/database/querying' => [
             'title' => 'Querying',
+            'description' => 'Raw queries, prepared statements, fetching results and transactions on the adapter.',
             'section' => 'Database',
             'order' => 6,
             'components' => [
@@ -570,6 +598,7 @@ return [
         ],
         '/database/query-builder' => [
             'title' => 'Query Builder',
+            'description' => 'Building portable SELECT, INSERT, UPDATE and DELETE statements, joins, predicates, subqueries and JSON column queries.',
             'section' => 'Database',
             'order' => 7,
             'components' => [
@@ -581,6 +610,7 @@ return [
         ],
         '/database/schema-builder' => [
             'title' => 'Schema Builder',
+            'description' => 'Building and altering tables portably — column types, keys, indexes, foreign keys, and how a schema object renders and executes.',
             'section' => 'Database',
             'order' => 8,
             'components' => [
@@ -592,6 +622,7 @@ return [
         ],
         '/database/migrations' => [
             'title' => 'Migrations',
+            'description' => 'Writing migrations, running and rolling them back with Kettle or from code.',
             'section' => 'Database',
             'order' => 9,
             'components' => [
@@ -604,6 +635,7 @@ return [
         ],
         '/database/seeding' => [
             'title' => 'Seeding',
+            'description' => 'Writing seeder classes and .sql seed files, and running them with Kettle.',
             'section' => 'Database',
             'order' => 10,
             'components' => [
@@ -616,6 +648,7 @@ return [
         ],
         '/database/sql-data' => [
             'title' => 'SQL Data',
+            'description' => 'Turning rows into portable INSERT statements, upserts, and reading a .sql file back in.',
             'section' => 'Database',
             'order' => 11,
             'components' => [
@@ -628,6 +661,7 @@ return [
         ],
         '/database/profiler' => [
             'title' => 'Profiler',
+            'description' => 'Recording every statement the adapter runs, with its parameters, timing and errors, and writing the log out through pop-debug.',
             'section' => 'Database',
             'order' => 12,
             'components' => [
@@ -640,6 +674,7 @@ return [
         ],
         '/console/kettle' => [
             'title' => 'Kettle',
+            'description' => 'The kettle command-line tool for scaffolding an application, managing databases and queues, and adding commands of your own.',
             'section' => 'The Console',
             'order' => 1,
             'components' => [
@@ -651,6 +686,7 @@ return [
         ],
         '/console/applications' => [
             'title' => 'Building Console Applications',
+            'description' => 'Building a console application on the Pop router, and the pop-console output layer — buffers, colors, tables, progress bars, prompts and help screens.',
             'section' => 'The Console',
             'order' => 2,
             'components' => [
@@ -663,6 +699,7 @@ return [
         ],
         '/toolkit/authentication' => [
             'title' => 'Authentication',
+            'description' => 'Proving a user is who they claim to be, with database records, a flat password file or a signed JWT.',
             'section' => 'The Toolkit',
             'order' => 1,
             'components' => [
@@ -675,6 +712,7 @@ return [
         ],
         '/toolkit/authorization' => [
             'title' => 'Authorization',
+            'description' => 'Deciding what an authenticated user is allowed to do, with roles, resources, permissions, assertions and policies.',
             'section' => 'The Toolkit',
             'order' => 2,
             'components' => [
@@ -686,6 +724,7 @@ return [
         ],
         '/toolkit/encryption' => [
             'title' => 'Hashing & Encryption',
+            'description' => 'Password hashing with bcrypt and Argon2, two-way encryption over OpenSSL and Sodium, and HMAC, RSA and EC signatures.',
             'section' => 'The Toolkit',
             'order' => 3,
             'components' => [
@@ -697,6 +736,7 @@ return [
         ],
         '/toolkit/http-client' => [
             'title' => 'HTTP Client',
+            'description' => 'Calling other services over HTTP — requests, authentication, handlers, middleware, promises and curl command conversion.',
             'section' => 'The Toolkit',
             'order' => 4,
             'components' => [
@@ -708,6 +748,7 @@ return [
         ],
         '/toolkit/mail' => [
             'title' => 'Mail',
+            'description' => 'Composing and sending mail over SMTP, the hosted mail APIs or sendmail, plus queues, saving to disk and reading over IMAP.',
             'section' => 'The Toolkit',
             'order' => 5,
             'components' => [
@@ -719,6 +760,7 @@ return [
         ],
         '/toolkit/cache' => [
             'title' => 'Cache',
+            'description' => 'Caching expensive values behind one API, with adapters for files, Redis, Memcached, APCu, a database, the session or memory.',
             'section' => 'The Toolkit',
             'order' => 6,
             'components' => [
@@ -730,6 +772,7 @@ return [
         ],
         '/toolkit/queues' => [
             'title' => 'Queues & Scheduled Tasks',
+            'description' => 'Queueing work with pop-queue — jobs, scheduled tasks, storage adapters, workers and daemon mode.',
             'section' => 'The Toolkit',
             'order' => 7,
             'components' => [
@@ -741,6 +784,7 @@ return [
         ],
         '/toolkit/logging' => [
             'title' => 'Logging',
+            'description' => 'PSR-3 logging with writers for files, syslog, a database, mail and HTTP endpoints.',
             'section' => 'The Toolkit',
             'order' => 8,
             'components' => [
@@ -752,6 +796,7 @@ return [
         ],
         '/toolkit/auditing' => [
             'title' => 'Auditing',
+            'description' => 'Recording what changed on a model, who changed it and when, to a database table or a remote endpoint.',
             'section' => 'The Toolkit',
             'order' => 9,
             'components' => [
@@ -763,6 +808,7 @@ return [
         ],
         '/toolkit/storage' => [
             'title' => 'File Storage',
+            'description' => 'One file API over local disk, AWS S3 and Azure Blob, plus directory traversal with pop-dir.',
             'section' => 'The Toolkit',
             'order' => 10,
             'components' => [
@@ -775,6 +821,7 @@ return [
         ],
         '/toolkit/images' => [
             'title' => 'Images',
+            'description' => 'Resizing, cropping, adjusting, filtering and drawing on images through the GD and Imagick adapters.',
             'section' => 'The Toolkit',
             'order' => 11,
             'components' => [
@@ -786,6 +833,7 @@ return [
         ],
         '/toolkit/pdf' => [
             'title' => 'PDFs',
+            'description' => 'Building PDF documents from pages, text, images and paths, plus annotations, form fields, merging, HTML rendering and text extraction.',
             'section' => 'The Toolkit',
             'order' => 12,
             'components' => [
@@ -797,6 +845,7 @@ return [
         ],
         '/toolkit/csv' => [
             'title' => 'CSV',
+            'description' => 'Reading and writing CSV from arrays of data, with control over delimiters, enclosures and nested fields.',
             'section' => 'The Toolkit',
             'order' => 13,
             'components' => [
@@ -808,6 +857,7 @@ return [
         ],
         '/toolkit/mime' => [
             'title' => 'MIME',
+            'description' => 'Parsing and building MIME messages, parts, headers and multipart form data.',
             'section' => 'The Toolkit',
             'order' => 14,
             'components' => [
@@ -819,6 +869,7 @@ return [
         ],
         '/toolkit/i18n' => [
             'title' => 'I18n',
+            'description' => 'Translating application strings from XML or JSON language files, with parameters and alternate phrasings.',
             'section' => 'The Toolkit',
             'order' => 15,
             'components' => [
@@ -830,6 +881,7 @@ return [
         ],
         '/toolkit/navigation' => [
             'title' => 'Navigation',
+            'description' => 'Rendering a navigation tree from a config array, with active-state classes and ACL-filtered branches.',
             'section' => 'The Toolkit',
             'order' => 16,
             'components' => [
@@ -841,6 +893,7 @@ return [
         ],
         '/toolkit/pagination' => [
             'title' => 'Pagination',
+            'description' => 'Turning a total row count into page links or a jump-to-page form, with bookends for large sets.',
             'section' => 'The Toolkit',
             'order' => 17,
             'components' => [
@@ -852,6 +905,7 @@ return [
         ],
         '/toolkit/config' => [
             'title' => 'Config Objects',
+            'description' => 'Loading configuration from PHP, JSON, INI, XML or YAML into an object you can merge and lock.',
             'section' => 'The Toolkit',
             'order' => 18,
             'components' => [
@@ -863,6 +917,7 @@ return [
         ],
         '/toolkit/utilities' => [
             'title' => 'Utilities & Helpers',
+            'description' => 'Strings, arrays, collections, array objects, dates, UUIDs, files, callable objects and type coercion.',
             'section' => 'The Toolkit',
             'order' => 19,
             'components' => [
@@ -874,6 +929,7 @@ return [
         ],
         '/toolkit/debugging' => [
             'title' => 'Debugging',
+            'description' => 'Collecting timing, memory, query, request and exception data during a request and storing it for later.',
             'section' => 'The Toolkit',
             'order' => 20,
             'components' => [
@@ -885,6 +941,7 @@ return [
         ],
         '/toolkit/code-generation' => [
             'title' => 'Code Generation',
+            'description' => 'Building PHP source with generator objects, and reflecting existing code back into them.',
             'section' => 'The Toolkit',
             'order' => 21,
             'components' => [
@@ -896,6 +953,7 @@ return [
         ],
         '/toolkit/css' => [
             'title' => 'CSS & Color',
+            'description' => 'Building, parsing and minifying stylesheets, and converting colors between twelve color spaces.',
             'section' => 'The Toolkit',
             'order' => 22,
             'components' => [
@@ -908,6 +966,7 @@ return [
         ],
         '/toolkit/dom' => [
             'title' => 'DOM',
+            'description' => 'Building, rendering and parsing XML and HTML documents as trees of Child nodes.',
             'section' => 'The Toolkit',
             'order' => 23,
             'components' => [
@@ -919,6 +978,7 @@ return [
         ],
         '/toolkit/parsing' => [
             'title' => 'Name & Address Parsing',
+            'description' => 'Breaking free-form personal names and US or Canadian street addresses into their component parts.',
             'section' => 'The Toolkit',
             'order' => 24,
             'components' => [
@@ -930,6 +990,7 @@ return [
         ],
         '/components' => [
             'title' => 'All Components',
+            'description' => 'Every package in the framework, grouped by what it does, each with a link to its guide and its README.',
             'section' => 'Components',
             'order' => 1,
             'components' => [],
