@@ -1,0 +1,29 @@
+<?php
+
+return [
+    'routes' => [
+        'get' => [
+            '/api[/]' => [
+                'controller' => 'Pop\Docs\Http\Controller\IndexController',
+                'action'     => 'index'
+            ],
+            '[/]' => [
+                'controller' => 'Pop\Docs\Http\Controller\IndexController',
+                'action'     => 'index'
+            ],
+        ],
+        '*' => [
+            '*'    => [
+                'controller' => 'Pop\Docs\Http\Controller\IndexController',
+                'action'     => 'error'
+            ]
+        ]
+    ],
+
+    'http_options_headers' => [
+        'Access-Control-Allow-Origin'  => '*',
+        'Access-Control-Allow-Headers' => 'Accept, Authorization, Content-Type',
+        'Access-Control-Allow-Methods' => 'HEAD, OPTIONS, GET, PUT, POST, PATCH, DELETE',
+        'Content-Type'                 => 'application/json'
+    ]
+];

@@ -9,3 +9,4 @@ public/assets/app.js
 .env
 .idea
 CLAUDE.md
+node_modules/
