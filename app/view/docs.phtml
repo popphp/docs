@@ -12,12 +12,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?=$title ?> — Pop PHP Framework</title>
+    <link rel="shortcut icon" type="image/png" href="https://media.popphp.org/img/pop-php-icon.png">
     <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body class="bg-bg text-fg">
     <div class="mx-auto flex max-w-7xl gap-10 px-6 py-10">
 
         <nav class="hidden w-64 shrink-0 lg:block">
+            <a href="/" class="mb-8 block" aria-label="Pop PHP home">
+                <!-- Same file in both themes: the approved v7 site does not swap the logo for dark. -->
+                <img src="https://media.popphp.org/img/pop-php-logo2.png" alt="Pop PHP" class="block h-[46px] w-auto">
+            </a>
 <?php foreach ($nav as $section => $pages): ?>
             <div class="mb-6">
                 <div class="eyebrow mb-2 text-[11px]"><?=$section ?></div>
