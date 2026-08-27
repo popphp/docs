@@ -378,10 +378,92 @@ field in that element.</p>
 </code></pre>
 </div>
 
-<p>For markup the component does not produce, <code>prepareForView()</code> hands back the rendered pieces instead of the
-whole form: a <code>{name}</code> entry per field, a <code>{name}_label</code> for each label, and a <code>{name}_errors</code> array for each
-field that failed. Merge that into a view's data and lay the fields out in the template yourself — see
-<a href="/basics/views">Views &amp; Templates</a>.</p>
+<h2 id="rendering-into-your-own-view">Rendering Into Your Own View<a class="anchor" href="#rendering-into-your-own-view" aria-label="Link to this section">#</a></h2>
+
+<p>Echoing the form hands the whole job to <code>pop-form</code> — it wraps every field in the container above and places the
+labels, hints and errors for you. When that markup has to fit a template you don't control, needs a structure
+the component doesn't produce, or gets handed to a front-end framework field by field, call <code>prepareForView()</code>
+instead of echoing:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">if</span> (<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">isPost</span>()) {
+    <span class="text-var">$form</span>-&gt;<span class="text-fn">setFieldValues</span>(<span class="text-var">$this</span>-&gt;<span class="text-type">request</span>-&gt;<span class="text-fn">getPost</span>());
+    <span class="text-var">$form</span>-&gt;<span class="text-fn">isValid</span>();
+}
+
+<span class="text-var">$this</span>-&gt;<span class="text-type">view</span>-&gt;<span class="text-type">fields</span> = <span class="text-var">$form</span>-&gt;<span class="text-fn">prepareForView</span>();
+</code></pre>
+</div>
+
+<p>No container markup is rendered at all. What comes back is a flat array of the already-rendered pieces, keyed
+off each field's name. For a required <code>username</code> field carrying a hint that failed validation:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code>[
+    <span class="text-str">&#039;username_label&#039;</span>  =&gt; <span class="text-str">&#039;&lt;label for=&quot;username&quot; class=&quot;required&quot;&gt;Username:&lt;/label&gt;&#039;</span>,
+    <span class="text-str">&#039;username_hint&#039;</span>   =&gt; <span class="text-str">&#039;&lt;span id=&quot;username-hint&quot;&gt;Letters and numbers only.&lt;/span&gt;&#039;</span>,
+    <span class="text-str">&#039;username_errors&#039;</span> =&gt; [<span class="text-str">&#039;This field is required.&#039;</span>],
+    <span class="text-str">&#039;username&#039;</span>        =&gt; <span class="text-str">&#039;&lt;input type=&quot;text&quot; name=&quot;username&quot; id=&quot;username&quot; value=&quot;&quot; required=&quot;required&quot; aria-invalid=&quot;true&quot; aria-describedby=&quot;username-hint username-error&quot; /&gt;&#039;</span>
+]
+</code></pre>
+</div>
+
+<p>Four keys per field, only the first of them guaranteed:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Present when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{name}</code></td>
+<td>always — the rendered field element itself</td>
+</tr>
+<tr>
+<td><code>{name}_label</code></td>
+<td>the field has a label</td>
+</tr>
+<tr>
+<td><code>{name}_hint</code></td>
+<td>the field has a hint</td>
+</tr>
+<tr>
+<td><code>{name}_errors</code></td>
+<td>the field failed validation — plain message strings, not markup</td>
+</tr>
+</tbody>
+</table>
+<p>So a template laying the pieces out by hand has to tolerate the other three being absent:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/view/register.phtml</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code>&lt;form action=&quot;/register&quot; method=&quot;post&quot;&gt;
+    &lt;div class=&quot;form-row&quot;&gt;
+        <span class="text-kw">&lt;?=</span><span class="text-var">$fields</span>[<span class="text-str">&#039;username_label&#039;</span>] <span class="text-kw">??</span> <span class="text-str">&#039;&#039;</span>; <span class="text-kw">?&gt;
+</span>        <span class="text-kw">&lt;?=</span><span class="text-var">$fields</span>[<span class="text-str">&#039;username&#039;</span>]; <span class="text-kw">?&gt;
+</span>        <span class="text-kw">&lt;?=</span><span class="text-var">$fields</span>[<span class="text-str">&#039;username_hint&#039;</span>] <span class="text-kw">??</span> <span class="text-str">&#039;&#039;</span>; <span class="text-kw">?&gt;
+</span>        <span class="text-kw">&lt;?php </span><span class="text-kw">foreach</span> (<span class="text-var">$fields</span>[<span class="text-str">&#039;username_errors&#039;</span>] <span class="text-kw">??</span> [] <span class="text-kw">as</span> <span class="text-var">$error</span>): <span class="text-kw">?&gt;
+</span>            &lt;div class=&quot;error&quot; id=&quot;username-error&quot; role=&quot;alert&quot;&gt;<span class="text-kw">&lt;?=</span><span class="text-var">$error</span>; <span class="text-kw">?&gt;</span>&lt;/div&gt;
+        <span class="text-kw">&lt;?php </span><span class="text-kw">endforeach</span>; <span class="text-kw">?&gt;
+</span>    &lt;/div&gt;
+    &lt;div class=&quot;form-row&quot;&gt;
+        <span class="text-kw">&lt;?=</span><span class="text-var">$fields</span>[<span class="text-str">&#039;email_label&#039;</span>] <span class="text-kw">??</span> <span class="text-str">&#039;&#039;</span>; <span class="text-kw">?&gt;
+</span>        <span class="text-kw">&lt;?=</span><span class="text-var">$fields</span>[<span class="text-str">&#039;email&#039;</span>]; <span class="text-kw">?&gt;
+</span>    &lt;/div&gt;
+    <span class="text-kw">&lt;?=</span><span class="text-var">$fields</span>[<span class="text-str">&#039;submit&#039;</span>]; <span class="text-kw">?&gt;
+</span>&lt;/form&gt;
+</code></pre>
+</div>
+
+<p>The accessibility wiring described above still happens on the field itself — it arrives with <code>aria-invalid</code> and
+an <code>aria-describedby</code> naming <code>{name}-hint</code> and <code>{name}-error</code>. The hint comes back with its <code>id</code> already on it,
+but the errors are bare strings, so the container you wrap them in is the one that has to carry
+<code>id=&quot;{name}-error&quot;</code>. Leave it off and each invalid field points at an element that isn't on the page.</p>
+<p><code>prepareForView()</code> is available on <code>Pop\Form\Form</code>, where it merges the fields of every fieldset into one
+array, and on an individual <code>Pop\Form\Fieldset</code> if you are placing one fieldset at a time. A composite field
+stays a single entry: a <code>checkbox-set</code> or <code>radio-set</code> comes back under <code>{name}</code> as one rendered <code>&lt;fieldset&gt;</code>
+holding all of its inputs.</p>
 <h2 id="csrf-protection">CSRF Protection<a class="anchor" href="#csrf-protection" aria-label="Link to this section">#</a></h2>
 
 <p>A <code>csrf</code> field type renders a hidden input holding a cryptographically random token, stores it in the session,

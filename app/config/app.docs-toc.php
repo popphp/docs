@@ -1124,28 +1124,34 @@ return array (
     5 => 
     array (
       'level' => 2,
+      'id' => 'rendering-into-your-own-view',
+      'text' => 'Rendering Into Your Own View',
+    ),
+    6 => 
+    array (
+      'level' => 2,
       'id' => 'csrf-protection',
       'text' => 'CSRF Protection',
     ),
-    6 => 
+    7 => 
     array (
       'level' => 2,
       'id' => 'file-uploads',
       'text' => 'File Uploads',
     ),
-    7 => 
+    8 => 
     array (
       'level' => 2,
       'id' => 'fields-from-a-database-table',
       'text' => 'Fields from a Database Table',
     ),
-    8 => 
+    9 => 
     array (
       'level' => 2,
       'id' => 'validating-without-rendering',
       'text' => 'Validating Without Rendering',
     ),
-    9 => 
+    10 => 
     array (
       'level' => 2,
       'id' => 'see-also',
