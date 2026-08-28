@@ -597,8 +597,8 @@ requirement, since it isn't installed everywhere:</p>
 </code></pre>
 </div>
 
-<p>Each file is named for the source document and its page number, and the returned array is keyed by
-1-based page number:</p>
+<p>By default each file is named for the source document and its page number, and the returned array is
+keyed by 1-based page number:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>[
@@ -624,14 +624,16 @@ at 300 DPI. <code>jpg</code>, <code>jpeg</code>, <code>png</code>, <code>webp</c
 300 DPI and 1275x1650 at 150. JPEG and WebP are written at quality 90 rather than the library default,
 because the usual destination is OCR and compression artifacts on text edges cost more than the bytes
 do. PNG and TIFF are lossless already and are left alone.</p>
-<p>The last two arguments are the same page selection and page limit the text extractors take, with the
-same rule — an explicit page list wins outright, and the limit applies only when there is no list:</p>
+<p>A page selection and a page limit come last, the same two the text extractors take and under the same
+rule — an explicit page list wins outright, and the limit applies only when there is no list. They sit
+behind <code>$filenameFormat</code>, a <code>sprintf()</code> string over the basename and page number that controls the
+output filenames, so pass them by name:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
 
-<span class="text-var">$firstTen</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(<span class="text-var">$file</span>, <span class="text-var">$location</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-num">300</span>, <span class="text-num">null</span>, <span class="text-num">10</span>);
-<span class="text-var">$twoPages</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(<span class="text-var">$file</span>, <span class="text-var">$location</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-num">300</span>, [<span class="text-num">1</span>, <span class="text-num">3</span>]);
+<span class="text-var">$firstTen</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(<span class="text-var">$file</span>, <span class="text-var">$location</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-num">300</span>, <span class="text-type">pageLimit</span>: <span class="text-num">10</span>);
+<span class="text-var">$twoPages</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(<span class="text-var">$file</span>, <span class="text-var">$location</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-num">300</span>, <span class="text-type">pages</span>: [<span class="text-num">1</span>, <span class="text-num">3</span>]);
 </code></pre>
 </div>
 
