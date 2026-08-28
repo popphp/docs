@@ -2609,6 +2609,12 @@ return array (
     12 => 
     array (
       'level' => 2,
+      'id' => 'extracting-pages-as-images',
+      'text' => 'Extracting Pages as Images',
+    ),
+    13 => 
+    array (
+      'level' => 2,
       'id' => 'see-also',
       'text' => 'See Also',
     ),

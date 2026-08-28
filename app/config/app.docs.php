@@ -880,7 +880,7 @@ return [
         ],
         '/toolkit/pdf' => [
             'title' => 'PDFs',
-            'description' => 'Building PDF documents from pages, text, images and paths, plus annotations, form fields, merging, HTML rendering and text extraction.',
+            'description' => 'Building PDF documents from pages, text, images and paths, plus annotations, form fields, merging, HTML rendering, text extraction and rasterizing pages to images.',
             'section' => 'The Toolkit',
             'order' => 12,
             'components' => [

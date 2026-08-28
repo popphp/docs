@@ -6,8 +6,9 @@
 ?>
 <p><code>pop-pdf</code> builds PDF documents out of objects — a document holding pages, pages holding text, images
 and paths — and compiles them to a real PDF file. It reads in the other direction too: importing an
-existing document, merging several, rendering HTML, and pulling the text back out. All of it is native
-PHP, with no external binary and no third-party PDF library behind it.</p>
+existing document, merging several, rendering HTML, and pulling the text back out. Building, importing
+and extracting are all native PHP, with no external binary and no third-party PDF library behind them —
+only rasterizing pages back to images calls out, to the <code>imagick</code> extension.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">BASH</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>composer require popphp/pop-pdf
@@ -418,7 +419,8 @@ in a request body or came out of a database column.</p>
 </div>
 
 <p>The second argument is the JPEG quality for the embedded images, defaulting to 70. A single path may be
-passed instead of an array.</p>
+passed instead of an array. Going the other way — a PDF back to one image per page — is
+<a href="#extracting-pages-as-images">Extracting Pages as Images</a> below.</p>
 <h2 id="merging-documents">Merging Documents<a class="anchor" href="#merging-documents" aria-label="Link to this section">#</a></h2>
 
 <p><code>Pdf::merge()</code> takes an array of file paths and returns one <code>Document</code> with every source's pages
@@ -578,6 +580,83 @@ exactly what you would want: <code>isImageOnlyDocument()</code> returns <code>tr
 embedded DejaVu Sans and containing Cyrillic extracts back byte-identical. That's the same round trip
 <code>pdftotext</code> performs on the output, which is worth knowing: <code>pop-pdf</code>'s documents read correctly in
 other tools, not only its own.</p>
+<h2 id="extracting-pages-as-images">Extracting Pages as Images<a class="anchor" href="#extracting-pages-as-images" aria-label="Link to this section">#</a></h2>
+
+<p><code>Pdf::extractAsImages()</code> is the other direction of <code>importFromImages()</code>: it rasterizes the pages of an
+existing PDF into standalone image files, one per page, and returns their paths. It is the one part of
+<code>pop-pdf</code> that reaches outside PHP — it needs the <code>imagick</code> extension, a <code>suggest</code> rather than a hard
+requirement, since it isn't installed everywhere:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
+
+<span class="text-var">$images</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/incoming.pdf&#039;</span>,
+    <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/pages&#039;</span>
+);
+</code></pre>
+</div>
+
+<p>Each file is named for the source document and its page number, and the returned array is keyed by
+1-based page number:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code>[
+    <span class="text-num">1</span> =&gt; <span class="text-str">&#039;/path/to/storage/pages/incoming-01.jpg&#039;</span>,
+    <span class="text-num">2</span> =&gt; <span class="text-str">&#039;/path/to/storage/pages/incoming-02.jpg&#039;</span>,
+    <span class="text-num">3</span> =&gt; <span class="text-str">&#039;/path/to/storage/pages/incoming-03.jpg&#039;</span>,
+]
+</code></pre>
+</div>
+
+<p>The destination has to exist and be writable — the method writes into it, it does not create it.</p>
+<p>Two further arguments set the output format and the resolution it is rasterized at, defaulting to JPEG
+at 300 DPI. <code>jpg</code>, <code>jpeg</code>, <code>png</code>, <code>webp</code>, <code>tiff</code> and <code>tif</code> are supported, and anything else throws:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
+
+<span class="text-var">$images</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(<span class="text-var">$file</span>, <span class="text-var">$location</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-num">150</span>);
+</code></pre>
+</div>
+
+<p>Resolution is what decides the pixel dimensions: a US Letter page comes out 2550x3300 at the default
+300 DPI and 1275x1650 at 150. JPEG and WebP are written at quality 90 rather than the library default,
+because the usual destination is OCR and compression artifacts on text edges cost more than the bytes
+do. PNG and TIFF are lossless already and are left alone.</p>
+<p>The last two arguments are the same page selection and page limit the text extractors take, with the
+same rule — an explicit page list wins outright, and the limit applies only when there is no list:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
+
+<span class="text-var">$firstTen</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(<span class="text-var">$file</span>, <span class="text-var">$location</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-num">300</span>, <span class="text-num">null</span>, <span class="text-num">10</span>);
+<span class="text-var">$twoPages</span> = <span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(<span class="text-var">$file</span>, <span class="text-var">$location</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-num">300</span>, [<span class="text-num">1</span>, <span class="text-num">3</span>]);
+</code></pre>
+</div>
+
+<p>Filtering does not renumber anything. Asking for pages <code>[1, 3]</code> returns keys <code>1</code> and <code>3</code>, named
+<code>incoming-01.png</code> and <code>incoming-03.png</code> — the numbers stay those of the source document, unlike
+<code>importFromFile()</code>, where selecting pages builds a new document that renumbers from <code>1</code>.</p>
+<p>That makes this the natural follow-on to the image-only check above: when <code>isImageOnlyDocument()</code> says
+a document is scans rather than text, <code>extractAsImages()</code> produces the files to hand an OCR engine, and
+the keys line up with the page numbers you report back.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
+
+<span class="text-kw">if</span> (<span class="text-type">Pdf</span>::<span class="text-fn">isImageOnlyDocument</span>(<span class="text-var">$file</span>)) {
+    <span class="text-kw">foreach</span> (<span class="text-type">Pdf</span>::<span class="text-fn">extractAsImages</span>(<span class="text-var">$file</span>, <span class="text-var">$location</span>, <span class="text-str">&#039;png&#039;</span>, <span class="text-num">300</span>) <span class="text-kw">as</span> <span class="text-var">$pageNumber</span> =&gt; <span class="text-var">$image</span>) {
+        <span class="text-comment">// hand $image to OCR, attribute the result to $pageNumber</span>
+    }
+}
+</code></pre>
+</div>
+
+<p>Pages are rasterized and written one at a time, so memory stays flat no matter how long the document
+is — a 400-page PDF costs the same as a 4-page one. A missing source file, a destination that is not a
+writable directory, an unsupported format, and a missing <code>imagick</code> extension all throw
+<code>Pop\Pdf\Build\Exception</code>.</p>
 <p>Form field values, annotation targets and the rest of the PDF specification's surface go past what this
 page covers — see the pop-pdf README.</p>
 <h2 id="see-also">See Also<a class="anchor" href="#see-also" aria-label="Link to this section">#</a></h2>
