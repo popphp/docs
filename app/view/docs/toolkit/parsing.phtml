@@ -7,6 +7,8 @@
 <p><code>pop-parser</code> splits a string a person typed into fields. <code>NameParser</code> turns <code>Dr. John Michael Smith Jr.</code>
 into a salutation, first, middle and last name and a suffix; <code>AddressParser</code> turns <code>123 Main St Apt 4B, Springfield, IL 62704</code> into street number, name, route type, unit, city, state and postal code. Both are
 native — no third-party parsing library.</p>
+<p><code>parse()</code> hands back a result object — <code>NameResult</code> or <code>AddressResult</code> — and every field is read off
+that. The parser itself holds none of them, so two parses on one parser give two independent results.</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">BASH</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code>composer require popphp/pop-parser
@@ -20,14 +22,13 @@ native — no third-party parsing library.</p>
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Name\NameParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">NameParser</span>();
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;Dr. John Michael Smith Jr.&#039;</span>);
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">NameParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;Dr. John Michael Smith Jr.&#039;</span>);
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getSalutation</span>();  <span class="text-comment">// &#039;Dr.&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getFirstname</span>();   <span class="text-comment">// &#039;John&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getMiddlename</span>();  <span class="text-comment">// &#039;Michael&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getLastname</span>();    <span class="text-comment">// &#039;Smith&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getSuffix</span>();      <span class="text-comment">// &#039;Jr&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getSalutation</span>();  <span class="text-comment">// &#039;Dr.&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getFirstname</span>();   <span class="text-comment">// &#039;John&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getMiddlename</span>();  <span class="text-comment">// &#039;Michael&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getLastname</span>();    <span class="text-comment">// &#039;Smith&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getSuffix</span>();      <span class="text-comment">// &#039;Jr&#039;</span>
 </code></pre>
 </div>
 
@@ -38,7 +39,7 @@ are equivalent, and the constructor form is the one to reach for when the name a
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Name\NameParser</span>;
 
 <span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">NameParser</span>(<span class="text-str">&#039;John Smith&#039;</span>);
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>();
+<span class="text-var">$result</span> = <span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>();
 </code></pre>
 </div>
 
@@ -48,12 +49,11 @@ database export or a sorted list hands you — with no flag to set:</p>
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Name\NameParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">NameParser</span>();
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;Smith, John Michael, Jr&#039;</span>);
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">NameParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;Smith, John Michael, Jr&#039;</span>);
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getFirstname</span>();  <span class="text-comment">// &#039;John&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getLastname</span>();   <span class="text-comment">// &#039;Smith&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getSuffix</span>();     <span class="text-comment">// &#039;Jr&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getFirstname</span>();  <span class="text-comment">// &#039;John&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getLastname</span>();   <span class="text-comment">// &#039;Smith&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getSuffix</span>();     <span class="text-comment">// &#039;Jr&#039;</span>
 </code></pre>
 </div>
 
@@ -67,18 +67,17 @@ without a second pass of your own.</p>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Name\NameParser</span>;
 
 <span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">NameParser</span>();
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;Ludwig van Beethoven&#039;</span>);
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getLastnamePrefix</span>();  <span class="text-comment">// &#039;van&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getLastname</span>();        <span class="text-comment">// &#039;Beethoven&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getFullName</span>();        <span class="text-comment">// &#039;Ludwig van Beethoven&#039;</span>
+<span class="text-var">$result</span> = <span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;Ludwig van Beethoven&#039;</span>);
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getLastnamePrefix</span>();  <span class="text-comment">// &#039;van&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getLastname</span>();        <span class="text-comment">// &#039;Beethoven&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getFullName</span>();        <span class="text-comment">// &#039;Ludwig van Beethoven&#039;</span>
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;J.R. &quot;Bob&quot; Smith&#039;</span>);
-
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getFirstname</span>();       <span class="text-comment">// &#039;J&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getInitials</span>();        <span class="text-comment">// &#039;R&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getNickname</span>();        <span class="text-comment">// &#039;Bob&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getNickname</span>(<span class="text-num">true</span>);    <span class="text-comment">// &#039;(Bob)&#039;</span>
+<span class="text-var">$result</span> = <span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;J.R. &quot;Bob&quot; Smith&#039;</span>);
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getFirstname</span>();       <span class="text-comment">// &#039;J&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getInitials</span>();        <span class="text-comment">// &#039;R&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getNickname</span>();        <span class="text-comment">// &#039;Bob&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getNickname</span>(<span class="text-num">true</span>);    <span class="text-comment">// &#039;(Bob)&#039;</span>
 </code></pre>
 </div>
 
@@ -89,27 +88,76 @@ salutation and suffix, and <code>toArray()</code> gives every field at once with
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Name\NameParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">NameParser</span>(<span class="text-str">&#039;John Michael Smith Jr&#039;</span>);
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>();
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">NameParser</span>(<span class="text-str">&#039;John Michael Smith Jr&#039;</span>))-&gt;<span class="text-fn">parse</span>();
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getGivenName</span>();  <span class="text-comment">// &#039;John Michael&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getFullName</span>();   <span class="text-comment">// &#039;John Michael Smith&#039;</span>
-<span class="text-kw">(string)</span><span class="text-var">$parser</span>;          <span class="text-comment">// &#039;John Michael Smith Jr&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getGivenName</span>();  <span class="text-comment">// &#039;John Michael&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getFullName</span>();   <span class="text-comment">// &#039;John Michael Smith&#039;</span>
+<span class="text-kw">(string)</span><span class="text-var">$result</span>;          <span class="text-comment">// &#039;John Michael Smith Jr&#039;</span>
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">toArray</span>();
+<span class="text-var">$result</span>-&gt;<span class="text-fn">toArray</span>();
 <span class="text-comment">// [&#039;salutation&#039; =&gt; null, &#039;firstname&#039; =&gt; &#039;John&#039;, &#039;initials&#039; =&gt; null, &#039;middlename&#039; =&gt; &#039;Michael&#039;,</span>
-<span class="text-comment">//  &#039;nickname&#039; =&gt; null, &#039;lastnamePrefix&#039; =&gt; null, &#039;lastname&#039; =&gt; &#039;Smith&#039;, &#039;suffix&#039; =&gt; &#039;Jr&#039;]</span>
+<span class="text-comment">//  &#039;nickname&#039; =&gt; null, &#039;lastnamePrefix&#039; =&gt; null, &#039;lastname&#039; =&gt; &#039;Smith&#039;, &#039;suffix&#039; =&gt; &#039;Jr&#039;,</span>
+<span class="text-comment">//  &#039;credentials&#039; =&gt; null, &#039;confidence&#039; =&gt; 1.0]</span>
 </code></pre>
 </div>
 
-<p>Every getter has a matching <code>has*()</code> — <code>hasSuffix()</code>, <code>hasNickname()</code>, <code>hasMiddlename()</code> — which
-returns <code>true</code> only when that part was actually found. Use those rather than testing the getter against
+<p>Every getter on the result has a matching <code>has*()</code> — <code>hasSuffix()</code>, <code>hasNickname()</code>, <code>hasMiddlename()</code> —
+which returns <code>true</code> only when that part was actually found. Use those rather than testing the getter against
 <code>null</code>, because they say what you mean.</p>
 <p>A single-word input becomes a first name, so check <code>hasLastname()</code> and fall back to <code>getFirstname()</code> when
 you are normalizing a surname column.</p>
 <p>The only input that raises is one with nothing in it. <code>parse()</code> with no data set anywhere, or with a
 string that normalizes to empty, throws <code>Pop\Parser\Exception</code> with &quot;Error: You must pass a name string
 to the parser object.&quot;</p>
+<h2 id="confidence-casing-and-credentials">Confidence, Casing and Credentials<a class="anchor" href="#confidence-casing-and-credentials" aria-label="Link to this section">#</a></h2>
+
+<p>Every result reports how much of the input it matched outright rather than guessed, as a <code>0.0</code>-<code>1.0</code>
+score. <code>isConfident()</code> checks it against a threshold, <code>0.7</code> by default:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Address\AddressParser</span>;
+
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">AddressParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;123 Main St, Springfield, IL 62704&#039;</span>);
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getConfidence</span>();  <span class="text-comment">// 1.0</span>
+
+<span class="text-var">$loose</span> = (<span class="text-kw">new</span> <span class="text-type">AddressParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;Main St Springfield IL&#039;</span>);
+<span class="text-var">$loose</span>-&gt;<span class="text-fn">getConfidence</span>();   <span class="text-comment">// 0.5</span>
+<span class="text-var">$loose</span>-&gt;<span class="text-fn">isConfident</span>();     <span class="text-comment">// false</span>
+</code></pre>
+</div>
+
+<p>The score starts at <code>1.0</code> and drops only for specific, identifiable guesses, so an address that genuinely
+has no city is not penalized for a field that was never there. Use it to route uncertain records to
+review rather than accepting every parse equally.</p>
+<p>Both parsers title-case a field that arrives all uppercase or all lowercase, which is what makes a legacy
+export usable, and leave anything already carrying mixed case exactly as typed — the rule that keeps
+<code>McDonald</code> and <code>O'Brien</code> from being flattened:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Name\NameParser</span>;
+
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">NameParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;JOHN SMITH&#039;</span>);
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getFirstname</span>();  <span class="text-comment">// &#039;John&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getLastname</span>();   <span class="text-comment">// &#039;Smith&#039;</span>
+
+(<span class="text-kw">new</span> <span class="text-type">NameParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;McDonald, RonalD&#039;</span>)-&gt;<span class="text-fn">getFirstname</span>();  <span class="text-comment">// &#039;RonalD&#039; — left alone</span>
+</code></pre>
+</div>
+
+<p><code>NameParser</code> also recognizes professional credentials — PhD, MD, Esq, JD, MBA, RN and others — as a field
+of their own rather than folding them into the suffix:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Name\NameParser</span>;
+
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">NameParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;Dr. John Q. Smith Jr, PhD&#039;</span>);
+
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getSuffix</span>();       <span class="text-comment">// &#039;Jr&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getCredentials</span>();  <span class="text-comment">// &#039;PhD&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">hasCredentials</span>();  <span class="text-comment">// true</span>
+</code></pre>
+</div>
+
 <h2 id="parsing-an-address">Parsing an Address<a class="anchor" href="#parsing-an-address" aria-label="Link to this section">#</a></h2>
 
 <p>The same shape, with more fields:</p>
@@ -117,18 +165,17 @@ to the parser object.&quot;</p>
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Address\AddressParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">AddressParser</span>();
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;123 Main St Apt 4B, Springfield, IL 62704&#039;</span>);
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">AddressParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;123 Main St Apt 4B, Springfield, IL 62704&#039;</span>);
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStreetNumber</span>();  <span class="text-comment">// &#039;123&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStreetName</span>();    <span class="text-comment">// &#039;Main&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getRouteType</span>();     <span class="text-comment">// &#039;St&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getUnit</span>();          <span class="text-comment">// &#039;Apt 4B&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getCity</span>();          <span class="text-comment">// &#039;Springfield&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStateCode</span>();     <span class="text-comment">// &#039;IL&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStateName</span>();     <span class="text-comment">// &#039;Illinois&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getPostalCode</span>();    <span class="text-comment">// &#039;62704&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getCountry</span>();       <span class="text-comment">// &#039;US&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStreetNumber</span>();  <span class="text-comment">// &#039;123&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStreetName</span>();    <span class="text-comment">// &#039;Main&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getRouteType</span>();     <span class="text-comment">// &#039;St&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getUnit</span>();          <span class="text-comment">// &#039;Apt 4B&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getCity</span>();          <span class="text-comment">// &#039;Springfield&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStateCode</span>();     <span class="text-comment">// &#039;IL&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStateName</span>();     <span class="text-comment">// &#039;Illinois&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getPostalCode</span>();    <span class="text-comment">// &#039;62704&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getCountry</span>();       <span class="text-comment">// &#039;US&#039;</span>
 </code></pre>
 </div>
 
@@ -141,13 +188,12 @@ includes it by default; pass <code>false</code> for the bare name:</p>
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Address\AddressParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">AddressParser</span>();
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;456 N Elm Street, Chicago, IL 60601&#039;</span>);
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">AddressParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;456 N Elm Street, Chicago, IL 60601&#039;</span>);
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getDirection</span>();        <span class="text-comment">// &#039;N&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStreetName</span>();       <span class="text-comment">// &#039;N Elm&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStreetName</span>(<span class="text-num">false</span>);  <span class="text-comment">// &#039;Elm&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getRouteType</span>();        <span class="text-comment">// &#039;Street&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getDirection</span>();        <span class="text-comment">// &#039;N&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStreetName</span>();       <span class="text-comment">// &#039;N Elm&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStreetName</span>(<span class="text-num">false</span>);  <span class="text-comment">// &#039;Elm&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getRouteType</span>();        <span class="text-comment">// &#039;Street&#039;</span>
 </code></pre>
 </div>
 
@@ -158,13 +204,12 @@ which kind of address you have:</p>
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Address\AddressParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">AddressParser</span>();
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;PO Box 1234, Springfield, IL 62704&#039;</span>);
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">AddressParser</span>())-&gt;<span class="text-fn">parse</span>(<span class="text-str">&#039;PO Box 1234, Springfield, IL 62704&#039;</span>);
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">isPoBox</span>();        <span class="text-comment">// true</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStreetName</span>();  <span class="text-comment">// &#039;PO Box 1234&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStreetNumber</span>();<span class="text-comment">// null</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getCity</span>();        <span class="text-comment">// &#039;Springfield&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">isPoBox</span>();        <span class="text-comment">// true</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStreetName</span>();  <span class="text-comment">// &#039;PO Box 1234&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStreetNumber</span>();<span class="text-comment">// null</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getCity</span>();        <span class="text-comment">// &#039;Springfield&#039;</span>
 </code></pre>
 </div>
 
@@ -175,13 +220,12 @@ stored as <code>H3Z2Y7</code> and needs reformatting before it goes on a label:<
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Address\AddressParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">AddressParser</span>(<span class="text-str">&#039;55 Rue Principale, Montreal, QC H3Z 2Y7&#039;</span>);
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>();
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">AddressParser</span>(<span class="text-str">&#039;55 Rue Principale, Montreal, QC H3Z 2Y7&#039;</span>))-&gt;<span class="text-fn">parse</span>();
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStateName</span>();   <span class="text-comment">// &#039;Quebec&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getStateCode</span>();   <span class="text-comment">// &#039;QC&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getPostalCode</span>();  <span class="text-comment">// &#039;H3Z2Y7&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getCountry</span>();     <span class="text-comment">// &#039;CA&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStateName</span>();   <span class="text-comment">// &#039;Quebec&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getStateCode</span>();   <span class="text-comment">// &#039;QC&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getPostalCode</span>();  <span class="text-comment">// &#039;H3Z2Y7&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getCountry</span>();     <span class="text-comment">// &#039;CA&#039;</span>
 </code></pre>
 </div>
 
@@ -191,12 +235,11 @@ columns wants:</p>
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Address\AddressParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">AddressParser</span>(<span class="text-str">&#039;123 Main St, Springfield, IL 62704-1234&#039;</span>);
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>();
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">AddressParser</span>(<span class="text-str">&#039;123 Main St, Springfield, IL 62704-1234&#039;</span>))-&gt;<span class="text-fn">parse</span>();
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getPostalCode</span>();  <span class="text-comment">// &#039;62704&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getZip4</span>();        <span class="text-comment">// &#039;1234&#039;</span>
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">hasZip4</span>();        <span class="text-comment">// true</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getPostalCode</span>();  <span class="text-comment">// &#039;62704&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getZip4</span>();        <span class="text-comment">// &#039;1234&#039;</span>
+<span class="text-var">$result</span>-&gt;<span class="text-fn">hasZip4</span>();        <span class="text-comment">// true</span>
 </code></pre>
 </div>
 
@@ -206,21 +249,21 @@ state appears as a code or a full name, and whether the country is appended:</p>
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
 <pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Parser\Address\AddressParser</span>;
 
-<span class="text-var">$parser</span> = <span class="text-kw">new</span> <span class="text-type">AddressParser</span>(<span class="text-str">&#039;123 Main St Apt 4B, Springfield, IL 62704&#039;</span>);
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">parse</span>();
+<span class="text-var">$result</span> = (<span class="text-kw">new</span> <span class="text-type">AddressParser</span>(<span class="text-str">&#039;123 Main St Apt 4B, Springfield, IL 62704&#039;</span>))-&gt;<span class="text-fn">parse</span>();
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getFullAddress</span>();
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getFullAddress</span>();
 <span class="text-comment">// &#039;123 Main St, Apt 4B, Springfield, IL 62704&#039;</span>
 
-<span class="text-var">$parser</span>-&gt;<span class="text-fn">getFullAddress</span>(<span class="text-str">&#039;, &#039;</span>, <span class="text-num">false</span>, <span class="text-num">true</span>);
+<span class="text-var">$result</span>-&gt;<span class="text-fn">getFullAddress</span>(<span class="text-str">&#039;, &#039;</span>, <span class="text-num">false</span>, <span class="text-num">true</span>);
 <span class="text-comment">// &#039;123 Main St, Apt 4B, Springfield, Illinois 62704, US&#039;</span>
 </code></pre>
 </div>
 
-<p>Casting to a string is <code>getFullAddress()</code> with its defaults, and <code>toArray()</code> returns all eleven fields.
-As with names, every getter has a <code>has*()</code> companion.</p>
-<p>A parser is reusable: pass a new string to <code>parse()</code> and it replaces both the parsed fields and the stored
-data, so a later bare <code>parse()</code> re-parses the string you last gave it.</p>
+<p>Casting to a string is <code>getFullAddress()</code> with its defaults, and <code>toArray()</code> returns every field plus the
+confidence score. As with names, every getter has a <code>has*()</code> companion.</p>
+<p>A parser is reusable: pass a new string to <code>parse()</code> and it replaces the stored data, so a later bare
+<code>parse()</code> re-parses the string you last gave it. Each call builds a fresh result, so an earlier one stays
+valid rather than being overwritten. <code>getResult()</code> hands back the most recent.</p>
 <h2 id="reference-data">Reference Data<a class="anchor" href="#reference-data" aria-label="Link to this section">#</a></h2>
 
 <p>The lookup tables the parsers work from are public, which is what you want when a form has to validate

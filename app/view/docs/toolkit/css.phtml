@@ -200,7 +200,46 @@ edited and written out again:</p>
 <p><code>Css::parseString()</code> takes CSS as a string and <code>Css::parseUri()</code> fetches it over HTTP. Each has an
 instance form — <code>parseCssFile()</code>, <code>parseCss()</code> and <code>parseCssUri()</code> — that merges into a <code>Css</code> object
 you already hold rather than returning a new one. <code>parseFile()</code> on a path that is not there throws
-<code>Pop\Css\Exception</code> (&quot;Error: That file '...' does not exist.&quot;).</p>
+<code>Pop\Css\Exception</code> (&quot;Error: That file '...' does not exist.&quot;), and <code>parseCssUri()</code> throws the same
+exception type when the URI cannot be fetched, rather than quietly handing back a stylesheet with
+nothing in it:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Exception</span>;
+
+<span class="text-kw">try</span> {
+    <span class="text-var">$css</span> = (<span class="text-kw">new</span> <span class="text-type">Css</span>())-&gt;<span class="text-fn">parseCssUri</span>(<span class="text-str">&#039;https://example.com/missing.css&#039;</span>);
+} <span class="text-kw">catch</span> (<span class="text-type">Exception</span> <span class="text-var">$exception</span>) {
+    <span class="text-kw">echo</span> <span class="text-var">$exception</span>-&gt;<span class="text-fn">getMessage</span>();
+    <span class="text-comment">// Error: Unable to fetch CSS from the URI &#039;https://example.com/missing.css&#039;.</span>
+}
+</code></pre>
+</div>
+
+<p>Adding the same selector name twice merges rather than replaces, the way two rules for one selector
+cascade in a browser — the later value wins per property, and properties only the first one set
+survive:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Css\Css</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Css\Selector</span>;
+
+<span class="text-var">$base</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;.btn&#039;</span>);
+<span class="text-var">$base</span>[<span class="text-str">&#039;color&#039;</span>]   = <span class="text-str">&#039;#fff&#039;</span>;
+<span class="text-var">$base</span>[<span class="text-str">&#039;padding&#039;</span>] = <span class="text-str">&#039;10px&#039;</span>;
+
+<span class="text-var">$theme</span> = <span class="text-kw">new</span> <span class="text-type">Selector</span>(<span class="text-str">&#039;.btn&#039;</span>);
+<span class="text-var">$theme</span>[<span class="text-str">&#039;color&#039;</span>]  = <span class="text-str">&#039;#000&#039;</span>;
+
+<span class="text-var">$css</span> = <span class="text-kw">new</span> <span class="text-type">Css</span>();
+<span class="text-var">$css</span>-&gt;<span class="text-fn">addSelector</span>(<span class="text-var">$base</span>);
+<span class="text-var">$css</span>-&gt;<span class="text-fn">addSelector</span>(<span class="text-var">$theme</span>);
+
+<span class="text-var">$css</span>-&gt;<span class="text-fn">getSelector</span>(<span class="text-str">&#039;.btn&#039;</span>)-&gt;<span class="text-fn">getProperties</span>();  <span class="text-comment">// [&#039;color&#039; =&gt; &#039;#000&#039;, &#039;padding&#039; =&gt; &#039;10px&#039;]</span>
+</code></pre>
+</div>
+
 <p>A parsed stylesheet is countable and iterable, and selectors are addressed by name:</p>
 <div class="code-window" x-data="copyCode">
 <div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>

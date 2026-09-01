@@ -527,6 +527,49 @@ tab-separated.</p>
 borders are drawn twice; nested tables are not supported; and a single row taller than a page is
 rendered best-effort on that page rather than split. Uncommon CSS properties and deeply nested block
 markup are where support thins out.</p>
+<h2 id="encryption-and-permissions">Encryption and Permissions<a class="anchor" href="#encryption-and-permissions" aria-label="Link to this section">#</a></h2>
+
+<p>A <code>Document\Security</code> object on the document encrypts everything written — page content, embedded
+images and fonts, and the strings the library authors. AES-256 by default, AES-128 on request:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Permissions</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document\Security</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
+
+<span class="text-var">$security</span> = <span class="text-kw">new</span> <span class="text-type">Security</span>(<span class="text-str">&#039;open-me&#039;</span>, <span class="text-str">&#039;admin123&#039;</span>);
+<span class="text-var">$security</span>-&gt;<span class="text-fn">setPermissions</span>((<span class="text-kw">new</span> <span class="text-type">Permissions</span>())-&gt;<span class="text-fn">allowPrinting</span>(<span class="text-num">false</span>)-&gt;<span class="text-fn">allowCopying</span>(<span class="text-num">false</span>));
+
+<span class="text-var">$document</span>-&gt;<span class="text-fn">setSecurity</span>(<span class="text-var">$security</span>);
+
+<span class="text-type">Pdf</span>::<span class="text-fn">writeToFile</span>(<span class="text-var">$document</span>, <span class="text-type">filename</span>: <span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/protected.pdf&#039;</span>);
+</code></pre>
+</div>
+
+<p>The first password opens the document; the second grants full access regardless of the permissions. An
+owner password left unset is generated for you, so the permissions cannot be bypassed by leaving it
+blank. <code>Permissions</code> covers printing, high-resolution printing, modifying, copying, annotating, form
+filling, accessibility extraction and assembling — all allowed until turned off. They are flags a
+reader agrees to honor rather than locks the file enforces, so treat them as intent.</p>
+<p>Reading a protected PDF is a matter of passing the password. <code>importFromFile()</code>, <code>importRawData()</code>,
+<code>extractTextFromFile()</code>, <code>extractTextFromData()</code> and the image-only classification methods all take
+one; <code>merge()</code> and <code>mergeRawData()</code> take an array keyed the same way as their sources:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Document</span>;
+<span class="text-kw">use</span> <span class="text-type">Pop\Pdf\Pdf</span>;
+
+<span class="text-var">$document</span> = <span class="text-type">Pdf</span>::<span class="text-fn">importFromFile</span>(<span class="text-kw">__DIR__</span> . <span class="text-str">&#039;/../storage/protected.pdf&#039;</span>, <span class="text-type">password</span>: <span class="text-str">&#039;open-me&#039;</span>);
+<span class="text-var">$merged</span>   = <span class="text-type">Pdf</span>::<span class="text-fn">merge</span>([<span class="text-var">$plain</span>, <span class="text-var">$protected</span>], <span class="text-kw">new</span> <span class="text-type">Document</span>(), [<span class="text-num">1</span> =&gt; <span class="text-str">&#039;open-me&#039;</span>]);
+</code></pre>
+</div>
+
+<p>Either password opens it. Opening is transparent — the <code>Document</code> you get back reports <code>hasSecurity()</code>
+as <code>false</code>, so writing it out again produces an unencrypted file unless you call <code>setSecurity()</code>
+yourself. Without a password, or with the wrong one, <code>Pop\Pdf\Extract\Exception</code> says which of the two
+happened.</p>
+<p><a rel="noopener noreferrer" target="_blank" class="external" href="https://docs.poppdf.org/build/security">The Pop PDF documentation</a> covers the full encryption and
+permission surface.</p>
 <h2 id="extracting-text">Extracting Text<a class="anchor" href="#extracting-text" aria-label="Link to this section">#</a></h2>
 
 <p>Extraction is native too, with no external binary and no third-party PDF library — including for

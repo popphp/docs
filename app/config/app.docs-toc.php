@@ -2603,16 +2603,22 @@ return array (
     11 => 
     array (
       'level' => 2,
+      'id' => 'encryption-and-permissions',
+      'text' => 'Encryption and Permissions',
+    ),
+    12 => 
+    array (
+      'level' => 2,
       'id' => 'extracting-text',
       'text' => 'Extracting Text',
     ),
-    12 => 
+    13 => 
     array (
       'level' => 2,
       'id' => 'extracting-pages-as-images',
       'text' => 'Extracting Pages as Images',
     ),
-    13 => 
+    14 => 
     array (
       'level' => 2,
       'id' => 'see-also',
@@ -3017,16 +3023,22 @@ return array (
     1 => 
     array (
       'level' => 2,
+      'id' => 'confidence-casing-and-credentials',
+      'text' => 'Confidence, Casing and Credentials',
+    ),
+    2 => 
+    array (
+      'level' => 2,
       'id' => 'parsing-an-address',
       'text' => 'Parsing an Address',
     ),
-    2 => 
+    3 => 
     array (
       'level' => 2,
       'id' => 'reference-data',
       'text' => 'Reference Data',
     ),
-    3 => 
+    4 => 
     array (
       'level' => 2,
       'id' => 'see-also',
