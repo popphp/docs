@@ -127,6 +127,12 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
     /**
      * Send error
      *
+     * Error handling lives here rather than on IndexController because every controller can be
+     * the one that fails: DocsController raises its own 404 when the route table and the page
+     * index have drifted apart, and maintenance mode is dispatched on whichever controller the
+     * router matched. With the HTML negotiation on IndexController alone, both of those answered
+     * a browser with JSON.
+     *
      * @param  int     $code
      * @param  ?string $message
      * @return void
@@ -137,13 +143,16 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
             $message = Response::getMessageFromCode($code);
         }
 
-        $responseBody = json_encode(['code' => $code, 'message' => $message], JSON_PRETTY_PRINT) . PHP_EOL . PHP_EOL;
+        if ($this->request->acceptsHtml()) {
+            $this->prepareView('error.phtml');
+            $this->view->code    = $code;
+            $this->view->message = $message;
+            $this->view->title   = $code . ' ' . $message;
+            $this->send($code);
+            return;
+        }
 
-        $this->response->setCode($code)
-            ->setMessage($message)
-            ->addHeaders($this->application->config['http_options_headers'] ?? [])
-            ->setBody($responseBody)
-            ->sendAndExit();
+        $this->sendErrorJson($code, $message);
     }
 
     /**
@@ -155,7 +164,33 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
      */
     public function maintenance(int $code = 503, ?string $message = null): void
     {
-        $this->error($code, $message);
+        if ($this->request->acceptsHtml()) {
+            $this->prepareView('maintenance.phtml');
+            $this->view->code  = $code;
+            $this->view->title = 'Down for maintenance';
+            $this->send($code);
+            return;
+        }
+
+        $this->sendErrorJson($code, $message ?? Response::getMessageFromCode($code));
+    }
+
+    /**
+     * Send an error as JSON, for a client that did not ask for HTML
+     *
+     * @param  int    $code
+     * @param  string $message
+     * @return void
+     */
+    protected function sendErrorJson(int $code, string $message): void
+    {
+        $responseBody = json_encode(['code' => $code, 'message' => $message], JSON_PRETTY_PRINT) . PHP_EOL . PHP_EOL;
+
+        $this->response->setCode($code)
+            ->setMessage($message)
+            ->addHeaders($this->application->config['http_options_headers'] ?? [])
+            ->setBody($responseBody)
+            ->sendAndExit();
     }
 
     /**
