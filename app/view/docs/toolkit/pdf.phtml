@@ -368,11 +368,21 @@ positioned wherever.</p>
 <p>The variants are flags on the field. <code>setMultiline()</code> turns a text field into a textarea.
 <code>setCombo()</code> makes a choice field a drop-down and <code>setMultiSelect()</code> makes it a list box; a choice
 field also takes <code>setFont()</code> and <code>setSize()</code> for the text inside it. <code>setRadio()</code> turns a button into a
-radio rather than a checkbox — though a <em>group</em> of radio buttons sharing one value is not supported, so
-each button is independent.</p>
-<p>Fields draw no border or label of their own. The rectangles and captions in a form you have seen are
-<code>Path</code> and <code>Text</code> objects placed at the same coordinates, which means a form page is built twice: once
-for what it looks like, once for what it captures.</p>
+radio, and two or more radios sharing a field name compile to one real group — a shared parent field
+plus a widget per option — so choosing one clears the rest.</p>
+<p>A checkbox or radio carries its checked state separately from its value: <code>setValue()</code> names what a
+reader reports for the box once it is checked, and <code>setChecked()</code> says whether it starts out checked.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-var">$agree</span> = <span class="text-kw">new</span> <span class="text-type">Page\Field\Button</span>(<span class="text-str">&#039;agree&#039;</span>);
+<span class="text-var">$agree</span>-&gt;<span class="text-fn">setValue</span>(<span class="text-str">&#039;Yes&#039;</span>)-&gt;<span class="text-fn">setChecked</span>();
+</code></pre>
+</div>
+
+<p>Fields draw their own box when you give them one — <code>setBorderWidth()</code>, <code>setBorderColor()</code> and
+<code>setBackgroundColor()</code> on any field, and <code>setCaption()</code> for a push button's label. Checkboxes and radios
+draw their own checked and clear appearances. Labels beside a field are still <code>Text</code> objects placed at
+the same coordinates.</p>
 <h2 id="importing-an-existing-pdf">Importing an Existing PDF<a class="anchor" href="#importing-an-existing-pdf" aria-label="Link to this section">#</a></h2>
 
 <p><code>Pdf::importFromFile()</code> parses a PDF back into a <code>Document</code> of the same page, font, image and text
@@ -523,6 +533,21 @@ to any element, not only cells.</p>
 <p>An invoice with a three-column table, a <code>colspan</code> row and a <code>rowspan</code> row compiles cleanly and renders
 through Ghostscript with no errors, and its text extracts back in reading order with the cells
 tab-separated.</p>
+<p>Form markup converts too, with no flag to set: <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code> and <code>&lt;button&gt;</code> become
+the same <code>Field\Text</code>, <code>Field\Choice</code> and <code>Field\Button</code> widgets the section above builds by hand, and
+each <code>&lt;form&gt;</code> becomes a <code>Document\Form</code> named from its <code>id</code>. Sizes come from <code>size</code>, <code>rows</code>/<code>cols</code>, a
+<code>width</code>/<code>height</code> attribute or CSS, and <code>border-width</code>, <code>border-color</code> and <code>background-color</code> carry onto
+the field. Radios sharing a <code>name</code> inside one form become one group.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-var">$document</span> = <span class="text-type">Pdf</span>::<span class="text-fn">importFromHtml</span>(<span class="text-str">&#039;&lt;form id=&quot;signup&quot;&gt;&lt;p&gt;Name&lt;/p&gt;&lt;input type=&quot;text&quot; name=&quot;who&quot;&gt;&lt;/form&gt;&#039;</span>);
+
+<span class="text-var">$document</span>-&gt;<span class="text-fn">getForm</span>(<span class="text-str">&#039;signup&#039;</span>);   <span class="text-comment">// a real, fillable form</span>
+</code></pre>
+</div>
+
+<p><a rel="noopener noreferrer" target="_blank" class="external" href="https://docs.poppdf.org/build/html">The Pop PDF documentation</a> covers the full control-by-control
+mapping.</p>
 <p>The limits are the ones a fixed page size imposes. There's no <code>border-collapse</code>, so adjacent cell
 borders are drawn twice; nested tables are not supported; and a single row taller than a page is
 rendered best-effort on that page rather than split. Uncommon CSS properties and deeply nested block
