@@ -1517,8 +1517,8 @@ return array (
     1 => 
     array (
       'level' => 2,
-      'id' => 'overriding-column-names-and-the-attempt-limit',
-      'text' => 'Overriding Column Names and the Attempt Limit',
+      'id' => 'overriding-column-names-and-limits',
+      'text' => 'Overriding Column Names and Limits',
     ),
     2 => 
     array (
@@ -1535,16 +1535,28 @@ return array (
     4 => 
     array (
       'level' => 2,
+      'id' => 'resending-an-mfa-code',
+      'text' => 'Resending an MFA Code',
+    ),
+    5 => 
+    array (
+      'level' => 2,
+      'id' => 'active-and-verified-accounts',
+      'text' => 'Active and Verified Accounts',
+    ),
+    6 => 
+    array (
+      'level' => 2,
       'id' => 'authentication-failures',
       'text' => 'Authentication Failures',
     ),
-    5 => 
+    7 => 
     array (
       'level' => 2,
       'id' => 'attempt-lockout',
       'text' => 'Attempt Lockout',
     ),
-    6 => 
+    8 => 
     array (
       'level' => 2,
       'id' => 'see-also',

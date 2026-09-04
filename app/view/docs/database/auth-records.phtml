@@ -5,8 +5,9 @@
  */
 ?>
 <p><code>Pop\Db\Record\Auth</code> extends <code>Record\Encoded</code> and turns a credentials table into a complete login
-flow — password verification, failed-attempt lockout, and optional multi-factor codes. It's new in
-v7; v6 had no equivalent, and it replaces the now defunct <code>Pop\Auth\Table</code> adapter in <code>pop-auth</code>.</p>
+flow — password verification, active and verified account gating, failed-attempt lockout that expires on
+its own, and optional multi-factor codes. It's new in v7; v6 had no equivalent, and it replaces the now
+defunct <code>Pop\Auth\Table</code> adapter in <code>pop-auth</code>.</p>
 <h2 id="setting-up-the-table-class">Setting up the Table Class<a class="anchor" href="#setting-up-the-table-class" aria-label="Link to this section">#</a></h2>
 
 <p>Because it sits on <a href="/database/encoded-records"><code>Record\Encoded</code></a>, the <code>Users</code> class moves up one more step
@@ -32,7 +33,7 @@ hash its password column.</p>
 </div>
 
 <p>An empty <code>class Users extends Auth {}</code> is a working auth class too — every column the class reads has a
-default name, and the table has to carry all five.</p>
+default name, and the table carries all of them.</p>
 <table>
 <thead>
 <tr>
@@ -58,6 +59,21 @@ default name, and the table has to carry all five.</p>
 <td>every <em>failed</em> attempt</td>
 </tr>
 <tr>
+<td><code>active</code></td>
+<td><code>int</code> or boolean, default truthy</td>
+<td>every <code>authenticate()</code>, <code>authenticateMfa()</code> and <code>generateMfaCode()</code> call</td>
+</tr>
+<tr>
+<td><code>verified</code></td>
+<td><code>int</code> or boolean, default truthy</td>
+<td>same as <code>active</code></td>
+</tr>
+<tr>
+<td><code>last_attempt</code></td>
+<td><code>int</code>, nullable — a Unix timestamp</td>
+<td>stamped on a failed guess, read to expire a lockout</td>
+</tr>
+<tr>
 <td><code>mfa_code</code></td>
 <td><code>varchar</code>, nullable</td>
 <td>every success on the default <code>$mfa = true</code> path</td>
@@ -71,11 +87,13 @@ default name, and the table has to carry all five.</p>
 </table>
 <p>Every other column is yours. <code>authenticate()</code> loads the whole row, so <code>email</code> and anything else the
 table holds are on the record it hands back.</p>
-<p>Give the table every column the auth flow reads — <code>attempts</code>, and the MFA columns if you enable it —
-since the failure path is the one that reads them.</p>
-<h2 id="overriding-column-names-and-the-attempt-limit">Overriding Column Names and the Attempt Limit<a class="anchor" href="#overriding-column-names-and-the-attempt-limit" aria-label="Link to this section">#</a></h2>
+<p>Give the table every column the auth flow reads — <code>attempts</code> and <code>last_attempt</code>, and the MFA columns if
+you enable it — since the failure path is the one that reads them. Give <code>active</code> and <code>verified</code> a truthy
+default so a newly inserted row can log in, or switch either check off as described under
+<a href="#active-and-verified-accounts">Active and Verified Accounts</a>.</p>
+<h2 id="overriding-column-names-and-limits">Overriding Column Names and Limits<a class="anchor" href="#overriding-column-names-and-limits" aria-label="Link to this section">#</a></h2>
 
-<p>Every one of those names, and the attempt limit, is a property override.</p>
+<p>Every one of those names, the attempt limit and the lockout window is a property override.</p>
 <table>
 <thead>
 <tr>
@@ -101,9 +119,29 @@ since the failure path is the one that reads them.</p>
 <td>an integer column counting consecutive failures</td>
 </tr>
 <tr>
+<td><code>$activeField</code></td>
+<td><code>'active'</code></td>
+<td>a truthy column marking the account usable — <code>null</code> to skip the check</td>
+</tr>
+<tr>
+<td><code>$verifiedField</code></td>
+<td><code>'verified'</code></td>
+<td>a truthy column marking the account confirmed — <code>null</code> to skip the check</td>
+</tr>
+<tr>
+<td><code>$lastAttemptField</code></td>
+<td><code>'last_attempt'</code></td>
+<td>a Unix-timestamp column anchoring the lockout clock — <code>null</code> to skip the tracking</td>
+</tr>
+<tr>
 <td><code>$attemptsLimit</code></td>
 <td><code>3</code></td>
-<td>the failure count at which the account locks</td>
+<td>the failure count at which the account locks — <code>0</code> to skip attempt enforcement</td>
+</tr>
+<tr>
+<td><code>$lockoutExpiration</code></td>
+<td><code>900</code></td>
+<td>seconds a lockout holds before it clears itself — <code>0</code> to hold it until reset</td>
 </tr>
 <tr>
 <td><code>$mfaConfig</code></td>
@@ -135,6 +173,34 @@ since the failure path is the one that reads them.</p>
     ];
 
 }
+</code></pre>
+</div>
+
+<p>The three settings a running application is most likely to vary — the attempt limit, the lockout window
+and the MFA config — are also readable and settable on a loaded instance. Each setter is fluent.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+
+<span class="text-var">$user</span> = <span class="text-type">Users</span>::<span class="text-fn">findOne</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$username</span>]);
+
+<span class="text-var">$user</span>-&gt;<span class="text-fn">setAttemptsLimit</span>(<span class="text-num">5</span>)
+     -&gt;<span class="text-fn">setLockoutExpiration</span>(<span class="text-num">1800</span>)
+     -&gt;<span class="text-fn">setMfaConfig</span>([<span class="text-str">&#039;length&#039;</span> =&gt; <span class="text-num">8</span>, <span class="text-str">&#039;alphanumeric&#039;</span> =&gt; <span class="text-num">true</span>]);
+</code></pre>
+</div>
+
+<p><code>setMfaConfig()</code> merges, so the call above changes <code>length</code> and <code>alphanumeric</code> and leaves the other three
+keys at their defaults. It keeps the five keys the class reads, so a key outside that set is dropped
+rather than stored. Read any of them back with <code>getAttemptsLimit()</code>, <code>getLockoutExpiration()</code> and
+<code>getMfaConfig()</code>, and ask whether a limit is in force with <code>hasAttemptsLimit()</code> and
+<code>hasLockoutExpiration()</code>.</p>
+<p><code>authenticate()</code> takes the attempt limit as an optional fourth argument for a path that wants a stricter
+one — an admin login, say. It calls <code>setAttemptsLimit()</code> internally, so the value stays on the instance
+for later calls as well.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-var">$user</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$username</span>, <span class="text-var">$attemptedPassword</span>, <span class="text-num">false</span>, <span class="text-num">1</span>);
 </code></pre>
 </div>
 
@@ -193,10 +259,79 @@ back by username between requests.</p>
 <p>Codes are compared with <code>hash_equals()</code>, and a successful check clears the stored code and timestamp,
 so a code cannot be replayed. A wrong code and an expired code both increment the same attempts column
 a bad password does — a locked-out account is locked out of MFA guessing too.</p>
+<h2 id="resending-an-mfa-code">Resending an MFA Code<a class="anchor" href="#resending-an-mfa-code" aria-label="Link to this section">#</a></h2>
+
+<p><code>generateMfaCode()</code> is the method <code>authenticate()</code> uses internally to issue a code, and it's public, so
+a &quot;resend code&quot; link reissues one on an already-loaded record without asking for the password again.
+It's fluent, and <code>wasMfaCodeGenerated()</code> reports whether the most recent call — direct, or the one
+inside <code>authenticate()</code> — issued a code.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+
+<span class="text-var">$user</span> = <span class="text-type">Users</span>::<span class="text-fn">findOne</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$username</span>]);
+<span class="text-var">$user</span>-&gt;<span class="text-fn">generateMfaCode</span>();
+
+<span class="text-kw">if</span> (<span class="text-var">$user</span>-&gt;<span class="text-fn">wasMfaCodeGenerated</span>()) {
+    <span class="text-var">$mailer</span>-&gt;<span class="text-fn">send</span>(<span class="text-var">$user</span>-&gt;<span class="text-type">email</span>, <span class="text-var">$user</span>-&gt;<span class="text-type">mfa_code</span>);
+} <span class="text-kw">else</span> {
+    <span class="text-comment">// log $user-&gt;getAuthFailure()</span>
+}
+</code></pre>
+</div>
+
+<p>A code is issued for a loaded record whose account is active, verified and within its attempt limit.
+Anything else leaves the stored code and timestamp as they were and sets the matching failure constant,
+so the previously delivered code stays valid while the resend reports why it declined. Holding the
+locked-out case back is what keeps resend from becoming an unlimited-guessing loophole: MFA
+verification checks the attempt limit before it compares the code, so a fresh code on a locked-out
+account would be unusable anyway. That account comes back through <code>resetAttempts()</code> or by waiting out
+the lockout window.</p>
+<h2 id="active-and-verified-accounts">Active and Verified Accounts<a class="anchor" href="#active-and-verified-accounts" aria-label="Link to this section">#</a></h2>
+
+<p>Two columns gate a login on account state rather than credentials. <code>$activeField</code> and <code>$verifiedField</code>
+are checked at the top of <code>authenticate()</code>, <code>authenticateMfa()</code> and <code>generateMfaCode()</code>, ahead of the
+attempts and password checks.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+
+<span class="text-comment">// A row whose `active` column is 0, with the correct password</span>
+<span class="text-var">$user</span> = <span class="text-kw">new</span> <span class="text-type">Users</span>();
+<span class="text-var">$user</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$username</span>, <span class="text-var">$attemptedPassword</span>, <span class="text-num">false</span>);   <span class="text-comment">// false</span>
+
+<span class="text-var">$user</span>-&gt;<span class="text-fn">getAuthFailure</span>();          <span class="text-comment">// &#039;USER_NOT_ACTIVE&#039;</span>
+<span class="text-var">$user</span>-&gt;<span class="text-fn">getAuthFailureMessage</span>();   <span class="text-comment">// &#039;The user is not active&#039;</span>
+</code></pre>
+</div>
+
+<p>Both are hard blocks rather than guess failures, so neither touches the attempts column — repeated
+logins against a deactivated account leave its attempt count where it was, and a lockout stays a signal
+about guessing. <code>userActive()</code> and <code>userVerified()</code> read the same state directly, which is what an
+account-status screen wants.</p>
+<p>Each check is independent and opt-out. Set its property to <code>null</code> and it always passes, whatever the
+row holds — for an application that has no email-verification step, that's the whole change.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Members.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
+
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record\Auth</span>;
+
+<span class="text-kw">class</span> <span class="text-type">Members</span> <span class="text-kw">extends</span> <span class="text-type">Auth</span>
+{
+
+    <span class="text-kw">protected</span> ?<span class="text-type">string</span> <span class="text-var">$verifiedField</span> = <span class="text-num">null</span>;
+
+}
+</code></pre>
+</div>
+
 <h2 id="authentication-failures">Authentication Failures<a class="anchor" href="#authentication-failures" aria-label="Link to this section">#</a></h2>
 
-<p>Every failure path sets one of five constants, readable through <code>getAuthFailure()</code>,
-<code>getAuthFailureMessage()</code> and <code>hasAuthFailure()</code>. A success clears it back to <code>null</code>.</p>
+<p>Every failure path sets a constant, readable through <code>getAuthFailure()</code>, <code>getAuthFailureMessage()</code> and
+<code>hasAuthFailure()</code>. A success clears it back to <code>null</code>. They are listed here in the order the checks run.</p>
 <table>
 <thead>
 <tr>
@@ -212,14 +347,24 @@ a bad password does — a locked-out account is locked out of MFA guessing too.<
 <td>no row matches the attempted username</td>
 </tr>
 <tr>
-<td><code>Auth::INVALID_CREDENTIALS</code></td>
-<td>Invalid credentials</td>
-<td>the row exists but the password does not verify</td>
+<td><code>Auth::USER_NOT_ACTIVE</code></td>
+<td>The user is not active</td>
+<td>the row's <code>$activeField</code> column is falsy</td>
+</tr>
+<tr>
+<td><code>Auth::USER_NOT_VERIFIED</code></td>
+<td>The user is not verified</td>
+<td>the row's <code>$verifiedField</code> column is falsy</td>
 </tr>
 <tr>
 <td><code>Auth::ATTEMPTS_EXCEEDED</code></td>
 <td>The authentication attempts have been exceeded</td>
 <td>attempts stand at or above <code>$attemptsLimit</code></td>
+</tr>
+<tr>
+<td><code>Auth::INVALID_CREDENTIALS</code></td>
+<td>Invalid credentials</td>
+<td>the row exists but the password does not verify</td>
 </tr>
 <tr>
 <td><code>Auth::INVALID_MFA_CODE</code></td>
@@ -233,7 +378,8 @@ a bad password does — a locked-out account is locked out of MFA guessing too.<
 </tr>
 </tbody>
 </table>
-<p>Log the result constant and show the person logging in a single generic message.
+<p>The order is what makes the first three cheap: they resolve before any password or code comparison
+happens. Log the result constant and show the person logging in a single generic message.
 <code>USER_DOES_NOT_EXIST</code> and <code>INVALID_CREDENTIALS</code> are for your logs.</p>
 <h2 id="attempt-lockout">Attempt Lockout<a class="anchor" href="#attempt-lockout" aria-label="Link to this section">#</a></h2>
 
@@ -255,9 +401,48 @@ counting — so <code>attempts</code> records total failures rather than remaini
 </div>
 
 <p>Both read the currently loaded record, so a fresh unloaded instance reports <code>false</code> from
-<code>attemptsExceeded()</code> regardless of what the table holds. Load the row first.</p>
-<p>Lockout holds until something calls <code>resetAttempts()</code>, so build the unlock path you want — an admin
-screen, an emailed link, or a scheduled task that clears attempts after a window.</p>
+<code>attemptsExceeded()</code> regardless of what the table holds. Load the row first. <code>resetAttempts()</code> is
+fluent, so it chains into whatever the unlock path does next.</p>
+<p>A lockout clears itself. Once <code>$lockoutExpiration</code> seconds — 15 minutes by default — have passed since
+the last failed guess, <code>attemptsExceeded()</code> resets the attempts column and reports <code>false</code>, and the next
+correct password logs in. That covers the ordinary case of someone mistyping their password three times,
+with no unlock path to build.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+
+<span class="text-var">$user</span> = <span class="text-type">Users</span>::<span class="text-fn">findOne</span>([<span class="text-str">&#039;username&#039;</span> =&gt; <span class="text-var">$username</span>]);
+
+<span class="text-var">$user</span>-&gt;<span class="text-fn">lockoutExpired</span>();      <span class="text-comment">// true once the window has passed</span>
+<span class="text-var">$user</span>-&gt;<span class="text-fn">attemptsExceeded</span>();    <span class="text-comment">// false — and the attempts column is now back to 0</span>
+</code></pre>
+</div>
+
+<p>The window is measured from <code>$lastAttemptField</code>, which is stamped when a guess fails. A request that was
+already turned away as locked out leaves the stamp alone, so the clock is anchored to the last real
+guess and a lockout always runs out on schedule. Call <code>lockoutExpired()</code> when you want to read the clock
+on its own — <code>attemptsExceeded()</code> is the one that clears the lockout as it reports.</p>
+<p>For a lockout that holds until someone clears it, set <code>$lockoutExpiration</code> to <code>0</code>, and build the unlock
+path you want — an admin screen, an emailed link, or a scheduled task.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><span class="code-file">app/src/Table/Admins.php</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">&lt;?php
+</span>
+<span class="text-kw">namespace</span> <span class="text-type">App\Table</span>;
+
+<span class="text-kw">use</span> <span class="text-type">Pop\Db\Record\Auth</span>;
+
+<span class="text-kw">class</span> <span class="text-type">Admins</span> <span class="text-kw">extends</span> <span class="text-type">Auth</span>
+{
+
+    <span class="text-kw">protected</span> <span class="text-type">int</span> <span class="text-var">$lockoutExpiration</span> = <span class="text-num">0</span>;
+
+}
+</code></pre>
+</div>
+
+<p>Setting <code>$attemptsLimit</code> to <code>0</code> goes the other way and turns attempt enforcement off, for a table where
+lockout is handled elsewhere: <code>attemptsExceeded()</code> stays <code>false</code> however high the column climbs.</p>
 <p>A successful <code>authenticate()</code> also resets the attempts counter to zero. It checks the password with
 <code>verify()</code>, so the <a href="/database/encoded-records">transparent rehash</a> happens inside that check — a login against an outdated
 hash comes back <code>true</code> with the stored hash already upgraded, and <code>authenticate()</code> does nothing further
