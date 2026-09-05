@@ -6,7 +6,7 @@
 ?>
 <p><code>Pop\Db\Record\Auth</code> extends <code>Record\Encoded</code> and turns a credentials table into a complete login
 flow — password verification, active and verified account gating, failed-attempt lockout that expires on
-its own, and optional multi-factor codes. It's new in v7; v6 had no equivalent, and it replaces the now
+its own, and optional multi-factor codes that can be switched on or off per account. It's new in v7; v6 had no equivalent, and it replaces the now
 defunct <code>Pop\Auth\Table</code> adapter in <code>pop-auth</code>.</p>
 <h2 id="setting-up-the-table-class">Setting up the Table Class<a class="anchor" href="#setting-up-the-table-class" aria-label="Link to this section">#</a></h2>
 
@@ -74,6 +74,11 @@ default name, and the table carries all of them.</p>
 <td>stamped on a failed guess, read to expire a lockout</td>
 </tr>
 <tr>
+<td><code>mfa</code></td>
+<td><code>int</code> or boolean, nullable</td>
+<td>every <code>authenticate()</code> call, to decide whether MFA applies</td>
+</tr>
+<tr>
 <td><code>mfa_code</code></td>
 <td><code>varchar</code>, nullable</td>
 <td>every success on the default <code>$mfa = true</code> path</td>
@@ -132,6 +137,11 @@ default so a newly inserted row can log in, or switch either check off as descri
 <td><code>$lastAttemptField</code></td>
 <td><code>'last_attempt'</code></td>
 <td>a Unix-timestamp column anchoring the lockout clock — <code>null</code> to skip the tracking</td>
+</tr>
+<tr>
+<td><code>$mfaField</code></td>
+<td><code>'mfa'</code></td>
+<td>a column deciding MFA per account — <code>null</code> to skip the override</td>
 </tr>
 <tr>
 <td><code>$attemptsLimit</code></td>
@@ -259,6 +269,37 @@ back by username between requests.</p>
 <p>Codes are compared with <code>hash_equals()</code>, and a successful check clears the stored code and timestamp,
 so a code cannot be replayed. A wrong code and an expired code both increment the same attempts column
 a bad password does — a locked-out account is locked out of MFA guessing too.</p>
+<h2 id="per-user-mfa">Per-User MFA<a class="anchor" href="#per-user-mfa" aria-label="Link to this section">#</a></h2>
+
+<p>The <code>$mfa</code> argument sets the policy for a call site. <code>$mfaField</code> names a column that overrides it per
+account, in either direction, so one login controller serves users who carry a second factor and users
+who do not.</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-kw">use</span> <span class="text-type">App\Table\Users</span>;
+
+<span class="text-var">$user</span>   = <span class="text-kw">new</span> <span class="text-type">Users</span>();
+<span class="text-var">$result</span> = <span class="text-var">$user</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$username</span>, <span class="text-var">$attemptedPassword</span>);
+
+<span class="text-comment">// mfa column 0 -&gt; $result is true, the login is finished</span>
+<span class="text-comment">// mfa column 1 -&gt; $result is the record, carrying a fresh code</span>
+</code></pre>
+</div>
+
+<p>The column counts only when it holds a value. A <code>null</code> means the account has expressed no preference
+and the <code>$mfa</code> argument stands, which is what makes the default safe on an existing table: a table with
+no <code>mfa</code> column keeps the behavior it had, and a row added before the column existed keeps whatever the
+call site asks for. Setting <code>$mfaField</code> to <code>null</code> turns the override off everywhere.</p>
+<p>Because the column can turn MFA on as readily as off, an account that requires a second factor gets one
+even where the call site passes <code>false</code>:</p>
+<div class="code-window" x-data="copyCode">
+<div class="code-window-bar"><span class="code-lang">PHP</span><button type="button" class="code-copy" @click="copy()" :aria-label="copied ? 'Copied' : 'Copy code'" aria-label="Copy code"><svg x-show="!copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"></rect><path d="M15 5.6A2.6 2.6 0 0 0 12.4 3H5.6A2.6 2.6 0 0 0 3 5.6v6.8A2.6 2.6 0 0 0 5.6 15"></path></svg><svg x-show="copied" x-cloak class="code-copied" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9 17l10.5-10.5"></path></svg></button></div>
+<pre><code><span class="text-var">$result</span> = <span class="text-var">$user</span>-&gt;<span class="text-fn">authenticate</span>(<span class="text-var">$username</span>, <span class="text-var">$attemptedPassword</span>, <span class="text-num">false</span>);
+
+<span class="text-comment">// mfa column 1 -&gt; $result is still the record, and a code was still issued</span>
+</code></pre>
+</div>
+
 <h2 id="resending-an-mfa-code">Resending an MFA Code<a class="anchor" href="#resending-an-mfa-code" aria-label="Link to this section">#</a></h2>
 
 <p><code>generateMfaCode()</code> is the method <code>authenticate()</code> uses internally to issue a code, and it's public, so
@@ -287,6 +328,9 @@ locked-out case back is what keeps resend from becoming an unlimited-guessing lo
 verification checks the attempt limit before it compares the code, so a fresh code on a locked-out
 account would be unusable anyway. That account comes back through <code>resetAttempts()</code> or by waiting out
 the lockout window.</p>
+<p><code>generateMfaCode()</code> issues a code whenever those four conditions hold, whatever the <code>mfa</code> column says —
+the <a href="#per-user-mfa">per-user override</a> governs <code>authenticate()</code>. A resend path that also serves
+MFA-exempt accounts reads the column itself before offering the link.</p>
 <h2 id="active-and-verified-accounts">Active and Verified Accounts<a class="anchor" href="#active-and-verified-accounts" aria-label="Link to this section">#</a></h2>
 
 <p>Two columns gate a login on account state rather than credentials. <code>$activeField</code> and <code>$verifiedField</code>

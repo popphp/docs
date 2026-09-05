@@ -1535,28 +1535,34 @@ return array (
     4 => 
     array (
       'level' => 2,
+      'id' => 'per-user-mfa',
+      'text' => 'Per-User MFA',
+    ),
+    5 => 
+    array (
+      'level' => 2,
       'id' => 'resending-an-mfa-code',
       'text' => 'Resending an MFA Code',
     ),
-    5 => 
+    6 => 
     array (
       'level' => 2,
       'id' => 'active-and-verified-accounts',
       'text' => 'Active and Verified Accounts',
     ),
-    6 => 
+    7 => 
     array (
       'level' => 2,
       'id' => 'authentication-failures',
       'text' => 'Authentication Failures',
     ),
-    7 => 
+    8 => 
     array (
       'level' => 2,
       'id' => 'attempt-lockout',
       'text' => 'Attempt Lockout',
     ),
-    8 => 
+    9 => 
     array (
       'level' => 2,
       'id' => 'see-also',
