@@ -1541,28 +1541,34 @@ return array (
     5 => 
     array (
       'level' => 2,
+      'id' => 'callers-that-cannot-do-mfa',
+      'text' => 'Callers That Cannot Do MFA',
+    ),
+    6 => 
+    array (
+      'level' => 2,
       'id' => 'resending-an-mfa-code',
       'text' => 'Resending an MFA Code',
     ),
-    6 => 
+    7 => 
     array (
       'level' => 2,
       'id' => 'active-and-verified-accounts',
       'text' => 'Active and Verified Accounts',
     ),
-    7 => 
+    8 => 
     array (
       'level' => 2,
       'id' => 'authentication-failures',
       'text' => 'Authentication Failures',
     ),
-    8 => 
+    9 => 
     array (
       'level' => 2,
       'id' => 'attempt-lockout',
       'text' => 'Attempt Lockout',
     ),
-    9 => 
+    10 => 
     array (
       'level' => 2,
       'id' => 'see-also',
